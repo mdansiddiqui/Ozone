@@ -1,0 +1,2462 @@
+<br />
+
+<form [formGroup]="ProjectForm" #projectForm="ngForm">
+  <section class="content-header pt-0 pb-0 mx-0 mb-0 md-0">
+    <div class="container-fluid">
+      <!-- <button class="btn-sm btn-success btn col-md-1 float-left mx-2" style="margin: 5px;" (click)="reloadGrid()">
+      Refresh
+    </button> -->
+      <div class="row col-md-12">
+        <div class="col-sm-4">
+          <div class="card">
+            <div class="card-body table-responsive p-0">
+              <dx-data-grid
+                id="dataGrid"
+                class="mx-1 mb-1 mt-1"
+                [showBorders]="true"
+                [rowAlternationEnabled]="true"
+                [showRowLines]="true"
+                [columnAutoWidth]="true"
+                [showColumnLines]="false"
+                [allowColumnReordering]="true"
+                (onRowClick)="onRowClick1($event)"
+                [dataSource]="
+                  AuditStatus
+                    | paginate
+                      : {
+                          id: 'server',
+                          itemsPerPage: this.pagedDto.pageSize,
+                          currentPage: this.pagedDto.page,
+                          totalItems: this.totalCount
+                        }
+                "
+                keyExpr="id"
+              >
+                <dxo-scrolling columnRenderingMode="virtual"></dxo-scrolling>
+
+                <dxi-column
+                  dataField="name"
+                  caption="Audits"
+                  cssClass="cell-header"
+                ></dxi-column>
+                <dxi-column
+                  dataField="count"
+                  caption="Count"
+                  cssClass="cell-header"
+                ></dxi-column>
+              </dx-data-grid>
+              <!-- <div class="card-footer table-card-footer pb-0 border-top">
+            <div class="row">
+              <div class="col-sm-2 col-12 text-sm-left text-center">
+                <button class="btn btn-sm">
+                  <i class="fas fa-redo text-info" (click)="reloadGrid()"></i>
+                </button>
+              </div> -->
+              <!-- <div class="col-sm-8 col-12">
+                <pagination-controls id="server" (pageChange)="onTableDataChange($event)">
+                </pagination-controls>
+              </div> -->
+              <!-- <div class="col-sm-2 col-12 ">
+
+                <div class="d-flex flex-row-reverse bd-highlight mb-2">
+                  <div class="p-2 bd-highlight">
+                    <select (change)="onTableSizeChange($event)" class="custom-select">
+                      <option *ngFor="let size of tableSizes" [ngValue]="size">
+                        {{ size }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div> -->
+              <!-- </div>
+          </div> -->
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="card">
+            <div class="card-body table-responsive p-0">
+              <dx-data-grid
+                id="dataGrid"
+                class="mx-1 mb-1 mt-1"
+                [showBorders]="true"
+                [rowAlternationEnabled]="true"
+                [showRowLines]="true"
+                [columnAutoWidth]="true"
+                [showColumnLines]="false"
+                [allowColumnReordering]="true"
+                (onRowClick)="onRowClick($event)"
+                [dataSource]="
+                  ProjectStatus
+                    | paginate
+                      : {
+                          id: 'server',
+                          itemsPerPage: this.pagedDto.pageSize,
+                          currentPage: this.pagedDto.page,
+                          totalItems: this.totalCount
+                        }
+                "
+                keyExpr="id"
+              >
+                <dxo-scrolling columnRenderingMode="virtual"></dxo-scrolling>
+
+                <dxi-column
+                  dataField="name"
+                  caption="Project Applications"
+                  cssClass="cell-header"
+                ></dxi-column>
+                <dxi-column
+                  dataField="count"
+                  caption="Count"
+                  cssClass="cell-header"
+                ></dxi-column>
+              </dx-data-grid>
+              <!-- <div class="card-footer table-card-footer pb-0 border-top">
+            <div class="row">
+              <div class="col-sm-2 col-12 text-sm-left text-center">
+                <button class="btn btn-sm">
+                  <i class="fas fa-redo text-info" (click)="reloadGrid()"></i>
+                </button>
+              </div>  -->
+              <!-- <div class="col-sm-8 col-12">
+                <pagination-controls id="server" (pageChange)="onTableDataChange($event)">
+                </pagination-controls>
+              </div> -->
+              <!-- <div class="col-sm-2 col-12 "> -->
+
+              <!-- <div class="d-flex flex-row-reverse bd-highlight mb-2">
+                  <div class="p-2 bd-highlight">
+                    <select (change)="onTableSizeChange($event)" class="custom-select">
+                      <option *ngFor="let size of tableSizes" [ngValue]="size">
+                        {{ size }}
+                      </option>
+                    </select>
+                  </div>
+                </div> 
+               </div> -->
+              <!-- </div>
+          </div>  -->
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-4">
+          <div class="card">
+            <div class="card-body table-responsive p-0">
+              <dx-data-grid
+                id="dataGrid"
+                class="mx-1 mb-1 mt-1"
+                [showBorders]="true"
+                [rowAlternationEnabled]="true"
+                [showRowLines]="true"
+                [columnAutoWidth]="true"
+                [showColumnLines]="false"
+                [allowColumnReordering]="true"
+                (onRowClick)="onRowContractClick($event)"
+                [dataSource]="
+                  ContractStatus
+                    | paginate
+                      : {
+                          id: 'server',
+                          itemsPerPage: this.pagedDto.pageSize,
+                          currentPage: this.pagedDto.page,
+                          totalItems: this.totalCount
+                        }
+                "
+                keyExpr="id"
+              >
+                <dxo-scrolling columnRenderingMode="virtual"></dxo-scrolling>
+
+                <dxi-column
+                  dataField="name"
+                  caption="Client Contracts"
+                  cssClass="cell-header"
+                ></dxi-column>
+                <dxi-column
+                  dataField="count"
+                  caption="Count"
+                  cssClass="cell-header"
+                ></dxi-column>
+              </dx-data-grid>
+              <!-- <div class="card-footer table-card-footer pb-0 border-top">
+            <div class="row">
+              <div class="col-sm-2 col-12 text-sm-left text-center">
+                <button class="btn btn-sm">
+                  <i class="fas fa-redo text-info" (click)="reloadGrid()"></i>
+                </button>
+              </div> -->
+              <!-- <div class="col-sm-8 col-12">
+                <pagination-controls id="server" (pageChange)="onTableDataChange($event)">
+                </pagination-controls>
+              </div> -->
+              <!-- <div class="col-sm-2 col-12 ">
+
+                <div class="d-flex flex-row-reverse bd-highlight mb-2">
+                  <div class="p-2 bd-highlight">
+                    <select (change)="onTableSizeChange($event)" class="custom-select">
+                      <option *ngFor="let size of tableSizes" [ngValue]="size">
+                        {{ size }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div> -->
+              <!-- </div>
+          </div> -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row col-md-12" *ngIf="ReviewChangeRequest">
+        <div class="col-sm-4">
+          <div class="card">
+            <div class="card-body table-responsive p-0">
+              <dx-data-grid
+                id="dataGrid"
+                class="mx-1 mb-1 mt-1"
+                [showBorders]="true"
+                [rowAlternationEnabled]="true"
+                [showRowLines]="true"
+                [columnAutoWidth]="true"
+                [showColumnLines]="false"
+                [allowColumnReordering]="true"
+                (onRowClick)="ClientChangeRowClick($event)"
+                [dataSource]="
+                  ClientChangeStatus
+                    | paginate
+                      : {
+                          id: 'server',
+                          itemsPerPage: this.pagedDto.pageSize,
+                          currentPage: this.pagedDto.page,
+                          totalItems: this.totalCount
+                        }
+                "
+                keyExpr="id"
+              >
+                <dxo-scrolling columnRenderingMode="virtual"></dxo-scrolling>
+
+                <dxi-column
+                  dataField="name"
+                  caption="Client Change Request"
+                  cssClass="cell-header"
+                ></dxi-column>
+                <dxi-column
+                  dataField="count"
+                  caption="Count"
+                  cssClass="cell-header"
+                ></dxi-column>
+              </dx-data-grid>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project Change Request start -->
+        <div class="col-sm-4">
+          <div class="card">
+            <div class="card-body table-responsive p-0">
+              <dx-data-grid
+                id="dataGrid"
+                class="mx-1 mb-1 mt-1"
+                [showBorders]="true"
+                [rowAlternationEnabled]="true"
+                [showRowLines]="true"
+                [columnAutoWidth]="true"
+                [showColumnLines]="false"
+                [allowColumnReordering]="true"
+                (onRowClick)="ProjectchangeRequestRows($event)"
+                [dataSource]="
+                  ProjectChangeRequestStatus
+                    | paginate
+                      : {
+                          id: 'server',
+                          itemsPerPage: this.pagedDto.pageSize,
+                          currentPage: this.pagedDto.page,
+                          totalItems: this.totalCount
+                        }
+                "
+                keyExpr="id"
+              >
+                <dxo-scrolling columnRenderingMode="virtual"></dxo-scrolling>
+
+                <dxi-column
+                  dataField="name"
+                  caption="Project Change Request"
+                  cssClass="cell-header"
+                ></dxi-column>
+                <dxi-column
+                  dataField="count"
+                  caption="Count"
+                  cssClass="cell-header"
+                ></dxi-column>
+              </dx-data-grid>
+            </div>
+          </div>
+        </div>
+        <!-- Project Change Request End -->
+
+        <!-- Client Site Change Request start -->
+        <div class="col-sm-4">
+          <div class="card">
+            <div class="card-body table-responsive p-0">
+              <dx-data-grid
+                id="dataGrid"
+                class="mx-1 mb-1 mt-1"
+                [showBorders]="true"
+                [rowAlternationEnabled]="true"
+                [showRowLines]="true"
+                [columnAutoWidth]="true"
+                [showColumnLines]="false"
+                [allowColumnReordering]="true"
+                (onRowClick)="ClientSiteschangeRequestRows($event)"
+                [dataSource]="
+                  ClientSiteChangeRequestStatus
+                    | paginate
+                      : {
+                          id: 'server',
+                          itemsPerPage: this.pagedDto.pageSize,
+                          currentPage: this.pagedDto.page,
+                          totalItems: this.totalCount
+                        }
+                "
+                keyExpr="id"
+              >
+                <dxo-scrolling columnRenderingMode="virtual"></dxo-scrolling>
+
+                <dxi-column
+                  dataField="name"
+                  caption="Client Site Change Request"
+                  cssClass="cell-header"
+                ></dxi-column>
+                <dxi-column
+                  dataField="count"
+                  caption="Count"
+                  cssClass="cell-header"
+                ></dxi-column>
+              </dx-data-grid>
+            </div>
+          </div>
+        </div>
+        <!-- Client site Change Request End -->
+      </div>
+
+      <div class="row col-md-12" *ngIf="auditgrid">
+        <div class="col-md-12">
+          <div class="card">
+            <h3
+              style="
+                text-align: center;
+                color: rgb(9, 26, 59);
+                font-family: 'Times New Roman';
+                font-weight: bold;
+                margin-top: 10px;
+              "
+            >
+              {{ CurrentName }}
+            </h3>
+            <div class="card-body table-responsive p-0">
+              <dx-data-grid
+                class="mx-3 mb-3"
+                id="gridContainer"
+                [showBorders]="true"
+                [rowAlternationEnabled]="true"
+                [showRowLines]="true"
+                [columnAutoWidth]="true"
+                [showColumnLines]="true"
+                [allowColumnReordering]="true"
+                [dataSource]="AuditList"
+                keyExpr="id"
+              >
+                <dxo-scrolling columnRenderingMode="virtual"></dxo-scrolling>
+                <dxo-search-panel
+                  [visible]="true"
+                  [width]="240"
+                  placeholder="Search..."
+                >
+                </dxo-search-panel>
+                <dxi-column
+                  dataField="clientName"
+                  caption="Client Name"
+                  cssClass="cell-header"
+                ></dxi-column>
+                <dxi-column
+                  dataField="projectCode"
+                  caption="Project Code"
+                  cssClass="cell-header"
+                ></dxi-column>
+                <dxi-column
+                  dataField="startDate"
+                  caption="Start Date"
+                  dataType="date"
+                  cssClass="cell-header"
+                ></dxi-column>
+                <dxi-column
+                  dataField="endDate"
+                  caption="End Date"
+                  dataType="date"
+                  cssClass="cell-header"
+                ></dxi-column>
+                <dxi-column
+                  dataField="reviewerName"
+                  caption="Reviewer Name"
+                  cssClass="cell-header"
+                ></dxi-column>
+                <dxi-column
+                  dataField="visitLevelName"
+                  caption="Visit Level"
+                  cssClass="cell-header"
+                ></dxi-column>
+                <dxi-column
+                  dataField="leadAuditorName"
+                  caption="leadAuditor Name"
+                  cssClass="cell-header"
+                ></dxi-column>
+                <dxi-column
+                dataField="auditor1Name"
+                caption="Auditor_1"
+                cssClass="cell-header"
+              ></dxi-column>
+                
+                <dxi-column
+                  dataField="visitStatusName"
+                  caption="Status"
+                  cssClass="cell-header"
+                ></dxi-column>
+                <dxi-column
+                  type="buttons"
+                  caption="Action"
+                  alignment="left"
+                  cssClass="cell-header"
+                >
+                  <dxi-button
+                    hint="Review"
+                    icon="fas fa-eye text-secondary"
+                    alignment="left"
+                    [onClick]="review1"
+                  >
+                  </dxi-button>
+                  <!-- <dxi-button 
+            hint="Remarks History"  icon="verticalaligntop" alignment='left'
+            [onClick]="Remarks"
+          
+            
+            ></dxi-button>  -->
+
+                  <!-- <dxi-button   icon="edit" alignment='left'
+            
+            hint="Edit Record"
+            
+            >
+        </dxi-button>  
+            <dxi-button 
+            hint="Submit For Review" icon="exportselected" alignment='left'
+           
+            
+            ></dxi-button>  -->
+                  <!-- <dxi-button   icon="fas fa-tasks"
+            hint="Add Visit"
+            [onClick]="OnManageVisit"
+            
+            [(visible)]="ManageVisit"
+            ></dxi-button>   -->
+                  <!-- <dxi-button
+            stylingMode="danger"
+            text="Application Submited For Review"
+         
+            type="danger"
+            [visible]="ReciewForApproval"
+            alignment='left'
+          
+           
+             >
+             </dxi-button> -->
+                </dxi-column>
+                <dxo-summary>
+                  <dxi-total-item column="clientName" summaryType="count"> </dxi-total-item>
+              </dxo-summary>
+              </dx-data-grid>
+              <!-- <div class="card-footer table-card-footer pb-0 border-top">
+          <div class="row">
+            <div class="col-sm-2 col-12 text-sm-left text-center">
+              <button class="btn btn-sm">
+                <i class="fas fa-redo text-info" (click)="reloadGrid()"></i>
+              </button>
+            </div> -->
+              <!-- <div class="col-sm-8 col-12">
+              <pagination-controls id="server" (pageChange)="onTableDataChange($event)">
+              </pagination-controls>
+            </div> -->
+              <!-- <div class="col-sm-2 col-12 ">
+
+              <div class="d-flex flex-row-reverse bd-highlight mb-2">
+                <div class="p-2 bd-highlight">
+                  <select (change)="onTableSizeChange($event)" class="custom-select">
+                    <option *ngFor="let size of tableSizes" [ngValue]="size">
+                      {{ size }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div> -->
+              <!-- </div>
+        </div> -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row col-md-12" *ngIf="projectgrid">
+        <div class="col-md-12">
+          <div class="card">
+            <h3
+              style="
+                text-align: center;
+                color: rgb(9, 26, 59);
+                font-family: 'Times New Roman';
+                font-weight: bold;
+                margin-top: 10px;
+              "
+            >
+              {{ CurrentName }}
+            </h3>
+            <div class="card-body table-responsive p-0">
+              <dx-data-grid
+                class="mx-3 mb-3"
+                id="gridContainer"
+                [showBorders]="true"
+                [rowAlternationEnabled]="true"
+                [showRowLines]="true"
+                [columnAutoWidth]="true"
+                [showColumnLines]="true"
+                [allowColumnReordering]="true"
+                [dataSource]="ProjectsList"
+                keyExpr="id"
+              >
+                <dxo-scrolling columnRenderingMode="virtual"></dxo-scrolling>
+                <dxo-search-panel
+                  [visible]="true"
+                  [width]="240"
+                  placeholder="Search..."
+                >
+                </dxo-search-panel>
+                <dxi-column
+                  dataField="clientName"
+                  caption="Client Name"
+                  cssClass="cell-header"
+                ></dxi-column>
+                <dxi-column
+                  dataField="projectCode"
+                  caption="Project Code"
+                  cssClass="cell-header"
+                ></dxi-column>
+                <dxi-column
+                  dataField="agencyName"
+                  caption="Branch Office"
+                  cssClass="cell-header"
+                ></dxi-column>
+                <dxi-column
+                  dataField="siteName"
+                  caption="Site Name"
+                  cssClass="cell-header"
+                ></dxi-column>
+                <!-- <dxi-column dataField="visitLevelName" caption="Visit Level" cssClass="cell-header"></dxi-column> -->
+                <dxi-column
+                  dataField="approvalStatusName"
+                  caption="Status"
+                  cssClass="cell-header"
+                ></dxi-column>
+                <dxi-column
+                  type="buttons"
+                  caption="Action"
+                  alignment="left"
+                  cssClass="cell-header"
+                >
+                  <dxi-button
+                    hint="Review"
+                    icon="fas fa-eye text-secondary"
+                    alignment="left"
+                    [onClick]="review"
+                  >
+                  </dxi-button>
+                </dxi-column>
+              </dx-data-grid>
+              <!-- <div class="card-footer table-card-footer pb-0 border-top">
+          <div class="row"> -->
+              <!-- <div class="col-sm-2 col-12 text-sm-left text-center">
+              <button class="btn btn-sm">
+                <i class="fas fa-redo text-info" (click)="reloadGrid()"></i>
+              </button>
+            </div> 
+            <div class="col-sm-8 col-12">
+              <pagination-controls id="server" (pageChange)="onTableDataChangeApplication($event)">
+              </pagination-controls>
+            </div> -->
+              <!-- <div class="col-sm-2 col-12 ">
+
+              <div class="d-flex flex-row-reverse bd-highlight mb-2">
+                <div class="p-2 bd-highlight">
+                  <select (change)="onTableSizeChange($event)" class="custom-select">
+                    <option *ngFor="let size of tableSizes" [ngValue]="size">
+                      {{ size }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div> -->
+              <!-- </div>
+        </div> -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row col-md-12" *ngIf="contractgrid">
+        <div class="col-md-12">
+          <div class="card">
+            <h3
+              style="
+                text-align: center;
+                color: rgb(9, 26, 59);
+                font-family: 'Times New Roman';
+                font-weight: bold;
+                margin-top: 10px;
+              "
+            >
+              {{ CurrentName }}
+            </h3>
+            <div class="card-body table-responsive p-0">
+              <dx-data-grid
+                class="mx-3 mb-3"
+                id="gridContainer"
+                [showBorders]="true"
+                [rowAlternationEnabled]="true"
+                [showRowLines]="true"
+                [columnAutoWidth]="true"
+                [showColumnLines]="true"
+                [allowColumnReordering]="true"
+                [dataSource]="ContractList"
+                keyExpr="id"
+              >
+                <dxo-scrolling columnRenderingMode="virtual"></dxo-scrolling>
+                <dxo-search-panel
+                  [visible]="true"
+                  [width]="240"
+                  placeholder="Search..."
+                >
+                </dxo-search-panel>
+                <dxi-column
+                  dataField="clientName"
+                  caption="Client Name"
+                  cssClass="cell-header"
+                ></dxi-column>
+                <dxi-column
+                  dataField="projectCode"
+                  caption="Project Code"
+                  cssClass="cell-header"
+                ></dxi-column>
+                <dxi-column
+                  dataField="agencyName"
+                  caption="Branch Office"
+                  cssClass="cell-header"
+                ></dxi-column>
+                <dxi-column
+                  dataField="siteName"
+                  caption="Site Name"
+                  cssClass="cell-header"
+                ></dxi-column>
+                <!-- <dxi-column dataField="visitLevelName" caption="Visit Level"cssClass="cell-header"></dxi-column> -->
+                <dxi-column
+                  dataField="approvalStatusName"
+                  caption="Status"
+                  cssClass="cell-header"
+                ></dxi-column>
+                <dxi-column
+                  type="buttons"
+                  caption="Action"
+                  alignment="left"
+                  cssClass="cell-header"
+                >
+                  <dxi-button
+                    hint="Review"
+                    icon="fas fa-eye text-secondary"
+                    alignment="left"
+                    [onClick]="review"
+                  >
+                  </dxi-button>
+                  <!-- <dxi-button 
+            hint="Remarks History"  icon="verticalaligntop" alignment='left'
+            [onClick]="Remarks"
+          
+            
+            ></dxi-button>  -->
+
+                  <dxi-button
+                    icon="fas fa-tasks"
+                    hint="Audit Visit"
+                    [onClick]="OnManageVisit"
+                    [(visible)]="ManageAuditVisit"
+                  ></dxi-button>
+                  <!-- <dxi-button
+            stylingMode="danger"
+            text="Application Submited For Review"
+         
+            type="danger"
+            [visible]="ReciewForApproval"
+            alignment='left'
+          
+           
+             >
+             </dxi-button> -->
+                </dxi-column>
+              </dx-data-grid>
+              <!-- <div class="card-footer table-card-footer pb-0 border-top">
+          <div class="row">
+            <div class="col-sm-2 col-12 text-sm-left text-center">
+              <button class="btn btn-sm">
+                <i class="fas fa-redo text-info" (click)="reloadGrid()"></i>
+              </button>
+            </div> -->
+              <!-- <div class="col-sm-8 col-12">
+              <pagination-controls id="server" (pageChange)="onTableDataChange($event)">
+              </pagination-controls>
+            </div> -->
+              <!-- <div class="col-sm-2 col-12 ">
+
+              <div class="d-flex flex-row-reverse bd-highlight mb-2">
+                <div class="p-2 bd-highlight">
+                  <select (change)="onTableSizeChange($event)" class="custom-select">
+                    <option *ngFor="let size of tableSizes" [ngValue]="size">
+                      {{ size }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div> -->
+              <!-- </div>
+        </div> -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row col-md-12" *ngIf="clientChangegrid">
+        <div class="col-md-12">
+          <div class="card">
+            <h3
+              style="
+                text-align: center;
+                color: rgb(9, 26, 59);
+                font-family: 'Times New Roman';
+                font-weight: bold;
+                margin-top: 10px;
+              "
+            >
+              {{ CurrentName }}
+            </h3>
+            <div class="card-body table-responsive p-0">
+              <dx-data-grid
+                class="mx-3 mb-3"
+                id="gridContainer"
+                [showBorders]="true"
+                [rowAlternationEnabled]="true"
+                [showRowLines]="true"
+                [columnAutoWidth]="true"
+                [showColumnLines]="true"
+                [allowColumnReordering]="true"
+                [dataSource]="clientChangeRequestList"
+                keyExpr="id"
+              >
+                <dxo-scrolling columnRenderingMode="virtual"></dxo-scrolling>
+                <dxo-search-panel
+                  [visible]="true"
+                  [width]="240"
+                  placeholder="Search..."
+                >
+                </dxo-search-panel>
+                <dxi-column
+                  dataField="organizationName"
+                  caption="Branch Office"
+                  cssClass="cell-header"
+                ></dxi-column>
+
+                <dxi-column
+                  dataField="clientName"
+                  caption="Client Name"
+                  cssClass="cell-header"
+                ></dxi-column>
+
+                <!-- <dxi-column dataField="visitLevelName" caption="Visit Level"cssClass="cell-header"></dxi-column> -->
+                <dxi-column
+                  dataField="approvalStatusName"
+                  caption="Status"
+                  cssClass="cell-header"
+                ></dxi-column>
+                <dxi-column
+                  type="buttons"
+                  caption="Action"
+                  alignment="left"
+                  cssClass="cell-header"
+                >
+                  <dxi-button
+                    hint="Review"
+                    icon="fas fa-eye text-secondary"
+                    alignment="left"
+                    [onClick]="onpopup"
+                  >
+                  </dxi-button>
+                  <!-- <dxi-button 
+            hint="Remarks History"  icon="verticalaligntop" alignment='left'
+            [onClick]="Remarks"
+          
+            
+            ></dxi-button>  -->
+
+                  <dxi-button
+                    icon="fas fa-tasks"
+                    hint="Audit Visit"
+                    [onClick]="OnManageVisit"
+                    [(visible)]="ManageAuditVisit"
+                  ></dxi-button>
+                  <!-- <dxi-button
+            stylingMode="danger"
+            text="Application Submited For Review"
+         
+            type="danger"
+            [visible]="ReciewForApproval"
+            alignment='left'
+          
+           
+             >
+             </dxi-button> -->
+                </dxi-column>
+              </dx-data-grid>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project Change Request Row show Start -->
+      <div class="row col-md-12" *ngIf="projectChangegrid">
+        <div class="col-md-12">
+          <div class="card">
+            <h3
+              style="
+                text-align: center;
+                color: rgb(9, 26, 59);
+                font-family: 'Times New Roman';
+                font-weight: bold;
+                margin-top: 10px;
+              "
+            >
+              {{ CurrentName }}
+            </h3>
+            <div class="card-body table-responsive p-0">
+              <dx-data-grid
+                class="mx-3 mb-3"
+                id="gridContainer"
+                [showBorders]="true"
+                [rowAlternationEnabled]="true"
+                [showRowLines]="true"
+                [columnAutoWidth]="true"
+                [showColumnLines]="true"
+                [allowColumnReordering]="true"
+                [dataSource]="projectChangeRequestList"
+                keyExpr="id"
+              >
+                <dxo-scrolling columnRenderingMode="virtual"></dxo-scrolling>
+                <dxo-search-panel
+                  [visible]="true"
+                  [width]="240"
+                  placeholder="Search..."
+                >
+                </dxo-search-panel>
+
+                <dxi-column
+                  dataField="organizationName"
+                  caption="Branch Office"
+                  cssClass="cell-header"
+                ></dxi-column>
+                <dxi-column
+                  dataField="clientName"
+                  caption="Client Name"
+                  cssClass="cell-header"
+                ></dxi-column>
+
+                <dxi-column
+                  dataField="tableName"
+                  caption="Project Name"
+                  cssClass="cell-header"
+                ></dxi-column>
+
+                <!-- <dxi-column dataField="visitLevelName" caption="Visit Level"cssClass="cell-header"></dxi-column> -->
+                <dxi-column
+                  dataField="approvalStatusName"
+                  caption="Status"
+                  cssClass="cell-header"
+                ></dxi-column>
+                <dxi-column
+                  type="buttons"
+                  caption="Action"
+                  alignment="left"
+                  cssClass="cell-header"
+                >
+                  <dxi-button
+                    hint="Review"
+                    icon="fas fa-eye text-secondary"
+                    alignment="left"
+                    [onClick]="Projectonpopup"
+                  >
+                  </dxi-button>
+                  <!-- <dxi-button 
+            hint="Remarks History"  icon="verticalaligntop" alignment='left'
+            [onClick]="Remarks"
+          
+            
+            ></dxi-button>  -->
+
+                  <!-- <dxi-button icon="fas fa-tasks" hint="Audit Visit" [onClick]="OnManageVisit"
+                    [(visible)]="ManageAuditVisit"></dxi-button> -->
+                  <!-- <dxi-button
+            stylingMode="danger"
+            text="Application Submited For Review"
+         
+            type="danger"
+            [visible]="ReciewForApproval"
+            alignment='left'
+          
+           
+             >
+             </dxi-button> -->
+                </dxi-column>
+              </dx-data-grid>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project Change Request Row show End -->
+
+      <!-- Client Site Change Request Row show Start -->
+      <div class="row col-md-12" *ngIf="clientSitesChangegrid">
+        <div class="col-md-12">
+          <div class="card">
+            <h3
+              style="
+                text-align: center;
+                color: rgb(9, 26, 59);
+                font-family: 'Times New Roman';
+                font-weight: bold;
+                margin-top: 10px;
+              "
+            >
+              {{ CurrentName }}
+            </h3>
+            <div class="card-body table-responsive p-0">
+              <dx-data-grid
+                class="mx-3 mb-3"
+                id="gridContainer"
+                [showBorders]="true"
+                [rowAlternationEnabled]="true"
+                [showRowLines]="true"
+                [columnAutoWidth]="true"
+                [showColumnLines]="true"
+                [allowColumnReordering]="true"
+                [dataSource]="clientSiteChangeRequestList"
+                keyExpr="id"
+              >
+                <dxo-scrolling columnRenderingMode="virtual"></dxo-scrolling>
+                <dxo-search-panel
+                  [visible]="true"
+                  [width]="240"
+                  placeholder="Search..."
+                >
+                </dxo-search-panel>
+
+                <dxi-column
+                  dataField="organizationName"
+                  caption="Branch Office"
+                  cssClass="cell-header"
+                ></dxi-column>
+                <dxi-column
+                  dataField="clientName"
+                  caption="Client Site Name"
+                  cssClass="cell-header"
+                ></dxi-column>
+
+                <dxi-column
+                  dataField="approvalStatusName"
+                  caption="Status"
+                  cssClass="cell-header"
+                ></dxi-column>
+                <dxi-column
+                  type="buttons"
+                  caption="Action"
+                  alignment="left"
+                  cssClass="cell-header"
+                >
+                  <dxi-button
+                    hint="Review"
+                    icon="fas fa-eye text-secondary"
+                    alignment="left"
+                    [onClick]="ClientSitesMainPopup"
+                  >
+                  </dxi-button>
+                </dxi-column>
+              </dx-data-grid>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Client Site Change Request Row show End -->
+    </div>
+  </section>
+
+  <!-- <form [formGroup]="ProjectForm" #projectForm="ngForm"> -->
+
+  <!-- <section class="content-header pt-0 pb-0 mt-3 mx-0 mb-0 md-0">
+   
+   
+    <div class="container-fluid mt-2">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                <div class="card-body table-responsive p-0">
+    
+                  
+    
+                    <dx-data-grid id="gridContainer"  [rowAlternationEnabled]="true" [showRowLines]="true"  [columnAutoWidth]="true" 
+                     [showColumnLines]="true" [allowColumnReordering]="true" [dataSource]="ProjectsList | paginate
+                        : {
+                            id: 'server',
+                            itemsPerPage: this.pagedDto.pageSize,
+                            currentPage: this.pagedDto.page,
+                            totalItems: this.totalCount
+                          }"
+                        keyExpr="id" >
+                      
+                        <dxo-scrolling columnRenderingMode="virtual"></dxo-scrolling>
+                      
+                            <dxo-search-panel [visible]="true" [width]="240" placeholder="Search...">
+                            </dxo-search-panel>
+                        
+                        <dxi-column dataField="projectCode" caption="Project Code"></dxi-column>
+                        <dxi-column dataField="agencyName" caption="Branch Office"></dxi-column>
+                        <dxi-column dataField="siteName" caption="Site Name"></dxi-column>
+                        <dxi-column dataField="createdDate" caption="Created Date" dataType="date"></dxi-column>
+                        <dxi-column dataField="approvalStatusName" caption="Status"></dxi-column>
+                        <dxi-column type="buttons" caption="Action" alignment='left'>
+          
+                          <dxi-button hint="Review" icon="fas fa-eye text-secondary" alignment='left' [onClick]="review">
+                          </dxi-button>
+                       
+                          </dxi-column>   
+                         
+                          
+                  
+    
+    
+    
+                    </dx-data-grid>
+                    <div class="card-footer table-card-footer pb-0 border-top">
+                        <div class="row">
+                            <div class="col-sm-2 col-12 text-sm-left text-center">
+                                <button class="btn btn-sm">
+                                    <i class="fas fa-redo text-info"(click)="reloadGrid()"></i>
+                               
+                               
+                                </button>
+    
+                            </div>
+                            <div class="col-sm-6 col-12">
+                              
+                                
+                            </div>
+                            <div class="col-sm-4 col-12">
+                                <pagination-controls id="server" (pageChange)="onTableDataChange($event)">
+                                </pagination-controls>
+                            </div>
+                           
+                        </div>
+                    </div>
+  
+    
+    
+    
+    
+                </div>
+            </div></div>
+        </div>
+    </div>
+
+   
+
+</section> -->
+</form>
+<br />
+<br />
+<br />
+<!-- </form>  -->
+
+<!-- Client change request Form  start-->
+
+<form [formGroup]="CardForm" #cardForm="ngForm">
+  <div
+    class="modal"
+    tabindex="-1"
+    role="dialog"
+    [ngStyle]="{ display: displayStyle }"
+  >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content" style="width: 700px; overflow: scroll">
+        <div class="modal-header">
+          <!-- <h4 class="modal-title" style="color:#304570;font-weight:bold ">Project Change Request</h4> -->
+          <h3
+            class="modal-title"
+            style="
+              text-align: center;
+              color: rgb(9, 26, 59);
+              font-family: 'Times New Roman';
+              font-weight: bold;
+              margin-top: 10px;
+            "
+          >
+            {{ CurrentName }}
+          </h3>
+        </div>
+        <div class="modal-body">
+          <section class="content-header pt-0 pb-0 mx-0 mb-0 md-0">
+            <div class="container-fluid">
+              <div class="row col-md-12">
+                <div class="col-md-12">
+                  <div class="card">
+                    <div class="card-body table-responsive p-0">
+                      <dx-data-grid
+                        class="mx-3 mb-3"
+                        id="gridContainer"
+                        [showBorders]="true"
+                        [rowAlternationEnabled]="true"
+                        [showRowLines]="true"
+                        [columnAutoWidth]="true"
+                        [showColumnLines]="true"
+                        [allowColumnReordering]="true"
+                        [dataSource]="
+                          clientChangeDataList
+                            | paginate
+                              : {
+                                  id: 'server',
+                                  itemsPerPage: this.pagedDto.pageSize,
+                                  currentPage: this.pagedDto.page,
+                                  totalItems: this.totalCount
+                                }
+                        "
+                        keyExpr="id"
+                      >
+                        <dxo-scrolling
+                          columnRenderingMode="virtual"
+                        ></dxo-scrolling>
+
+                        <dxi-column
+                          dataField="clientName"
+                          caption="Client Name"
+                        ></dxi-column>
+
+                        <dxi-column
+                          dataField="affectedColumns"
+                          caption="Field Name"
+                        ></dxi-column>
+
+                        <!-- <dxi-column dataField="visitLevelName" caption="Visit Level"cssClass="cell-header"></dxi-column> -->
+                        <dxi-column
+                          dataField="oldValues"
+                          caption="Old Values"
+                        ></dxi-column>
+                        <dxi-column
+                          dataField="newValues"
+                          caption="New Values"
+                        ></dxi-column>
+                        <dxi-column
+                          dataField="createdDate"
+                          caption="Date"
+                          dataType="date"
+                        ></dxi-column>
+
+                        <dxi-column
+                          type="buttons"
+                          caption="Action"
+                          alignment="left"
+                        >
+                          <dxi-button
+                            icon="edit"
+                            hint="Edit"
+                            [onClick]="openPopupEdit"
+                            *ngIf="editClientrecord"
+                          ></dxi-button>
+                          <dxi-button
+                            hint="Record Review"
+                            icon="comment"
+                            alignment="left"
+                            [onClick]="openPopup"
+                            *ngIf="RecordeviewClient"
+                          ></dxi-button>
+
+                          <dxi-button
+                            hint="Download File"
+                            icon="download"
+                            [onClick]="Downloadfile"
+                          >
+                          </dxi-button>
+                          <dxi-button
+                            hint="Remarks History"
+                            icon="verticalaligntop"
+                            alignment="left"
+                            [onClick]="RemarksPopup"
+                          ></dxi-button>
+                          <!-- <dxi-button 
+                    hint="Remarks History"  icon="verticalaligntop" alignment='left'
+                    [onClick]="Remarks"
+                  
+                    
+                    ></dxi-button>  -->
+
+                          <!-- <dxi-button icon="fas fa-tasks" hint="Audit Visit" [onClick]="OnManageVisit"
+                            [(visible)]="ManageAuditVisit"></dxi-button> -->
+                          <!-- <dxi-button
+
+                            
+                    stylingMode="danger"
+                    text="Application Submited For Review"
+                 
+                    type="danger"
+                    [visible]="ReciewForApproval"
+                    alignment='left'
+                  
+                   
+                     >
+                     </dxi-button> -->
+                        </dxi-column>
+                      </dx-data-grid>
+                    </div>
+                  </div>
+
+                  <!-- <div class="card mx-2 pt-3 pb-2">
+                    <div class="row mx-1">
+                       <div class="col-sm-12"> 
+
+                            <div class="col-md-12">
+                                <label class="mb-0" for="Remarks">Remarks</label>
+                                <textarea type="text" 
+                                    class="form-control form-control-sm col-md-12" id="Remarks" required></textarea>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="mb-0" for="ApprovalStatusId">
+                                    {{ "Status" }}
+                                </label>
+                                <select 
+                                    class="form-control form-control-sm col-md-12" id="ApprovalStatusId">
+                                    <option *ngFor="let item of statusList" [value]="item.id">
+                                        {{ item.name }}
+                                    </option>
+                                </select>
+
+
+                             <input  class="form-control form-control-sm col-md-12" id="indent" /> 
+
+
+                            </div>
+
+
+                       
+                        </div> 
+                    </div>
+                </div> -->
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" (click)="closePopup()">
+            Close
+          </button>
+
+          <!-- <button type="button" class=" btn-success btn " >Submit Request</button> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="modal"
+    tabindex="-1"
+    role="dialog"
+    [ngStyle]="{ display: display }"
+  >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" style="text-align: center">
+            Client Change Request
+          </h4>
+        </div>
+        <div class="modal-body">
+          <div class="container-fluid">
+            <div class="card mx-2 pt-3 pb-2">
+              <div class="row mx-1">
+                <!-- <div class="col-sm-12"> -->
+
+                <input
+                  type="number"
+                  [hidden]="true"
+                  formControlName="ActivityLogId"
+                />
+                <div class="col-md-12">
+                  <label class="mb-0" for="Remarks">Remarks</label>
+                  <textarea
+                    type="text"
+                    formControlName="Remarks"
+                    class="form-control form-control-sm col-md-12"
+                    id="Remarks"
+                  ></textarea>
+                </div>
+                <div class="col-md-12">
+                  <label class="mb-0" for="ApprovalStatusId">
+                    {{ "Status" }}
+                  </label>
+                  <select
+                    formControlName="ApprovalStatusId"
+                    class="form-control form-control-sm col-md-12"
+                    id="ApprovalStatusId"
+                  >
+                    <option *ngFor="let item of statusList" [value]="item.id">
+                      {{ item.name }}
+                    </option>
+                  </select>
+
+                  <!-- <input  class="form-control form-control-sm col-md-12" id="indent" /> -->
+                </div>
+
+                <!-- </div> -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" (click)="closepopup()">
+            Close
+          </button>
+          <button
+            type="button"
+            class="btn-success btn"
+            (click)="OnApprovalSubmit()"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="modal"
+    tabindex="-1"
+    role="dialog"
+    [ngStyle]="{ display: RemarksDisplayStyle }"
+  >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content" style="width: 700px; overflow: scroll">
+        <div class="modal-header">
+          <h4
+            class="modal-title"
+            style="text-align: center"
+            class="modal-title"
+            style="
+              text-align: center;
+              color: rgb(9, 26, 59);
+              font-family: 'Times New Roman';
+              font-weight: bold;
+              margin-top: 10px;
+            "
+          >
+            Client Remarks History
+          </h4>
+        </div>
+        <div class="modal-body">
+          <section class="content-header pt-0 pb-0 mx-0 mb-0 md-0">
+            <div class="container-fluid">
+              <div class="row col-md-12">
+                <div class="col-md-12">
+                  <div class="card" style="width: 650px">
+                    <div class="card-body table-responsive p-0">
+                      <dx-data-grid
+                        class="mx-3 mb-3"
+                        id="gridContainer"
+                        [showBorders]="true"
+                        [rowAlternationEnabled]="true"
+                        [showRowLines]="true"
+                        [columnAutoWidth]="true"
+                        [showColumnLines]="true"
+                        [allowColumnReordering]="true"
+                        [dataSource]="
+                          clientChangeRemarksList
+                            | paginate
+                              : {
+                                  id: 'server',
+                                  itemsPerPage: this.pagedDto.pageSize,
+                                  currentPage: this.pagedDto.page,
+                                  totalItems: this.totalCount
+                                }
+                        "
+                        keyExpr="id"
+                      >
+                        <dxo-scrolling
+                          columnRenderingMode="virtual"
+                        ></dxo-scrolling>
+
+                        <dxi-column
+                          dataField="remarksDate"
+                          dataType="date"
+                          caption="Date"
+                        ></dxi-column>
+
+                        <dxi-column
+                          dataField="remarksByName"
+                          caption="Remarks Given By"
+                        ></dxi-column>
+
+                        <dxi-column
+                          dataField="remarks"
+                          caption="Remarks"
+                        ></dxi-column>
+
+                        <dxi-column
+                          dataField="approvalStatusName"
+                          caption="Status"
+                        ></dxi-column>
+                      </dx-data-grid>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-danger"
+            (click)="RemarksClosepopup()"
+          >
+            Close
+          </button>
+          <!-- <button type="button" class="btn-success btn" (click)="OnApprovalSubmit()">
+                  Submit
+              </button> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="modal"
+    tabindex="-1"
+    role="dialog"
+    [ngStyle]="{ display: editdisplay }"
+  >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" style="text-align: center">Client Edit</h4>
+        </div>
+        <div class="modal-body">
+          <div class="container-fluid">
+            <div class="card mx-2 pt-3 pb-2">
+              <div class="row mx-1">
+                <!-- <div class="col-sm-12"> -->
+
+                <input
+                  type="number"
+                  [hidden]="true"
+                  formControlName="ActivityLogId"
+                />
+
+                <div class="col-md-12">
+                  <label class="mb-0" for="NewValues">New Values</label>
+                  <input
+                    type="text"
+                    formControlName="NewValues"
+                    class="form-control form-control-sm col-md-12"
+                    id="NewValues"
+                  />
+                </div>
+
+                <div class="col-md-12">
+                  <label class="mb-0" for="Remarks">Remarks</label>
+                  <textarea
+                    type="text"
+                    formControlName="Remarks"
+                    class="form-control form-control-sm col-md-12"
+                    id="Remarks"
+                  ></textarea>
+                </div>
+
+                <!-- </div> -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-danger"
+            (click)="editclosepopup()"
+          >
+            Close
+          </button>
+          <button
+            type="button"
+            class="btn-success btn"
+            (click)="NewValuesEditSubmit()"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<!-- Client change request Form  end-->
+
+<!-- Project change request Form  start-->
+
+<form [formGroup]="ProjectRemarks" #projectRemarks="ngForm">
+  <div
+    class="modal"
+    tabindex="-1"
+    role="dialog"
+    [ngStyle]="{ display: projectdisplayStyle }"
+  >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content" style="width: 700px;">
+        <div class="modal-header">
+          <!-- <h4 class="modal-title" style="color:#304570;font-weight:bold ">Project Change Request</h4> -->
+          <h3
+            class="modal-title"
+            style="
+              text-align: center;
+              color: rgb(9, 26, 59);
+              font-family: 'Times New Roman';
+              font-weight: bold;
+              margin-top: 10px;
+            "
+          >
+            {{ CurrentName }}
+          </h3>
+        </div>
+        <div class="modal-body">
+          <section class="content-header pt-0 pb-0 mx-0 mb-0 md-0">
+            <div
+              class="container-fluid"
+             
+            >
+              <div class="row col-md-12">
+                <div class="col-md-12">
+                  <div class="card" style="height: 270px">
+                    <div
+                      class="card-body table-responsive p-0"
+                      *ngIf="ProjectChangeGrid"
+                    >
+                      <dx-data-grid
+                        class="mx-3 mb-3"
+                        id="gridContainer"
+                        [showBorders]="true"
+                        [rowAlternationEnabled]="true"
+                        [showRowLines]="true"
+                        [columnAutoWidth]="true"
+                        [showColumnLines]="true"
+                        [allowColumnReordering]="true"
+                        [dataSource]="ProjectChangeRequestStatuslist"
+                        keyExpr="id"
+                      >
+                        <dxo-scrolling
+                          columnRenderingMode="virtual"
+                        ></dxo-scrolling>
+
+                        <dxo-search-panel
+                          [visible]="true"
+                          [width]="240"
+                          placeholder="Search..."
+                        >
+                        </dxo-search-panel>
+                        <dxi-column
+                          dataField="tableName"
+                          caption="Project Name"
+                        ></dxi-column>
+                        <dxi-column
+                          dataField="clientName"
+                          caption="Client Name"
+                        ></dxi-column>
+
+                        <dxi-column
+                          dataField="affectedColumns"
+                          caption="Field Name"
+                        ></dxi-column>
+
+                        <!-- <dxi-column dataField="visitLevelName" caption="Visit Level"cssClass="cell-header"></dxi-column> -->
+                        <dxi-column
+                          alignment="left"
+                          dataField="oldValues"
+                          caption="Old Values"
+                        ></dxi-column>
+                        <!-- <dxi-column type="buttons" caption="Action" alignment='left' > 
+
+
+                        <dxi-button hint="Download File" icon="download" [onClick]="ProjectSa800Downloadfile">
+                        </dxi-button>
+     
+                        </dxi-column> -->
+
+                        <dxi-column
+                          dataField="newValues"
+                          caption="New Values"
+                        ></dxi-column>
+                        <dxi-column
+                          dataField="createdDate"
+                          caption="Date"
+                          dataType="date"
+                        ></dxi-column>
+
+                        <dxi-column
+                          type="buttons"
+                          caption="Action"
+                          alignment="left"
+                        >
+                          <dxi-button
+                            icon="edit"
+                            hint="Edit"
+                            [onClick]="openPopupProjectEdit"
+                            *ngIf="editRecord"
+                          ></dxi-button>
+                          <dxi-button
+                            hint="Record Review"
+                            icon="comment"
+                            alignment="left"
+                            [onClick]="ProjectReviewpopup"
+                            *ngIf="Recordeview"
+                          ></dxi-button>
+
+                          <dxi-button
+                            hint="Download File"
+                            icon="download"
+                            [onClick]="ProjectChangeRequestDownloadfile"
+                          >
+                          </dxi-button>
+                          <dxi-button
+                            hint="Remarks History"
+                            icon="verticalaligntop"
+                            alignment="left"
+                            [onClick]="ProjectRemarksHistoryPopup"
+                          ></dxi-button>
+                        </dxi-column>
+                      </dx-data-grid>
+                    </div>
+                  </div>
+
+                  <div class="card" *ngIf="FileUploadingGrid">
+                    <div class="card-body table-responsive p-0">
+                      <dx-data-grid
+                        class="mx-3 mb-3"
+                        id="gridContainer"
+                        [showBorders]="true"
+                        [rowAlternationEnabled]="true"
+                        [showRowLines]="true"
+                        [columnAutoWidth]="true"
+                        [showColumnLines]="true"
+                        [allowColumnReordering]="true"
+                        [dataSource]="
+                          ProjectChangeRequestFileUploadlist
+                            | paginate
+                              : {
+                                  id: 'server',
+                                  itemsPerPage: this.pagedDto.pageSize,
+                                  currentPage: this.pagedDto.page,
+                                  totalItems: this.totalCount
+                                }
+                        "
+                        keyExpr="id"
+                      >
+                        <dxo-scrolling
+                          columnRenderingMode="virtual"
+                        ></dxo-scrolling>
+
+                        <dxi-column
+                          dataField="tableName"
+                          caption="Project Name"
+                        ></dxi-column>
+                        <dxi-column
+                          dataField="clientName"
+                          caption="Client Name"
+                        ></dxi-column>
+
+                        <dxi-column
+                          dataField="affectedColumns"
+                          caption="Field Name"
+                        ></dxi-column>
+
+                        <!-- <dxi-column dataField="visitLevelName" caption="Visit Level"cssClass="cell-header"></dxi-column> -->
+                        <dxi-column
+                          type="buttons"
+                          alignment="left"
+                          dataField="oldValues"
+                          caption="Old Values"
+                        >
+                          <dxi-button
+                            hint="Download File"
+                            icon="download"
+                            [onClick]="OldValuesDownloadfile"
+                          >
+                          </dxi-button>
+                        </dxi-column>
+
+                        <dxi-column
+                          type="buttons"
+                          dataField="newValues"
+                          caption="New Values"
+                        >
+                          <dxi-button
+                            hint="Download File"
+                            icon="download"
+                            [onClick]="NewValuesDownloadfile"
+                          >
+                          </dxi-button>
+                        </dxi-column>
+
+                        <dxi-column
+                          dataField="createdDate"
+                          caption="Date"
+                          dataType="date"
+                        ></dxi-column>
+
+                        <dxi-column
+                          type="buttons"
+                          caption="Action"
+                          alignment="left"
+                        >
+                          <!-- <dxi-button icon="edit" hint="Edit" [onClick]="openPopupProjectEdit" *ngIf="editRecord"></dxi-button> -->
+                          <dxi-button
+                            hint="Record Review"
+                            icon="comment"
+                            alignment="left"
+                            [onClick]="ProjectReviewpopup"
+                            *ngIf="Recordeview"
+                          ></dxi-button>
+
+                          <!-- <dxi-button hint="Download File" icon="download" [onClick]="ProjectChangeRequestDownloadfile">
+                                              </dxi-button> -->
+                          <dxi-button
+                            hint="Remarks History"
+                            icon="verticalaligntop"
+                            alignment="left"
+                            [onClick]="ProjectRemarksHistoryPopup"
+                          ></dxi-button>
+                        </dxi-column>
+                      </dx-data-grid>
+                    </div>
+                  </div>
+                  <button
+            type="button" 
+            class="btn btn-danger float-right"
+            (click)="projectclosePopup()"
+          >
+            Close
+          </button>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="modal"
+    tabindex="-1"
+    role="dialog"
+    [ngStyle]="{ display: ProjectRemarksdisplay }"
+  >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" style="text-align: center">
+            Project Change Request
+          </h4>
+        </div>
+        <div class="modal-body">
+          <div class="container-fluid">
+            <div class="card mx-2 pt-3 pb-2">
+              <div class="row mx-1">
+                <!-- <div class="col-sm-12"> -->
+
+                <input
+                  type="number"
+                  [hidden]="true"
+                  formControlName="ActivityLogId"
+                />
+                <div class="col-md-12">
+                  <label class="mb-0" for="Remarks">Remarks</label>
+                  <textarea
+                    type="text"
+                    formControlName="Remarks"
+                    class="form-control form-control-sm col-md-12"
+                    id="Remarks"
+                  ></textarea>
+                </div>
+                <div class="col-md-12">
+                  <label class="mb-0" for="ApprovalStatusId">
+                    {{ "Status" }}
+                  </label>
+                  <select
+                    formControlName="ApprovalStatusId"
+                    class="form-control form-control-sm col-md-12"
+                    id="ApprovalStatusId"
+                  >
+                    <option *ngFor="let item of statusList" [value]="item.id">
+                      {{ item.name }}
+                    </option>
+                  </select>
+
+                  <!-- <input  class="form-control form-control-sm col-md-12" id="indent" /> -->
+                </div>
+
+                <!-- </div> -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-danger"
+            (click)="ProjectReviewclose()"
+          >
+            Close
+          </button>
+          <button
+            type="button"
+            class="btn-success btn"
+            (click)="OnProjectApprovalSubmit()"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="modal"
+    tabindex="-1"
+    role="dialog"
+    [ngStyle]="{ display: RemarksHistoryDisplay }"
+  >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content" style="width: 700px; overflow: scroll">
+        <div class="modal-header">
+          <h4
+            class="modal-title"
+            style="text-align: center"
+            class="modal-title"
+            style="
+              text-align: center;
+              color: rgb(9, 26, 59);
+              font-family: 'Times New Roman';
+              font-weight: bold;
+              margin-top: 10px;
+            "
+          >
+            Project Remarks History
+          </h4>
+        </div>
+        <div class="modal-body">
+          <section class="content-header pt-0 pb-0 mx-0 mb-0 md-0">
+            <div class="container-fluid">
+              <div class="row col-md-12">
+                <div class="col-md-12">
+                  <div class="card" style="width: 650px">
+                    <div class="card-body table-responsive p-0">
+                      <dx-data-grid
+                        class="mx-3 mb-3"
+                        id="gridContainer"
+                        [showBorders]="true"
+                        [rowAlternationEnabled]="true"
+                        [showRowLines]="true"
+                        [columnAutoWidth]="true"
+                        [showColumnLines]="true"
+                        [allowColumnReordering]="true"
+                        [dataSource]="
+                          projectChangeRemarksList
+                            | paginate
+                              : {
+                                  id: 'server',
+                                  itemsPerPage: this.pagedDto.pageSize,
+                                  currentPage: this.pagedDto.page,
+                                  totalItems: this.totalCount
+                                }
+                        "
+                        keyExpr="id"
+                      >
+                        <dxo-scrolling
+                          columnRenderingMode="virtual"
+                        ></dxo-scrolling>
+
+                        <dxi-column
+                          dataField="remarksDate"
+                          dataType="date"
+                          caption="Date"
+                        ></dxi-column>
+
+                        <dxi-column
+                          dataField="remarksByName"
+                          caption="Remarks Given By"
+                        ></dxi-column>
+
+                        <dxi-column
+                          dataField="remarks"
+                          caption="Remarks"
+                        ></dxi-column>
+
+                        <dxi-column
+                          dataField="approvalStatusName"
+                          caption="Status"
+                        ></dxi-column>
+                      </dx-data-grid>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-danger"
+            (click)="RemarksHistoryClosepopup()"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="modal"
+    tabindex="-1"
+    role="dialog"
+    [ngStyle]="{ display: editProjectdisplay }"
+  >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" style="text-align: center">Project Edit</h4>
+        </div>
+        <div class="modal-body">
+          <div class="container-fluid">
+            <div class="card mx-2 pt-3 pb-2">
+              <div class="row mx-1">
+                <!-- <div class="col-sm-12"> -->
+
+                <input
+                  type="number"
+                  [hidden]="true"
+                  formControlName="ActivityLogId"
+                />
+
+                <div class="col-md-12" *ngIf="WithOutDropdown">
+                  <label class="mb-0" for="NewValues">New Values</label>
+                  <input
+                    type="text"
+                    formControlName="NewValues"
+                    class="form-control form-control-sm col-md-12"
+                    id="NewValues"
+                  />
+                </div>
+
+                <div class="col-md-12" *ngIf="Dropdown">
+                  <label class="mb-0" for="NewValues">
+                    {{ "New Values" }}
+                  </label>
+                  <select
+                    class="form-control form-control-sm col-md-12"
+                    formControlName="NewValues"
+                    id="NewValues"
+                  >
+                    <option
+                      *ngFor="let item of NewValuesList"
+                      [value]="item.id"
+                    >
+                      {{ item.name }}
+                    </option>
+                  </select>
+                </div>
+
+                <div class="col-md-12">
+                  <label class="mb-0" for="Remarks">Remarks</label>
+                  <textarea
+                    type="text"
+                    formControlName="Remarks"
+                    class="form-control form-control-sm col-md-12"
+                    id="Remarks"
+                  ></textarea>
+                </div>
+
+                <!-- </div> -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-danger"
+            (click)="editProjectclosepopup()"
+          >
+            Close
+          </button>
+          <button
+            type="button"
+            class="btn-success btn"
+            (click)="ResubmitProjectRequest()"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<!-- project change request Form  end-->
+
+<!-- Client Sites change request Form  start-->
+
+<form [formGroup]="ClientSitesRemarks" #clientSitesRemarks="ngForm">
+  <div
+    class="modal"
+    tabindex="-1"
+    role="dialog"
+    [ngStyle]="{ display: ClientSitesMainPopupDisplay }"
+  >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content" style="width: 700px; overflow: scroll">
+        <div class="modal-header">
+          <!-- <h4 class="modal-title" style="color:#304570;font-weight:bold ">Project Change Request</h4> -->
+          <h3
+            class="modal-title"
+            style="
+              text-align: center;
+              color: rgb(9, 26, 59);
+              font-family: 'Times New Roman';
+              font-weight: bold;
+              margin-top: 10px;
+            "
+          >
+            {{ CurrentName }}
+          </h3>
+        </div>
+        <div class="modal-body">
+          <section class="content-header pt-0 pb-0 mx-0 mb-0 md-0">
+            <div class="container-fluid">
+              <div class="row col-md-12">
+                <div class="col-md-12">
+                  <div class="card">
+                    <div class="card-body table-responsive p-0">
+                      <dx-data-grid
+                        class="mx-3 mb-3"
+                        id="gridContainer"
+                        [showBorders]="true"
+                        [rowAlternationEnabled]="true"
+                        [showRowLines]="true"
+                        [columnAutoWidth]="true"
+                        [showColumnLines]="true"
+                        [allowColumnReordering]="true"
+                        [dataSource]="
+                          ClientSitesChangeRequestStatuslist
+                            | paginate
+                              : {
+                                  id: 'server',
+                                  itemsPerPage: this.pagedDto.pageSize,
+                                  currentPage: this.pagedDto.page,
+                                  totalItems: this.totalCount
+                                }
+                        "
+                        keyExpr="id"
+                      >
+                        <dxo-scrolling
+                          columnRenderingMode="virtual"
+                        ></dxo-scrolling>
+
+                        <dxi-column
+                          dataField="clientName"
+                          caption="Client Name"
+                        ></dxi-column>
+
+                        <dxi-column
+                          dataField="affectedColumns"
+                          caption="Field Name"
+                        ></dxi-column>
+
+                        <!-- <dxi-column dataField="visitLevelName" caption="Visit Level"cssClass="cell-header"></dxi-column> -->
+                        <dxi-column
+                          dataField="oldValues"
+                          caption="Old Values"
+                        ></dxi-column>
+                        <dxi-column
+                          dataField="newValues"
+                          caption="New Values"
+                        ></dxi-column>
+                        <dxi-column
+                          dataField="createdDate"
+                          caption="Date"
+                          dataType="date"
+                        ></dxi-column>
+
+                        <dxi-column
+                          type="buttons"
+                          caption="Action"
+                          alignment="left"
+                        >
+                          <dxi-button
+                            hint="Record Review"
+                            icon="comment"
+                            alignment="left"
+                            [onClick]="ClientSitesReviewpopup"
+                            *ngIf="RecordeviewClientSite"
+                          ></dxi-button>
+                          <dxi-button
+                            hint="Download File"
+                            icon="download"
+                            [onClick]="ClientSitesDownloadfile"
+                          >
+                          </dxi-button>
+
+                          <dxi-button
+                            icon="edit"
+                            hint="Edit"
+                            [onClick]="openPopupClientSitesEdit"
+                            *ngIf="editClientSite"
+                          ></dxi-button>
+
+                          <dxi-button
+                            hint="Remarks History"
+                            icon="verticalaligntop"
+                            alignment="left"
+                            [onClick]="ClientSitesRemarksHistoryPopup"
+                          ></dxi-button>
+                        </dxi-column>
+                      </dx-data-grid>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-danger"
+            (click)="ClientSitesMainClosePopup()"
+          >
+            Close
+          </button>
+
+          <!-- <button type="button" class=" btn-success btn " >Submit Request</button> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="modal"
+    tabindex="-1"
+    role="dialog"
+    [ngStyle]="{ display: ClientSitesRemarksdisplay }"
+  >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" style="text-align: center">
+            Client Sites Change Request
+          </h4>
+        </div>
+        <div class="modal-body">
+          <div class="container-fluid">
+            <div class="card mx-2 pt-3 pb-2">
+              <div class="row mx-1">
+                <!-- <div class="col-sm-12"> -->
+
+                <input
+                  type="number"
+                  [hidden]="true"
+                  formControlName="ActivityLogId"
+                />
+                <div class="col-md-12">
+                  <label class="mb-0" for="Remarks">Remarks</label>
+                  <textarea
+                    type="text"
+                    formControlName="Remarks"
+                    class="form-control form-control-sm col-md-12"
+                    id="Remarks"
+                  ></textarea>
+                </div>
+                <div class="col-md-12">
+                  <label class="mb-0" for="ApprovalStatusId">
+                    {{ "Status" }}
+                  </label>
+                  <select
+                    formControlName="ApprovalStatusId"
+                    class="form-control form-control-sm col-md-12"
+                    id="ApprovalStatusId"
+                  >
+                    <option *ngFor="let item of statusList" [value]="item.id">
+                      {{ item.name }}
+                    </option>
+                  </select>
+
+                  <!-- <input  class="form-control form-control-sm col-md-12" id="indent" /> -->
+                </div>
+
+                <!-- </div> -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-danger"
+            (click)="ClientSitesReviewclose()"
+          >
+            Close
+          </button>
+          <button
+            type="button"
+            class="btn-success btn"
+            (click)="OnClientSitesApprovalSubmit()"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="modal"
+    tabindex="-1"
+    role="dialog"
+    [ngStyle]="{ display: ClientSitesRemarksHistoryDisplay }"
+  >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content" style="width: 700px; overflow: scroll">
+        <div class="modal-header">
+          <h4
+            class="modal-title"
+            style="text-align: center"
+            class="modal-title"
+            style="
+              text-align: center;
+              color: rgb(9, 26, 59);
+              font-family: 'Times New Roman';
+              font-weight: bold;
+              margin-top: 10px;
+            "
+          >
+            Client Sites Remarks History
+          </h4>
+        </div>
+        <div class="modal-body">
+          <section class="content-header pt-0 pb-0 mx-0 mb-0 md-0">
+            <div class="container-fluid">
+              <div class="row col-md-12">
+                <div class="col-md-12">
+                  <div class="card" style="width: 650px">
+                    <div class="card-body table-responsive p-0">
+                      <dx-data-grid
+                        class="mx-3 mb-3"
+                        id="gridContainer"
+                        [showBorders]="true"
+                        [rowAlternationEnabled]="true"
+                        [showRowLines]="true"
+                        [columnAutoWidth]="true"
+                        [showColumnLines]="true"
+                        [allowColumnReordering]="true"
+                        [dataSource]="
+                          clientSitesChangeRemarksList
+                            | paginate
+                              : {
+                                  id: 'server',
+                                  itemsPerPage: this.pagedDto.pageSize,
+                                  currentPage: this.pagedDto.page,
+                                  totalItems: this.totalCount
+                                }
+                        "
+                        keyExpr="id"
+                      >
+                        <dxo-scrolling
+                          columnRenderingMode="virtual"
+                        ></dxo-scrolling>
+
+                        <dxi-column
+                          dataField="remarksDate"
+                          dataType="date"
+                          caption="Date"
+                        ></dxi-column>
+
+                        <dxi-column
+                          dataField="remarksByName"
+                          caption="Remarks Given By"
+                        ></dxi-column>
+
+                        <dxi-column
+                          dataField="remarks"
+                          caption="Remarks"
+                        ></dxi-column>
+
+                        <dxi-column
+                          dataField="approvalStatusName"
+                          caption="Status"
+                        ></dxi-column>
+                      </dx-data-grid>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-danger"
+            (click)="ClientSitesRemarksHistoryClosepopup()"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="modal"
+    tabindex="-1"
+    role="dialog"
+    [ngStyle]="{ display: editClientSitesdisplay }"
+  >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" style="text-align: center">Client Edit</h4>
+        </div>
+        <div class="modal-body">
+          <div class="container-fluid">
+            <div class="card mx-2 pt-3 pb-2">
+              <div class="row mx-1">
+                <!-- <div class="col-sm-12"> -->
+
+                <input
+                  type="number"
+                  [hidden]="true"
+                  formControlName="ActivityLogId"
+                />
+
+                <div class="col-md-12">
+                  <label class="mb-0" for="NewValues">New Values</label>
+                  <input
+                    type="text"
+                    formControlName="NewValues"
+                    class="form-control form-control-sm col-md-12"
+                    id="NewValues"
+                  />
+                </div>
+
+                <!-- <div class="col-md-12" *ngIf="WithOutDropdown">
+                  <label class="mb-0" for="NewValues">New Values</label>
+                  <input
+                    type="text"
+                    formControlName="NewValues"
+                    class="form-control form-control-sm col-md-12"
+                    id="NewValues"
+                  />
+                </div>
+
+                <div class="col-md-12" *ngIf="Dropdown">
+                  <label class="mb-0" for="NewValues">
+                    {{ "New Values" }}
+                  </label>
+                  <select
+                    class="form-control form-control-sm col-md-12"
+                    formControlName="NewValues"
+                    id="NewValues"
+                  >
+                    <option
+                      *ngFor="let item of NewValuesList"
+                      [value]="item.id"
+                    >
+                      {{ item.name }}
+                    </option>
+                  </select>
+                </div> -->
+
+                <div class="col-md-12">
+                  <label class="mb-0" for="Remarks">Remarks</label>
+                  <textarea
+                    type="text"
+                    formControlName="Remarks"
+                    class="form-control form-control-sm col-md-12"
+                    id="Remarks"
+                  ></textarea>
+                </div>
+
+                <!-- </div> -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-danger"
+            (click)="editClientSitesclosepopup()"
+          >
+            Close
+          </button>
+          <button
+            type="button"
+            class="btn-success btn"
+            (click)="ResubmitClientSitesRequest()"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<!-- Client Sites change request Form  end-->

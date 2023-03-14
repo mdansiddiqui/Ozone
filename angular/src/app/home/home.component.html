@@ -1,0 +1,362 @@
+﻿<!-- <p>
+</p>
+<section class="content-header pt-0 pb-0 mx-0 mb-0 md-0">
+  <div class="container-fluid mt-2">
+
+    <button class="btn-sm btn-success btn col-md-1 float-left mx-2" style="margin: 5px;" (click)="reloadGrid()">
+      Refresh
+    </button>
+    <div class="row col-md-12">
+      <div class="col-sm-4">
+        <div class="card">
+          <div class="card-body table-responsive p-0">
+
+
+            <dx-data-grid id="dataGrid" [rowAlternationEnabled]="true" [showRowLines]="true" [columnAutoWidth]="true"
+              [showColumnLines]="false" [allowColumnReordering]="true" (onRowClick)="onRowClick($event)"
+             [dataSource]="ProjectStatus | paginate
+           : {
+                id: 'server',
+                itemsPerPage: this.pagedDto.pageSize,
+                currentPage: this.pagedDto.page,
+                totalItems: this.totalCount
+              }" keyExpr="id">
+              <dxo-scrolling columnRenderingMode="virtual"></dxo-scrolling>
+
+              <dxi-column dataField="name" caption="Projects"></dxi-column>
+              <dxi-column dataField="count" caption="Count"></dxi-column>
+
+
+
+
+
+
+            </dx-data-grid>
+            
+
+
+          </div>
+        </div>
+      </div>
+
+
+
+      <div class="col-sm-4">
+        <div class="card">
+          <div class="card-body table-responsive p-0">
+
+
+
+            <dx-data-grid id="dataGrid" [rowAlternationEnabled]="true" [showRowLines]="true" [columnAutoWidth]="true"
+              [showColumnLines]="false" [allowColumnReordering]="true" (onRowClick)="onRowContractClick($event)"
+              [dataSource]="ContractStatus | paginate
+            : {
+                id: 'server',
+                itemsPerPage: this.pagedDto.pageSize,
+                currentPage: this.pagedDto.page,
+                totalItems: this.totalCount
+              }" keyExpr="id">
+              <dxo-scrolling columnRenderingMode="virtual"></dxo-scrolling>
+
+              <dxi-column dataField="name" caption="Client Contracts"></dxi-column>
+              <dxi-column dataField="count" caption="Count"></dxi-column>
+
+
+
+
+
+
+            </dx-data-grid>
+           
+
+
+
+          </div>
+        </div>
+      </div>
+
+
+      <div class="col-sm-4">
+        <div class="card">
+          <div class="card-body table-responsive p-0">
+
+
+
+            <dx-data-grid id="dataGrid" [rowAlternationEnabled]="true" [showRowLines]="true" [columnAutoWidth]="true"
+              [showColumnLines]="false" [allowColumnReordering]="true" (onRowClick)="onRowClick1($event)"
+              (onCellPrepared)="onCellPrepared($event)" [dataSource]="AuditStatus | paginate
+          : {
+              id: 'server',
+              itemsPerPage: this.pagedDto.pageSize,
+              currentPage: this.pagedDto.page,
+              totalItems: this.totalCount
+            }" keyExpr="id">
+              <dxo-scrolling columnRenderingMode="virtual"></dxo-scrolling>
+
+              <dxi-column dataField="name" caption="Audits"></dxi-column>
+              <dxi-column dataField="count" caption="Count"></dxi-column>
+
+
+
+
+
+
+            </dx-data-grid>
+          
+
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="row col-md-12" *ngIf="auditgrid">
+      <div class="col-md-12">
+        <div class="card">
+          <h3 style="text-align: center; color: rgb(9, 26, 59) ;font-family: 'Times New Roman'; font-weight: bold; margin-top: 5px; ">
+
+
+            {{CurrentName}}
+          </h3>
+          <div class="card-body table-responsive p-0">
+
+            <dx-data-grid id="dataGrid" [rowAlternationEnabled]="true" [showRowLines]="true" [columnAutoWidth]="true"
+              [showColumnLines]="true" [allowColumnReordering]="true" [dataSource]="AuditList | paginate
+        : {
+            id: 'server',
+            itemsPerPage: this.pagedDto.pageSize,
+            currentPage: this.pagedDto.page,
+            totalItems: this.totalCount
+          }" keyExpr="id">
+              <dxo-scrolling columnRenderingMode="virtual"></dxo-scrolling>
+
+              <dxi-column dataField="projectCode" caption="Project Code"></dxi-column>
+              <dxi-column dataField="startDate" caption="Start Date" type="date"></dxi-column>
+              <dxi-column dataField="endDate" caption="End Date" type="date"></dxi-column>
+              <dxi-column dataField="reviewerName" caption="Reviewer Name"></dxi-column>
+              <dxi-column dataField="createdDate" caption="Created Date" dataType="date" ></dxi-column>
+              <dxi-column dataField="leadAuditorName" caption="leadAuditor Name"></dxi-column>
+              <dxi-column dataField="visitStatusName" caption="Status"></dxi-column>
+              <dxi-column type="buttons" caption="Action" alignment='left'>
+
+                <dxi-button hint="Review" icon="fas fa-eye text-secondary" alignment='left' [onClick]="review1">
+                </dxi-button>
+               
+
+              </dxi-column>
+
+
+
+
+            </dx-data-grid>
+          
+
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="row col-md-12" *ngIf="projectgrid">
+      <div class="col-md-12">
+        <div class="card " >
+          <h3 style="text-align: center; color: rgb(9, 26, 59) ;font-family: 'Times New Roman'; font-weight: bold; margin-top: 5px; ">
+
+
+            {{CurrentName}}
+          </h3>
+          <div class="card-body table-responsive p-0">
+
+
+
+            <dx-data-grid id="dataGrid" [rowAlternationEnabled]="true" [showRowLines]="true" [columnAutoWidth]="true"
+              [showColumnLines]="true" [allowColumnReordering]="true" [dataSource]="ProjectsList | paginate
+        : {
+            id: 'server',
+            itemsPerPage: this.pagedDto.pageSize,
+            currentPage: this.pagedDto.page,
+            totalItems: this.totalCount
+          }" keyExpr="id">
+              <dxo-scrolling columnRenderingMode="virtual"></dxo-scrolling>
+
+              <dxi-column dataField="projectCode" caption="Project Code"></dxi-column>
+              <dxi-column dataField="agencyName" caption="Branch Office"></dxi-column>
+              <dxi-column dataField="siteName" caption="Site Name"></dxi-column>
+              <dxi-column dataField="createdDate" caption="Created Date" dataType="date"></dxi-column>
+              <dxi-column dataField="approvalStatusName" caption="Status"></dxi-column>
+              <dxi-column type="buttons" caption="Action" alignment='left'>
+
+                <dxi-button hint="Review" icon="fas fa-eye text-secondary" alignment='left' [onClick]="review">
+                </dxi-button>
+              
+
+              </dxi-column>
+
+
+
+
+            </dx-data-grid>
+            <div class="card-footer table-card-footer pb-0 border-top">
+          <div class="row">
+            <div class="col-sm-2 col-12 text-sm-left text-center">
+              <button class="btn btn-sm">
+                <i class="fas fa-redo text-info" (click)="reloadGrid()"></i>
+              </button>
+            </div> 
+            <div class="col-sm-8 col-12">
+              <pagination-controls id="server" (pageChange)="onTableDataChangeApplication($event)">
+              </pagination-controls>
+            </div>
+           
+            </div>
+        </div>
+
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row col-md-12" *ngIf="contractgrid">
+      <div class="col-md-12">
+        <div class="card mt-3 ml-3">
+          <h3 style="text-align: center; color: rgb(9, 26, 59) ;font-family: 'Times New Roman'; font-weight: bold; margin-top: 5px; ">
+
+
+            {{CurrentName}}
+          </h3>
+          <div class="card-body table-responsive p-0">
+
+
+
+            <dx-data-grid id="dataGrid" [rowAlternationEnabled]="true" [showRowLines]="true" [columnAutoWidth]="true"
+              [showColumnLines]="true" [allowColumnReordering]="true" [dataSource]="ContractList | paginate
+        : {
+            id: 'server',
+            itemsPerPage: this.pagedDto.pageSize,
+            currentPage: this.pagedDto.page,
+            totalItems: this.totalCount
+          }" keyExpr="id">
+              <dxo-scrolling columnRenderingMode="virtual"></dxo-scrolling>
+
+              <dxi-column dataField="projectCode" caption="Project Code"></dxi-column>
+              <dxi-column dataField="agencyName" caption="Branch Office"></dxi-column>
+              <dxi-column dataField="siteName" caption="Site Name"></dxi-column>
+              <dxi-column dataField="createdDate" caption="Created Date" dataType="date"></dxi-column>
+              <dxi-column dataField="approvalStatusName" caption="Status"></dxi-column>
+              <dxi-column type="buttons" caption="Action" alignment='left'>
+
+                <dxi-button hint="Review" icon="fas fa-eye text-secondary" alignment='left' [onClick]="review">
+                </dxi-button>
+              
+
+              </dxi-column>
+
+
+
+
+            </dx-data-grid>
+          
+
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+   
+
+  </div>
+</section>
+
+
+
+   
+  <section class="content-header pt-0 pb-0 mt-3 mx-0 mb-0 md-0">
+   
+   
+    <div class="container-fluid mt-2">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                <div class="card-body table-responsive p-0">
+    
+                  
+    
+                    <dx-data-grid id="dataGrid"  [rowAlternationEnabled]="true" [showRowLines]="true"  [columnAutoWidth]="true" 
+                     [showColumnLines]="true" [allowColumnReordering]="true" [dataSource]="ProjectsList | paginate
+                        : {
+                            id: 'server',
+                            itemsPerPage: this.pagedDto.pageSize,
+                            currentPage: this.pagedDto.page,
+                            totalItems: this.totalCount
+                          }"
+                        keyExpr="id" >
+                      
+                        <dxo-scrolling columnRenderingMode="virtual"></dxo-scrolling>
+                      
+
+                        
+                        <dxi-column dataField="projectCode" caption="Project Code"></dxi-column>
+                        <dxi-column dataField="agencyName" caption="Branch Office"></dxi-column>
+                        <dxi-column dataField="siteName" caption="Site Name"></dxi-column>
+                        <dxi-column dataField="createdDate" caption="Created Date" dataType="date"></dxi-column>
+                        <dxi-column dataField="approvalStatusName" caption="Status"></dxi-column>
+                        <dxi-column type="buttons" caption="Action" alignment='left'>
+          
+                          <dxi-button hint="Review" icon="fas fa-eye text-secondary" alignment='left' [onClick]="review">
+                          </dxi-button>
+                       
+                          </dxi-column>   
+                         
+                          
+                  
+    
+    
+    
+                    </dx-data-grid>
+                    <div class="card-footer table-card-footer pb-0 border-top">
+                        <div class="row">
+                            <div class="col-sm-2 col-12 text-sm-left text-center">
+                                <button class="btn btn-sm">
+                                    <i class="fas fa-redo text-info"(click)="reloadGrid()"></i>
+                               
+                               
+                                </button>
+    
+                            </div>
+                            <div class="col-sm-6 col-12">
+                              
+                            </div>
+                            <div class="col-sm-4 col-12">
+                                <pagination-controls id="server" (pageChange)="onTableDataChange($event)">
+                                </pagination-controls>
+                            </div>
+                           
+                        </div>
+                    </div>
+  
+    
+    
+    
+    
+                </div>
+            </div></div>
+        </div>
+    </div>
+
+   
+
+</section>
+<br>
+<br>
+<br> -->

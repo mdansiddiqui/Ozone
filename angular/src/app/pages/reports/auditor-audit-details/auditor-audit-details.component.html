@@ -1,0 +1,23 @@
+
+<dx-data-grid [dataSource]="tasksDataSource"  [showBorders]="true" [columnAutoWidth]="true"
+  [rowAlternationEnabled]="true" [showRowLines]="true"   >
+  <dxi-column dataField="leadAuditorName"  dataType="string" ></dxi-column>
+  <dxi-column dataField="projectCode" dataType="string"></dxi-column>
+  <dxi-column dataField="visitLevel" dataType="string"></dxi-column>
+  <dxi-column dataField="ncs" dataType="string"></dxi-column>
+  <dxi-column dataField="avgTAT_1" caption="TAT (Audit Conduct to Submited QC)" dataType="string"></dxi-column>
+  <dxi-column dataField="avgTAT_2" caption="TAT (Submited QC to Reject)" dataType="string"></dxi-column>
+  <dxi-column dataField="avgTAT_3" caption="TAT (Reject QC to Resubmit)" dataType="string"></dxi-column>
+  <dxi-column dataField="avgTAT_4" caption="TAT (Resubmit to Approved)" dataType="string"></dxi-column>
+  <dxi-column dataField="avgTAT_5" caption="Average TAT (Submit QC to Approved)"  dataType="string"></dxi-column>
+  <dxi-column type="buttons" caption="Action">
+    <dxi-button icon="fas fa-eye text-secondary" hint="View Report Remarks History">
+     
+    </dxi-button>
+    
+
+
+
+  </dxi-column>
+                 
+</dx-data-grid>
