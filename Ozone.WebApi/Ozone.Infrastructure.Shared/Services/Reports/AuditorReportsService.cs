@@ -16,6 +16,7 @@ using Ozone.Application.DTOs.Projects;
 using System.Data;
 using Microsoft.Data.SqlClient;
 using System.Data.Common;
+using Ozone.Application.DTOs.Reports;
 
 namespace Ozone.Infrastructure.Shared.Services
 {
@@ -859,6 +860,15 @@ namespace Ozone.Infrastructure.Shared.Services
 
         }
 
+        public async Task<List<AuditReportHistoryModel>> AuditReportHistory(int id)
+        {
+            var result = new List<AuditReportHistoryModel>();
+            var DbAuditReportHistory = await Task.Run(() => _dbContext.AuditReportHistory.Include(x=>x.ApprovalStatus).Include(x=>x.RemarksBy).Where(x => x.ClientAuditVisitId == id).ToList());
+            result = _mapper.Map<List<AuditReportHistoryModel>>(DbAuditReportHistory);
+            return result;
+        }
+
+
         public async Task<List<SPAuditorDetailModel>> AuditorReportsDetail(IDictionary<string, string> keyValuePairs)
         //public async Task<List<SPAuditorReportsModel>> AuditorReports(string fromdate, string todate, string OrganizationId)
         {
@@ -964,6 +974,143 @@ namespace Ozone.Infrastructure.Shared.Services
 
 
         }
+
+
+
+
+        public async Task<List<CertifiedClientModel>> GetScheduleOfAuditWithWindowPeriod(IDictionary<string, string> keyValuePairs)
+        {
+            try
+            {
+
+                string StandardId = "";
+                string LeadAuditorId = "";
+                CertifiedClientModel SHOfAudit = new CertifiedClientModel();
+                string fromdate = null;
+                string todate = null;
+                string OrganizationId = null;
+
+                DateTime frmdate = Convert.ToDateTime(fromdate);
+                if (keyValuePairs.ContainsKey("fromdate"))
+                    fromdate = keyValuePairs["fromdate"].Split("T")[0];
+                if (keyValuePairs.ContainsKey("todate"))
+                    todate = keyValuePairs["todate"];
+                if (keyValuePairs.ContainsKey("OrganizationId"))
+                {
+                    if (keyValuePairs["OrganizationId"] != "0")
+                    {
+                        OrganizationId = keyValuePairs["OrganizationId"];
+                    }
+                }
+                if (keyValuePairs.ContainsKey("StandardId"))
+                {
+                    if (keyValuePairs["StandardId"] != "0")
+                    {
+                        StandardId = keyValuePairs["StandardId"];
+                    }
+                }
+                //long? OrgId;
+                //if (OrganizationId != null && OrganizationId !="" && OrganizationId != string.Empty) 
+                //{
+                //    OrgId = Convert.ToInt64(OrganizationId);
+
+
+                //}
+                List<CertifiedClientModel> SHALIst = new List<CertifiedClientModel>();
+
+                await EnsureConnectionOpenAsync();
+                using (var command = _dbContext.Database.GetDbConnection().CreateCommand())
+                {
+
+                    command.CommandText = "sp_ScheduleOfAudit";
+                    //command.CommandText = "sp_AVG_Tat_AuditorReport";
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddRange(new[]
+                    {
+                    new SqlParameter("@FromDate",Convert.ToDateTime(fromdate)),
+                    new SqlParameter("@ToDate",Convert.ToDateTime(todate)),
+                    //new SqlParameter("@StandardId",StandardId),
+                    //new SqlParameter("@LeadAuditorId",LeadAuditorId),
+                    
+                    
+                    new SqlParameter("@StandardId",(StandardId == "" ? null : StandardId)),
+
+                    new SqlParameter("@OrganizationId",(OrganizationId == "" ? null : OrganizationId)),
+                    //new SqlParameter("@OrganizationId",OrganizationId),
+                    });
+                    //  command.Transaction = GetActiveTransaction();
+
+                    using (var dataReader = command.ExecuteReader())
+                    {
+                        if (dataReader.HasRows)
+                        {
+                            var i = 1;
+                            while (dataReader.Read())
+                            {
+                                CertifiedClientModel SHA = new CertifiedClientModel();
+
+                              
+
+
+                                SHA.S_No = i++;
+                                SHA.ProjectCode = (!(dataReader["ProjectCode"] is DBNull)) ? dataReader["ProjectCode"].ToString() : null;
+                                SHA.ClientName = (!(dataReader["ClientName"] is DBNull)) ? dataReader["ClientName"].ToString() : null;
+                                SHA.Country = (!(dataReader["Country"] is DBNull)) ? dataReader["Country"].ToString() : null;
+                                SHA.CertificationStatus = (!(dataReader["CertificationStatus"] is DBNull)) ? dataReader["CertificationStatus"].ToString() : null;
+                                SHA.currentState = (!(dataReader["currentState"] is DBNull)) ? dataReader["currentState"].ToString() : null;
+                                SHA.Registration_no = (!(dataReader["Registration_no"] is DBNull)) ? dataReader["Registration_no"].ToString() : null;
+                                SHA.CertificationIssueDate = (!(dataReader["CertificationIssueDate"] is DBNull)) ? Convert.ToDateTime(dataReader["CertificationIssueDate"]) : (DateTime?)null;
+                                SHA.CertificationExpiryDate = (!(dataReader["CertificationExpiryDate"] is DBNull)) ? Convert.ToDateTime(dataReader["CertificationExpiryDate"]) : (DateTime?)null;
+                                SHA.Surveillance_Frequency = (!(dataReader["Surveillance_Frequency"] is DBNull)) ? dataReader["Surveillance_Frequency"].ToString() : null;
+                                SHA.IntimationdateSurv_1 = (!(dataReader["IntimationdateSurv_1"] is DBNull)) ? Convert.ToDateTime(dataReader["IntimationdateSurv_1"]) : (DateTime?)null;
+                                SHA.Windowperiod_start_Surv_1 = (!(dataReader["Windowperiod_start_Surv_1"] is DBNull)) ? Convert.ToDateTime(dataReader["Windowperiod_start_Surv_1"]) : (DateTime?)null;
+                                SHA.Windowperiod_end_Surv_1 = (!(dataReader["Windowperiod_end_Surv_1"] is DBNull)) ? Convert.ToDateTime(dataReader["Windowperiod_end_Surv_1"]) : (DateTime?)null;
+                                SHA.Surv_1_due = (!(dataReader["Surv_1_due"] is DBNull)) ? Convert.ToDateTime(dataReader["Surv_1_due"]) : (DateTime?)null;
+                                SHA.Windowperiod_Sart_FUP_1 = (!(dataReader["Windowperiod_Sart_FUP_1"] is DBNull)) ? Convert.ToDateTime(dataReader["Windowperiod_Sart_FUP_1"]) : (DateTime?)null;
+                                SHA.Windowperiod_end_FUP_1 = (!(dataReader["Windowperiod_end_FUP_1"] is DBNull)) ? Convert.ToDateTime(dataReader["Windowperiod_end_FUP_1"]) : (DateTime?)null;
+
+                                SHA.IntimationdateSurv_2 = (!(dataReader["IntimationdateSurv_2"] is DBNull)) ? Convert.ToDateTime(dataReader["IntimationdateSurv_2"]) : (DateTime?)null;
+
+                                SHA.Windowperiod_start_Surv_2 = (!(dataReader["Windowperiod_start_Surv_2"] is DBNull)) ? Convert.ToDateTime(dataReader["Windowperiod_start_Surv_2"]) : (DateTime?)null;
+                                SHA.Windowperiod_end_Surv_2 = (!(dataReader["Windowperiod_end_Surv_2"] is DBNull)) ? Convert.ToDateTime(dataReader["Windowperiod_end_Surv_2"]) : (DateTime?)null;
+                                SHA.Surv_2_due = (!(dataReader["Surv_2_due"] is DBNull)) ? Convert.ToDateTime(dataReader["Surv_2_due"]) : (DateTime?)null;
+                                SHA.Windowperiod_Sart_FUP_2 = (!(dataReader["Windowperiod_Sart_FUP_2"] is DBNull)) ? Convert.ToDateTime(dataReader["Windowperiod_Sart_FUP_2"]) : (DateTime?)null;
+                                SHA.Windowperiod_end_FUP_2 = (!(dataReader["Windowperiod_end_FUP_2"] is DBNull)) ? Convert.ToDateTime(dataReader["Windowperiod_end_FUP_2"]) : (DateTime?)null;
+
+                                SHA.RecertificationIntimationdate = (!(dataReader["RecertificationIntimationdate"] is DBNull)) ? Convert.ToDateTime(dataReader["RecertificationIntimationdate"]) : (DateTime?)null;
+
+                                SHA.Recertification_Windowperiod_start_Surv_2 = (!(dataReader["Recertification_Windowperiod_start_Surv_2"] is DBNull)) ? Convert.ToDateTime(dataReader["Recertification_Windowperiod_start_Surv_2"]) : (DateTime?)null;
+                                SHA.Recertification_Windowperiod_end_Surv_2 = (!(dataReader["Recertification_Windowperiod_end_Surv_2"] is DBNull)) ? Convert.ToDateTime(dataReader["Recertification_Windowperiod_end_Surv_2"]) : (DateTime?)null;
+                                SHA.Followup_Recert_Start = (!(dataReader["Followup_Recert_Start"] is DBNull)) ? Convert.ToDateTime(dataReader["Followup_Recert_Start"]) : (DateTime?)null;
+                                SHA.Followup_Recert_end = (!(dataReader["Followup_Recert_end"] is DBNull)) ? Convert.ToDateTime(dataReader["Followup_Recert_end"]) : (DateTime?)null;
+
+
+
+                                SHALIst.Add(SHA);
+                                //}); ;
+                            }
+                        }
+                    }
+                }
+
+
+
+               
+               
+
+                return SHALIst;
+
+
+            }
+
+            catch (Exception ex)
+            {
+                // throw ex;
+                return null;
+            }
+
+        }
+
 
         private async Task EnsureConnectionOpenAsync()
         {

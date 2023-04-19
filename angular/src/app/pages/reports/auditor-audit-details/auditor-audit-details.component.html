@@ -11,13 +11,54 @@
   <dxi-column dataField="avgTAT_4" caption="TAT (Resubmit to Approved)" dataType="string"></dxi-column>
   <dxi-column dataField="avgTAT_5" caption="Average TAT (Submit QC to Approved)"  dataType="string"></dxi-column>
   <dxi-column type="buttons" caption="Action">
-    <dxi-button icon="fas fa-eye text-secondary" hint="View Report Remarks History">
-     
+    <dxi-button class="cursor-point" icon="fas fa-eye text-secondary" hint="View Report Remarks History" [onClick]="viewHistoryReport" >
     </dxi-button>
-    
+
 
 
 
   </dxi-column>
-                 
+
 </dx-data-grid>
+<form #resetPasswordForm="ngForm">
+  <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayHistoryPopup}">
+      <div class="history-modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header my-center">
+                  <h4 class="">View History Report</h4>
+              </div>
+              <div class="modal-body">
+                  <div class="container-fluid">
+                      <div class="card mx-2 pt-3 pb-2">
+                          <div class="row">
+
+                            <dx-data-grid id="dataGrid" [rowAlternationEnabled]="true" [showRowLines]="true"
+                            [showColumnLines]="true" [allowColumnReordering]="true" [dataSource]="viewHistoryReportData | paginate
+                        : {
+                            id: 'server',
+                            itemsPerPage: this.pagedDto.pageSize,
+                            currentPage: this.pagedDto.page,
+                            totalItems: this.totalCount
+                          }"
+                          keyExpr="id">
+                            <dxo-scrolling mode="virtual"></dxo-scrolling>
+                            <dxi-column dataField="clientAuditVisitId" caption="Client Audit Visit Id"  alignment='left'></dxi-column>
+                            <dxi-column dataField="remarksByName" caption="RemarksBy"></dxi-column>
+                            <dxi-column dataField="remarks" caption="Remarks"></dxi-column>
+                            <dxi-column dataField="remarksDate" caption="RemarksDate"></dxi-column>
+                            <dxi-column dataField="approvalStatusName" caption="Status"></dxi-column>
+
+                        </dx-data-grid>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-danger" (click)="closeHistoryPopup()">
+                      Close
+                  </button>
+              </div>
+          </div>
+      </div>
+  </div>
+</form>

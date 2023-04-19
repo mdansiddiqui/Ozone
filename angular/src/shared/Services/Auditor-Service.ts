@@ -11,36 +11,36 @@ import { AgencyModel } from "../Dto/Agency-model";
 
 
 export const API_BASE_URL = new InjectionToken<string>('API_BASE_URL');
-     
+
 
 @Injectable({
     providedIn: 'root',
-    
+
   })
 
-  export class AuditorService 
+  export class AuditorService
   {
 
     private baseUrl: string;
 
     private REST_API_SERVER = AppConsts.remoteServiceBaseUrl;
     $isDataLoaded = new EventEmitter();
-  
+
     constructor(
       private http: HttpClient
     ) { }
     private data = new BehaviorSubject<any>(Response);
-  
-     
+
+
     Get(value): Observable<any> {
-        
+
         let headers = new HttpHeaders({
             'Content-Type': 'application/json',
             'Authorization' : 'Bearer ' + JSON.parse(localStorage.getItem('token')),
         });
         let options = { headers: headers };
         return this.http.post<any>(`${environment.apiUrl}/api/AuditorReports/GetPagedAuditorReportsResponse`, value, options);
-            
+
       }
 
       GetAuditorReport(values: any):Observable<any>
@@ -110,5 +110,24 @@ export const API_BASE_URL = new InjectionToken<string>('API_BASE_URL');
         let options={headers:headers};
         return this.http.post(this.REST_API_SERVER+'/api/AuditorReports/GetImpartialityReviewReport',values,options);
       }
-      
+      GetAuditorReportHistory(id): Observable<any> {
+
+        let headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Authorization' : 'Bearer ' + JSON.parse(localStorage.getItem('token')),
+        });
+        let options = { headers: headers };
+        return this.http.get<any>(`${environment.apiUrl}/api/AuditorReports/AuditorReportsHistory?id=${id}` , options);
+
+      }
+
+      GetCertifiedClientReport(values: any):Observable<any>
+      {
+        ;debugger
+        let headers = new HttpHeaders({
+          'Content-Type':'application/json'
+        });
+        let options={headers:headers};
+        return this.http.post(this.REST_API_SERVER+'/api/AuditorReports/GetCertifiedClientReport',values,options);
+      }
   }

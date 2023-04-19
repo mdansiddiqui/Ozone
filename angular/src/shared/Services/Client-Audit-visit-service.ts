@@ -1,3 +1,4 @@
+import { VisitLevel } from './../Dto/visit-level.model';
 import { result } from "lodash";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { EventEmitter, Injectable, InjectionToken } from "@angular/core";
@@ -42,7 +43,7 @@ export class ClientAuditVisitService {
             Accept: "text/plain",
         });
         let options = { headers: headers };
-        // return this.http.post(this.REST_API_SERVER + '/api/services/app/PurchaseOrderService/CreatePurchaseOrder',content_) 
+        // return this.http.post(this.REST_API_SERVER + '/api/services/app/PurchaseOrderService/CreatePurchaseOrder',content_)
         return this.http.post<any>(`${environment.apiUrl}/api/ClientAuditVisit/Create`, content_, options)
     }
     CreateWithFile(values): Observable<any> {
@@ -79,6 +80,29 @@ export class ClientAuditVisitService {
         return this.http.get<any>(`${environment.apiUrl}/api/ClientAuditVisit/GetClientAuditVisitBYId?id=${id}`, options);
     }
 
+    GetClientAuditVisitByOrganizationId(id) {
+
+        let headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('token')),
+        });
+        let options = { headers: headers };
+
+        let url = `${environment.apiUrl}/api/ClientAuditVisit/GetClientAuditVisitByOrganizationId?id=${id}`;
+
+        return this.http.get<any>(url, options);
+    }
+
+    clientAuditVisitDownloadFile(id:number)
+    {
+      let headers = new HttpHeaders({
+
+        'Authorization' : 'Bearer ' + JSON.parse(localStorage.getItem('token')),
+    });
+    let options = { headers: headers };
+      return this.http.get(`${environment.apiUrl}/api/ClientAuditVisit/GetClientAuditVisitByOrganizationId?id=${id}`,{responseType:'blob'})
+
+    }
     GetPagedClientAuditVisitResponse(id, value): Observable<any> {
 
         let headers = new HttpHeaders({
@@ -110,8 +134,17 @@ export class ClientAuditVisitService {
         return this.http.get<any>(`${environment.apiUrl}/api/ClientAuditVisit/GetALLVisitStatus`, options)
     }
 
+    GetAllAgencywithHeadOffice(): Observable<any> {
 
+        let headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('token')),
+        });
+        let options = { headers: headers };
 
+        return this.http.get<any>(`${environment.apiUrl}/api/ClientAuditVisit/GetAllAgencywithHeadOffice`, options)
+    }
+    
     GetAllProjectCode(): Observable<any> {
 
         let headers = new HttpHeaders({
@@ -256,4 +289,42 @@ export class ClientAuditVisitService {
 
         return this.http.get<any>(`${environment.apiUrl}/api/ClientAuditVisit/GetALLVisitLevel`, options)
     }
+
+    CreateVisitLevel(body: VisitLevel | undefined) : Observable<any> {
+
+        const content_ = JSON.stringify(body);
+
+        let headers = new HttpHeaders({
+         "Content-Type": "application/json",
+         'Authorization' : 'Bearer ' + JSON.parse(localStorage.getItem('token')),
+           Accept: "text/plain",
+       });
+      let options = { headers: headers };
+      // return this.http.post(this.REST_API_SERVER + '/api/services/app/PurchaseOrderService/CreatePurchaseOrder',content_)
+          return this.http.post<any>(`${environment.apiUrl}/api/ClientAuditVisit/CreateVisitLevel`,content_,options)
+        }
+
+        DeleteVisitLevelById(id) {
+            let headers = new HttpHeaders({
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + JSON.parse(localStorage.getItem("token")),
+            });
+            let options = { headers: headers };
+
+            return this.http.post<any>(
+              `${environment.apiUrl}/api/ClientAuditVisit/DeleteVisitLevelById?id=${id}`,
+              options
+            );
+          }
+
+
+          GetClientAuditVisitBySearch(values: any):Observable<any>
+          {
+            ;debugger
+            let headers = new HttpHeaders({
+              'Content-Type':'application/json'
+            });
+            let options={headers:headers};
+            return this.http.post(this.REST_API_SERVER+'/api/ClientAuditVisit/GetClientAuditVisitBySearch',values,options);
+          }
 }

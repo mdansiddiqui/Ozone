@@ -145,6 +145,8 @@ export class QCMasterListComponent implements OnInit {
   else
   {
     this.QcStatusList = this.QcStatusList.filter(item => item.id != 8);
+
+   
   }
     this.displayStyle = "block";
 
@@ -290,7 +292,11 @@ export class QCMasterListComponent implements OnInit {
 
 
     this.submitted = true;
-
+    debugger
+    let qcstatusId=parseInt(this.QcDocumentsForm.get('QcStatusId').value);
+   if(qcstatusId > 0)
+   {
+    
     // stop here if form is invalid
     if (this.QcDocumentsForm.invalid) {
       abp.message.error("Some fields are required ");
@@ -336,6 +342,12 @@ export class QCMasterListComponent implements OnInit {
     //this.QCDetail=this.qCDetail
     this.dataGrid.instance.refresh()
     this.displayStyle = "none";
+
+  }
+  else{
+  alert("Please select Qc Status");
+    return;
+   }
     //this.QcmasterList=this.QcmasterList
     //this.QCDetail=this.QCDetail
 
@@ -441,7 +453,17 @@ export class QCMasterListComponent implements OnInit {
 
     this._ClientAuditVisitService.AllQcStatus().subscribe((Response) => {
       this.QcStatusList = Response
-
+      const item2 = {
+        id: 0,
+        name:'--- Select Status ---',
+     };
+     debugger
+    //  this.VisitStatusList.push(item2);
+    //     this.VisitStatusList.push(result);
+        this.QcStatusList.push(item2);
+        this.QcStatusList= this.QcStatusList.sort((a, b) => {
+         return a.id - b.id;
+       });
     })
   }
   onCellPrepared(e) {

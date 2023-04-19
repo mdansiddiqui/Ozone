@@ -1,4 +1,5 @@
 ﻿using Ozone.Application.DTOs;
+using Ozone.Application.DTOs.Projects;
 using Ozone.Application.DTOs.Security;
 
 using Ozone.Application.Parameters;
@@ -15,6 +16,8 @@ namespace Ozone.Infrastructure.Shared.Services
         Task<string> Create(ClientAuditVisitModel input);
         Task<GetPagedClientAuditVisitModel> GetPagedClientAuditVisitResponse(long ProjectId, PagedResponseModel model);
         Task<ClientAuditVisitModel> GetClientAuditVisitBYId(long id);
+        Task<List<ClientAuditVisitModel>> GetClientAuditVisitByOrganizationId(long id);
+        Task<List<ClientAuditVisitModel>> GetClientAuditVisitBySearch(IDictionary<string, string> keyValuePairs);
         Task<string> ClientAuditVisitDeleteById(long id);
         Task<GetPagedClientAuditVisitModel> AuditPlan(long id,PagedResponseModel model);
         Task<ClientAuditVisitModel> DownloadAuditPlan(long id);
@@ -23,5 +26,6 @@ namespace Ozone.Infrastructure.Shared.Services
        // Task<string> AuditComplete(long id);
         Task<string> AuditComplete(ClientAuditVisitModel input);
         Task<GetPagedProjectStatusModel> ProjectStatus(long id , PagedResponseModel model);
+
     }
 }

@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import {Injectable} from '@angular/core'; 
+import {Injectable} from '@angular/core';
 import {HttpResponse} from '@angular/common/http';
 import {NgxPaginationModule} from 'ngx-pagination'; // <-- import the module
 import {Observable} from 'rxjs';
@@ -34,7 +34,7 @@ export class AccreditationComponent implements OnInit {
     IsActive: new FormControl(''),
     Description: new FormControl(''),
     Code: new FormControl(''),
-   
+
   })
   submitted = false;
 
@@ -47,22 +47,22 @@ export class AccreditationComponent implements OnInit {
   public pagedDto: PagedRequestModel = new PagedRequestModel()
   pageNumber : number = 1
   pageSize : number = 10
-  public isEditShown : boolean  
-  public isViewShown : boolean  
-  public isAddShown : boolean  
+  public isEditShown : boolean
+  public isViewShown : boolean
+  public isAddShown : boolean
   public keyword : string = ''
   public AccreditationList = []
   public moduleList = [];
   public StatusList=[];
 
- 
+
   readonly allowedPageSizes = [5, 10, 'all'];
   readonly displayModes = [{ text: "Display Mode 'full'", value: "full" }, { text: "Display Mode 'compact'", value: "compact" }];
   displayMode = "full";
   showPageSizeSelector = true;
   showInfo = true;
   showNavButtons = true;
-   
+
   customizeColumns(columns) {
       columns[0].width = 70;
   }
@@ -76,70 +76,70 @@ export class AccreditationComponent implements OnInit {
     private _toster: ToastrService,
     private route: ActivatedRoute,
      public AccreditationService: AccreditationService,
-     private router : Router) 
-      { this.edit = this.edit.bind(this); 
+     private router : Router)
+      { this.edit = this.edit.bind(this);
       this.NewRecord=this.NewRecord.bind(this);
       this.delete=this.delete.bind(this);}
 
       ngOnInit(): void {
-        
-        
+
+
         this.loadSecRoleForm();
         this.loadStatus();
         this.onSearch()
       }
       id: number
-    
-      edit(e) {  
-         
+
+      edit(e) {
+
     // var List = [];
-    // List=this.Liststandard                                                                             ; 
+    // List=this.Liststandard                                                                             ;
     // this.router.navigateByUrl('/app/pages/stock-management/library');
     this.id=e.row.data.id
     // var updateDate =this.StandardList.find(x => x.id == this.id );
-    
-    // this._StandardService.GetStandardById(this.id).subscribe((res) => 
+
+    // this._StandardService.GetStandardById(this.id).subscribe((res) =>
     // {
-    
+
      // this.ModuleForm.controls.Code.setValue(e.row.data.code);
       this.AccreditationForm.controls.Id.setValue(e.row.data.id);
       this.AccreditationForm.controls.Name.setValue(e.row.data.name);
       this.AccreditationForm.controls.Code.setValue(e.row.data.code);
-      this.AccreditationForm.controls.Description.setValue(e.row.data.description); 
-    
+      this.AccreditationForm.controls.Description.setValue(e.row.data.description);
+
     // this.CertificateForm.controls.StartDate.setValue(e.row.data.startdate);
       //let req = new Date(this.datePipe.transform(e.row.data.startDate, 'yyyy/MM/dd'))
-    
+
        //this.CertificateForm.controls.StartDate.setValue(this.datePipe.transform(req, 'yyyy/MM/dd'))
-    
+
       if(e.row.data.isActive==true){
       this.AccreditationForm.controls.IsActive.setValue(1);
       }else{this.AccreditationForm.controls.IsActive.setValue(0);}
-      
+
       // });
       // this.router.navigate(['app/pages/stock-management/library']);
         //this.router.navigate(["account/login"]);
-    // this.router.navigateByUrl('/app/pages/certification-setups/Standard?'+this.id);  
-    }  
-    
+    // this.router.navigateByUrl('/app/pages/certification-setups/Standard?'+this.id);
+    }
+
     onTableDataChange(event) {
       this.pagedDto.page = event;
       this.onSearch();
     }
     loadSecRoleForm() {
-    
-      
-        
+
+
+
       this.formName = "Accreditation"
       this._makerAuthorizerFormService.getSecRoleForm().subscribe((data) => {
-          
+
         let formName = (this.formName == undefined ? localStorage.getItem('formName') : this.formName)
-          
+
         this.secRoleForm = data.find(x => x.formCode != null && x.formCode == this.formName)
-    
+
       //this.isEditShown= this.secRoleForm.authAllowed
       // this.isViewShown = this.secRoleForm.authAllowed
-    
+
       // var formName = "User"
       // this._makerAuthorizerFormService.getSecRoleForm().subscribe((data) => {
       //   this.secRoleForm = data.find(x => x.formName.toLocaleLowerCase() == formName.toLocaleLowerCase())
@@ -169,40 +169,40 @@ export class AccreditationComponent implements OnInit {
         }
         //this.isViewShown = this.secRoleForm.authAllowed
       })
-        
-    } 
-    
+
+    }
+
     delete(e) {
       debugger
          abp.message.confirm((""),
          undefined,
              (result: boolean) => {
                  if (result) {
-                   // this.SecUserService.Deleteuser(e.row.data.id).subscribe() 
+                   // this.SecUserService.Deleteuser(e.row.data.id).subscribe()
                    //     abp.message.info("Deleted successfully", "Status", {});
-     
+
                        this.AccreditationService.Delete(e.row.data.id).subscribe((Response)=>{
-      
+
                          abp.message.info(Response.message)
                          this.onSearch();
-                        
+
                         })
-                       
+
                  }
                }
           )}
-    
+
     onTableSizeChange(event): void {
       this.pagedDto.pageSize = event.target.value;
       this.onSearch();
-    
+
      }
-    
+
       onSubmit(): void {
          debugger
         this.item =new AccreditationModel();
         this.submitted = true;
-    
+
         // stop here if form is invalid
         if (this.AccreditationForm.invalid) {
           abp.message.error("Some fields are required ");
@@ -211,53 +211,53 @@ export class AccreditationComponent implements OnInit {
         if (this.id > 0 && this.id != null && this.id != undefined && this.id != NaN) {
           this.item.Id = this.id
         }
-    
+
       if(this.id>0){this.item.Id=this.id}
-    
+
     // this.item.Id=this.DocumentTypeForm.get('Id').value
     this.item.Name=this.AccreditationForm.get('Name').value
     this.item.Code=this.AccreditationForm.get('Code').value
     this.item.Description=this.AccreditationForm.get('Description').value
-    
+
     if(this.AccreditationForm.get('IsActive').value==1)
     {
       this.item.IsActive=true;
-    
+
     }
     else
-    { 
+    {
       this.item.IsActive=false;
-    
+
     }
     var userId =localStorage.getItem('userId');
     this.item.CreatedBy=parseFloat(userId);
     // this.item.IsDeleted=this.CertificateForm.get('IsDeleted').value
-    
+
           this.AccreditationService.create(this.item).subscribe((Response)=>{
-     
+
         abp.message.info(Response.message)
         this.reloadGrid();
         this.NewRecord();
-       
+
        })
     }
-    
+
     onSearch(){
-      
-        
+
+
       this.pagedDto.keyword = this.keyword
       this.pagedDto.authAllowed = this.secRoleForm.authAllowed
       //this.pagedDto.pageSize = 3
       this.AccreditationService.Get(this.pagedDto).subscribe((Response) => {
-                  
-      
+
+
         this.totalCount = Response.totalCount
         this.AccreditationList = Response.accreditationModel
       })
     }
-    
+
     loadStatus(): void {
-        
+
       const item = {
         id: 1,
         name:'Active',
@@ -268,32 +268,32 @@ export class AccreditationComponent implements OnInit {
       name:'InActive',
       };
     this.StatusList.push(item2);
-    
-      } 
-    
+
+      }
+
     reloadGrid()
-     
+
     {
-    
+
       this.pagedDto.page =1;
       this.onSearch();
     }
-    
+
     NewRecord()
-    
-     
-     {  
+
+
+     {
       this.id=0;
-      
+
       this.AccreditationForm.controls.Name.setValue('');
       this.AccreditationForm.controls.Code.setValue('');
-      this.AccreditationForm.controls.Description.setValue(''); 
-      this.AccreditationForm.controls.IsActive.setValue(''); 
-    
+      this.AccreditationForm.controls.Description.setValue('');
+      this.AccreditationForm.controls.IsActive.setValue('');
+
     }
-    
-    
-    
-    
-    
+
+
+
+
+
     }

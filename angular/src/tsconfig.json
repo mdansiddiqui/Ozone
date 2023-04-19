@@ -1,7 +1,7 @@
   {
   "compilerOptions": {
     // "enableIvy": true,
-    // "fullTemplateTypeCheck": false,   
+    // "fullTemplateTypeCheck": false,
     "declaration": false,
     "downlevelIteration": true,
     "emitDecoratorMetadata": true,
@@ -31,7 +31,8 @@
   },
   "files": [
     "main.ts",
-    "polyfills.ts"
+    "polyfills.ts",
+    "./app/pages/security-module/all-visit/all-visit.component.ts"
   ],
   "include": [
     "src/**/*.d.ts",

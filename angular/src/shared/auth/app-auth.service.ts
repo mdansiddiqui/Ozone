@@ -23,7 +23,7 @@ export class AppAuthService {
         private _utilsService: UtilsService,
         private _tokenService: TokenService,
         private _logService: LogService,
-        private _toster : ToastrService 
+        private _toster : ToastrService
     ) {
         this.clear();
     }
@@ -42,9 +42,8 @@ export class AppAuthService {
     }
 
     authenticate(finallyCallback?: () => void): void {
-        debugger
         finallyCallback = finallyCallback || (() => { });
-  
+
         this._tokenAuthService
 
             .authenticate(this.authenticateModel)
@@ -55,16 +54,16 @@ export class AppAuthService {
 
             )
             // .subscribe((result: AuthenticateResultModel) => {
-            //       
+            //
             //     this.processAuthenticateResult(result);
 
             // });
-            
+
             .subscribe((result: AuthenticateResultModel) => {
                 debugger
-                  
+
                if (result.token != undefined) {
-                      
+
                     localStorage.setItem('secRoleForm', JSON.stringify(result.secRoleForm))
                     localStorage.setItem('userId', JSON.stringify(result.userId))
                     localStorage.setItem('userName', JSON.stringify(result.userName))
@@ -76,14 +75,14 @@ export class AppAuthService {
                     localStorage.setItem('roleId',JSON.stringify(result.roleId))
                     localStorage.setItem('organizationName', JSON.stringify(result.organizationName))
                     //localStorage.setItem('roleId',JSON.stringify(result.roleId))
-                    
-          
-                    
+
+
+
                    // localStorage.setItem('locationId', JSON.stringify(result.locationId))
                     //localStorage.setItem('locationTypeId', JSON.stringify(result.locationTypeId))
                     //localStorage.setItem('locationName', JSON.stringify(result.locationName))
                     localStorage.setItem('token', JSON.stringify(result.token))
-                      
+
                     this.processAuthenticateResult(result);
                 }
                 else {
@@ -96,9 +95,9 @@ export class AppAuthService {
     private processAuthenticateResult(
         authenticateResult: AuthenticateResultModel
     ) {
-          
+
         this.authenticateResult = authenticateResult;
-  
+
         if (authenticateResult.token) {
             // Successfully logged in
             this.login(
@@ -133,10 +132,10 @@ export class AppAuthService {
         //     // tokenExpireDate,
         //     abp.appPath
         // );
-    //      
+    //
     //     let initialUrl = UrlHelper.initialUrl;
     //     if (initialUrl.indexOf('/login') > 0) {
-    //           
+    //
     //         initialUrl = AppConsts.appBaseUrl;
     //     }
     //   // initialUrl = "http://localhost:4200/"

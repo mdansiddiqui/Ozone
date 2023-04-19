@@ -252,7 +252,16 @@ GetUserbyId(id)
       let options = { headers: headers };
       return this.http.get<any>(`${environment.apiUrl}/api/ProjectAmountReports/getAllAgency`, options)
     }
+    GetAllAgencywithHeadOffice(): Observable<any> {
 
+      let headers = new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('token')),
+      });
+      let options = { headers: headers };
+
+      return this.http.get<any>(`${environment.apiUrl}/api/ClientAuditVisit/GetAllAgencywithHeadOffice`, options)
+  }
     getAllUsers(id): Observable<any> {
       debugger
       let headers = new HttpHeaders({

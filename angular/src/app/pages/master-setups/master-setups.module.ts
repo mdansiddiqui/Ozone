@@ -20,6 +20,7 @@ import { EaCodeComponent } from './ea-code/ea-code.component';
 import { LegislationComponent } from './legislation/legislation.component';
 import { AudditorTypeComponent } from './audditor-type/audditor-type.component';
 import { ProjectAmountComponent } from './project-amount/project-amount.component';
+import { VisitLevelComponent } from './visit-level/visit-level.component';
 //import { DashboardComponent } from './dashboard/dashboard.component';
 
 
@@ -29,6 +30,7 @@ import { ProjectAmountComponent } from './project-amount/project-amount.componen
 @NgModule({
   declarations: [
     DocumentTypeComponent,
+    VisitLevelComponent,
   ],
   imports: [
     CommonModule,

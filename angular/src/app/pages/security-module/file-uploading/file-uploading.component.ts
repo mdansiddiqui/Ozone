@@ -117,7 +117,7 @@ reloadGrid()
 
 loadAllAgency(): void {
   debugger
-      this.SecUserService.getAllAgency().subscribe((Response) => {
+      this.SecUserService.GetAllAgencywithHeadOffice().subscribe((Response) => {
         this.OrganizationList = Response
       })     
     }   

@@ -1,3 +1,4 @@
+import { SecurityModuleModule } from './pages/security-module/security-module.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -40,7 +41,7 @@ import { SidebarMenuComponent } from './layout/sidebar-menu.component';
 import { StockManagementModule } from 'app/pages/stock-management/stock-management.module';
 import { SalesModule } from './pages/sales/sales.module';
 import { ReportsModule } from './pages/reports/reports.module';
-import { SecurityModuleModule } from './pages/security-module/security-module.module';
+//
 import { CertificationSetupsModule } from './pages/certification-setups/certification-setups.module';
 import { MasterSetupsModule } from './pages/master-setups/master-setups.module';
 import { OperationsModule } from './pages/Operations/Operations.module';
@@ -96,8 +97,8 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     HomeComponent,
     AboutComponent,
     // tenants
-    
-   
+
+
     // roles
     RolesComponent,
     CreateRoleDialogComponent,
@@ -138,20 +139,21 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
    ProjectAmountReportsComponent,
    QcDocumentComponent,
    DashboardComponent,
+
    //AuditorAuditDetailsComponent,
 
    //HolidayCalendarComponent,
-  
+
    //AuditReportListComponent,
-    
+
     //AuditPlanListComponent,
 
-    
+
    // LibraryResourcesListComponent,
-   
+
 
   ],
- 
+
   imports: [
     CommonModule,
     FormsModule,
@@ -173,7 +175,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     //Dx Button
     DxButtonModule,
     DxDataGridModule,
-  
+
     DxDataGridModule,
     DxTemplateModule,
     DxBulletModule,
@@ -188,11 +190,12 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     CalendarModule,
     SalesModule,
     OperationsModule,
+
   ],
   providers: [],
   entryComponents: [
     // tenants
- 
+
     // roles
     CreateRoleDialogComponent,
     EditRoleDialogComponent,

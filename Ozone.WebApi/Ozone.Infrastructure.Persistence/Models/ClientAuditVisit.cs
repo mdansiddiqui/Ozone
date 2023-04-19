@@ -66,6 +66,7 @@ namespace Ozone.Infrastructure.Persistence.Models
         public DateTime? AuditCompletedDate { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime? AuditConductedDate { get; set; }
+        public string Remarks { get; set; }
 
         [ForeignKey(nameof(Auditor1Id))]
         [InverseProperty(nameof(SecUser.ClientAuditVisitAuditor1))]

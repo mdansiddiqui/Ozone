@@ -85,6 +85,8 @@ namespace Ozone.WebApi.Controllers.AllReports
             return new JsonResult(list);
         }
 
+
+
         [Route("GetClientProjectReport")]
         [HttpPost]
         [Authorize]
@@ -96,6 +98,7 @@ namespace Ozone.WebApi.Controllers.AllReports
        
             return new JsonResult(list);
         }
+
 
 
         [Route("GetAuditorListReport")]
@@ -149,9 +152,21 @@ namespace Ozone.WebApi.Controllers.AllReports
         }
 
 
+        [Route("AuditorReportsHistory")]
+        [HttpGet]
+        [Authorize]
+
+        public async Task<IActionResult> AuditorReportsHistory(int id)
+        {
 
 
-        [Route("GetAuditorReportsDetails")]
+            var list = await _auditorReportsService.AuditReportHistory(id);
+
+            return new JsonResult(list);
+        }
+    
+
+    [Route("GetAuditorReportsDetails")]
         [HttpPost]
         [Authorize]
 
@@ -161,6 +176,20 @@ namespace Ozone.WebApi.Controllers.AllReports
            
             var list = await _auditorReportsService.AuditorReportsDetail(keyValuePairs);
   
+            return new JsonResult(list);
+        }
+
+
+        [Route("GetCertifiedClientReport")]
+        [HttpPost]
+        [Authorize]
+
+        public async Task<IActionResult> GetCertifiedClientReport(IDictionary<string, string> keyValuePairs)
+        {
+
+
+            var list = await _auditorReportsService.GetScheduleOfAuditWithWindowPeriod(keyValuePairs);
+
             return new JsonResult(list);
         }
     }

@@ -30,9 +30,9 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
     ngOnInit(): void {
 
         this.menuItems = this.getMenuItems();
-        
+
         this.patchMenuItems(this.menuItems);
-        
+
         this.routerEvents
             .pipe(filter((event) => event instanceof NavigationEnd))
             .subscribe((event) => {
@@ -74,8 +74,14 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
             ]),
             // new MenuItem(this.l('Operations'), '', 'fas fa-book', this.permissionCheckParent(['AuditPlan', 'Clients', 'Agency', 'AllAgencyProjects']), [
                 new MenuItem(this.l('Operations'), '', 'fas fa-book', this.permissionCheckParent(['Operations']), [
-                   
-                    new MenuItem(
+
+                new MenuItem(
+                    'All Client Visit',
+                    '/app/pages/security-module/all-visit',
+                    'fas fa-arrow-circle-right',
+                    this.permissionCheck('AllClientVisit')
+                    ),
+                new MenuItem(
                         'File Uploading',
                         '/app/pages/security-module/file-uploading',
                         'fas fa-arrow-circle-right',
@@ -105,7 +111,7 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
                     'fas fa-user-check',
                     this.permissionCheck('Agency')
                 ),
-    
+
                 new MenuItem(
                     'Client Projects',
                     '/app/pages/sales/all-projects',
@@ -118,7 +124,7 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
                     'fas fa-arrow-circle-right',
                     this.permissionCheck('ProjectAmount')
                 ),
-                new MenuItem(   
+                new MenuItem(
                     'Consultant',
                     '/app/pages/Operations/consultant',
                     'fas fa-arrow-circle-right',
@@ -137,7 +143,7 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
                 //     'fas fa-arrow-circle-right',
                 //     this.permissionCheck('GeneralForm')
                 // ),
-             
+
                 // new MenuItem(
                 //     'DASHBOAD',
                 //     '/app/pages/master-setups/dashboard',
@@ -202,12 +208,17 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
 
 
             //Security Group
-           
+
 
             // new MenuItem(this.l('Master Setups'), '', 'fas fa-certificate', this.permissionCheckParent(['Standard', 'Modules', 'DocumentType', 'StandardType', 'ApplicationType', 'AudditorType', 'Country', 'State', 'City', 'CertificationBody', 'EaCode', 'NaceCode', 'CourseType', 'Section', 'Legislation', 'Accreditation', 'ProjectAmount']), [
                 new MenuItem(this.l('Master Setups'), '', 'fas fa-certificate', this.permissionCheckParent(['Master Setups']), [
 
-
+                new MenuItem(
+                    'Visit Level',
+                    '/app/pages/master-setups/visit-level',
+                    'fas fa-arrow-circle-right',
+                    this.permissionCheck('VisitLevel')
+                ),
                 new MenuItem(
                     'Standard',
                     '/app/pages/certification-setups/certificate',
@@ -311,7 +322,7 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
                     this.permissionCheck('QcDocument')
                 ),
 
-             
+
                 //     new MenuItem(
                 //         'Authorizer Form',
                 //         '/app/pages/sales/authorizer-form-task-board',
@@ -348,7 +359,7 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
             ]),
 
             new MenuItem(this.l('Reports'), '', 'fas fa-users', this.permissionCheckParent(['Reports']), [
-            
+
                 // new MenuItem(
                 //     'Project Ledger',
                 //     '/app/pages/reports/project-amount-reports',
@@ -377,7 +388,7 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
                 // ),
 
             ]),
-            
+
 
         ];
     }
@@ -393,14 +404,14 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
     //         if (test != null && test != undefined && test != "" && test != NaN && test != '') { per.push(test) }
     //         //return  permissions.some(x => x.formCode == obj[i]);
     //     }
-    //     
+    //
     //     return per
     // }
     permissionCheckParent(obj:any) :any{
         let permissions : any =  [];
         permissions = JSON.parse(localStorage.getItem('secRoleForm'));
     //let per:any=[];
-    
+
         for(let i =0; i < obj.length; i++ )
         {
 
@@ -414,7 +425,7 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
     permissionCheck(data: any): any {
         let permissions: any = [];
         permissions = JSON.parse(localStorage.getItem('secRoleForm'));
-        
+
         return permissions.some(x => x.formCode == data);
 
 

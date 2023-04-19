@@ -923,13 +923,26 @@ debugger
 
         }
         else { foData.append('LastModifiedById', LoginUserId); }
-
+        if (this.AuditReportForm.get('Minor').value != undefined && this.AuditReportForm.get('Minor').value != null && this.AuditReportForm.get('Minor').value > 0)
+       { 
         foData.append('Minor', this.AuditReportForm.get('Minor').value);
+        }
+        if (this.AuditReportForm.get('Major').value != undefined && this.AuditReportForm.get('Major').value != null && this.AuditReportForm.get('Major').value > 0)
+        { 
         foData.append('Major', this.AuditReportForm.get('Major').value);
+        }
+        if (this.AuditReportForm.get('Critical').value != undefined && this.AuditReportForm.get('Critical').value != null && this.AuditReportForm.get('Critical').value > 0)
+        { 
         foData.append('Critical', this.AuditReportForm.get('Critical').value);
-        foData.append('TimeBound', this.AuditReportForm.get('TimeBound').value);
-        foData.append('Observation', this.AuditReportForm.get('Observation').value);
-        
+        }
+        if (this.AuditReportForm.get('TimeBound').value != undefined && this.AuditReportForm.get('TimeBound').value != null && this.AuditReportForm.get('TimeBound').value > 0)
+        { 
+          foData.append('TimeBound', this.AuditReportForm.get('TimeBound').value);
+        }
+          if (this.AuditReportForm.get('Observation').value != undefined && this.AuditReportForm.get('Observation').value != null && this.AuditReportForm.get('Observation').value > 0)
+          { 
+              foData.append('Observation', this.AuditReportForm.get('Observation').value);
+          }
 
 
 
@@ -1071,7 +1084,37 @@ debugger
 
   }
   onSubmitForReview(): void {
-
+debugger
+  let minor=parseFloat(this.AuditReportForm.get('Minor').value);
+  let major=parseFloat(this.AuditReportForm.get('Major').value);
+  let critical=parseFloat(this.AuditReportForm.get('Critical').value);
+  let timeBound=parseFloat(this.AuditReportForm.get('TimeBound').value);
+  let observation=parseFloat(this.AuditReportForm.get('Observation').value);
+    if (Number.isNaN(minor))
+    { 
+      abp.message.error( "Minor can be not empty, value should be a number !");
+      return;
+     }
+     if ( Number.isNaN(major))
+     { 
+      abp.message.error( "Major  can be not empty, value should be a number!");
+      return;
+     }
+     if ( Number.isNaN(critical))
+     { 
+      abp.message.error( "Critical can be not empty, value should be a number!");
+      return;
+     }
+     if ( Number.isNaN(timeBound))
+     { 
+      abp.message.error( "TimeBound  can be not empty, value should be a number!");
+      return;
+     }
+       if (Number.isNaN(observation))
+       { 
+        abp.message.error( "Observation can be not empty, value should be a number!");
+        return;
+       }
 
     abp.message.confirm(("Please make sure all the required information is entered. Are you sure to submit your application for review?"),
       undefined,
@@ -1320,7 +1363,7 @@ debugger
     this._SlcpService.GetReviewerByStandard(UserModel).subscribe((Response) => {
       
       var reviwerData = Response
-      if (reviwerData == null || reviwerData == undefined || reviwerData == "" || reviwerData == '' || reviwerData == NaN) {
+      if (reviwerData == null || reviwerData == undefined || reviwerData == "" || reviwerData == '' || reviwerData == isNaN) {
         this.Revieweruser = false
       }
       else if (parseInt(reviwerData.userId) == parseInt(localStorage.getItem('userId'))) {
@@ -1332,4 +1375,29 @@ debugger
     })
 
   }
+
+  // ManageVisit(e) {
+   
+  
+   
+  // //  var tt= this.authorizer;
+  //   if(manageAllowed=='1')
+  //   {
+  //  if (e.row.data.approvalStatusId=="7" || e.row.data.approvalStatusId=="3")
+  //   {
+  //   return !e.row.isEditing;
+  //   }
+  
+  //   else
+  //   {
+      
+  //     return e.row.isEditing;
+  //   }
+  // }
+  // else
+  // {
+  //    return e.row.isEditing;
+  // }
+  
+  // }
 }

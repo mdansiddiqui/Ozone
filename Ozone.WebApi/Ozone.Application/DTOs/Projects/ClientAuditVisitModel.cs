@@ -8,6 +8,8 @@ namespace Ozone.Application.DTOs
 {
     public class ClientAuditVisitModel
     {
+        public long? S_No { get; set; }
+
         public long Id { get; set; }
         [ReadOnly(true)]
         public string Code { get; set; }
@@ -59,6 +61,8 @@ namespace Ozone.Application.DTOs
         public string AuditPlanFilePath { get; set; }
         public string AuditPlanContentType { get; set; }
         public string StandardName { get; set; }
+        
+        public string Remarks { get; set; }
         public long? ReviewerId { get; set; }
         public string ReviewerName { get; set; }
         public long? StandardId { get; set; }
@@ -71,9 +75,16 @@ namespace Ozone.Application.DTOs
         public long? VisitLevelId { get; set; }
         public string VisitLevelName { get; set; }
         public string ClientName { get; set; }
+        public string ClientSiteName { get; set; }
         public DateTime? ResubmitedDate { get; set; }
         public TimeSpan days { get; set; }
         public DateTime? AuditCompletedDate { get; set; }
+        public string BranchName { get; set; }
+
+        public string NaceCode { get; set; }
+        public string EACode { get; set; }
+
+
     }
     public class GetPagedClientAuditVisitModel
     {

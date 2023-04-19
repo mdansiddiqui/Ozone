@@ -8,7 +8,7 @@
 // export class UserWithLocationsTaskBoardComponent implements OnInit {
 
 //   public approval = [
-    
+
 //     {
 //       dencode: "0001",
 //       Name: "Muhammad Farooq",
@@ -68,7 +68,7 @@ import { Employee, EmployeesService } from '@app/pages/sales/employees.service';
   selector: 'app-user-with-locations-task-board',
   templateUrl: './user-with-locations-task-board.component.html',
   styleUrls: ['./user-with-locations-task-board.component.css']
-}) 
+})
 // @Component({
 //   selector: 'app-user-with-locations-task-board',
 //   templateUrl: './user-with-locations-task-board.component.html',
@@ -81,27 +81,23 @@ export class UserWithLocationsTaskBoardComponent implements OnInit {
 
   public tabIndex: number = 1;
   secRoleForm
-  isManageAllowed: boolean 
-  public isAddShown : boolean 
+  isManageAllowed: boolean
+  public isAddShown : boolean
   //public deletedbtn:boolean
-  public isEditShown : boolean  
-  public isViewShown : boolean  
+  public isEditShown : boolean
+  public isViewShown : boolean
   public userdata:any;
   public keyword : string = ''
   tableSizes = [3, 5, 10, 15, 20, 25];
   public totalCount: number
   public user = []
   public pagedDto: PagedRequestModel = new PagedRequestModel()
+
   ResetPasswordForm = new FormGroup({
-   
-    
-    
-     NewPassword: new FormControl(''),
+    NewPassword: new FormControl(''),
      NewConfirmPassword: new FormControl(''),
      EmailForgotPassword: new FormControl(''),
- 
- 
-   })
+    })
 
   readonly allowedPageSizes = [5, 10, 'all'];
   readonly displayModes = [{ text: "Display Mode 'full'", value: "full" }, { text: "Display Mode 'compact'", value: "compact" }];
@@ -115,33 +111,33 @@ export class UserWithLocationsTaskBoardComponent implements OnInit {
   get isCompactMode() {
       return this.displayMode === "compact";
   }
- 
+
   constructor(
     private _makerAuthorizerFormService: MakerAuthorizerFormService,
     public SecUserService : SecUserService,
     private router : Router
-  ) {  
-    this.edit = this.edit.bind(this);  
+  ) {
+    this.edit = this.edit.bind(this);
     this.edittest=this.edittest.bind(this);
     this.delete=this.delete.bind(this);
     this.review=this.review.bind(this);
     this.SubmitForreview=this.SubmitForreview.bind(this);
     this.Remarks=this.Remarks.bind(this);
     this.resetpassword= this.resetpassword.bind(this);
-    //  this.editIconClick = this.editIconClick.bind(this);  
+    //  this.editIconClick = this.editIconClick.bind(this);
     // this.Downloadfile=this.Downloadfile.bind(this);
   }
-  
+
   Remarks(e)
-  { 
-    
+  {
+
    // var userId=item;
     //var urlink=e;app/pages/security-module/user-remarks
     this.router.navigateByUrl('app/pages/security-module/user-remarks?'+e.row.data.id)
 
   }
   ngOnInit(): void {
-      
+
     this.tabIndexEmitter.emit({ "tabIndex" : undefined });
 
     this.loadSecRoleForm()
@@ -150,31 +146,31 @@ export class UserWithLocationsTaskBoardComponent implements OnInit {
   }
   ngAfterViewInit() : void {
     this.onSearch();
-   
+
   }
-//   edit(e) {  
-//     
-// //this.router.navigate([/app/pages/stock-management/library/']);  
-// }  
+//   edit(e) {
+//
+// //this.router.navigate([/app/pages/stock-management/library/']);
+// }
  onTableDataChange(event) {
-   
+
     this.pagedDto.page = event;
     this.onSearch();
   }
   reloadGrid()
-  
+
   {
 
     this.pagedDto.page =1;
     this.onSearch();
   }
   loadSecRoleForm() {
-      
+
     this.formName = "User"
     this._makerAuthorizerFormService.getSecRoleForm().subscribe((data) => {
-        
+
       let formName = (this.formName == undefined ? localStorage.getItem('formName') : this.formName)
-        
+
       this.secRoleForm = data.find(x => x.formCode != null && x.formCode == this.formName)
       debugger
       if(this.secRoleForm==undefined || this.secRoleForm=="" ||this.secRoleForm==null)
@@ -182,14 +178,14 @@ export class UserWithLocationsTaskBoardComponent implements OnInit {
       this.router.navigateByUrl('/app/home')
       }
       if(this.secRoleForm.manageAllowed == true)
-      { 
+      {
         this.isManageAllowed = true
 
       }
       else
       {
         this.isManageAllowed = false;
-    
+
       }
     //this.isEditShown= this.secRoleForm.authAllowed
     // this.isViewShown = this.secRoleForm.authAllowed
@@ -223,21 +219,21 @@ export class UserWithLocationsTaskBoardComponent implements OnInit {
     }
       //this.isViewShown = this.secRoleForm.authAllowed
     })
-      
+
   }
   id: number
 //   editIconClick(e)
-//    {  
-//      
+//    {
+//
 // // this.router.navigateByUrl('/app/pages/stock-management/library');
 // this.id=e.row.data.id;
 //   // this.router.navigate(['app/pages/stock-management/library']);
 //     //this.router.navigate(["account/login"]);
-// this.router.navigateByUrl('/app/pages/stock-management/user-with-locations?'+this.id);  
-// }  
+// this.router.navigateByUrl('/app/pages/stock-management/user-with-locations?'+this.id);
+// }
 
 // Downloadfile(e): void {
-//    
+//
 
 //   // this.id=e.row.data.id;
 //   // var fillename=e.row.data.title;
@@ -248,29 +244,29 @@ export class UserWithLocationsTaskBoardComponent implements OnInit {
 //   //   // const url=window.URL.createObjectURL(Blb);
 //   //   // window.open(url);
 //   //   // console.log("success");
-  
-//   //   
+
+//   //
 //   //   const a = document.createElement('a');
 //   //     a.setAttribute('style', 'display:none;');
 //   //     document.body.appendChild(a);
-//   //    a.download =fillename;  
-    
-      
-     
+//   //    a.download =fillename;
+
+
+
 //   //     a.href = URL.createObjectURL(Blb);
 //   //     a.target = '_blank';
 //   //     a.click();
 //   //     document.body.removeChild(a);
-      
+
 //   // })
 // }
   onTableSizeChange(event): void {
-    
+
     this.pagedDto.pageSize = event.target.value;
     this.onSearch();
   }
   onSearch(){
-    
+
     var OrganId;
     var  ur ;
      ur=window.location.href.split("/")[7];
@@ -295,37 +291,37 @@ export class UserWithLocationsTaskBoardComponent implements OnInit {
     //this.pagedDto.authAllowed = this.secRoleForm.authAllowed
    // this.pagedDto.pageSize = 3
     this.SecUserService.Get(OrganId,this.pagedDto).subscribe((Response) => {
-              
-     
+
+
       this.totalCount = Response.totalCount
       this.user = Response.secUserModel
     })
   }
 
   // id: number
-  // editIconClick(e) {  
-  //          
+  // editIconClick(e) {
+  //
   //   // this.router.navigateByUrl('/app/pages/stock-management/library');
   //   this.id=e.row.data.id;
   //       // this.router.navigate(['app/pages/stock-management/library']);
   //         //this.router.navigate(["account/login"]);
-  //     this.router.navigateByUrl('/app/pages/stock-management/library?'+this.id);  
-  //    }  
+  //     this.router.navigateByUrl('/app/pages/stock-management/library?'+this.id);
+  //    }
   displayStyle = "none";
   userId:number
   resetpassword(e)
    {
-     
+
      this.userId=0;
     this.userId=e.row.data.id;
     this.userdata=e.row.data;
     this.ResetPasswordForm.get('EmailForgotPassword').setValue(e.row.data.emailForgotPassword);
     this.ResetPasswordForm.get('EmailForgotPassword').disable();
     this.displayStyle = "block";
-  
-  //this.router.navigateByUrl('/app/pages/stock-management/library?'+this.id);  
+
+  //this.router.navigateByUrl('/app/pages/stock-management/library?'+this.id);
   }
- 
+
   edit(e) {
     if(e.row.data.approvelStatusId==1)
     {
@@ -334,16 +330,16 @@ export class UserWithLocationsTaskBoardComponent implements OnInit {
     }
     else
     {
-    
+
     this.id=e.row.data.id;
     // var userdata=e.row.data;
     //  this.SecUserService.setUserWithLocations(e.row.data)
     // this.tabIndexEmitter.emit({ "tabIndex" : this.tabIndex });
    this.router.navigateByUrl('/app/pages/security-module/user-with-locations?'+this.id)
     }
-  //this.router.navigateByUrl('/app/pages/stock-management/library?'+this.id);  
+  //this.router.navigateByUrl('/app/pages/stock-management/library?'+this.id);
   }
- 
+
 
   // openPopup() {
   //   this.displayStyle = "block";
@@ -353,21 +349,21 @@ export class UserWithLocationsTaskBoardComponent implements OnInit {
     this.displayStyle = "none";
   }
   onView(item){
-      
+
     item["onView"] = true
     this.SecUserService.setUserWithLocations(item)
     this.tabIndexEmitter.emit({ "tabIndex" : this.tabIndex });
   }
   review(e)
   { this.id=e.row.data.id;
-    
+
    // var userId=item;
     //var urlink=e;
     this.router.navigateByUrl('/app/pages/security-module/user-review?'+this.id)
 
   }
-  SubmitForreview(e) 
-  { 
+  SubmitForreview(e)
+  {
     if(e.row.data.approvelStatusId==1)
     {
       abp.message.error("Can not Manage this user Because this record has been send For Review")
@@ -376,21 +372,21 @@ export class UserWithLocationsTaskBoardComponent implements OnInit {
     else{
 
     this.id=e.row.data.id;
-    
+
     abp.message.confirm(("Please make sure all the required information is entered. Are you sure to submit your application for review?"),
     undefined,
         (result: boolean) => {
             if (result) {
-              // this.SecUserService.Deleteuser(e.row.data.id).subscribe() 
+              // this.SecUserService.Deleteuser(e.row.data.id).subscribe()
               //     abp.message.info("Deleted successfully", "Status", {});
 
                   this.SecUserService.SubmitForReview(e.row.data.id).subscribe((Response)=>{
- 
+
                     abp.message.info(Response.message)
                     this.onSearch();
-                   
+
                    })
-                  
+
             }
           }
      )
@@ -405,14 +401,14 @@ export class UserWithLocationsTaskBoardComponent implements OnInit {
     }
     else{
     this.id=e.row.data.id;
-    
+
    // var userId=item;
     //var urlink=e;
     this.router.navigateByUrl('/app/pages/security-module/user-standards?'+this.id)
 
   }}
   delete(e) {
- 
+
 
  if(e.row.data.approvelStatusId==1)
  {
@@ -424,29 +420,29 @@ export class UserWithLocationsTaskBoardComponent implements OnInit {
     undefined,
         (result: boolean) => {
             if (result) {
-              // this.SecUserService.Deleteuser(e.row.data.id).subscribe() 
+              // this.SecUserService.Deleteuser(e.row.data.id).subscribe()
               //     abp.message.info("Deleted successfully", "Status", {});
 
                   this.SecUserService.Deleteuser(e.row.data.id).subscribe((Response)=>{
- 
+
                     abp.message.info(Response.message)
                     this.onSearch();
-                   
+
                    })
-                  
+
             }
           }
      )}
         }
      onCellPrepared (e) {
-       
+
       if (e.row.data.approvelStatusId == "1") {
         e.row.Cells[2].Visible = false;
-         
+
       }
   }
   UserSubmit(): void {
-    
+
     debugger
 
     if (this.ResetPasswordForm.get('NewConfirmPassword').value != this.ResetPasswordForm.get('NewPassword').value) {
@@ -458,7 +454,7 @@ export class UserWithLocationsTaskBoardComponent implements OnInit {
       return
       // MesseageError="Module is Empty";
     }
-   
+
     var LoginUserId = localStorage.getItem('userId');
     const UserModel =
 
@@ -482,43 +478,43 @@ export class UserWithLocationsTaskBoardComponent implements OnInit {
   }
 
   deletedbtn(e) {
-     
-    
+
+
     var LoginUserId =parseInt(localStorage.getItem('userId'));
   //  var tt= this.authorizer;
     if(LoginUserId == parseInt(e.row.data.id))
     {
-  
+
     return e.row.isEditing;
     }
-  
+
     else
     {
-      
+
       return !e.row.isEditing;
     }
-  
-  
-  
+
+
+
   }
   btnforReview(e) {
     debugger
-    
+
         var Insert_Allow =localStorage.getItem('InsertAllow');
                debugger
-      
+
                   if (Insert_Allow =="1" && e.row.data.approvalStatusId!="3" && e.row.data.approvalStatusId!="10003")
                    {
                    return !e.row.isEditing;
                  }
-                 
+
                    else
                    {
-                     
+
                      return e.row.isEditing;
                    }
-                 
-                 
-                 }        
-    
+
+
+                 }
+
 }

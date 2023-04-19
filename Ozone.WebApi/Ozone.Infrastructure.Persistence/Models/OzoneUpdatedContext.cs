@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Ozone.Infrastructure.Persistence.Models
 {
-    public partial class OzoneContext : DbContext
+    public partial class OzoneUpdatedContext : DbContext
     {
-        public OzoneContext()
+        public OzoneUpdatedContext()
         {
         }
 
-        public OzoneContext(DbContextOptions<OzoneContext> options)
+        public OzoneUpdatedContext(DbContextOptions<OzoneUpdatedContext> options)
             : base(options)
         {
         }
@@ -121,7 +121,7 @@ namespace Ozone.Infrastructure.Persistence.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=DESKTOP-PE36NEL;Initial Catalog=Ozone;user id=sa;password=123qwe;integrated security=True;");
+                optionsBuilder.UseSqlServer("Data Source=DESKTOP-1R953HG;Initial Catalog=OzoneUpdated;user id=sa;password=123qwe;integrated security=True;");
             }
         }
 
@@ -1324,7 +1324,7 @@ namespace Ozone.Infrastructure.Persistence.Models
                 entity.HasOne(d => d.ApprovelStatus)
                     .WithMany(p => p.SecUser)
                     .HasForeignKey(d => d.ApprovelStatusId)
-                    .HasConstraintName("FK__SecUser__Approve__25DB9BFC");
+                    .HasConstraintName("FK__SecUser__Approve__38EE7070");
 
                 entity.HasOne(d => d.City)
                     .WithMany(p => p.SecUser)

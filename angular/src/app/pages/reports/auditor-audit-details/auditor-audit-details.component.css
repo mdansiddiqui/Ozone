@@ -1,0 +1,11 @@
+.cursor-point{
+    cursor: pointer;
+}
+.history-modal-dialog{
+    max-width: 800px;
+    margin: auto;
+}
+.my-center{
+    display: flex;
+    justify-content: center;
+}

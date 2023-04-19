@@ -76,6 +76,7 @@ namespace Ozone.Infrastructure.Shared.Services
             result = _mapper.Map<List<ProjectTypeModel>>(list);
             return result;
         }
+
         public async Task<List<ConsultantModel>> GetAllConsultantList(long id)
         {
             var result = new List<ConsultantModel>();
@@ -497,6 +498,107 @@ namespace Ozone.Infrastructure.Shared.Services
             return result;
         }
 
+        public async Task<string> CreateVisitLevel(VisitLevelModel input)
+        {
+            using (var transaction = _unitOfWork.BeginTransaction())
+            {
+                VisitLevel DbVisitLevel = await Task.Run(() => _dbContext.VisitLevel.Where(x => x.IsDeleted == false && x.Id == input.Id).FirstOrDefault());
 
+                try
+                {
+                    var message = "";
+                    long newid;
+                    bool New = false;
+                    if (DbVisitLevel == null)
+                    {
+                        New = true;
+                        DbVisitLevel = new VisitLevel();
+                    }
+                    //DbModules.Id = input.Id;
+                    DbVisitLevel.Id = input.Id;
+                    DbVisitLevel.Name = input.Name;
+                    DbVisitLevel.IsActive = input.IsActive;
+                    DbVisitLevel.Description = input.Description;
+                    //DbAudditor.Address = input.Address;
+                    DbVisitLevel.Code = input.Code;
+                    DbVisitLevel.CreatedById = input.CreatedById;
+
+
+                    if (New == true)
+                    {
+                        DbVisitLevel.IsDeleted = false;
+                        //await base.AddAsync(DbVisitLevel);
+                        _dbContext.VisitLevel.Add(DbVisitLevel);
+                        message = "Successfully Inserted!";
+                    }
+                    else
+                    {
+                        _dbContext.VisitLevel.Update(DbVisitLevel);
+                        //await base.UpdateAsync(DbVisitLevel);
+                        message = "Successfully Updated!";
+                    }
+                    var result = await _unitOfWork.SaveChangesAsync();
+
+                    newid = DbVisitLevel.Id;
+
+                    transaction.Commit();
+                    return message;
+
+                }
+
+                catch
+                {
+                    transaction.Rollback();
+                    return "Not Inserted!";
+                }
+
+
+
+            }
+
+        }
+
+        public async Task<string> DeleteVisitLevelById(long id)
+        {
+            using (var transaction = _unitOfWork.BeginTransaction())
+            {
+
+                VisitLevel dbVisit = _dbContext.VisitLevel.Where(u => u.Id == id).FirstOrDefault();
+
+
+                if (dbVisit != null)
+                {
+                    try
+                    {
+                        dbVisit.IsDeleted = true;
+                        _dbContext.VisitLevel.Update(dbVisit);
+                        await _unitOfWork.SaveChangesAsync();
+                        transaction.Commit();
+                        return "Successfully Deleted!";
+
+                    }
+                    catch (Exception ex)
+                    {
+                        var Exception = ex;
+                        transaction.Rollback();
+                        return "Not Deleted!";
+                    }
+                }
+                else
+                {
+                    return "Client not Exists!";
+                }
+
+            }
+        }
+
+
+         public async Task<List<OrganizationModel>> GetAllAgencywithHeadOffice()
+        {
+            var result = new List<OrganizationModel>();
+            var list = await Task.Run(() => _dbContext.Organization.Where(x => x.IsActive == true && x.IsDeleted==false).ToList());
+            result = _mapper.Map<List<OrganizationModel>>(list);
+            return result;
+        }
     }
 }

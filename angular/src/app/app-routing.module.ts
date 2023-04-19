@@ -1,3 +1,5 @@
+import { VisitLevelComponent } from './pages/master-setups/visit-level/visit-level.component';
+import { AllVisitComponent } from './pages/security-module/all-visit/all-visit.component';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
@@ -151,11 +153,11 @@ import { AuditorAuditDetailsComponent } from './pages/reports/auditor-audit-deta
                     { path: 'pages/sales/audit-report', component: AuditReportComponent },
                     { path: 'pages/sales/audit-reportList', component: AuditReportListComponent },
                     { path: 'pages/sales/qc-detail-grid', component: QCDetailGridComponent },
-                
+
                     { path: 'pages/sales/qc-master-list', component: QCMasterListComponent },
 
                     { path: 'pages/sales/general-form', component: GeneralFormComponent },
-                    
+
 
 
 
@@ -189,7 +191,8 @@ import { AuditorAuditDetailsComponent } from './pages/reports/auditor-audit-deta
                     { path: 'pages/security-module/user-review', component: UserReviewComponent },
                     { path: 'pages/security-module/user-remarks', component: UserRemarksComponent },
                     { path: 'pages/security-module/file-uploading', component: FileUploadingComponent },
-                   
+                    { path: 'pages/security-module/all-visit', component: AllVisitComponent },
+
 
                     //reports
 
@@ -197,7 +200,7 @@ import { AuditorAuditDetailsComponent } from './pages/reports/auditor-audit-deta
                     { path: 'pages/reports/auditor-reports', component: AuditorReportsComponent },
                     { path: 'pages/reports/invoice', component: InvoiceComponent },
                     //{ path: 'pages/reports/auditor-audit-details', component: AuditorAuditDetailsComponent },
-                    
+
                     //Transfer
                     { path: 'pages/security-module/userlocation-tab', component: UserlocationTabComponent },
 
@@ -207,6 +210,7 @@ import { AuditorAuditDetailsComponent } from './pages/reports/auditor-audit-deta
 
                     //Master Setups
                     { path: 'pages/master-setups/document-type', component: DocumentTypeComponent },
+                    { path: 'pages/master-setups/visit-level', component: VisitLevelComponent },
                     { path: 'pages/master-setups/standard-type', component: StandardTypeComponent },
                     { path: 'pages/master-setups/country', component: CountryComponent },
                     { path: 'pages/master-setups/state', component: StateComponent },
@@ -224,7 +228,7 @@ import { AuditorAuditDetailsComponent } from './pages/reports/auditor-audit-deta
                     { path: 'pages/master-setups/qc-document', component: QcDocumentComponent },
                     { path: 'pages/master-setups/dashboard', component: DashboardComponent },
 //Opeartions
-                    
+
                     { path: 'pages/Operations/consultant', component: ConsultantComponent },
 
                     //TaskBoard

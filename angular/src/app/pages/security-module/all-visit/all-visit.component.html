@@ -1,0 +1,166 @@
+<form [formGroup]="filterForm">
+    <section class="content-header pt-0 pb-0 mt-0 mx-0 mb-0 md-0">
+        <div class="container-fluid mx-0 px-0 mx-0 mb-0">
+            <div class="row md-0 mb-1 mt-0">
+                <div class="col-sm-12 px-0">
+                    <div class="alert alert-info alert-dismissible">
+                        <h6>All Client Visit</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-header pt-0 pb-0 mt-3 mx-0 mb-0 md-0">
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row md-0 px-3 pb-2 ">
+
+                        <div class="col-md-4">
+                            <label class="mb-0" for="fromdate">From Date</label>
+                            <input type="date" formControlName="fromdate" class="form-control form-control-sm col-md-12" id="fromdate" />
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="mb-0" for="todate">To Date</label>
+                            <input type="date" formControlName="todate" class="form-control form-control-sm col-md-12" id="todate" />
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="mb-0 " for="Agency">Branch Office</label>
+                            <select  class="form-control form-control-sm col-md-12" formControlName="OrganizationId" id="OrganizationId">
+                                <option *ngFor="let item of OrganizationList" [value]="item.id">
+                                    {{item.name }}
+                                </option>
+                            </select>
+                        </div>
+                       
+                    </div>
+                    <div class="row  mt-1 mx-2">
+                        <div class="col-md-4">
+                            <label class="mb-0 " for="Standard">Standard</label>
+                            <select formControlName="StandardId"
+                                class="form-control form-control-sm col-md-12"
+                                id="StandardId">
+
+                                <option *ngFor="let item of standardList" [value]="item.id">
+                                    {{item.name }}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            
+                            <label class="mb-0 " for="VisitLevelId">Visit Level</label>
+                            <select formControlName="VisitLevelId"
+                                class="form-control form-control-sm col-md-12"
+                                id="VisitLevelId">
+
+                                <option *ngFor="let item of VisitLevelList" [value]="item.id">
+                                    {{item.name }}
+                                </option>
+                            </select>
+                        </div>
+
+                        
+                        <div class="col-md-4">
+                            <label class="mb-0" for="VisitStatusId">
+                                {{ "Status" }}
+                            </label>
+
+                            <select formControlName="VisitStatusId"  class="form-control" id="VisitStatusId">
+                                <option *ngFor="let item of VisitStatusList" [value]="item.id">
+                                  {{item.name }}
+                                </option>
+                              </select>
+                            
+                        </div>
+                     
+                    </div>
+
+                    <div class="row  mt-1 mx-2">
+                        <div class="col-md-6"></div>
+
+                        <div class="col-md-6">
+                            <button type="button"
+                                class="btn-sm btn btn-primary float-right mx-2 px-4 mt-2 pt-2 pb-2 mt-3 fas fa-search" (click)="Search()" type="submit"> <i
+                                    class="fas fa-search"  
+                                    ></i> Search</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+</form>
+
+
+<section class="content-header pt-0 pb-0 mt-3 mx-0 mb-0 md-0">
+    <div class="container-fluid mt-2 mb-2">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body table-responsive p-0">
+                        <dx-data-grid id="dataGrid" [rowAlternationEnabled]="true" [showRowLines]="true"
+                            [showBorders]="true" [columnAutoWidth]="true" [rowAlternationEnabled]="true"
+                            [showColumnLines]="true" [allowColumnReordering]="true" [dataSource]="AllClientVisit | paginate
+                        : {
+                        id: 'server',
+                        itemsPerPage: this.pagedDto.pageSize,
+                        currentPage: this.pagedDto.page,
+                        totalItems: this.totalCount
+                        }" keyExpr="id" (onExporting)="onExporting($event)">
+                            <dxo-selection mode="multiple"></dxo-selection>
+                            <dxo-scrolling columnRenderingMode="virtual"></dxo-scrolling>
+                            <dxo-search-panel class="mt-15 mb-3 my-3" [visible]="true" [width]="240"
+                                placeholder="Search...">
+                            </dxo-search-panel>
+                            <dxo-scrolling mode="virtual"></dxo-scrolling>
+                            <dxo-scrolling columnRenderingMode="virtual"></dxo-scrolling>
+                            <dxi-column dataField="projectCode" caption="Project Code"></dxi-column>
+                            <dxi-column dataField="clientName" caption="Client Name"></dxi-column>
+                            <dxi-column dataField="clientSiteName" caption="Client Site Name"></dxi-column>
+                            <dxi-column dataField="visitLevelName" caption="Visit Level"></dxi-column>
+                            <dxi-column dataField="visitStatusName" caption="Visit Status"></dxi-column>
+                            <dxi-column dataField="justifiedPersonName" caption="Justified Person"></dxi-column>
+                            <dxi-column dataField="technicalExpertName" caption="Technical Expert"></dxi-column>
+                            <dxi-column dataField="duration" caption="Duration"></dxi-column>
+                            <dxi-column dataField="visitDate" dataType="date" caption="Visit Date"></dxi-column>
+                            <dxi-column dataField="startDate" dataType="date" caption="Start Date"></dxi-column>
+                            <dxi-column dataField="endDate" dataType="date" caption="End Date"></dxi-column>
+                            <dxi-column dataField="leadAuditorName" caption="Lead Auditor"></dxi-column>
+                            <dxi-column dataField="auditor1Name" caption="Auditor 1"></dxi-column>
+                            <dxi-column dataField="auditor2Name" caption="Auditor 2"></dxi-column>
+                            <dxi-column dataField="auditor3Name" caption="Auditor 3"></dxi-column>
+                            <dxi-column dataField="auditor4Name" caption="Auditor 4"></dxi-column>
+                            <dxi-column dataField="auditor5Name" caption="Auditor 5"></dxi-column>
+                            <dxi-column dataField="reviewerName" caption="Reviewer"></dxi-column>
+                            <dxi-column dataField="reviewDate" dataType="date" caption="Review Date"></dxi-column>
+                            <dxi-column dataField="submisionDate" dataType="date" caption="Submision Date"></dxi-column>
+                            <dxi-column dataField="remarks" caption="Remarks"></dxi-column>
+                            <dxi-column type="buttons" caption="Action">
+                                <!-- <dxi-button hint="Download File" icon="download" [(visible)]="isAddShown"
+                                    [onClick]="Downloadfile">
+                                </dxi-button> -->
+                                <dxi-button
+                                hint="View Detail"
+                                icon="fas fa-eye text-secondary"
+                                alignment="left"
+                                [onClick]="review1"
+                            >
+                            </dxi-button>
+                            </dxi-column>
+                            <dxo-export [enabled]="true" [allowExportSelectedData]="true"></dxo-export>
+                            <dxo-summary>
+                                <dxi-total-item column="projectCode" summaryType="count"> </dxi-total-item>
+                            </dxo-summary>
+                        </dx-data-grid>
+                        <!-- footer  -->
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

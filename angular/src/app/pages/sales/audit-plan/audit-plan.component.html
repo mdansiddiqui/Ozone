@@ -508,9 +508,9 @@
                         </dxi-column>
 
                         <dxi-column type="buttons" caption="Action" cssClass="cell-header">
-                            <dxi-button icon="edit" [onClick]="edit"></dxi-button>
+                            <dxi-button icon="edit" [onClick]="edit" [(visible)]="btnSave" ></dxi-button>
 
-                            <dxi-button icon="deleterow" [onClick]="delete"></dxi-button>
+                            <dxi-button icon="deleterow" [onClick]="delete"  [(visible)]="btnSave"></dxi-button>
                         </dxi-column>
                     </dx-data-grid>
                 </div>

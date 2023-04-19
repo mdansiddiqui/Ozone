@@ -15,6 +15,9 @@ using Ozone.Application.Interfaces.Service;
 using System.IO;
 using Ozone.Infrastructure;
 using System.Collections.Generic;
+using Ozone.Application.Interfaces.Security;
+using Ozone.Application.Interfaces.Setup;
+using Ozone.Application.Interfaces;
 
 namespace Ozone.WebApi.Controllers.ClientALLProjects
 {
@@ -90,6 +93,33 @@ namespace Ozone.WebApi.Controllers.ClientALLProjects
 
 
         }
+
+        [Route("GetClientAuditVisitByOrganizationId")]
+        [HttpGet]
+        [Authorize]
+
+        public async Task<IActionResult> GetClientAuditVisitByOrganizationId(int id)
+        {
+            var list = await _clientAuditVisitService.GetClientAuditVisitByOrganizationId(id);
+            return new JsonResult(list);
+
+
+        }
+
+
+        [Route("GetClientAuditVisitBySearch")]
+        [HttpPost]
+        [Authorize]
+
+        public async Task<IActionResult> GetClientAuditVisitBySearch(IDictionary<string, string> keyValuePairs)
+        {
+
+            var list = await _clientAuditVisitService.GetClientAuditVisitBySearch(keyValuePairs);
+
+            return new JsonResult(list);
+        }
+
+
 
         [HttpPost]
         [Route("ClientAuditVisitDeleteById")]
@@ -469,5 +499,51 @@ namespace Ozone.WebApi.Controllers.ClientALLProjects
             var List = await _AllDropdownService.GetALLVisitLevel();
             return new JsonResult(List);
         }
+
+        [Route("CreateVisitLevel")]
+        [HttpPost]
+        [Authorize]
+
+        public async Task<IActionResult> CreateVisitLevel(VisitLevelModel input)
+        {
+
+            var result = await _AllDropdownService.CreateVisitLevel(input);
+            return Ok(new Response { Status = result, Message = result });
+
+        }
+
+
+        [HttpPost]
+        [Route("DeleteVisitLevelById")]
+        [Authorize]
+
+        public async Task<IActionResult> DeleteVisitLevelById(long id)
+        {
+            // SecUserService secuserservice = new SecUserService();
+            var result = await _AllDropdownService.DeleteVisitLevelById(id);
+            return Ok(new Response { Status = result, Message = result });
+
+        }
+
+        [Route("GetAllAgencywithHeadOffice")]
+        [HttpGet]
+        [Authorize]
+
+        public async Task<IActionResult> GetAllAgencywithHeadOffice()
+        {
+
+            var list = await _AllDropdownService.GetAllAgencywithHeadOffice();
+
+            return new JsonResult(list);
+        }
+
+        //[HttpPost]
+        //[Route("AddVisitLevelUser")]
+        //[Authorize]
+        //public async Task<IActionResult> AddVisitLevelUser(VisitLevelModel input)
+        //{
+        //    var result = await _AllDropdownService.CreateUserVisitLevel(input);
+        //    return Ok(new Response { Status = result, Message = result });
+        //}
     }
 }

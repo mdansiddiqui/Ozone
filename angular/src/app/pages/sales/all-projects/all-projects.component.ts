@@ -665,7 +665,7 @@ ManageVisit(e) {
 //  var tt= this.authorizer;
   if(manageAllowed=='1')
   {
- if (e.row.data.approvalStatusId=="7")
+ if (e.row.data.approvalStatusId=="7" || e.row.data.approvalStatusId=="3")
   {
   return !e.row.isEditing;
   }

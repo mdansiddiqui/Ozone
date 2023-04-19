@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Ozone.Application.Interfaces;
+using Ozone.Infrastructure.Persistence.Entities;
 using Ozone.Infrastructure.Persistence.Models;
 using System;
 using System.Collections.Generic;
@@ -88,5 +89,6 @@ namespace Ozone.Application.Repository
             //await _dbContext.SaveChangesAsync();
             return;
         }
+
     }
 }

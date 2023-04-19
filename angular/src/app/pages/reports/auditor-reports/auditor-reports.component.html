@@ -530,7 +530,89 @@
               
                           </div>
                     </div>
+                    <div class="card" *ngIf="CertifiedClientReport">
+                       
 
+
+                      <div class="card-body table-responsive p-0">
+
+                          <div class="long-title">
+                              <h3
+                              class="modal-title"
+                              style="
+                                text-align: center;
+                                color: rgb(9, 26, 59);
+                                font-family: 'Times New Roman';
+                                font-weight: bold;
+                                margin-top: 10px;
+                                text-decoration: underline;
+                              "
+                            >
+                              {{ ReportName }}
+                            </h3>
+                            </div>
+
+                          <dx-data-grid class="mx-3 mb-3" id="gridContainer" [showBorders]="true" [rowAlternationEnabled]="true"
+                            [showRowLines]="true" [columnAutoWidth]="true" [showColumnLines]="true" [allowColumnReordering]="true"
+                            [dataSource]="CertifiedClientList" keyExpr="s_No"
+                            (onExporting)="onExporting($event)">
+                            <dxo-paging [pageSize]="10"></dxo-paging>
+                            <dxo-pager
+                              [showPageSizeSelector]="true"
+                              [allowedPageSizes]="[10, 25, 50, 100]"
+                            ></dxo-pager>
+                           
+                            <dxo-grouping [autoExpandAll]="true"></dxo-grouping>
+                            <dxo-selection mode="multiple"></dxo-selection>
+                            <dxo-scrolling  columnRenderingMode="virtual"></dxo-scrolling>
+
+                            <dxo-search-panel class="mt-15 mb-3 my-3"[visible]="true" [width]="240" placeholder="Search...">
+                            </dxo-search-panel>
+
+                            <dxi-column dataField="s_No" caption="S.No"  cssClass="cell-header"></dxi-column>
+
+                            <dxi-column dataField="registration_no" caption="Registration NO."  cssClass="cell-header"></dxi-column>
+                
+                            <dxi-column dataField="clientName" caption="Client"  cssClass="cell-header"></dxi-column>
+
+                            <dxi-column dataField="projectCode" caption="Project Code"  cssClass="cell-header"></dxi-column>
+
+                            <dxi-column dataField="projectType" caption="Project Type"  cssClass="cell-header"></dxi-column>
+
+                            <dxi-column dataField="naceCode" caption="Nace Code"  cssClass="cell-header"></dxi-column>
+
+                         
+
+                            <dxi-column dataField="stage_1" caption="Stage-1" dataType="date" cssClass="cell-header"></dxi-column>
+
+                            
+                            <dxi-column dataField="stage_2" caption="Stage-2"  cssClass="cell-header"  dataType="date"></dxi-column>
+                            <dxi-column dataField="surveillance_Frequency" caption="Surveillance Frequency"  cssClass="cell-header"></dxi-column>
+                          
+                            <dxi-column dataField="certificationIssueDate" caption="Certification Issue Date" dataType="date" cssClass="cell-header"></dxi-column>
+                            <dxi-column dataField="surv_1" caption="Surv 1"  cssClass="cell-header"  dataType="date"></dxi-column>
+
+                            <dxi-column dataField="followup_1" caption="Followup 1" dataType="date"  cssClass="cell-header" ></dxi-column>
+
+                            <dxi-column dataField="surv_2" caption="surv 2"  cssClass="cell-header"  dataType="date"></dxi-column>
+
+                            <dxi-column dataField="followup_2" caption="Followup 2"  cssClass="cell-header"  dataType="date"></dxi-column>
+
+                            <dxi-column dataField="surv_3" caption="Surv 3"  cssClass="cell-header"  dataType="date"></dxi-column>
+
+                            <dxi-column dataField="surv_4" caption="Surv 4"  cssClass="cell-header"  dataType="date"></dxi-column>
+                            <dxi-column dataField="surv_5" caption="Surv 5"  cssClass="cell-header"  dataType="date"></dxi-column>
+
+                            <dxi-column dataField="recertification" caption="Recertification"  dataType="date" cssClass="cell-header"></dxi-column>
+                            <dxo-export [enabled]="true" [allowExportSelectedData]="true"></dxo-export>
+                            <dxo-summary>
+                              <dxi-total-item column="s_No" summaryType="count"> </dxi-total-item>
+                          </dxo-summary>
+                          </dx-data-grid>
+            
+            
+                        </div>
+                  </div>
                 </div>
             </div>
         </div>

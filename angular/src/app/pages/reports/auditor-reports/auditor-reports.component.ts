@@ -35,6 +35,7 @@ export class AuditorReportsComponent implements OnInit {
   public CertificationList = [];
   public ScheduleOfAuditList = [];
   public ImpartialityReviewList = [];
+  public CertifiedClientList = [];
   // public ReportsList = [];
   public standardList = [];
   public totalCount: number
@@ -45,6 +46,7 @@ export class AuditorReportsComponent implements OnInit {
   public AuditorListReport: boolean=false
   public AuditorValidationScheduleReport: boolean=false
   public ScheduleOfAuditReport: boolean=false
+  public CertifiedClientReport: boolean=false
   public ImpartialityReviewReport: boolean=false
   public ReportName: string=""
   filterForm = new FormGroup({
@@ -67,6 +69,14 @@ export class AuditorReportsComponent implements OnInit {
     this.loadAgency();
     this.loadAllCertification();
     // this.loadReportsList();
+    var roleId = localStorage.getItem("roleId");
+    var organizationId = localStorage.getItem("organizationId");
+    if(parseInt(roleId) !=2 && parseInt(roleId)!=21)
+    {
+      this.filterForm.controls.OrganizationId.setValue(organizationId);
+      this.filterForm.get('OrganizationId').disable();
+    }
+  
     
   }
   
@@ -103,6 +113,7 @@ export class AuditorReportsComponent implements OnInit {
     {id:4, name:' Auditor Validation Schedule'},
     {id:5, name:' Schedule Of Audits'},
     {id:6, name:' Impartiality Review'},
+    {id:7, name:' Window Period monitoring'},
   ]
  public StatusList = [
     {id:0,name:' In-Active '},
@@ -175,6 +186,7 @@ Search() {
   this.AuditorListReport = false
   this.AuditorValidationScheduleReport = false
   this.ScheduleOfAuditReport = false
+  this.CertifiedClientReport=false
   this.ImpartialityReviewReport = false
   this.AuditorReportSearch();
 }
@@ -186,6 +198,7 @@ Search() {
   this.AuditorListReport = false
   this.AuditorValidationScheduleReport = false
   this.ScheduleOfAuditReport = false
+  this.CertifiedClientReport=false
   this.ImpartialityReviewReport = false
  this.ClientProjectReportSearch();
 }
@@ -206,6 +219,7 @@ this.AuditorListReportSearch();
   this.AuditorListReport = false
   this.AuditorValidationScheduleReport = true
   this.ScheduleOfAuditReport = false
+  this.CertifiedClientReport=false
   this.ImpartialityReviewReport = false
  this.AuditorValidationScheduleReportSearch();
 }
@@ -216,6 +230,7 @@ this.AuditorListReportSearch();
   this.AuditorListReport = false
   this.AuditorValidationScheduleReport = false
   this.ScheduleOfAuditReport = true
+  this.CertifiedClientReport=false
   this.ImpartialityReviewReport = false
   this.ScheduleOfAuditReportSearch();
 }
@@ -226,8 +241,20 @@ this.AuditorListReportSearch();
   this.AuditorListReport = false
   this.AuditorValidationScheduleReport = false
   this.ScheduleOfAuditReport = false
+  this.CertifiedClientReport=false
   this.ImpartialityReviewReport = true
   this.ImpartialityReviewReportSearch();
+}
+else if( parseInt(this.filterForm.get('ReportId').value) == 7)
+{  
+  this.AuditReport = false
+  this.ClientProjectReport = false
+  this.AuditorListReport = false
+  this.AuditorValidationScheduleReport = false
+  this.ScheduleOfAuditReport = false
+  this.CertifiedClientReport=true
+  this.ImpartialityReviewReport = false
+  this.CertifiedClientSearch();
 }
 }
 else
@@ -486,4 +513,40 @@ addItem(newItem: []) {
 
 }
 
+
+
+CertifiedClientSearch(){
+  debugger
+  if(this.filterForm.get('fromdate').value ==null ||this.filterForm.get('fromdate').value==undefined|| this.filterForm.get('fromdate').value=="")
+  {  abp.message.error("From-Date can not be Empty","Alert")
+  return
+  // MesseageError="Version is Empty";
+  }
+  if(this.filterForm.get('todate').value ==null ||this.filterForm.get('todate').value==undefined|| this.filterForm.get('todate').value=="")
+  {  abp.message.error("To-Date can not be Empty","Alert")
+  return
+  // MesseageError="Version is Empty";
+  }
+  if(parseInt(this.filterForm.get('StandardId').value) == 7 )
+  {  
+    debugger
+    this.pagedDto.pageSize = 100
+    this.ScheduleOfAuditList =[];
+    this.ReportName="Certified Client Monitoring";
+    this._AuditorService.GetCertifiedClientReport(this.filterForm.value).subscribe((Response) => {
+                
+
+      debugger
+      this.CertifiedClientList = Response;
+      console.log(Response);
+     
+      //console.log(this.NaceCodeList)
+    })
+  }
+  else{
+    abp.message.error("This Report generated For SA8000","Please Select Standard SA8000 ")
+    return
+    // MesseageError="Version is Empty";
+    }
+}
 }

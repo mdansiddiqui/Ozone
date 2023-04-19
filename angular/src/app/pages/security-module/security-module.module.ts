@@ -1,3 +1,4 @@
+import { AllVisitComponent } from './all-visit/all-visit.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserWithLocationsComponent } from './user-with-locations/user-with-locations.component';
@@ -26,29 +27,28 @@ import { UserAuditsComponent } from './user-audits/user-audits.component';
 import { UserAuditorComponent } from './user-auditor/user-auditor.component';
 import { UserDeclarationComponent } from './user-declaration/user-declaration.component';
 import { NgxPaginationModule } from 'ngx-pagination';
-
  import { DxBulletModule, DxDataGridModule, DxSpeedDialActionModule, DxTemplateModule } from 'devextreme-angular';
 
 
 
- 
 
- 
 
- 
+
+
+
  import { AbpModalHeaderComponent } from '@shared/components/modal/abp-modal-header.component';
 import { UserReviewComponent } from './user-review/user-review.component';
 import { UserRemarksComponent } from './user-remarks/user-remarks.component';
 import { FileUploadingComponent } from './file-uploading/file-uploading.component';
 
 
- 
+
 
 
 
 @NgModule({
   declarations: [
-    
+
     UserWithLocationsComponent,
     RolesWithPermissionComponent,
     RolesMasterTaskBoardComponent,
@@ -73,7 +73,9 @@ import { FileUploadingComponent } from './file-uploading/file-uploading.componen
     UserReviewComponent,
     UserRemarksComponent,
     FileUploadingComponent,
-   
+    AllVisitComponent
+
+
   ],
   imports: [
     CommonModule,
@@ -89,7 +91,7 @@ import { FileUploadingComponent } from './file-uploading/file-uploading.componen
     NgxPaginationModule,
     DxDataGridModule,
 
-   
+
   ]
 })
 export class SecurityModuleModule { }

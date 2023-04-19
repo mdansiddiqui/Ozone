@@ -13,11 +13,13 @@
 using Microsoft.AspNetCore.Routing;
 using Ozone.Application.DTOs;
 using Ozone.Application.DTOs.Projects;
+using Ozone.Application.DTOs.Reports;
 using Ozone.Application.DTOs.Setup;
 using Ozone.Application.Features.Employees.Queries.GetEmployees;
 using Ozone.Application.Features.Positions.Commands.CreatePosition;
 using Ozone.Application.Features.Positions.Queries.GetPositions;
 using Ozone.Infrastructure.Persistence.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -383,7 +385,11 @@ namespace Ozone.Application.Mappings
                              .ForMember(x => x.ClientId, opt => opt.MapFrom(src => src.Project.ClientId))
                                .ForMember(x => x.VisitLevelName, opt => opt.MapFrom(src => src.VisitLevel.Name))
                                .ForMember(x => x.ClientName, opt => opt.MapFrom(src => src.Project.Client.Name))
-                               
+                               .ForMember(x => x.ClientSiteName, opt => opt.MapFrom(src => src.Project.ClientSite.SiteName))
+                               .ForMember(x => x.ClientName, opt => opt.MapFrom(src => src.Project.ClientSite.Client.Name))
+
+
+
                                .ForMember(x => x.ResubmitedDate, opt => opt.MapFrom(src => src.QcHistory.Where(x => x.ClientAuditVisitId == src.Id && x.QcStatusId == 8).Select(x => x.RemarksDate).FirstOrDefault()))
                             .ForMember(x => x.days, opt => opt.MapFrom(src => src.QcHistory.Where(x => x.ClientAuditVisitId == src.Id && x.QcStatusId == 8).Select(x => x.RemarksDate).FirstOrDefault() - src.LastModifiedDate))
 
@@ -425,6 +431,13 @@ namespace Ozone.Application.Mappings
            .ForMember(x => x.Agency, opt => opt.MapFrom(src => src.Organization.Name))
 
          .ReverseMap();
+
+            CreateMap<AuditReportHistory, AuditReportHistoryModel>()
+              .ForMember(x => x.ApprovalStatusName, opt => opt.MapFrom(src => src.ApprovalStatus.Name))
+            .ForMember(x => x.RemarksByName, opt => opt.MapFrom(src => src.RemarksBy.FullName))
+
+            .ReverseMap();
+
 
             CreateMap<AuditDocumentsType, AuditDocumentsTypeModel>();
 
@@ -481,6 +494,18 @@ namespace Ozone.Application.Mappings
       .ForMember(x => x.RemarksByName, opt => opt.MapFrom(src => src.RemarksBy.FullName))
         .ReverseMap();
 
+
+            CreateMap<ClientAuditVisitModel, UserAuditModel>()
+        .ForMember(x => x.StandardName, opt => opt.MapFrom(src => src.StandardName))
+         //.ForMember(x => x.CertificationBodyName, opt => opt.MapFrom(src => "Ozone"))
+         //.ForMember(x => x.AuditTypeName, opt => opt.MapFrom(src => "3rd Party"))
+         .ForMember(x => x.AuditLevel, opt => opt.MapFrom(src => src.VisitLevelName))
+           .ForMember(x => x.EacodeName, opt => opt.MapFrom(src => src.EACode))
+           .ForMember(x => x.NacecodeName, opt => opt.MapFrom(src => src.NaceCode))
+           .ForMember(x => x.Organization, opt => opt.MapFrom(src => src.ClientName))
+           //.ForMember(x => x.Year, opt => opt.MapFrom(src => Convert.ToDateTime(src.StartDate).Year))
+           .ForMember(x => x.Duration, opt => opt.MapFrom(src => src.Duration))
+           .ReverseMap();
         }
     }
 

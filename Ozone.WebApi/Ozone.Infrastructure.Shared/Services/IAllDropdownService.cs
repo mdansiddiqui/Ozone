@@ -9,7 +9,7 @@ namespace Ozone.Infrastructure
 {
   public  interface IAllDropdownService
     {
-       // Task<List<ClientSitesModel>> GetAllClientSites();
+        // Task<List<ClientSitesModel>> GetAllClientSites();
         Task<List<VerificationTypeModel>> GetAllVerificationType();
         Task<List<ProjectTypeModel>> GetAllProjectType();
         Task<List<ConsultantModel>> GetAllConsultantList(long id);
@@ -52,6 +52,8 @@ namespace Ozone.Infrastructure
         Task<List<VisitLevelModel>> GetALLVisitLevel();
         Task<List<SecUserModel>> GetAllUsers(long organizationId);
         Task<List<EnrollmentTypeModel>> GetEnrollmentType();
-
+        Task<string> CreateVisitLevel(VisitLevelModel input);
+        Task<string> DeleteVisitLevelById(long id);
+        Task<List<OrganizationModel>> GetAllAgencywithHeadOffice();
     }
 }

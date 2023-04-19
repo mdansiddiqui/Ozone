@@ -1,5 +1,6 @@
 ﻿using Ozone.Application.DTOs;
 using Ozone.Application.DTOs.Projects;
+using Ozone.Application.DTOs.Reports;
 using Ozone.Application.DTOs.Security;
 using Ozone.Application.Parameters;
 using System;
@@ -15,6 +16,8 @@ namespace Ozone.Application.Interfaces
     {
          //Task<GetPagedLeadAuditorReportsModel> GetPagedLeadAuditorReportsModel(IDictionary<string, string> keyValuePairs);
         Task<List<SPAuditorReportsModel>> AuditorReports(IDictionary<string, string> keyValuePairs);
+        Task<List<AuditReportHistoryModel>> AuditReportHistory(int id);
+
 
 
         Task<GetPagedClientProjectReportsModel> GetClientProjectReport(IDictionary<string, string> keyValuePairs);
@@ -30,6 +33,6 @@ namespace Ozone.Application.Interfaces
         Task<GetPagedImpartialityReviewReportModel> GetImpartialityReviewReport(IDictionary<string, string> keyValuePairs);
 
         Task<List<SPAuditorDetailModel>> AuditorReportsDetail(IDictionary<string, string> keyValuePairs);
-        
+        Task<List<CertifiedClientModel>> GetScheduleOfAuditWithWindowPeriod(IDictionary<string, string> keyValuePairs);
     }
 }
