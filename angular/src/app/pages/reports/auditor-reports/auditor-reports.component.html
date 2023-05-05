@@ -570,26 +570,30 @@
                             </dxo-search-panel>
 
                             <dxi-column dataField="s_No" caption="S.No"  cssClass="cell-header"></dxi-column>
-
-                            <dxi-column dataField="registration_no" caption="Registration NO."  cssClass="cell-header"></dxi-column>
+                            <dxi-column dataField="clientName" caption="Certified Organization"  cssClass="cell-header"></dxi-column>
+                            <dxi-column dataField="country" caption="Country"  cssClass="cell-header"></dxi-column>
+                            <dxi-column dataField="certificationStatus" caption="Certification status."  cssClass="cell-header"></dxi-column>
                 
-                            <dxi-column dataField="clientName" caption="Client"  cssClass="cell-header"></dxi-column>
-
-                            <dxi-column dataField="projectCode" caption="Project Code"  cssClass="cell-header"></dxi-column>
-
-                            <dxi-column dataField="projectType" caption="Project Type"  cssClass="cell-header"></dxi-column>
-
-                            <dxi-column dataField="naceCode" caption="Nace Code"  cssClass="cell-header"></dxi-column>
-
-                         
-
-                            <dxi-column dataField="stage_1" caption="Stage-1" dataType="date" cssClass="cell-header"></dxi-column>
-
                             
-                            <dxi-column dataField="stage_2" caption="Stage-2"  cssClass="cell-header"  dataType="date"></dxi-column>
-                            <dxi-column dataField="surveillance_Frequency" caption="Surveillance Frequency"  cssClass="cell-header"></dxi-column>
-                          
-                            <dxi-column dataField="certificationIssueDate" caption="Certification Issue Date" dataType="date" cssClass="cell-header"></dxi-column>
+
+                            <dxi-column dataField="currentState" caption="Current state"  cssClass="cell-header"></dxi-column>
+
+                            <dxi-column dataField="registration_no" caption="Registration no."  cssClass="cell-header"></dxi-column>
+
+                            <dxi-column dataField="certificationIssueDate" caption="Date of initial certification"  cssClass="cell-header"></dxi-column>
+                            <dxi-column dataField="certificationIssueDate" caption="Date of expiry"  cssClass="cell-header"></dxi-column>
+                            <dxi-column dataField="cycle" caption="Cycle"  cssClass="cell-header"></dxi-column>
+                            <dxi-column dataField="surveillance_Frequency" caption="Surv Frequency"  cssClass="cell-header"></dxi-column>
+                            
+                            <dxi-column caption="Surv 1" cssClass="cell-header" alignment="center">
+                            <dxi-column dataField="intimationdateSurv_1" caption="Intimation date Surv 1" dataType="date" cssClass="cell-header"></dxi-column>
+
+                            <dxi-column caption="Window period : Surv 1"  cssClass="cell-header">
+                            <dxi-column dataField="windowperiod_start_Surv_1" caption="Start Date" cssClass="cell-header"  dataType="date"></dxi-column>
+                            <dxi-column dataField="windowperiod_end_Surv_1"  caption="End End" cssClass="cell-header"></dxi-column>
+                            </dxi-column>
+                            <dxi-column dataField="surv_1_due" caption="Surv 1 due" dataType="date" cssClass="cell-header"></dxi-column>
+                          </dxi-column>
                             <dxi-column dataField="surv_1" caption="Surv 1"  cssClass="cell-header"  dataType="date"></dxi-column>
 
                             <dxi-column dataField="followup_1" caption="Followup 1" dataType="date"  cssClass="cell-header" ></dxi-column>

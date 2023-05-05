@@ -32,4 +32,7 @@ export class HeaderLeftNavbarComponent implements OnInit {
   toggleSidebar(): void {
     this._layoutStore.setSidebarExpanded(!this.sidebarExpanded);
   }
+  goBack(): void {
+    window.history.back();
+  }
 }

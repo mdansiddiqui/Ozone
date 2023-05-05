@@ -1022,7 +1022,7 @@ namespace Ozone.Infrastructure.Shared.Services
                 using (var command = _dbContext.Database.GetDbConnection().CreateCommand())
                 {
 
-                    command.CommandText = "sp_ScheduleOfAudit";
+                    command.CommandText = "sp_ScheduleOfAudit_with_Windowperiod";
                     //command.CommandText = "sp_AVG_Tat_AuditorReport";
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddRange(new[]
