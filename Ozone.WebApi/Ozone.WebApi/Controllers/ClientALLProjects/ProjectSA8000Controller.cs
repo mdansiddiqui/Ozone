@@ -66,6 +66,19 @@ namespace Ozone.WebApi.Controllers
 
         }
 
+        //[Route("ProjectSA8000ProjectStatusChange")]
+        //[HttpPut]
+        //[Authorize]
+        //public async Task<IActionResult> ProjectSA8000ProjectStatusChange([FromForm] ClientProjectModel input)
+        //{
+
+        //    var result = await _ProjectSA8000Service.ProjectSA8000ProjectStatusChange(input);
+        //    return Ok(new Response { Status = result, Message = result });
+
+
+
+        //}
+
 
 
 

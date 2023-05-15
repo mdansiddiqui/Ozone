@@ -14,42 +14,42 @@ export const API_BASE_URL = new InjectionToken<string>('API_BASE_URL');
 
 @Injectable({
     providedIn: 'root',
-    
+
   })
 
-  export class AuditReportService 
+  export class AuditReportService
   {
 
     private baseUrl: string;
 
     private REST_API_SERVER = AppConsts.remoteServiceBaseUrl;
     $isDataLoaded = new EventEmitter();
-  
+
     constructor(
       private http: HttpClient
     ) { }
 
    /////User Academic
-CreateWithFile(values): Observable<any> 
-   
+CreateWithFile(values): Observable<any>
+
 {    let headers = new HttpHeaders({
 
   'Authorization' : 'Bearer ' + JSON.parse(localStorage.getItem('token')),
-   
+
 });
 let options = { headers: headers };
    return this.http.post<any>(`${environment.apiUrl}/api/ClientAuditVisit/CreateAuditReport`,values,options)
- 
+
 }
 GetAuditReportBYId(id)
 {
-  
+
 
  return this.http.get<any>(`${environment.apiUrl}/api/ClientAuditVisit/GetAuditReportById?id=${id}`);
      }
 
      GetPagedAuditReport(value): Observable<any> {
-   
+
 let headers = new HttpHeaders({
    'Content-Type': 'application/json',
    'Authorization' : 'Bearer ' + JSON.parse(localStorage.getItem('token')),
@@ -58,13 +58,13 @@ let options = { headers: headers };
 
 return this.http.post<any>(`${environment.apiUrl}/api/ClientAuditVisit/GetPagedAuditReport`,value,options);
 // return this.http.post<any>(`${environment.apiUrl}​/api​/Standard​/GetPagedStandard`, value, options);
-   
+
 }
 
-     
+
 
 GetPagedAuditReportById(id:number,value): Observable<any> {
-   
+
 let headers = new HttpHeaders({
    'Content-Type': 'application/json',
    'Authorization' : 'Bearer ' + JSON.parse(localStorage.getItem('token')),
@@ -73,18 +73,18 @@ let options = { headers: headers };
 
 return this.http.post<any>(`${environment.apiUrl}/api/ClientAuditVisit/GetPagedAuditReportById?id=${id}`,value,options);
 // return this.http.post<any>(`${environment.apiUrl}​/api​/Standard​/GetPagedStandard`, value, options);
-   
-}   
+
+}
 //   private data = new BehaviorSubject<any>(Response);
 //   getSecRoleForm() {
-//     
+//
 //   this.data.next(JSON.parse(localStorage.getItem('secRoleForm')))
 //   return this.data.asObservable()
 // }
 
 
 
-AuditReportDeleteById(id) { 
+AuditReportDeleteById(id) {
 let headers = new HttpHeaders({
 'Content-Type': 'application/json',
 'Authorization' : 'Bearer ' + JSON.parse(localStorage.getItem('token')),
@@ -101,44 +101,49 @@ downloadFile(id:number)
 }
 
 GetAllDocumentsType() : Observable<any> {
- 
+
   let headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization' : 'Bearer ' + JSON.parse(localStorage.getItem('token')),
         });
     let options = {headers : headers};
-   
-  return this.http.get<any>(`${environment.apiUrl}/api/ClientAuditVisit/GetALLAuditDoucmentsType`,options) 
+
+  return this.http.get<any>(`${environment.apiUrl}/api/ClientAuditVisit/GetALLAuditDoucmentsType`,options)
  }
  SubmitForReview(value: any) : Observable<any>
-   
- {   
+
+ {
 
    var userId =parseInt(localStorage.getItem('userId'));
  debugger
    let headers = new HttpHeaders({
-     
+
      'Authorization' : 'Bearer ' + JSON.parse(localStorage.getItem('token')),
  });
  let options = { headers: headers };
- 
+
   // var Id =localStorage.getItem('organizationId');
  return this.http.post<any>(`${environment.apiUrl}/api/ClientAuditVisit/AuditSubmitForReview`,value,options);
  }
 
-//  AuditComplete(id) { 
-//   let headers = new HttpHeaders({
-//   'Content-Type': 'application/json',
-//   'Authorization' : 'Bearer ' + JSON.parse(localStorage.getItem('token')),
-//   });
-//   let options = {headers : headers};
-  
-//   return this.http.post<any>(`${environment.apiUrl}/api/ClientAuditVisit/AuditComplete?id=${id}`,options)
-  
-//   }
+ onStageOne(value: any) : Observable<any>
+
+ {
+
+   var userId =parseInt(localStorage.getItem('userId'));
+ debugger
+   let headers = new HttpHeaders({
+
+     'Authorization' : 'Bearer ' + JSON.parse(localStorage.getItem('token')),
+ });
+ let options = { headers: headers };
+
+  // var Id =localStorage.getItem('organizationId');
+ return this.http.post<any>(`${environment.apiUrl}/api/ClientAuditVisit/onStageOne`,value,options);
+ }
 
   AuditComplete(body: ClientAuditVisitModel | undefined): Observable<any> {
-        
+
     const content_ = JSON.stringify(body);
 
     let headers = new HttpHeaders({
@@ -147,7 +152,7 @@ GetAllDocumentsType() : Observable<any> {
         Accept: "text/plain",
     });
     let options = { headers: headers };
-    // return this.http.post(this.REST_API_SERVER + '/api/services/app/PurchaseOrderService/CreatePurchaseOrder',content_) 
+    // return this.http.post(this.REST_API_SERVER + '/api/services/app/PurchaseOrderService/CreatePurchaseOrder',content_)
     return this.http.post<any>(`${environment.apiUrl}/api/ClientAuditVisit/AuditComplete`, content_, options)
 }
 

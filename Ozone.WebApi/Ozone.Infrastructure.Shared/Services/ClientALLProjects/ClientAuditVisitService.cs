@@ -963,7 +963,10 @@ namespace Ozone.Infrastructure.Shared.Services
                     int ForReviewContract = 0;
                     int OSPActionContract = 0;
                     int ResubmitedContract = 0;
-
+                    int SuspendedContract = 0;
+                    int CancelledAndWithdrawContract = 0;
+                    int ExpiredContract = 0;
+                    int ActiveContract = 0;
                     //Audit
                     int ApprovedAudit = 0;
                     int ForReviewAudit = 0;
@@ -984,6 +987,11 @@ namespace Ozone.Infrastructure.Shared.Services
                         ForReviewContract = ForReviewContract + clientproject.Where(x => x.ApprovalStatusId == 9 && x.StandardId == standard.StandardId).Count();
                         OSPActionContract = OSPActionContract + clientproject.Where(x => x.ApprovalStatusId == 8 && x.StandardId == standard.StandardId).Count();
                         ResubmitedContract = ResubmitedContract + clientproject.Where(x => x.ApprovalStatusId == 10 && x.StandardId == standard.StandardId).Count();
+                        SuspendedContract = SuspendedContract + clientproject.Where(x => x.ApprovalStatusId == 13 && x.StandardId == standard.StandardId).Count();
+                        CancelledAndWithdrawContract = CancelledAndWithdrawContract + clientproject.Where(x => x.ApprovalStatusId == 14 && x.StandardId == standard.StandardId).Count();
+                        ExpiredContract = ExpiredContract + clientproject.Where(x => x.ApprovalStatusId == 15 && x.StandardId == standard.StandardId).Count();
+                        ActiveContract = ActiveContract + clientproject.Where(x => x.ApprovalStatusId == 3 && x.StandardId == standard.StandardId).Count();
+
 
 
 
@@ -1076,6 +1084,36 @@ namespace Ozone.Infrastructure.Shared.Services
                     ContractDashboard.Name = "Resubmited";
                     //ContractDashboard.Count = clientproject.Where(x => x.ApprovalStatusId == 10).Count();
                     ContractDashboard.Count = ResubmitedContract;
+                    Contract.Add(ContractDashboard);
+
+
+
+                    ContractDashboard = new ContractDashboardStatusModel();
+                    ContractDashboard.Id = 13;
+                    ContractDashboard.Name = "Suspended";
+                    //ContractDashboard.Count = clientproject.Where(x => x.ApprovalStatusId == 10).Count();
+                    ContractDashboard.Count = SuspendedContract;
+                    Contract.Add(ContractDashboard);
+
+                    ContractDashboard = new ContractDashboardStatusModel();
+                    ContractDashboard.Id = 14;
+                    ContractDashboard.Name = "Cancelled/Withdrawn";
+                    //ContractDashboard.Count = clientproject.Where(x => x.ApprovalStatusId == 10).Count();
+                    ContractDashboard.Count = CancelledAndWithdrawContract;
+                    Contract.Add(ContractDashboard);
+
+                    ContractDashboard = new ContractDashboardStatusModel();
+                    ContractDashboard.Id = 3;
+                    ContractDashboard.Name = "Live Projects";
+                    //ContractDashboard.Count = clientproject.Where(x => x.ApprovalStatusId == 10).Count();
+                    ContractDashboard.Count = ActiveContract;
+                    Contract.Add(ContractDashboard);
+
+                    ContractDashboard = new ContractDashboardStatusModel();
+                    ContractDashboard.Id = 15;
+                    ContractDashboard.Name = "Expired";
+                    //ContractDashboard.Count = clientproject.Where(x => x.ApprovalStatusId == 10).Count();
+                    ContractDashboard.Count = ExpiredContract;
                     Contract.Add(ContractDashboard);
 
                     result.ContractDashboardStatusModel = Contract;
@@ -1265,11 +1303,12 @@ namespace Ozone.Infrastructure.Shared.Services
 
                     // Contact
                     ContractDashboardStatusModel ContractDashboard = new ContractDashboardStatusModel();
-                    ContractDashboard.Id = 7;
-                    ContractDashboard.Name = "Approved";
-                    ContractDashboard.Count = clientproject.Where(x => x.ApprovalStatusId == 7).Count();
-
+                    ContractDashboard.Id = 3;
+                    ContractDashboard.Name = "Live Projects";
+                    //ContractDashboard.Count = clientproject.Where(x => x.ApprovalStatusId == 10).Count();
+                    ContractDashboard.Count = clientproject.Where(x => x.ApprovalStatusId == 3).Count();
                     Contract.Add(ContractDashboard);
+                 
 
                     ContractDashboard = new ContractDashboardStatusModel();
                     ContractDashboard.Id = 9;
@@ -1289,6 +1328,34 @@ namespace Ozone.Infrastructure.Shared.Services
                     ContractDashboard.Name = "Resubmited";
                     ContractDashboard.Count = clientproject.Where(x => x.ApprovalStatusId == 10).Count();
 
+                    Contract.Add(ContractDashboard);
+
+                    ContractDashboard = new ContractDashboardStatusModel();
+                    ContractDashboard.Id = 13;
+                    ContractDashboard.Name = "Suspended";
+                    //ContractDashboard.Count = clientproject.Where(x => x.ApprovalStatusId == 10).Count();
+                    ContractDashboard.Count = clientproject.Where(x => x.ApprovalStatusId == 13).Count();
+                    Contract.Add(ContractDashboard);
+
+                    ContractDashboard = new ContractDashboardStatusModel();
+                    ContractDashboard.Id = 14;
+                    ContractDashboard.Name = "Cancelled/Withdraw";
+                    //ContractDashboard.Count = clientproject.Where(x => x.ApprovalStatusId == 10).Count();
+                    ContractDashboard.Count = clientproject.Where(x => x.ApprovalStatusId == 14).Count();
+                    Contract.Add(ContractDashboard);
+
+                    ContractDashboard = new ContractDashboardStatusModel();
+                    ContractDashboard.Id = 7;
+                    ContractDashboard.Name = "Approved";
+                    ContractDashboard.Count = clientproject.Where(x => x.ApprovalStatusId == 7).Count();
+
+                    Contract.Add(ContractDashboard);
+
+                    ContractDashboard = new ContractDashboardStatusModel();
+                    ContractDashboard.Id = 15;
+                    ContractDashboard.Name = "Expired";
+                    //ContractDashboard.Count = clientproject.Where(x => x.ApprovalStatusId == 10).Count();
+                    ContractDashboard.Count = clientproject.Where(x => x.ApprovalStatusId == 15).Count();
                     Contract.Add(ContractDashboard);
 
                     result.ContractDashboardStatusModel = Contract;

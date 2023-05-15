@@ -282,6 +282,18 @@ export class HiggService {
 
   }
 
+  ProjectStatusChange(values): Observable<any> {
+    let headers = new HttpHeaders({
+
+      'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('token')),
+
+    });
+    
+    let options = { headers: headers };
+    return this.http.put<any>(`${environment.apiUrl}/api/ProjectIso/ProjectStatusChange`, values, options)
+
+  }
+
   downloadContract(id: number) {
     
     return this.http.get(`${environment.apiUrl}/api/ProjectSLCP/DownloadContract?id=${id}`, { responseType: 'blob' })

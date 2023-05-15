@@ -262,9 +262,9 @@
                                 <dxi-column   dataField="auditLevel"  
                                 caption="Audit Level" ></dxi-column>
                                 <dxi-column type="buttons" caption="Action">
-                                    <dxi-button icon="edit"   hint="Edit" [onClick]="edit" [(visible)]="isAddShown"></dxi-button>
+                                    <dxi-button icon="edit"   hint="Edit" [onClick]="edit" [visible]="editViaible"></dxi-button>
 
-                                    <dxi-button icon="deleterow"  hint="Delete" [onClick]="delete" [(visible)]="isAddShown">
+                                    <dxi-button icon="deleterow"  hint="Delete" [onClick]="delete" [visible]="editViaible">
                                     </dxi-button>
 
                                 </dxi-column>

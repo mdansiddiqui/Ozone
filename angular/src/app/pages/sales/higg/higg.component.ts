@@ -91,6 +91,10 @@ export class HiggComponent implements OnInit {
     ProjectCode: new FormControl(''),
     ContractRemarks: new FormControl(''),
     ContractStatusId: new FormControl(''),
+
+    ProjectRemarks: new FormControl(''),
+    VisitStatusId: new FormControl('')
+
   })
 
   HiggChangeFormControl = new FormGroup({
@@ -168,6 +172,7 @@ export class HiggComponent implements OnInit {
 
   public btnContract: boolean = false
   public btnContractSave: boolean = false
+  public Registration:string
 
   public ContractApprovalList = [];
   public btnContractDownload: boolean = false
@@ -239,7 +244,7 @@ export class HiggComponent implements OnInit {
 
 
   editHiggProject() {
-    debugger
+
 
     this._HiggService.GetProjectHiggBYId(this.ProjectId).subscribe(data => {
 
@@ -290,7 +295,7 @@ export class HiggComponent implements OnInit {
 
 
   onSubmitChangeRequest() {
-    debugger
+
     this.submitted = true;
 
 
@@ -303,7 +308,7 @@ export class HiggComponent implements OnInit {
 
   HiggChangeRequest(): void {
 
-    debugger
+
     const foData: FormData = new FormData();
 
 
@@ -352,7 +357,7 @@ export class HiggComponent implements OnInit {
 
   CheckReviewer() {
 
-    debugger
+
     const UserModel =
 
     {
@@ -366,7 +371,7 @@ export class HiggComponent implements OnInit {
     };
 
     this._SlcpService.GetReviewerByStandard(UserModel).subscribe((Response) => {
-      debugger
+
       var reviwerData = Response
       if (reviwerData == null || reviwerData == undefined || reviwerData == "" || reviwerData == '' || reviwerData == isNaN) {
         this.Revieweruser = false
@@ -399,7 +404,7 @@ export class HiggComponent implements OnInit {
 
   }
   loadSecRoleForm() {
-    debugger
+
     // let secRoleForm = JSON.parse(localStorage.getItem('secRoleForm'))
     // let permission = secRoleForm.find(x => x.formCode != null && x.formCode == this.formCode)
 
@@ -420,7 +425,7 @@ export class HiggComponent implements OnInit {
       }
       else
       {
-        
+
         this.secRoleForm.authAllowed = false
       }
       if (this.secRoleForm.insertAllowed == false) {
@@ -450,7 +455,7 @@ export class HiggComponent implements OnInit {
         //this.HiggForm.get('Remarks').disable();
 
       }
-    
+
       if (this.secRoleForm.authAllowed == true) {
 
         if (this.ProjectId>0) {
@@ -483,7 +488,7 @@ export class HiggComponent implements OnInit {
   }
   ClientId: number
   editUser() {
-debugger
+
     var ur;
     ur = window.location.href.split("/")[7];
     var com = [] = ur.split("?")[1];
@@ -496,7 +501,7 @@ debugger
       //  this.onSearch(this.userUpdateId);
       //  }
 
-      //    
+      //
       //   var  ur ;
       //   ur=window.location.href.split("/")[7];
       //   var com=[]=ur.split("?")[1];
@@ -531,7 +536,7 @@ debugger
 
 
   UpdateProject() {
-debugger 
+
     this._HiggService.GetProjectHiggBYId(this.ProjectId).subscribe(data => {
 
       var ClientSiteData = data.clientSitesModel;
@@ -539,7 +544,12 @@ debugger
       var ClientProjectMod = data.clientProjectModel;
       //this.UserAuditList= data
       this.clientsaiteInfo = data.clientSitesModel;
-      debugger
+      console.log('Test Higg');
+      console.log('Test Higg');
+      console.log('Test Higg');
+
+      this.Registration = data.clientProjectModel.registration_no
+
       console.log(this.clientsaiteInfo);
       this.standardId = ClientProjectMod.standardId;
 
@@ -557,8 +567,8 @@ debugger
 
       //this.TransferProjectList = [{ id: "1", code: "Yes" }, { id: "0", code: "No" }];
       //this.HiggForm.controls.ProjectTypeId.setValue(ClientProjectMod.projectTypeId);
-      debugger
-      if (ClientProjectMod.projectTypeId == 1) 
+
+      if (ClientProjectMod.projectTypeId == 1)
       {
         this.HiggForm.controls.ProjectTypeId.setValue(ClientProjectMod.projectTypeId);
       }
@@ -604,7 +614,7 @@ debugger
 
       // this._HiggService.GetALLModuleVersion(ClientProjectMod.standardId).subscribe((Response) => {
       //   this.ModuleVersionList = Response
-      //   debugger
+      //
       //   this.HiggForm.controls.ModuleVersionId.setValue(ProjectSaData.moduleVersionId)
 
       // })
@@ -727,13 +737,56 @@ debugger
     )
 
   }
+
+
+  ChangeStatus(): void {
+
+    console.log('ProjectRemarks value:', this.HiggForm.get('ProjectRemarks').value);
+    console.log('VisitStatusId value:', this.HiggForm.get('VisitStatusId').value);
+
+    if (this.HiggForm.get('VisitStatusId').value == null || this.HiggForm.get('VisitStatusId').value == undefined || this.HiggForm.get('VisitStatusId').value == "" || this.HiggForm.get('VisitStatusId').value == '' || this.HiggForm.get('VisitStatusId').value == isNaN) {
+
+      abp.message.error("Project Status is required", "Please Select Status");
+      return;
+    }
+
+    var LoginUserId = localStorage.getItem('userId');
+    const status: FormData = new FormData();
+
+    if (this.ProjectId > 0) {
+      status.append("Id", this.ProjectId.toString());
+    }
+    status.append('LastModifiedById', LoginUserId);
+    status.append('Remarks', this.HiggForm.get('ProjectRemarks').value);
+    status.append('ApprovalStatusId', this.HiggForm.get('VisitStatusId').value);
+
+    this._HiggService.ProjectStatusChange(status).subscribe((Response) => {
+
+      // abp.message.info(Response.message)
+      if (Response.message == '1') {
+        abp.message.info("Successfully Saved!")
+        this.router.navigateByUrl('/app/home');
+
+      }
+      else if (Response.message == '2') {
+        abp.message.info("Project Status not set in Status Amount form for this Standard!")
+        ///this.router.navigateByUrl('/app/pages/sales/all-projects?'+this.ClientId);
+      }
+      else if (Response.message == '0') {
+        abp.message.error("Not Inserted!")
+      }
+      //this.router.navigateByUrl('/app/pages/sales/all-projects?'+this.ClientId);
+
+    })
+
+  }
   //  if(ClientProjectMod.contractFilePath!=null && ClientProjectMod.contractFilePath!=undefined && ClientProjectMod.contractFilePath!="")
-  //  { 
+  //  {
   //    this.btnContractDownload=true;
 
   //   }
   //       if(ClientProjectMod.approvalStatusId==7 || ClientProjectMod.approvalStatusId==8 ||ClientProjectMod.approvalStatusId==9||ClientProjectMod.approvalStatusId==10)
-  //       { 
+  //       {
   //         this.btnApproval=false;
 
   //        }
@@ -745,14 +798,14 @@ debugger
   //        if(this.authorizer==false)
   //        {
   //        if( ClientProjectMod.approvalStatusId==8 || ClientProjectMod.approvalStatusId==1 )
-  //        { 
+  //        {
   //          this.IsContract=true;
 
   //         }
   //        }
   //       if(this.authorizer==false){
   //         if(ClientProjectMod.approvalStatusId==8 || ClientProjectMod.approvalStatusId==7 || ClientProjectMod.approvalStatusId==1 )
-  //        { 
+  //        {
   //          this.btnContract=true
   //          this.btnContractSave=false
   //          this.HiggForm.get('ContractStatusId').disable();
@@ -767,7 +820,7 @@ debugger
   //        }
   //        }
   //        else if( this.authorizer==true )
-  //         { 
+  //         {
   //           if(ClientProjectMod.approvalStatusId==9 ||ClientProjectMod.approvalStatusId==10)
   //           {
   //           this.btnContract=true
@@ -777,7 +830,7 @@ debugger
   //           }
   //          }
   //        if(ClientProjectMod.approvalStatusId==1)
-  //       { 
+  //       {
   //         this.btnApproval=false
   //        }
 
@@ -797,17 +850,17 @@ debugger
 
 
   //        if(this.ProjectId>0 && this.authorizer==false && ClientProjectMod.approvalStatusId==5 || ClientProjectMod.approvalStatusId==6 )
-  //        { 
+  //        {
   //          this.deletebtn=true;
 
   //        }
   //        else
-  //        { 
+  //        {
   //          this.deletebtn=false;
   //        }
 
   //          if(ProjectSaData.applicationFormPath!=null && ProjectSaData.applicationFormPath!=undefined && ProjectSaData.applicationFormPath!="")
-  //          { 
+  //          {
   //            this.savedownload=true;
   //          }
   //       }
@@ -842,7 +895,7 @@ debugger
   }
 
   loadClientSites(): void {
-debugger
+
     if (this.ClientId > 0 && this.ClientId != null && this.ClientId != undefined) {
       this.ClientSiteList = null;
       this._HiggService.GetAllClientSites(this.ClientId).subscribe((Response) => {
@@ -919,7 +972,7 @@ debugger
 
 
   onSubmit1(): void {
-debugger
+
     try {
       if (this.HiggForm.get('VerificationTypeId').value == null || this.HiggForm.get('VerificationTypeId').value == undefined || this.HiggForm.get('VerificationTypeId').value == "") {
         abp.message.error("Verification Type is Empty", "Alert")
@@ -986,7 +1039,7 @@ debugger
 
       foData.append('StandardId', this.standardId.toString());
       foData.append('ClientId', this.ClientId.toString());
-     
+
       foData.append('ApplicationForm', this.fileToUpload);
 
 
@@ -1015,18 +1068,18 @@ debugger
   }
 
   Back(): void { this.router.navigateByUrl('/app/pages/sales/all-projects?' + this.ClientId); }
-  
-  // edit(e) {  
-  //          
+
+  // edit(e) {
+  //
   //   // var List = [];
-  //   // List=this.Liststandard                                                                             ; 
+  //   // List=this.Liststandard                                                                             ;
   //   // this.router.navigateByUrl('/app/pages/stock-management/library');
   //   this.ProjectId=e.row.data.id
   //   // var updateDate =this.StandardList.find(x => x.id == this.ProjectId );
 
-  //   // this._StandardService.GetStandardById(this.ProjectId).subscribe((res) => 
+  //   // this._StandardService.GetStandardById(this.ProjectId).subscribe((res) =>
   //   // {
-  //     
+  //
   //       this.UserAuditForm.controls.Organization.setValue(e.row.data.organization);
   //       this.UserAuditForm.controls.StandardId.setValue(e.row.data.standardId);
   //       this.UserAuditForm.controls.DurationDays.setValue(e.row.data.durationDays);
@@ -1037,7 +1090,7 @@ debugger
   //       this.UserAuditForm.controls.CertificationBodyId.setValue(e.row.data.CertificationBodyId);
 
 
-  //  }  
+  //  }
 
 
 
@@ -1061,7 +1114,7 @@ debugger
   //  NewRecord()
 
 
-  //  {  
+  //  {
   //   this.UserAuditForm.controls.Organization.setValue('');
   //   this.UserAuditForm.controls.StandardId.setValue('');
   //   this.UserAuditForm.controls.DurationDays.setValue('');
@@ -1084,7 +1137,7 @@ debugger
   //   // this.router.routeReuseStrategy.shouldReuseRoute = () => false;
   //   // this.router.onSameUrlNavigation = 'reload';
   //   // this.router.navigate([currentUrl]);
-  //    
+  //
   //  // this.router.navigateByUrl('/app/pages/certification-setups/module');
 
   // }
@@ -1101,12 +1154,12 @@ debugger
   datadisplay = "none";
 
   Popup() {
-    debugger
-   
+
+
     this.datadisplay = "block";
-  
+
   }
- 
+
   close() {
     this.datadisplay = "none";
   }
@@ -1115,7 +1168,7 @@ debugger
   handlefileInput(e: any) {
 
     this.fileToUpload = <File>e?.target?.files[0];
-    //this.url=e.target.value; 
+    //this.url=e.target.value;
 
 
   }
@@ -1130,7 +1183,7 @@ debugger
 
   onChange(deviceValue) {
 
-    debugger
+
     this._ClientService.GetSiteById(deviceValue).subscribe((Response) => {
 
       this.HiggForm.controls.Address.setValue(Response.address);
@@ -1145,7 +1198,7 @@ debugger
   }
 
   OnApprovalSubmit(): void {
-debugger
+
 
 
     var LoginUserId = localStorage.getItem('userId');
@@ -1192,7 +1245,7 @@ debugger
       const a = document.createElement('a');
       a.setAttribute('style', 'display:none;');
       document.body.appendChild(a);
-      // a.download =fillename;  
+      // a.download =fillename;
       // const fileName =
 
       //="farooq";
@@ -1273,7 +1326,7 @@ debugger
 
 
         },
-        //   { 
+        //   {
 
         //   text: 'Proposal for Higg Index FEM 3.0 Verification Audit',
         //   alignment: "center",
@@ -1281,7 +1334,7 @@ debugger
         //   decoration: "" ,
         //   bold : true,
         //   color:"white",
-        //   background: 
+        //   background:
         //        'blue',
         //        border: [false, true, false, true],
         //        widths: [510, '*',],
@@ -1347,7 +1400,7 @@ debugger
         //            table: {
         //             headerRows: 1,
         //             widths: [150, '*',],
-        //             body: 
+        //             body:
         //               [
         //                 {
         //                   text: 'GRN DESCRIPTION',
@@ -1484,7 +1537,7 @@ debugger
           ]
         },
         {
-          //pageBreak: 'before',      
+          //pageBreak: 'before',
           table: {
 
             // widths: [370, 120],
@@ -1617,7 +1670,7 @@ debugger
           ]
         },
         {
-          //pageBreak: 'before',      
+          //pageBreak: 'before',
           table: {
 
             // widths: [370, 120],
@@ -1719,7 +1772,7 @@ debugger
 
         //   margin: [0, 0, 0, 10],
         //   // lineHeight:2,
-        //   // width: 510, 
+        //   // width: 510,
         // },
 
         // {
@@ -1757,7 +1810,7 @@ debugger
           ]
         },
         {
-          //pageBreak: 'before',      
+          //pageBreak: 'before',
           table: {
 
             // widths: [370, 120],
@@ -2012,7 +2065,7 @@ debugger
       const a = document.createElement('a');
       a.setAttribute('style', 'display:none;');
       document.body.appendChild(a);
-      // a.download =fillename;  
+      // a.download =fillename;
       // const fileName =
 
       //="farooq";
@@ -2031,7 +2084,7 @@ debugger
         undefined,
         (result: boolean) => {
           if (result) {
-            // this.SecUserService.Deleteuser(e.row.data.id).subscribe() 
+            // this.SecUserService.Deleteuser(e.row.data.id).subscribe()
             //     abp.message.info("Deleted successfully", "Status", {});
 
             this._HiggService.DeleteProject(this.ProjectId).subscribe((Response) => {
@@ -2083,7 +2136,7 @@ debugger
   }
 
   editProject() {
-    debugger
+
     var  ur ;
     ur=window.location.href.split("/")[7];
     var com=[]=ur.split("?")[1];
@@ -2093,7 +2146,7 @@ debugger
       var Parameter2=com.split("&")[1];
       var Parameter3=com.split("&")[2];
 
-    
+
      if(Parameter1.split("=")[0]=="ProjectId")
      {
         this.ProjectId =Parameter1.split("=")[1];
@@ -2106,7 +2159,7 @@ debugger
      {
       this.ClientId =Parameter1.split("=")[1];
      }
-     
+
      if(Parameter2.split("=")[0]=="StandardId")
      {
         this.standardId =Parameter2.split("=")[1];
@@ -2134,7 +2187,7 @@ debugger
       this.ClientId =Parameter3.split("=")[1];
      }
     }
-    
+
     if(this.ProjectId==0)
     {
       //this.ProjectId = 0;
@@ -2150,7 +2203,7 @@ if(this.ProjectId > 0 &&   this.OrganizationId > 1){
     // this.ClientId = parseInt(localStorage.getItem('clientId'));
     // this.standardId = parseInt(localStorage.getItem('standardId'));
     this.savebtn = true;
-    
+
   }
   dashboard(): void { this.router.navigateByUrl('/app/home'); }
 }

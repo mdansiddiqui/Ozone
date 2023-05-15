@@ -236,7 +236,51 @@ namespace Ozone.Infrastructure.Shared.Services
         }
 
 
+        //public async Task<string> ProjectSA8000ProjectStatusChange(ClientProjectModel input)
+        //{
+        //    // OzoneContext ozonedb = new OzoneContext();
+        //    using (var transaction = _unitOfWork.BeginTransaction())
+        //    {
+        //        ProjectRemarksHistory history = new ProjectRemarksHistory();
+        //        ClientProjects ClientProject = _dbContext.ClientProjects.Where(u => u.Id == input.Id).FirstOrDefault();
+        //        var secuser = _dbContext.SecUser.Where(u => u.Id == ClientProject.CreatedById).FirstOrDefault();
 
+        //        // ProjectRemarksHistory history = await Task.Run(() => _dbContext.ProjectRemarksHistory.Where(x => x.ProjectId == id).FirstOrDefault());
+        //        if (ClientProject != null)
+        //        {
+
+
+
+        //            history.ApprovalStatusId = input.ApprovalStatusId;
+        //            ClientProject.ApprovalStatusId = input.ApprovalStatusId;
+        //            ClientProject.Remarks = input.Remarks;
+
+
+        //            history.Remarks = input.Remarks;
+        //            history.RemarksById = input.LastModifiedById;
+
+        //            history.RemarksDate = DateTime.Now;
+        //            history.ProjectId = input.Id;
+
+        //            history.IsDeleted = false;
+
+        //            _dbContext.ProjectRemarksHistory.Add(history);
+
+        //            await base.UpdateAsync(ClientProject);
+        //            await _unitOfWork.SaveChangesAsync();
+
+        //            transaction.Commit();
+        //            // return "Successfully Saved !";
+        //            return "1";
+        //        }
+        //        else
+        //        {
+        //            // return "Not Submited!";
+        //            return "0";
+        //        }
+        //    }
+
+        //}
 
         public async Task<string> SA8000ChangeRequest(ProjectSA8000Model input)
         {

@@ -170,10 +170,10 @@ this.loadStandard();
   // }
 
   loadNaceCode(eacodeId): void {
-    debugger
+     
         this._UserStandardService.getAllNaceCodeByEaCode(eacodeId).subscribe((Response) => {
           this.NaceCodeList = Response
-    debugger
+     
          // riskLevelId=
           // this.ClientForm.controls.RiskId.setValue(this.NaceCodeList[0].riskLevelId);
           
@@ -190,7 +190,7 @@ this.loadStandard();
   // }
 
   loadEaCode(): void {
-    debugger
+     
         this._UserStandardService.getAllEACode().subscribe((Response) => {
           this.EACodeList = Response
           let eacodeId = 0;
@@ -199,8 +199,6 @@ this.loadStandard();
         })
       }
   onSubmit(): void {
-    
-
     this.UserAudit= new UserAuditModel();
     this.submitted = true;
     
@@ -308,7 +306,20 @@ onTableSizeChange(event): void {
   this.pagedDto.pageSize = event.target.value;
   this.onSearch();
 }
+editViaible(e) {
+ if (e.row.data.certificationBodyName === 'Ozone')
+  {
+  return e.row.isEditing;
+}
 
+  else
+  {
+    
+    return !e.row.isEditing;
+  }
+
+
+}
 onSearch(){
   
     
@@ -317,8 +328,6 @@ onSearch(){
   //this.pagedDto.pageSize = 3
   
   this._UserStandardService.GetPagedUserAudit(this.pagedDto).subscribe((Response) => {
-              
-  
     this.totalCount = Response.totalCount
     this.UserAuditList = Response.userAuditModel
     //this .Liststandard=this.StandardList;

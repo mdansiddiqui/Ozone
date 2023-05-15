@@ -319,7 +319,8 @@ namespace Ozone.Application.Mappings
                                          .ForMember(x => x.StandardCode, opt => opt.MapFrom(src => src.Standard.Code))
                                           .ForMember(x => x.AgencyId, opt => opt.MapFrom(src => src.Client.OrganizationId))
                                        .ForMember(x => x.ProjectStandardAmount, opt => opt.MapFrom(src => src.ProjectAmount.Amount))
-                                          //.ForMember(x => x.VisitLevelName, opt => opt.MapFrom(src => src.VisitLevel.Name))
+                                       .ForMember(x => x.Registration_no, opt => opt.MapFrom(src => src.RegistrationNo))
+          //.ForMember(x => x.VisitLevelName, opt => opt.MapFrom(src => src.VisitLevel.Name))
 
 
 
@@ -444,6 +445,7 @@ namespace Ozone.Application.Mappings
 
             CreateMap<AuditReportDetail, AuditVisitReportMasterModel>()
             .ForMember(x => x.AuditDocumentName, opt => opt.MapFrom(src => src.AuditDocumentType.Name))
+      
 
              //.ForMember(x => x.ApprovalStatusName, opt => opt.MapFrom(src => src.AuditReportMaster.ApprovalStatus.Name))
              .ForMember(x => x.AuditReportMasterId, opt => opt.MapFrom(src => src.AuditReportMaster.Id))
@@ -456,6 +458,8 @@ namespace Ozone.Application.Mappings
              .ForMember(x => x.Critical, opt => opt.MapFrom(src => src.AuditReportMaster.Critical))
              .ForMember(x => x.TimeBound, opt => opt.MapFrom(src => src.AuditReportMaster.TimeBound))
              .ForMember(x => x.Observation, opt => opt.MapFrom(src => src.AuditReportMaster.Observation))
+             .ForMember(x => x.VisitLevelId, opt => opt.MapFrom(src => src.AuditReportMaster.ClientAuditVisit.VisitLevelId))
+             .ForMember(x => x.VisitLevel, opt => opt.MapFrom(src => src.AuditReportMaster.ClientAuditVisit.VisitLevel.Name))
              //.ForMember(x => x.AuditReportMasterId, opt => opt.MapFrom(src => src.AuditReportMaster.Project.ProjectCode))
              .ReverseMap();
             CreateMap<AuditReportMaster, AuditReportMSModel>()

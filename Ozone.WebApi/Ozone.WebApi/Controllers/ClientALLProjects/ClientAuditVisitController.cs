@@ -458,6 +458,21 @@ namespace Ozone.WebApi.Controllers.ClientALLProjects
             return Ok(new Response { Status = result, Message = result });
 
         }
+
+        [HttpPost]
+        [Route("onStageOne")]
+        [Authorize]
+
+        //  [Authorize]
+        public async Task<IActionResult> onStageOne(IDictionary<string, long> keyValuePairs)
+        {
+            // SecUserService secuserservice = new SecUserService();
+            var result = await _auditReportService.onStageOne(keyValuePairs);
+            return Ok(new Response { Status = result, Message = result });
+
+        }
+
+
         [Route("GetAllAdminList")]
         [HttpGet]
         [Authorize]

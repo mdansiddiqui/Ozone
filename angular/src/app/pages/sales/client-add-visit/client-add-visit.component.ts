@@ -99,6 +99,7 @@ export class ClientAddVisitComponent implements OnInit {
   fileToUpload: any;
   clientinfo: any;
   submitted = false;
+  clientId:number;
   public UserStatusList = []
   public TechnicalExpertList = []
   public JustifiedPersonList = []
@@ -138,6 +139,8 @@ export class ClientAddVisitComponent implements OnInit {
     this.recordEdit = this.recordEdit.bind(this);
 
   }
+
+  get f() { return this.ClientVisitForm.controls; }
 
   ngOnInit(): void {
     var ur;
@@ -211,7 +214,7 @@ export class ClientAddVisitComponent implements OnInit {
   handlefileInput(e: any) {
 
     this.fileToUpload = <File>e?.target?.files[0];
-    //this.url=e.target.value; 
+    //this.url=e.target.value;
 
 
   }
@@ -346,13 +349,13 @@ export class ClientAddVisitComponent implements OnInit {
 
     this._ClientAuditVisitService.GetAllJustifiedPerson(this.projectId).subscribe((Response) => {
       this.JustifiedPersonList = Response
-       
+
     })
   }
   // LoadProjectCode(): void
   // {
 
-  // debugger
+  //
   //  this._ClientAuditVisitService.GetAllProjectCode(this.projectId).subscribe((Response)=>{
   //    this.projyctcodelist = Response
   //    var pro=this.projyctcodelist.find(x => x.projectId == this.projectId)
@@ -365,10 +368,13 @@ export class ClientAddVisitComponent implements OnInit {
 
   LoadProjectCode(): void {
 
-
+debugger
+console.log();
     this._ClientAuditVisitService.GetProjectCodeById(this.projectId).subscribe((Response) => {
       //this.projyctcodelist = Response
-      this.Projectcode = Response.projectCode
+      console.log(Response);
+      this.Projectcode = Response.projectCode;
+      this.clientId=Response.clientId;
       this.ClientVisitForm.controls.ProjectCode.setValue(Response.projectCode);
       this.ClientVisitForm.get('ProjectCode').disable();
       //this.StandardName=Response.standardName
@@ -427,7 +433,7 @@ export class ClientAddVisitComponent implements OnInit {
 
     this._SlcpService.GetReviewerByStandardId(UserModel).subscribe((Response) => {
       this.ReviewerList = Response
-    
+
 
     })
   }
@@ -472,7 +478,7 @@ export class ClientAddVisitComponent implements OnInit {
   //       this.ClientVisitForm.controls.VisitStatusId.setValue(Response.visitStatusId);
   //       this.ClientVisitForm.controls.VisitLevelId.setValue(Response.visitLevelId);
 
-  //       this.ClientVisitForm.controls.JustifiedPersonId.setValue(Response.justifiedPersonId); 
+  //       this.ClientVisitForm.controls.JustifiedPersonId.setValue(Response.justifiedPersonId);
   //       this.ClientVisitForm.controls.TechnicalExpertId.setValue(Response.technicalExpertId);
   //       this.ClientVisitForm.controls.Duration.setValue(Response.duration);
   //       //this.ClientVisitForm.controls.Duration.setValue(Response.ReviewDate);
@@ -494,15 +500,15 @@ export class ClientAddVisitComponent implements OnInit {
   //       let start_Date = new Date(this.datePipe.transform(Response.startDate, 'yyyy/MM/dd'))
 
   //       this.ClientVisitForm.controls.StartDate.setValue(this.datePipe.transform(start_Date, 'yyyy-MM-dd'))
-  //      // this.ClientVisitForm.controls.StartDate.setValue(e.row.data.startDate); 
+  //      // this.ClientVisitForm.controls.StartDate.setValue(e.row.data.startDate);
   //       //this.ClientVisitForm.controls.EndDate.setValue(e.row.data.endDate);
   //       let EndDate = new Date(this.datePipe.transform(Response.endDate, 'yyyy/MM/dd'))
 
   //       this.ClientVisitForm.controls.EndDate.setValue(this.datePipe.transform(EndDate, 'yyyy-MM-dd'))
   //       this.ClientVisitForm.controls.LeadAuditorId.setValue(Response.leadAuditorId);
   //       this.ClientVisitForm.controls.Auditor1Id.setValue(Response.auditor1Id);
-  //       this.ClientVisitForm.controls.Auditor2Id.setValue(Response.auditor2Id); 
-  //       this.ClientVisitForm.controls.Auditor3Id.setValue(Response.auditor3Id); 
+  //       this.ClientVisitForm.controls.Auditor2Id.setValue(Response.auditor2Id);
+  //       this.ClientVisitForm.controls.Auditor3Id.setValue(Response.auditor3Id);
   //       this.ClientVisitForm.controls.Auditor4Id.setValue(Response.auditor4Id);
   //       this.ClientVisitForm.controls.Auditor5Id.setValue(Response.auditor5Id);
   //       this.ClientVisitForm.controls.ReviewerId.setValue(Response.reviewerId);
@@ -544,7 +550,7 @@ export class ClientAddVisitComponent implements OnInit {
 
 
   //       this.ClientVisitForm.controls.StartDate.disable();
-  //      // this.ClientVisitForm.controls.StartDate.setValue(e.row.data.startDate); 
+  //      // this.ClientVisitForm.controls.StartDate.setValue(e.row.data.startDate);
   //       //this.ClientVisitForm.controls.EndDate.setValue(e.row.data.endDate);
 
 
@@ -570,7 +576,7 @@ export class ClientAddVisitComponent implements OnInit {
   // //  this.onSearch(this.userUpdateId);
   //     //  }
 
-  //     //    
+  //     //
   //     //   var  ur ;
   //     //   ur=window.location.href.split("/")[7];
   //     //   var com=[]=ur.split("?")[1];
@@ -596,14 +602,14 @@ export class ClientAddVisitComponent implements OnInit {
 
   //   }
   edit(e) {
-    debugger
+
     // var List = [];
-    // List=this.Liststandard                                                                             ; 
+    // List=this.Liststandard                                                                             ;
     // this.router.navigateByUrl('/app/pages/stock-management/library');
     this.ClientAuditPlanId = e.row.data.id
     // var updateDate =this.StandardList.find(x => x.id == this.id );
 
-    // this._StandardService.GetStandardById(this.id).subscribe((res) => 
+    // this._StandardService.GetStandardById(this.id).subscribe((res) =>
     // {
 
     // this.ModuleForm.controls.Code.setValue(e.row.data.code);
@@ -623,7 +629,7 @@ export class ClientAddVisitComponent implements OnInit {
     let start_Date = new Date(this.datePipe.transform(e.row.data.startDate, 'yyyy/MM/dd'))
 
     this.ClientVisitForm.controls.StartDate.setValue(this.datePipe.transform(start_Date, 'yyyy-MM-dd'))
-    // this.ClientVisitForm.controls.StartDate.setValue(e.row.data.startDate); 
+    // this.ClientVisitForm.controls.StartDate.setValue(e.row.data.startDate);
     //this.ClientVisitForm.controls.EndDate.setValue(e.row.data.endDate);
     let End_Date = new Date(this.datePipe.transform(e.row.data.endDate, 'yyyy/MM/dd'))
 
@@ -658,7 +664,7 @@ export class ClientAddVisitComponent implements OnInit {
 
 
       this.ClientVisitForm.controls.StartDate.disable();
-      // this.ClientVisitForm.controls.StartDate.setValue(e.row.data.startDate); 
+      // this.ClientVisitForm.controls.StartDate.setValue(e.row.data.startDate);
       //this.ClientVisitForm.controls.EndDate.setValue(e.row.data.endDate);
 
 
@@ -694,7 +700,7 @@ export class ClientAddVisitComponent implements OnInit {
 
 
       this.ClientVisitForm.controls.StartDate.enable();
-      // this.ClientVisitForm.controls.StartDate.setValue(e.row.data.startDate); 
+      // this.ClientVisitForm.controls.StartDate.setValue(e.row.data.startDate);
       //this.ClientVisitForm.controls.EndDate.setValue(e.row.data.endDate);
 
 
@@ -721,7 +727,7 @@ export class ClientAddVisitComponent implements OnInit {
     // });
     // this.router.navigate(['app/pages/stock-management/library']);
     //this.router.navigate(["account/login"]);
-    // this.router.navigateByUrl('/app/pages/certification-setups/Standard?'+this.id);  
+    // this.router.navigateByUrl('/app/pages/certification-setups/Standard?'+this.id);
   }
   onTableDataChange(event) {
     this.pagedDto.page = event;
@@ -752,7 +758,7 @@ export class ClientAddVisitComponent implements OnInit {
       undefined,
       (result: boolean) => {
         if (result) {
-          // this.SecUserService.Deleteuser(e.row.data.id).subscribe() 
+          // this.SecUserService.Deleteuser(e.row.data.id).subscribe()
           //     abp.message.info("Deleted successfully", "Status", {});
 
           this._ClientAuditVisitService.Delete(e.row.data.id).subscribe((Response) => {
@@ -766,10 +772,16 @@ export class ClientAddVisitComponent implements OnInit {
       }
     )
   }
-  get f() { return this.ClientVisitForm.controls; }
-
   onSubmit() {
-    debugger
+
+    if (
+      this.ClientVisitForm.get('JustifiedPersonId').value === this.ClientVisitForm.get('LeadAuditorId').value ||
+      this.ClientVisitForm.get('JustifiedPersonId').value === this.ClientVisitForm.get('Auditor1Id').value ||
+      this.ClientVisitForm.get('JustifiedPersonId').value === this.ClientVisitForm.get('Auditor2Id').value ||
+      this.ClientVisitForm.get('JustifiedPersonId').value === this.ClientVisitForm.get('Auditor3Id').value ||
+      this.ClientVisitForm.get('JustifiedPersonId').value === this.ClientVisitForm.get('Auditor4Id').value ||
+      this.ClientVisitForm.get('JustifiedPersonId').value === this.ClientVisitForm.get('Auditor5Id').value
+      ) {
     var count = this.AllVisitDataList.length;
     console.log(count);
     console.log(this.ClientAuditPlanId);
@@ -792,10 +804,14 @@ export class ClientAddVisitComponent implements OnInit {
       // MesseageError="Document File is Empty";
     }
     this.onSubmit1();
+  }
+  else {
+    abp.message.error("Selected justified person should be included in audit team");
+  }
 
   }
   onSubmit1(): void {
-    debugger
+
     try {
       var fileName = this.fileToUpload.name.split("_")[0];
       let ProjectList = this.projyctcodelist.find(x => x.id == this.projectId)
@@ -909,7 +925,7 @@ export class ClientAddVisitComponent implements OnInit {
       })
 
       // }
-      //   else{  
+      //   else{
       //     //this.SLCPForm.controls.File.setValue("");
       //   abp.message.error("File Name Is Incorrect", "Please Upload Correct File")
       // }
@@ -930,7 +946,7 @@ export class ClientAddVisitComponent implements OnInit {
   }
 
   NewRecord() {
-    debugger
+
     this.ClientAuditPlanId = null;
     // this.ClientVisitForm.controls.VisitTypeId.setValue('');
     this.ClientVisitForm.controls.VisitStatusId.setValue('');
@@ -946,7 +962,7 @@ export class ClientAddVisitComponent implements OnInit {
 
 
     this.ClientVisitForm.controls.StartDate.setValue('')
-    // this.ClientVisitForm.controls.StartDate.setValue(e.row.data.startDate); 
+    // this.ClientVisitForm.controls.StartDate.setValue(e.row.data.startDate);
     //this.ClientVisitForm.controls.EndDate.setValue(e.row.data.endDate);
 
     this.ClientVisitForm.controls.EndDate.setValue('')
@@ -967,12 +983,13 @@ export class ClientAddVisitComponent implements OnInit {
 
     var client = this.projyctcodelist.find(x => x.id == this.projectId)
     // this.projyctcodelist.find()
-    this.router.navigateByUrl('/app/pages/sales/all-projects?' + client.clientId);
+    //this.router.navigateByUrl('/app/pages/sales/all-projects?' + client.clientId);
+    this.router.navigateByUrl("/app/pages/sales/project-sa8000?"+"ProjectId="+ this.projectId +"&StandardId="+this.standardId+"&ClientId="+this.clientId );
 
   }
 
   ChangeAuditor(LeadAuditorId): void {
-    debugger
+
     if (parseInt(this.ClientVisitForm.get('Auditor1Id').value) == parseInt(LeadAuditorId) || parseInt(this.ClientVisitForm.get('Auditor2Id').value) == parseInt(LeadAuditorId) || parseInt(this.ClientVisitForm.get('Auditor3Id').value) == parseInt(LeadAuditorId) || parseInt(this.ClientVisitForm.get('Auditor4Id').value) == parseInt(LeadAuditorId) || parseInt(this.ClientVisitForm.get('Auditor5Id').value) == parseInt(LeadAuditorId) || parseInt(this.ClientVisitForm.get('ReviewerId').value) == parseInt(LeadAuditorId)) {
       if (parseInt(LeadAuditorId) > 0) {
         abp.message.error("Auditor Already Exist")
@@ -984,14 +1001,14 @@ export class ClientAddVisitComponent implements OnInit {
 
   }
 
-  // this.ClientVisitForm.controls.Auditor2Id.setValue(''); 
-  // this.ClientVisitForm.controls.Auditor3Id.setValue(''); 
+  // this.ClientVisitForm.controls.Auditor2Id.setValue('');
+  // this.ClientVisitForm.controls.Auditor3Id.setValue('');
   // this.ClientVisitForm.controls.Auditor4Id.setValue('');
   // this.ClientVisitForm.controls.Auditor5Id.setValue('');
   // this.ClientVisitForm.controls.ReviewerId.setValue('');
 
   ChangeAuditor1(Auditor1Id): void {
-    debugger
+
     if (parseInt(this.ClientVisitForm.get('LeadAuditorId').value) == parseInt(Auditor1Id) || parseInt(this.ClientVisitForm.get('Auditor2Id').value) == parseInt(Auditor1Id) || parseInt(this.ClientVisitForm.get('Auditor3Id').value) == parseInt(Auditor1Id) || parseInt(this.ClientVisitForm.get('Auditor4Id').value) == parseInt(Auditor1Id) || parseInt(this.ClientVisitForm.get('Auditor5Id').value) == parseInt(Auditor1Id) || parseInt(this.ClientVisitForm.get('ReviewerId').value) == parseInt(Auditor1Id)) {
       if (parseInt(Auditor1Id) > 0) {
         abp.message.error("Auditor Already Exist")
@@ -1003,7 +1020,7 @@ export class ClientAddVisitComponent implements OnInit {
   }
 
   ChangeAuditor2(Auditor2Id): void {
-    debugger
+
     if (parseInt(this.ClientVisitForm.get('LeadAuditorId').value) == parseInt(Auditor2Id) || parseInt(this.ClientVisitForm.get('Auditor1Id').value) == parseInt(Auditor2Id) || parseInt(this.ClientVisitForm.get('Auditor3Id').value) == parseInt(Auditor2Id) || parseInt(this.ClientVisitForm.get('Auditor4Id').value) == parseInt(Auditor2Id) || parseInt(this.ClientVisitForm.get('Auditor5Id').value) == parseInt(Auditor2Id) || parseInt(this.ClientVisitForm.get('ReviewerId').value) == parseInt(Auditor2Id)) {
       if (parseInt(Auditor2Id) > 0) {
         abp.message.error("Auditor Already Exist")
@@ -1015,7 +1032,7 @@ export class ClientAddVisitComponent implements OnInit {
   }
 
   ChangeAuditor3(Auditor3Id): void {
-    debugger
+
     if (parseInt(this.ClientVisitForm.get('LeadAuditorId').value) == parseInt(Auditor3Id) || parseInt(this.ClientVisitForm.get('Auditor1Id').value) == parseInt(Auditor3Id) || parseInt(this.ClientVisitForm.get('Auditor2Id').value) == parseInt(Auditor3Id) || parseInt(this.ClientVisitForm.get('Auditor4Id').value) == parseInt(Auditor3Id) || parseInt(this.ClientVisitForm.get('Auditor5Id').value) == parseInt(Auditor3Id) || parseInt(this.ClientVisitForm.get('ReviewerId').value) == parseInt(Auditor3Id)) {
       if (parseInt(Auditor3Id) > 0) {
         abp.message.error("Auditor Already Exist")
@@ -1026,7 +1043,7 @@ export class ClientAddVisitComponent implements OnInit {
   }
 
   ChangeAuditor4(Auditor4Id): void {
-    debugger
+
     if (parseInt(this.ClientVisitForm.get('LeadAuditorId').value) == parseInt(Auditor4Id) || parseInt(this.ClientVisitForm.get('Auditor1Id').value) == parseInt(Auditor4Id) || parseInt(this.ClientVisitForm.get('Auditor2Id').value) == parseInt(Auditor4Id) || parseInt(this.ClientVisitForm.get('Auditor3Id').value) == parseInt(Auditor4Id) || parseInt(this.ClientVisitForm.get('Auditor5Id').value) == parseInt(Auditor4Id) || parseInt(this.ClientVisitForm.get('ReviewerId').value) == parseInt(Auditor4Id)) {
       if (parseInt(Auditor4Id) > 0) {
         abp.message.error("Auditor Already Exist")
@@ -1037,7 +1054,7 @@ export class ClientAddVisitComponent implements OnInit {
   }
 
   ChangeAuditor5(Auditor5Id): void {
-    debugger
+
     if (parseInt(this.ClientVisitForm.get('LeadAuditorId').value) == parseInt(Auditor5Id) || parseInt(this.ClientVisitForm.get('Auditor1Id').value) == parseInt(Auditor5Id) || parseInt(this.ClientVisitForm.get('Auditor2Id').value) == parseInt(Auditor5Id) || parseInt(this.ClientVisitForm.get('Auditor3Id').value) == parseInt(Auditor5Id) || parseInt(this.ClientVisitForm.get('Auditor4Id').value) == parseInt(Auditor5Id) || parseInt(this.ClientVisitForm.get('ReviewerId').value) == parseInt(Auditor5Id)) {
       if (parseInt(Auditor5Id) > 0) {
         abp.message.error("Auditor Already Exist")
@@ -1048,19 +1065,19 @@ export class ClientAddVisitComponent implements OnInit {
   }
 
   ChangeReviewerId(ReviewerId): void {
-    debugger
+
 
   var patrnt = this.ReviewerList.find(x => x.parentUserId != null && x.parentUserId ===parseInt(ReviewerId))
   var patrnt2 =  this.ReviewerList.filter(item => item.parentUserId === parseInt(ReviewerId));
   //console.log(this.ReviewerList);
   console.log(patrnt);
   console.log(patrnt2);
-debugger
+
     if (parseInt(this.ClientVisitForm.get('LeadAuditorId').value) == parseInt(ReviewerId) || parseInt(this.ClientVisitForm.get('Auditor1Id').value) == parseInt(ReviewerId) || parseInt(this.ClientVisitForm.get('Auditor2Id').value) == parseInt(ReviewerId) || parseInt(this.ClientVisitForm.get('Auditor3Id').value) == parseInt(ReviewerId) || parseInt(this.ClientVisitForm.get('Auditor4Id').value) == parseInt(ReviewerId) || parseInt(this.ClientVisitForm.get('Auditor5Id').value) == parseInt(ReviewerId) )
      {
       //abp.message.error("User Already Exist")
       if (parseInt(this.ClientVisitForm.get('LeadAuditorId').value) == parseInt(patrnt.parentUserId) || parseInt(this.ClientVisitForm.get('Auditor1Id').value) == parseInt(patrnt.parentUserId) || parseInt(this.ClientVisitForm.get('Auditor2Id').value) == parseInt(patrnt.parentUserId) || parseInt(this.ClientVisitForm.get('Auditor3Id').value) == parseInt(patrnt.parentUserId) || parseInt(this.ClientVisitForm.get('Auditor4Id').value) == parseInt(patrnt.parentUserId) || parseInt(this.ClientVisitForm.get('Auditor5Id').value) == parseInt(patrnt.parentUserId) ) {
-        
+
       if (parseInt(ReviewerId) > 0) {
         abp.message.error("Auditor Already Exist")
         this.ClientVisitForm.controls.ReviewerId.setValue('');
@@ -1069,7 +1086,7 @@ debugger
 
   }
   deleteVisit(e) {
-    debugger
+
 
 
     if (e.row.data.visitStatusId == "5" || e.row.data.visitStatusId == "6") {
@@ -1084,7 +1101,7 @@ debugger
 
   }
   recordEdit(e) {
-    debugger
+
 
 
     if (e.row.data.visitStatusId == "5" || e.row.data.visitStatusId == "6") {

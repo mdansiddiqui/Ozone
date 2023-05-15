@@ -948,7 +948,8 @@ namespace Ozone.Infrastructure.Shared.Services
                                     LeadAuditorName = (!(dataReader["LeadAuditorName"] is DBNull)) ? dataReader["LeadAuditorName"].ToString() : null,
                                     ProjectCode = (!(dataReader["ProjectCode"] is DBNull)) ? dataReader["ProjectCode"].ToString() : null,
                                     VisitLevel = (!(dataReader["VisitLevel"] is DBNull)) ? dataReader["VisitLevel"].ToString() : null,
-                                   
+                                    ClientName = (!(dataReader["ClientName"] is DBNull)) ? dataReader["ClientName"].ToString() : null,
+
                                     NCS = (!(dataReader["NCS"] is DBNull)) ? Convert.ToInt64(dataReader["NCS"]) : 0,
                                    
                                     AvgTAT_1 = (!(dataReader["tat_1"] is DBNull)) ? Math.Round(Convert.ToDecimal(dataReader["tat_1"])) : 0,

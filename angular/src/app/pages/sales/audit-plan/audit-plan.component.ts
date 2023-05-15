@@ -118,8 +118,8 @@ export class AuditPlanComponent implements OnInit {
   UserId:number
   id: number
   addetail:boolean=false
- 
-  
+
+
   // standardId:number
   public standardId: number
   public ProjectId: number
@@ -190,7 +190,7 @@ export class AuditPlanComponent implements OnInit {
     //public StandardService: StandardService
   ) {
     this.edit = this.edit.bind(this);
-   
+
     this.NewRecord = this.NewRecord.bind(this);
     this.delete = this.delete.bind(this);
     this.Downloadfile = this.Downloadfile.bind(this);
@@ -200,7 +200,7 @@ export class AuditPlanComponent implements OnInit {
   displayStyle = "none";
   userId: number
 
-  
+
   //  addComments(e)
   //   {
   //     this.QcdocumentsListId=0;
@@ -208,7 +208,7 @@ export class AuditPlanComponent implements OnInit {
 
   //    this.displayStyle = "block";
 
-  //  //this.router.navigateByUrl('/app/pages/stock-management/library?'+this.id);  
+  //  //this.router.navigateByUrl('/app/pages/stock-management/library?'+this.id);
   //  }
   ngOnInit(): void {
 
@@ -223,17 +223,17 @@ export class AuditPlanComponent implements OnInit {
   }
   //displayStyle = "none";
 
- 
 
 
-  
+
+
   openPopup() {
-    debugger
-   
+
+
     this.displayStyle = "block";
-  
+
   }
- 
+
   closePopup() {
     this.displayStyle = "none";
   }
@@ -279,7 +279,7 @@ export class AuditPlanComponent implements OnInit {
   loadSecRoleForm() {
 
 
-debugger
+
     this.formName = "AuditReport"
     this._makerAuthorizerFormService.getSecRoleForm().subscribe((data) => {
 
@@ -320,7 +320,7 @@ debugger
 
   }
 
-  
+
 
   loadVisitType(): void {
 
@@ -369,7 +369,7 @@ debugger
   editVisit() {
 
 
-    
+
     var ur;
     ur = window.location.href.split("/")[7];
     var com = [] = ur.split("?")[1];
@@ -450,7 +450,7 @@ debugger
 
       this._ClientAuditVisitService.GetClientAuditVisitBYId(this.AuditVisitId).subscribe((Response) => {
         //this.VisitTypeList = Response
-debugger
+
         this.id = Response.id
         if (parseInt(Response.standardId) == 7) {
 
@@ -471,7 +471,7 @@ debugger
 
 
         }
-        debugger
+
       if(parseInt(Response.standardId) != 7 &&parseInt(Response.visitStatusId)==7 || parseInt(Response.visitStatusId)==3)
       {
 
@@ -489,8 +489,8 @@ debugger
            {
             this.btnSave=false
            }
-          } 
-          else if(parseInt(localStorage.getItem('roleId')) == 6 ||parseInt(localStorage.getItem('roleId')) == 20)  
+          }
+          else if(parseInt(localStorage.getItem('roleId')) == 6 ||parseInt(localStorage.getItem('roleId')) == 20)
           {
             this.btnSave=true
 
@@ -500,8 +500,8 @@ debugger
            this.btnSave=false
           }
 
-          
-          
+
+
           //this.btnSave=true
         }
         else{ this.btnSave=false}
@@ -524,6 +524,20 @@ debugger
         this.Projectcode = Response.projectCode
         this.visitstatus = Response.visitStatusName
         this.visitLevel = Response.visitLevelName
+        console.log('Magic')
+        console.log('Magic')
+        console.log('Magic')
+        console.log('Magic')
+        console.log('Magic')
+        console.log('Magic')
+        console.log('Magic')
+        if (Response.visitLevelId === 7){
+          this.SubmitReview =false
+          this.StageOne = true
+        }
+        console.log(Response.visitLevelName)
+        console.log(Response)
+
         this.Auditor1Name = Response.auditor1Name
         this.Auditor2Name = Response.auditor2Name
         this.Auditor3Name = Response.auditor3Name
@@ -562,13 +576,13 @@ debugger
         this.StartDate = this.datePipe.transform(Start_Date, 'yyyy-MM-dd')
 
 
-       
-        
-      
+
+
+
         //this.StartDate=Response.startDate
         var date = new Date();
         let latest_date = this.datePipe.transform(date, 'yyyy-MM-dd');
-        
+
         if (this.StartDate <= latest_date) {
           this.auditcompletebtn = true;
           this.auditpendingbtn = false;
@@ -593,13 +607,13 @@ debugger
         {
           this.auditcompletebtn = false
         }
-      
+
 
     // if(parseInt(Response.standardId) == 7)
     //   {
     //    this.auditcompletebtn = false;
     //    this.auditpendingbtn = false;
-      
+
     //   }
         let End_Date = new Date(this.datePipe.transform(Response.endDate, 'yyyy/MM/dd'))
 
@@ -608,7 +622,7 @@ debugger
         var clientvisit = Response
         this.projectId = Response.projectId
         this.projectUrl = "ProjectId=" + Response.projectId
-        
+
         this.onSearch();
         // this.QCDocumentsList();
         //this.QCHistory();
@@ -623,7 +637,7 @@ debugger
       //  this.onSearch(this.userUpdateId);
       //  }
 
-      //    
+      //
       //   var  ur ;
       //   ur=window.location.href.split("/")[7];
       //   var com=[]=ur.split("?")[1];
@@ -713,11 +727,11 @@ debugger
         // // window.open(url);
         // // console.log("success");
 
-        // 
+        //
         // const a = document.createElement('a');
         //   a.setAttribute('style', 'display:none;');
         //   document.body.appendChild(a);
-        // // a.download =fillename;  
+        // // a.download =fillename;
         //  // const fileName =
 
         //   //="farooq";
@@ -736,6 +750,7 @@ debugger
   //For Audit Report
 
   public SubmitReview: boolean = false
+  public StageOne: boolean = false
   public qcbtn: boolean = false
   public ProjectCompleted: boolean = false
   ReportMasterid: number
@@ -769,12 +784,12 @@ debugger
 
   onSearch() {
 
-debugger
+
     this.pagedDto.keyword = this.keyword
     this.pagedDto.authAllowed = true
     //this.pagedDto.pageSize = 3
     //this.AuditReportService.GetPagedAuditReport(this.pagedDto).subscribe((Response) => {
-      debugger
+
     this.AuditReportService.GetPagedAuditReportById(this.AuditVisitId, this.pagedDto).subscribe((Response) => {
       if (Response.totalCount > 0) {
         this.totalCount = Response.totalCount
@@ -787,20 +802,23 @@ debugger
         this.AuditReportForm.controls.Observation.setValue(Response.auditVisitReportModel.observation);
 
 
-        debugger
+
         this.ReportMasterList = Response.auditVisitReportModel
         this.ApprovalStatus = Response.auditVisitReportModel.approvalStatusName
        // if (Response.auditVisitReportModel.approvalStatusId == 2 && Response.AuditVisitId != 12 ) {
         if ( parseInt( Response.auditVisitReportModel.approvalStatusId) == 2  )
-        {  
+        {
        this.ProjectCompleted = true
-          this.ApprovalStatus = "Project Completed" 
+          this.ApprovalStatus = "Project Completed"
 
-        }                                                                                                                                                                       
-        this.ReportMasterid = Response.auditVisitReportModel.id 
+        }
+        this.ReportMasterid = Response.auditVisitReportModel.id
 
         if (this.ReportMasterid > 0) {
           this.SubmitReview = true
+          if(this.StageOne === true){
+          this.SubmitReview = false
+          }
 
         }
 
@@ -812,12 +830,12 @@ debugger
   edit(e) {
 
     // var List = [];
-    // List=this.Liststandard                                                                             ; 
+    // List=this.Liststandard                                                                             ;
     // this.router.navigateByUrl('/app/pages/stock-management/library');
     this.AuditReportDetailId = e.row.data.id
     // var updateDate =this.StandardList.find(x => x.id == this.id );
 
-    // this._StandardService.GetStandardById(this.id).subscribe((res) => 
+    // this._StandardService.GetStandardById(this.id).subscribe((res) =>
     // {
 
     // this.ModuleForm.controls.Code.setValue(e.row.data.code);
@@ -829,7 +847,7 @@ debugger
 
   }
 
- 
+
 
   NewRecord() {
 
@@ -845,7 +863,7 @@ debugger
   handlefileInput(e: any) {
 
     this.fileToUpload = <File>e?.target?.files[0];
-    //this.url=e.target.value; 
+    //this.url=e.target.value;
 
 
   }
@@ -914,7 +932,7 @@ debugger
         // }
         foData.append('File', this.fileToUpload);
         foData.append('AuditDocumentTypeId', this.AuditReportForm.get('AuditDocumentTypeId').value);
-        
+
         foData.append('ClientAuditVisitId', this.AuditVisitId.toString());
         foData.append('ProjectId', this.ProjectId.toString());
         if (this.ReportMasterid != undefined && this.ReportMasterid != null && this.ReportMasterid > 0) {
@@ -924,23 +942,23 @@ debugger
         }
         else { foData.append('LastModifiedById', LoginUserId); }
         if (this.AuditReportForm.get('Minor').value != undefined && this.AuditReportForm.get('Minor').value != null && this.AuditReportForm.get('Minor').value > 0)
-       { 
+       {
         foData.append('Minor', this.AuditReportForm.get('Minor').value);
         }
         if (this.AuditReportForm.get('Major').value != undefined && this.AuditReportForm.get('Major').value != null && this.AuditReportForm.get('Major').value > 0)
-        { 
+        {
         foData.append('Major', this.AuditReportForm.get('Major').value);
         }
         if (this.AuditReportForm.get('Critical').value != undefined && this.AuditReportForm.get('Critical').value != null && this.AuditReportForm.get('Critical').value > 0)
-        { 
+        {
         foData.append('Critical', this.AuditReportForm.get('Critical').value);
         }
         if (this.AuditReportForm.get('TimeBound').value != undefined && this.AuditReportForm.get('TimeBound').value != null && this.AuditReportForm.get('TimeBound').value > 0)
-        { 
+        {
           foData.append('TimeBound', this.AuditReportForm.get('TimeBound').value);
         }
           if (this.AuditReportForm.get('Observation').value != undefined && this.AuditReportForm.get('Observation').value != null && this.AuditReportForm.get('Observation').value > 0)
-          { 
+          {
               foData.append('Observation', this.AuditReportForm.get('Observation').value);
           }
 
@@ -985,7 +1003,7 @@ debugger
     //this.LibraryResourceService.create(this.item).subscribe((Response)=>{
 
   }
-  //   onSubmit(): void 
+  //   onSubmit(): void
   //   {
 
 
@@ -1000,7 +1018,7 @@ debugger
   //     var LoginUserId =localStorage.getItem('userId');
   //   const foData:FormData = new FormData();
 
-  //   if (this.id != undefined && this.id != null && this.id>0 ) 
+  //   if (this.id != undefined && this.id != null && this.id>0 )
   //   {
 
   //     foData.append("Id",this.id.toString());
@@ -1022,7 +1040,7 @@ debugger
   //   foData.append('AuditDocumentTypeId',this.AuditReportForm.get('AuditDocumentTypeId').value);
   //   foData.append('ClientAuditVisitId',this.id.toString());
   //   foData.append('ProjectId',this.ClientAuditPlanId.toString());
-  //   if (this.ReportMasterid != undefined && this.ReportMasterid != null && this.ReportMasterid>0 ) 
+  //   if (this.ReportMasterid != undefined && this.ReportMasterid != null && this.ReportMasterid>0 )
   //   {
   //     foData.append('CreatedById',LoginUserId);
   //     foData.append('AuditReportMasterId',this.ReportMasterid.toString());
@@ -1059,7 +1077,7 @@ debugger
       undefined,
       (result: boolean) => {
         if (result) {
-          // this.SecUserService.Deleteuser(e.row.data.id).subscribe() 
+          // this.SecUserService.Deleteuser(e.row.data.id).subscribe()
           //     abp.message.info("Deleted successfully", "Status", {});
 
           this.AuditReportService.AuditReportDeleteById(e.row.data.id).subscribe((Response) => {
@@ -1084,34 +1102,34 @@ debugger
 
   }
   onSubmitForReview(): void {
-debugger
+
   let minor=parseFloat(this.AuditReportForm.get('Minor').value);
   let major=parseFloat(this.AuditReportForm.get('Major').value);
   let critical=parseFloat(this.AuditReportForm.get('Critical').value);
   let timeBound=parseFloat(this.AuditReportForm.get('TimeBound').value);
   let observation=parseFloat(this.AuditReportForm.get('Observation').value);
     if (Number.isNaN(minor))
-    { 
+    {
       abp.message.error( "Minor can be not empty, value should be a number !");
       return;
      }
      if ( Number.isNaN(major))
-     { 
+     {
       abp.message.error( "Major  can be not empty, value should be a number!");
       return;
      }
      if ( Number.isNaN(critical))
-     { 
+     {
       abp.message.error( "Critical can be not empty, value should be a number!");
       return;
      }
      if ( Number.isNaN(timeBound))
-     { 
+     {
       abp.message.error( "TimeBound  can be not empty, value should be a number!");
       return;
      }
        if (Number.isNaN(observation))
-       { 
+       {
         abp.message.error( "Observation can be not empty, value should be a number!");
         return;
        }
@@ -1120,26 +1138,26 @@ debugger
       undefined,
       (result: boolean) => {
         if (result) {
-          // this.SecUserService.Deleteuser(e.row.data.id).subscribe() 
+          // this.SecUserService.Deleteuser(e.row.data.id).subscribe()
           //     abp.message.info("Deleted successfully", "Status", {});
           const UserModel =
 
           {
             reportMasterid: this.ReportMasterid,
             userId: parseInt(localStorage.getItem('userId'))
-      
-      
-      
-      
-      
-      
+
+
+
+
+
+
           };
           this.AuditReportService.SubmitForReview(UserModel).subscribe((Response) => {
             if(Response.message=="1")
             {abp.message.info( "Successfully Reports Send For QC !")
             window.location.reload();
           }
-           
+
             else{abp.message.error("Not Submited!")}
             this.reloadGrid();
             this.onSearch();
@@ -1152,6 +1170,68 @@ debugger
 
   }
 
+  onStageOne(): void {
+
+    let minor=parseFloat(this.AuditReportForm.get('Minor').value);
+    let major=parseFloat(this.AuditReportForm.get('Major').value);
+    let critical=parseFloat(this.AuditReportForm.get('Critical').value);
+    let timeBound=parseFloat(this.AuditReportForm.get('TimeBound').value);
+    let observation=parseFloat(this.AuditReportForm.get('Observation').value);
+      if (Number.isNaN(minor))
+      {
+        abp.message.error( "Minor can be not empty, value should be a number !");
+        return;
+       }
+       if ( Number.isNaN(major))
+       {
+        abp.message.error( "Major  can be not empty, value should be a number!");
+        return;
+       }
+       if ( Number.isNaN(critical))
+       {
+        abp.message.error( "Critical can be not empty, value should be a number!");
+        return;
+       }
+       if ( Number.isNaN(timeBound))
+       {
+        abp.message.error( "TimeBound  can be not empty, value should be a number!");
+        return;
+       }
+         if (Number.isNaN(observation))
+         {
+          abp.message.error( "Observation can be not empty, value should be a number!");
+          return;
+         }
+
+      abp.message.confirm(("Please make sure all the required information is entered. Are you sure to submit your application for review?"),
+        undefined,
+        (result: boolean) => {
+          if (result) {
+            // this.SecUserService.Deleteuser(e.row.data.id).subscribe()
+            //     abp.message.info("Deleted successfully", "Status", {});
+            const UserModel =
+
+            {
+              reportMasterid: this.ReportMasterid,
+              userId: parseInt(localStorage.getItem('userId')),
+            };
+            this.AuditReportService.onStageOne(UserModel).subscribe((Response) => {
+              if(Response.message=="1")
+              {abp.message.info( "Successfully Reports Send For QC !")
+              window.location.reload();
+            }
+
+              else{abp.message.error("Not Submited!")}
+              this.reloadGrid();
+              this.onSearch();
+
+            })
+
+          }
+        }
+      )
+
+    }
   AuditComplete(): void {
 
 
@@ -1286,7 +1366,7 @@ debugger
   // }
   // QCHistory(): void {
   //   //let organizationId =parseInt(localStorage.getItem('organizationId'));
-  //   
+  //
   //   this._ClientAuditVisitService.QCHistory(this.projectId).subscribe((Response) => {
   //     this.QCDetail = Response
 
@@ -1346,7 +1426,7 @@ debugger
   }
 
   CheckReviewer() {
-    
+
     const UserModel =
 
     {
@@ -1361,7 +1441,7 @@ debugger
     };
 
     this._SlcpService.GetReviewerByStandard(UserModel).subscribe((Response) => {
-      
+
       var reviwerData = Response
       if (reviwerData == null || reviwerData == undefined || reviwerData == "" || reviwerData == '' || reviwerData == isNaN) {
         this.Revieweruser = false
@@ -1377,9 +1457,9 @@ debugger
   }
 
   // ManageVisit(e) {
-   
-  
-   
+
+
+
   // //  var tt= this.authorizer;
   //   if(manageAllowed=='1')
   //   {
@@ -1387,10 +1467,10 @@ debugger
   //   {
   //   return !e.row.isEditing;
   //   }
-  
+
   //   else
   //   {
-      
+
   //     return e.row.isEditing;
   //   }
   // }
@@ -1398,6 +1478,6 @@ debugger
   // {
   //    return e.row.isEditing;
   // }
-  
+
   // }
 }

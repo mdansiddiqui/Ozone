@@ -1,6 +1,7 @@
 
 <dx-data-grid [dataSource]="tasksDataSource"  [showBorders]="true" [columnAutoWidth]="true"
   [rowAlternationEnabled]="true" [showRowLines]="true"   >
+  <dxi-column dataField="clientName" caption="Client Name" dataType="string"></dxi-column>
   <dxi-column dataField="leadAuditorName"  dataType="string" ></dxi-column>
   <dxi-column dataField="projectCode" dataType="string"></dxi-column>
   <dxi-column dataField="visitLevel" dataType="string"></dxi-column>

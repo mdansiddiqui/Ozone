@@ -28,6 +28,7 @@ namespace Ozone.Infrastructure.Shared.Services
        // Task<string> SubmitForReview(long id, long? loginUserId);
         Task<string> SubmitForReview(IDictionary<string, long> keyValuePairs);
 
+        Task<string> onStageOne(IDictionary<string, long> keyValuePairs);
 
 
     }

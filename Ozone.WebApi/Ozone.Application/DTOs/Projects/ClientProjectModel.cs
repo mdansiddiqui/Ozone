@@ -49,8 +49,8 @@ namespace Ozone.Application.DTOs
 
         public long? ProjectAmountId { get; set; }
         public decimal ProjectStandardAmount { get; set; }
+        public string Registration_no { get; set; }
 
-        
 
     }
 }

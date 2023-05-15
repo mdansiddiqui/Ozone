@@ -669,8 +669,130 @@ namespace Ozone.Infrastructure.Shared.Services
 
         }
 
+        //public async Task<string> ProjectStatusChange(ClientProjectModel input)
+        //{
+        //    // OzoneContext ozonedb = new OzoneContext();
+        //    using (var transaction = _unitOfWork.BeginTransaction())
+        //    {
+        //        ProjectRemarksHistory history = new ProjectRemarksHistory();
+        //        ClientProjects ClientProject = _dbContext.ClientProjects.Where(u => u.Id == input.Id).FirstOrDefault();
+        //        var secuser = _dbContext.SecUser.Where(u => u.Id == ClientProject.CreatedById).FirstOrDefault();
+        //        var dbprojectAmount = await Task.Run(() => _dbContext.ProjectAmount.Where(x => x.StandardId == ClientProject.StandardId && x.IsDeleted == false && x.OrganizationId == secuser.OrganizationId).OrderByDescending(x => x.Id).FirstOrDefault());
+
+        //        // ProjectRemarksHistory history = await Task.Run(() => _dbContext.ProjectRemarksHistory.Where(x => x.ProjectId == id).FirstOrDefault());
+        //        if (ClientProject != null)
+        //        {
 
 
+
+        //            history.ApprovalStatusId = input.ApprovalStatusId;
+        //            ClientProject.ApprovalStatusId = input.ApprovalStatusId;
+        //            ClientProject.Remarks = input.Remarks;
+
+        //            if (dbprojectAmount != null)
+        //            {
+        //                ClientProject.ProjectAmountId = dbprojectAmount.Id;
+        //            }
+        //            else
+        //            {
+        //                return "2";
+        //            }
+
+        //            history.Remarks = input.Remarks;
+        //            history.RemarksById = input.LastModifiedById;
+
+        //            history.RemarksDate = DateTime.Now;
+        //            history.ProjectId = input.Id;
+
+        //            history.IsDeleted = false;
+
+        //            ClientProject.ProjectRemarksHistory.Add(history);
+
+        //            await base.UpdateAsync(ClientProject);
+        //            await _unitOfWork.SaveChangesAsync();
+
+        //            transaction.Commit();
+        //            // return "Successfully Saved !";
+        //            return "1";
+        //        }
+        //        else
+        //        {
+        //            // return "Not Submited!";
+        //            return "0";
+        //        }
+        //    }
+
+        //}
+
+        public async Task<string> ProjectStatusChange(ClientProjectModel input)
+        {
+            // OzoneContext ozonedb = new OzoneContext();
+            using (var transaction = _unitOfWork.BeginTransaction())
+            {
+                ProjectRemarksHistory history = new ProjectRemarksHistory();
+                ClientProjects ClientProject = _dbContext.ClientProjects.Where(u => u.Id == input.Id).FirstOrDefault();
+
+                var Projecthistory = _dbContext.ProjectRemarksHistory.Where(u => u.ProjectId == input.Id).ToList();
+                List<long?> Ids = new List<long?>() { 13, 14, 15 };
+                if (input.ApprovalStatusId == 3)
+                {
+                    var laststatusId = Projecthistory.Where(x => !Ids.Contains(x.ApprovalStatusId)).LastOrDefault();
+
+                    input.ApprovalStatusId = laststatusId.ApprovalStatusId;
+
+                    //var liveproject = Projecthistory.Where(x => x.ApprovalStatusId == 3).FirstOrDefault();
+                    //if (liveproject != null)
+                    //{
+                    //    input.ApprovalStatusId = 3;
+                    //}
+                    //else
+                    //{
+                    // //var laststatusId=Projecthistory.Where(x => !Ids.Contains(x.ApprovalStatusId)).LastOrDefault();
+
+
+                    //}
+
+
+                }
+                var secuser = _dbContext.SecUser.Where(u => u.Id == ClientProject.CreatedById).FirstOrDefault();
+
+                // ProjectRemarksHistory history = await Task.Run(() => _dbContext.ProjectRemarksHistory.Where(x => x.ProjectId == id).FirstOrDefault());
+                if (ClientProject != null)
+                {
+
+
+
+                    history.ApprovalStatusId = input.ApprovalStatusId;
+                    ClientProject.ApprovalStatusId = input.ApprovalStatusId;
+                    ClientProject.Remarks = input.Remarks;
+
+
+                    history.Remarks = input.Remarks;
+                    history.RemarksById = input.LastModifiedById;
+
+                    history.RemarksDate = DateTime.Now;
+                    history.ProjectId = input.Id;
+
+                    history.IsDeleted = false;
+
+                    _dbContext.ProjectRemarksHistory.Add(history);
+
+                    await base.UpdateAsync(ClientProject);
+                    await _unitOfWork.SaveChangesAsync();
+
+                    transaction.Commit();
+                    // return "Successfully Saved !";
+                    return "1";
+                }
+                else
+                {
+                    // return "Not Submited!";
+                    return "0";
+                }
+            }
+
+        }
+        
         public async Task<ClientProjectModel> downloadContract(long id)
         {
             // OzoneContext ozonedb = new OzoneContext();

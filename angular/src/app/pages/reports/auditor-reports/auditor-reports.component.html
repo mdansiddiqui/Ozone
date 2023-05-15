@@ -590,24 +590,52 @@
 
                             <dxi-column caption="Window period : Surv 1"  cssClass="cell-header">
                             <dxi-column dataField="windowperiod_start_Surv_1" caption="Start Date" cssClass="cell-header"  dataType="date"></dxi-column>
-                            <dxi-column dataField="windowperiod_end_Surv_1"  caption="End End" cssClass="cell-header"></dxi-column>
+                            <dxi-column dataField="windowperiod_end_Surv_1"  caption="End End"  dataType="date" cssClass="cell-header"></dxi-column>
                             </dxi-column>
                             <dxi-column dataField="surv_1_due" caption="Surv 1 due" dataType="date" cssClass="cell-header"></dxi-column>
                           </dxi-column>
-                            <dxi-column dataField="surv_1" caption="Surv 1"  cssClass="cell-header"  dataType="date"></dxi-column>
+                            <!-- <dxi-column dataField="surv_1" caption="Surv 1"  cssClass="cell-header"  dataType="date"></dxi-column> -->
+                            <dxi-column caption="Followup review-1" cssClass="cell-header" alignment="center">
+                            <dxi-column dataField="windowperiod_Sart_FUP_1" caption="Window period : FUP-1 Start" dataType="date"  cssClass="cell-header" ></dxi-column>
+                            <dxi-column dataField="windowperiod_end_FUP_1" caption="Window period : FUP-1 End" dataType="date"  cssClass="cell-header" ></dxi-column> 
+                          </dxi-column>
 
-                            <dxi-column dataField="followup_1" caption="Followup 1" dataType="date"  cssClass="cell-header" ></dxi-column>
 
-                            <dxi-column dataField="surv_2" caption="surv 2"  cssClass="cell-header"  dataType="date"></dxi-column>
+                          <dxi-column caption="Surv 2" cssClass="cell-header" alignment="center">
+                            <dxi-column dataField="intimationdateSurv_2" caption="Intimation date Surv 2" dataType="date" cssClass="cell-header"></dxi-column>
 
-                            <dxi-column dataField="followup_2" caption="Followup 2"  cssClass="cell-header"  dataType="date"></dxi-column>
+                            <dxi-column caption="Window period of Surv 2"  cssClass="cell-header">
+                            <dxi-column dataField="windowperiod_start_Surv_2" caption="Start Date" cssClass="cell-header"  dataType="date"></dxi-column>
+                            <dxi-column dataField="windowperiod_end_Surv_2"  caption="End End" dataType="date" cssClass="cell-header"></dxi-column>
+                            </dxi-column>
+                            <dxi-column dataField="surv_2_due" caption="Surv 2 due" dataType="date" cssClass="cell-header"></dxi-column>
+                          </dxi-column>
 
-                            <dxi-column dataField="surv_3" caption="Surv 3"  cssClass="cell-header"  dataType="date"></dxi-column>
+                            <!-- <dxi-column dataField="surv_2" caption="surv 2"  cssClass="cell-header"  dataType="date"></dxi-column> -->
+                            <dxi-column caption="Followup review-2" cssClass="cell-header" alignment="center">
+                              <dxi-column dataField="windowperiod_Sart_FUP_2" caption="Window period : FUP-2 Start" dataType="date"  cssClass="cell-header" ></dxi-column>
+                              <dxi-column dataField="windowperiod_end_FUP_2" caption="Window period : FUP-2  End" dataType="date"  cssClass="cell-header" ></dxi-column> 
+                            </dxi-column>
+
+
+                            <!-- <dxi-column dataField="followup_2" caption="Followup 2"  cssClass="cell-header"  dataType="date"></dxi-column> -->
+
+                            <dxi-column caption="Recertification" cssClass="cell-header" alignment="center">
+                              <dxi-column dataField="recertificationIntimationdate" caption="Intimation" dataType="date"  cssClass="cell-header" ></dxi-column>
+                              <dxi-column dataField="recertification_Windowperiod_start_Surv_2" caption="Start" dataType="date"  cssClass="cell-header" ></dxi-column> 
+                              <dxi-column dataField="recertification_Windowperiod_end_Surv_2" caption="End" dataType="date"  cssClass="cell-header" ></dxi-column> 
+                            </dxi-column>
+
+                            <dxi-column caption="Followup-Recertification" cssClass="cell-header" alignment="center">
+                              <dxi-column dataField="followup_Recert_Start" caption="Window period : FUP Start" dataType="date"  cssClass="cell-header" ></dxi-column>
+                              <dxi-column dataField="followup_Recert_end" caption="Window period : FUP End" dataType="date"  cssClass="cell-header" ></dxi-column> 
+                            </dxi-column>
+                            <!-- <dxi-column dataField="surv_3" caption="Surv 3"  cssClass="cell-header"  dataType="date"></dxi-column>
 
                             <dxi-column dataField="surv_4" caption="Surv 4"  cssClass="cell-header"  dataType="date"></dxi-column>
                             <dxi-column dataField="surv_5" caption="Surv 5"  cssClass="cell-header"  dataType="date"></dxi-column>
 
-                            <dxi-column dataField="recertification" caption="Recertification"  dataType="date" cssClass="cell-header"></dxi-column>
+                            <dxi-column dataField="recertification" caption="Recertification"  dataType="date" cssClass="cell-header"></dxi-column> -->
                             <dxo-export [enabled]="true" [allowExportSelectedData]="true"></dxo-export>
                             <dxo-summary>
                               <dxi-total-item column="s_No" summaryType="count"> </dxi-total-item>

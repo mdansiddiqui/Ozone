@@ -469,7 +469,7 @@ namespace Ozone.Infrastructure.Shared.Services
                 var result = new GetPagedAuditVisitReportMasterModel();
                 var AuditReportList = new List<AuditVisitReportMasterModel>();
                 var auditreportMSmodel= new AuditReportMSModel();
-
+                
                 //if (model.AuthAllowed == true)
                 //{
                 //var list = await _dbContext.Module.Include("Module").Include("Status").Where(x => x.IsDeleted == false && x.IsActive == true &&
@@ -481,7 +481,21 @@ namespace Ozone.Infrastructure.Shared.Services
                 var listMaster = await Task.Run(() => _dbContext.AuditReportMaster.Include(x=>x.Project).Include(x=>x.ApprovalStatus).Where(x=> x.IsDeleted == false && x.ClientAuditVisitId == id).FirstOrDefault());
                 auditreportMSmodel = _mapper.Map<AuditReportMSModel>(listMaster);
 
-                var list = await Task.Run(() => _dbContext.AuditReportDetail.Include(x=>x.AuditReportMaster).Include(x => x.AuditDocumentType).Include(x=>x.AuditReportMaster.Project).Where(x => x.IsDeleted == false && x.AuditReportMaster.ClientAuditVisitId == id).ToList());
+                var list = await Task.Run(() => _dbContext.AuditReportDetail.Include(x=>x.AuditReportMaster).Include(x => x.AuditDocumentType).Include(x=>x.AuditReportMaster.Project).Include(x=>x.AuditReportMaster.ClientAuditVisit).Include(x => x.AuditReportMaster.ClientAuditVisit.VisitLevel).Where(x => x.IsDeleted == false && x.AuditReportMaster.ClientAuditVisitId == id).ToList());
+                
+                var clientvisit = _dbContext.ClientAuditVisit.Where(x => x.Id == id).FirstOrDefault();
+                if (clientvisit.VisitLevelId == 8)
+                {
+                    var stage1 = _dbContext.ClientAuditVisit.Where(x => x.ProjectId == clientvisit.ProjectId && x.VisitLevelId==7 && x.IsDeleted==false).FirstOrDefault();
+                    if (stage1 != null)
+                    {
+                        var statge1Report = await Task.Run(() => _dbContext.AuditReportDetail.Include(x => x.AuditReportMaster).Include(x => x.AuditDocumentType).Include(x => x.AuditReportMaster.Project).Include(x => x.AuditReportMaster.ClientAuditVisit).Include(x => x.AuditReportMaster.ClientAuditVisit.VisitLevel).Where(x => x.IsDeleted == false && x.AuditReportMaster.ClientAuditVisitId == stage1.Id).ToList());
+                        list.AddRange(statge1Report);
+                    }
+
+                }
+
+
                 AuditReportList = _mapper.Map<List<AuditVisitReportMasterModel>>(list);
                 foreach (var auditlist in AuditReportList)
                 {
@@ -922,7 +936,20 @@ namespace Ozone.Infrastructure.Shared.Services
 
                                     ClientProject2.RegistrationNo = RegistrationNo;
                                     _dbContext.ClientProjects.Update(ClientProject2);
-                                   
+
+                                    ProjectRemarksHistory history = new ProjectRemarksHistory();
+
+                                    history.ApprovalStatusId = 3;
+
+                                    history.Remarks = "Stage 2 QC Approved";
+                                    history.RemarksById = input[0].RemarksById;
+
+                                    history.RemarksDate = DateTime.Now;
+                                    history.ProjectId = input[0].ProjectId;
+
+                                    history.IsDeleted = false;
+
+                                    _dbContext.ProjectRemarksHistory.Add(history);
                                 }
                                 //var  projectmaster= _dbContext.ClientProjects.Where(u => u.Id == input[0].ProjectId).FirstOrDefault();
                                 //projectmaster.ApprovalStatusId=3;
@@ -1044,6 +1071,81 @@ namespace Ozone.Infrastructure.Shared.Services
             //return null;
         }
 
+        public async Task<string> onStageOne(IDictionary<string, long> keyValuePairs)
+        {
+            try
+            {
+                long? ReportMasterid = 0;
+                long? userId = 0;
+
+                if (keyValuePairs.ContainsKey("reportMasterid"))
+                    ReportMasterid = Convert.ToInt64(keyValuePairs["reportMasterid"]);
+                if (keyValuePairs.ContainsKey("userId"))
+                    userId = Convert.ToInt64(keyValuePairs["userId"]);
+                // OzoneContext ozonedb = new OzoneContext();
+                using (var transaction = _unitOfWork.BeginTransaction())
+                {
+
+                    AuditReportMaster ReportMaster = _dbContext.AuditReportMaster.Where(u => u.Id == ReportMasterid).FirstOrDefault();
+
+                    ClientAuditVisit ClientAuditVisit = _dbContext.ClientAuditVisit.Where(u => u.Id == ReportMaster.ClientAuditVisitId).FirstOrDefault();
+
+                    // ProjectRemarksHistory history = await Task.Run(() => _dbContext.ProjectRemarksHistory.Where(x => x.ProjectId == id).FirstOrDefault());
+                    if (ReportMaster != null)
+                    {
+
+                        AuditReportHistory AuditReportHistoryMod = new AuditReportHistory();
+                        if (ReportMaster.ApprovalStatusId > 0)
+                        {
+                            ReportMaster.ApprovalStatusId = 2;
+                            ClientAuditVisit.VisitStatusId = 2;
+                            AuditReportHistoryMod.ApprovalStatusId = 2;
+                            AuditReportHistoryMod.Remarks = "Stage O1 Completed";
+
+                        }
+                        else
+                        {
+
+                            AuditReportHistoryMod.ApprovalStatusId = 2;
+                            AuditReportHistoryMod.Remarks = "Stage O1 Completed";
+                            ReportMaster.ApprovalStatusId = 2;
+                            ClientAuditVisit.VisitStatusId = 2;
+
+
+                        }
+                        AuditReportHistoryMod.ClientAuditVisitId = ClientAuditVisit.Id;
+                        AuditReportHistoryMod.AuditReportId = ReportMasterid;
+
+                        // AuditReportMod.Remarks = NewComments.QcdocumentsListId;
+                        AuditReportHistoryMod.RemarksById = userId;
+                        AuditReportHistoryMod.RemarksDate = DateTime.Now;
+                        AuditReportHistoryMod.IsDeleted = false;
+
+                        _dbContext.AuditReportHistory.Add(AuditReportHistoryMod);
+
+                        _dbContext.AuditReportMaster.Update(ReportMaster);
+                        _dbContext.ClientAuditVisit.Update(ClientAuditVisit);
+                        await _unitOfWork.SaveChangesAsync();
+
+                        transaction.Commit();
+                        return "1";
+                    }
+                    else
+                    {
+                        return "0";
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+                //return ex;
+
+            }
+
+            //return null;
+        }
 
 
     }

@@ -46,6 +46,7 @@ import { Injector, QueryList, ViewChildren } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { max } from 'rxjs/operators';
 import { SlcpService } from '@shared/Services/project-slcp-service';
+import { HiggService } from '@shared/Services/project-higg-service';
 
 
 @Component({
@@ -101,6 +102,9 @@ export class ProjectSA8000Component implements OnInit {
     RiskName: new FormControl(''),
     Eacodename: new FormControl(''),
     NaceCodeName: new FormControl(''),
+    ProjectRemarks: new FormControl(''),
+    VisitStatusId: new FormControl(''),
+
   })
 
   SAClientChangeRequest= new FormGroup({
@@ -129,7 +133,7 @@ export class ProjectSA8000Component implements OnInit {
   // public EACodeName: string = ''
   // public NaceCodeName: string = ''
   // public RiskName: string = ''
-  
+
   public isEditShown: boolean
   public isViewShown: boolean
   public isAddShown: boolean
@@ -175,7 +179,7 @@ export class ProjectSA8000Component implements OnInit {
   clientinfo: any;
   projectinfo: any;
   clientsite: any;
- 
+
   // public ProjectCode:string
   public TransferProjectList = [{ id: "1", code: "Yes" }, { id: "0", code: "No" }];
   public UserStatusList = []
@@ -184,6 +188,8 @@ export class ProjectSA8000Component implements OnInit {
   public btnContractDownload: boolean = false
   public Inserted: boolean = false
   public Revieweruser: boolean = false
+  public Registration:string
+
   // public reviwerData :any
   readonly allowedPageSizes = [5, 10, 'all'];
   readonly displayModes = [{ text: "Display Mode 'full'", value: "full" }, { text: "Display Mode 'compact'", value: "compact" }];
@@ -202,6 +208,7 @@ export class ProjectSA8000Component implements OnInit {
 
   constructor(
     //  private http: HttpClient,
+    private _HiggService: HiggService,
     private _UserStandardService: UserStandardService,
     private _SA8000Service: SA8000Service,
     private _ClientService: ClientService,
@@ -241,7 +248,7 @@ export class ProjectSA8000Component implements OnInit {
 
   }
   ngAfterViewInit(): void {
-   
+
     if (this.ProjectId > 0) {
       this.editSA8000User();
       this.UpdateProject();
@@ -255,12 +262,12 @@ export class ProjectSA8000Component implements OnInit {
   datadisplay = "none";
 
   Popup() {
-    debugger
-   
+
+
     this.datadisplay = "block";
-  
+
   }
- 
+
   close() {
     this.datadisplay = "none";
   }
@@ -275,12 +282,12 @@ export class ProjectSA8000Component implements OnInit {
   }
 
   editSA8000User() {
-    debugger
- 
+
+
       this._SA8000Service.GetProjectSA8000BYId(this.ProjectId).subscribe(data => {
         var ProjectSaData = data.projectSA8000Model;
-     
-     
+
+
           this.SAClientChangeRequest.controls.DurationStage2.setValue(ProjectSaData.durationStage2);
           this.SAClientChangeRequest.controls.NoOfSurveillanceVisits.setValue(ProjectSaData.noOfSurveillanceVisits)
           this.SAClientChangeRequest.controls.Scope.setValue(ProjectSaData.scope);
@@ -288,25 +295,65 @@ export class ProjectSA8000Component implements OnInit {
           this.SAClientChangeRequest.controls.SurveillanceVisitFrequencyId.setValue(ProjectSaData.surveillanceVisitFrequencyId);
          this.SAClientChangeRequest.controls.Survfee.setValue(ProjectSaData.survfee);
          this.SAClientChangeRequest.controls.Assessmentfee.setValue(ProjectSaData.assessmentfee)
-   
+
 
       })
   }
+  ChangeStatus(): void {
 
+    console.log('ProjectRemarks value:', this.SAForm.get('ProjectRemarks').value);
+    console.log('VisitStatusId value:', this.SAForm.get('VisitStatusId').value);
+
+    if (this.SAForm.get('VisitStatusId').value == null || this.SAForm.get('VisitStatusId').value == undefined || this.SAForm.get('VisitStatusId').value == "" || this.SAForm.get('VisitStatusId').value == '' || this.SAForm.get('VisitStatusId').value == isNaN) {
+
+      abp.message.error("Project Status is required", "Please Select Status");
+      return;
+    }
+
+    var LoginUserId = localStorage.getItem('userId');
+    const status: FormData = new FormData();
+
+    if (this.ProjectId > 0) {
+      status.append("Id", this.ProjectId.toString());
+    }
+    status.append('LastModifiedById', LoginUserId);
+    status.append('Remarks', this.SAForm.get('ProjectRemarks').value);
+    status.append('ApprovalStatusId', this.SAForm.get('VisitStatusId').value);
+
+    this._HiggService.ProjectStatusChange(status).subscribe((Response) => {
+
+      // abp.message.info(Response.message)
+      if (Response.message == '1') {
+        abp.message.info("Successfully Saved!")
+        this.router.navigateByUrl('/app/home');
+
+      }
+      else if (Response.message == '2') {
+        abp.message.info("Project Status not set in Status Amount form for this Standard!")
+        ///this.router.navigateByUrl('/app/pages/sales/all-projects?'+this.ClientId);
+      }
+      else if (Response.message == '0') {
+        abp.message.error("Not Inserted!")
+      }
+      //this.router.navigateByUrl('/app/pages/sales/all-projects?'+this.ClientId);
+
+    })
+
+  }
   onSubmitChangeRequest() {
-    debugger
+
         this.submitted = true;
 
         if (this.SAClientChangeRequest.invalid) {
           return;
         }
         this.SA8000ChangeRequest();
-   
+
       }
-      
+
       SA8000ChangeRequest(): void {
-    
-        debugger
+
+
         const foData:FormData = new FormData();
         // const ProjectSA8000CreateModel = {
         //   Id:this.id,
@@ -321,7 +368,7 @@ export class ProjectSA8000Component implements OnInit {
         //   OrganizationId: localStorage.getItem('organizationId'),
         //   FormName:"ProjectSA8000",
         //   File:this.fileToUploadSa8000
- 
+
         // };
 
         Object.keys(this.SAClientChangeRequest.controls).forEach(key => {
@@ -330,7 +377,7 @@ export class ProjectSA8000Component implements OnInit {
             var sname = key;
             //var sname= this.SAForm.controls[key].;
             var val = this.SAClientChangeRequest.controls[key].value;
-    
+
             foData.append(sname, val);
           }
         });
@@ -346,20 +393,20 @@ export class ProjectSA8000Component implements OnInit {
          foData.append("FormName","ProjectSA8000");
         foData.append('File',this.fileToUploadSa8000);
         foData.append('ContractForm',this.ContractfileToUploadSa8000);
-    
-        
-        
+
+
+
         var OrgId = localStorage.getItem('organizationId');
-   
+
         foData.append("OrganizationId",OrgId)
-    
+
         var userId = localStorage.getItem('userId');
-      
+
         foData.append("CreatedById",userId)
 
 
         this._SA8000Service.SA8000ChangeRequest(foData).subscribe((Response) => {
-    
+
           if (Response.message == '1') {
             abp.message.info("Please Submit For Review","Change Request Successfully Saved.!")
             this.router.navigateByUrl('/app/pages/sales/all-projects?' + this.ClientId);
@@ -379,15 +426,15 @@ export class ProjectSA8000Component implements OnInit {
     // this.ProjectId=e.row.data.id;
     // var fillename=e.row.data.title;
     var fillename = "Document File";
-    debugger
+
     if(this.ContarctFileName!=undefined && this.ContarctFileName!=null )
     {
         fillename =  this.ContarctFileName.replace(/^.*[\\\/]/, '')
 
         // var  fillename2=[...fillename];
         // fillename2.splice(0,37,"").join('');
-      
-        
+
+
     }
     this._SA8000Service.downloadContract(this.ProjectId).subscribe((result: Blob) => {
       const Blb = new Blob([result], { type: result.type });
@@ -483,7 +530,7 @@ export class ProjectSA8000Component implements OnInit {
 
   }
   loadSecRoleForm() {
-debugger
+
     // let secRoleForm = JSON.parse(localStorage.getItem('secRoleForm'))
     // let permission = secRoleForm.find(x => x.formCode != null && x.formCode == this.formCode)
 
@@ -660,10 +707,14 @@ debugger
 
 
   UpdateProject() {
-debugger
+
     this._SA8000Service.GetProjectSA8000BYId(this.ProjectId).subscribe(data => {
-
-
+      console.log('Testing Sa800')
+      console.log('Testing Sa800')
+      this.Registration = data.clientProjectModel.registration_no
+      console.log(this.Registration)
+      console.log(this.Registration)
+      console.log(data)
       var ProjectSaData = data.projectSA8000Model;
       this.projectinfo = data.clientSitesModel;
       var ClientProjectMod = data.clientProjectModel;
@@ -705,7 +756,7 @@ debugger
 
       }
 
-      debugger
+
       console.log(ClientProjectMod);
       this.id=ProjectSaData.id;
       this.SAForm.controls.ProjectTypeName.setValue(ClientProjectMod.projectTypeName);
@@ -739,7 +790,7 @@ debugger
       this.SAForm.controls.Survfee.setValue(ProjectSaData.survfee);
       this.SAForm.controls.ProjectCode.setValue(ClientProjectMod.projectCode);
       this.ProjectCode = ClientProjectMod.projectCode
-    
+
 
 
       this._ClientService.GeClientDatabyId(ProjectSaData.clientId).subscribe((Response) => {
@@ -918,7 +969,7 @@ debugger
 
   }
   loadNaceCode(eacodeId): void {
-debugger
+
     this._UserStandardService.getAllNaceCodeByEaCode(eacodeId).subscribe((Response) => {
       this.NaceCodeList = Response
 
@@ -935,7 +986,7 @@ debugger
     })
   }
   loadEaCode(): void {
-debugger
+
     this._UserStandardService.getAllEACode().subscribe((Response) => {
       this.EACodeList = Response
       let eacodeId = 0;
@@ -1022,7 +1073,7 @@ debugger
     })
   }
   onSubmit() {
-debugger
+
     this.submitted = true;
 
     // stop here if form is invalid
@@ -1035,7 +1086,7 @@ debugger
   }
   onSubmit1(): void {
 
-    debugger
+
 
     var LoginUserId = localStorage.getItem('userId');
     const foData: FormData = new FormData();
@@ -1227,7 +1278,7 @@ debugger
   handleContractfileInputSA8000(e:any){
     this.ContractfileToUploadSa8000 = <File>e?.target?.files[0];
   }
-  
+
 
   onOptionsSelected(id: number) {
     console.log("the selected value is " + id);
@@ -1291,7 +1342,7 @@ debugger
     // this.ProjectId=e.row.data.id;
     // var fillename=e.row.data.title;
     var fillename = "Document File";
-    debugger
+
     if(this.ApplicationfileName!=undefined && this.ApplicationfileName!=null )
 {
     fillename =  this.ApplicationfileName.replace(/^.*[\\\/]/, '')
@@ -1301,7 +1352,7 @@ debugger
       // const url=window.URL.createObjectURL(Blb);
       // window.open(url);
       // console.log("success");
-debugger
+
 
       const a = document.createElement('a');
       a.setAttribute('style', 'display:none;');
@@ -2408,7 +2459,7 @@ debugger
     this._ClientService.GeClientDatabyId(this.ClientId).subscribe((Response) => {
 
       this.clientinfo = Response;
-debugger
+
 this.Multisite = Response.multisite;
 if(this.Multisite ==true)
       {
@@ -2418,7 +2469,7 @@ if(this.Multisite ==true)
       {
         this.SiteCount="Only One Site"
       }
-   
+
       this.SAForm.controls.OverAllEmployees.setValue(Response.overAllEmployees)
       this.SAForm.controls.RiskName.setValue(Response.riskName)
       this.SAForm.controls.Eacodename.setValue(Response.eacodename)

@@ -36,6 +36,9 @@ namespace Ozone.Application.DTOs
         public long? Critical { get; set; }
         public long? TimeBound { get; set; }
         public long? Observation { get; set; }
+        public long? VisitLevelId { get; set; }
+        public string VisitLevel { get; set; }
+
 
 
     }

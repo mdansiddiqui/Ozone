@@ -91,25 +91,29 @@ export class SlcpComponent implements OnInit {
     //ProjectCode: new FormControl(''),
     ContractRemarks: new FormControl(''),
     ContractStatusId: new FormControl(''),
+    ProjectRemarks: new FormControl(''),
+    VisitStatusId: new FormControl(''),
+
+
   })
 
 
   SLCPFormControl= new FormGroup({
     AssessmentCompletedId: new FormControl(''),
     AccreditationId: new FormControl(''),
-    CompletedStepId: new FormControl(''), 
-    NoOfMd: new FormControl(''), 
-    RequestOfSiteId: new FormControl(''), 
-    ModuleVersionId: new FormControl(''), 
-    BodySelectDate: new FormControl(''), 
-    ModuleShareId: new FormControl(''), 
-    ModuleYear: new FormControl(''), 
-    TentativeDate: new FormControl(''), 
-    ServicesTypeId: new FormControl(''), 
-    MethodologyId: new FormControl(''), 
-    FromDate: new FormControl(''), 
-    ToDate: new FormControl(''), 
-    ApplicationDate: new FormControl('') 
+    CompletedStepId: new FormControl(''),
+    NoOfMd: new FormControl(''),
+    RequestOfSiteId: new FormControl(''),
+    ModuleVersionId: new FormControl(''),
+    BodySelectDate: new FormControl(''),
+    ModuleShareId: new FormControl(''),
+    ModuleYear: new FormControl(''),
+    TentativeDate: new FormControl(''),
+    ServicesTypeId: new FormControl(''),
+    MethodologyId: new FormControl(''),
+    FromDate: new FormControl(''),
+    ToDate: new FormControl(''),
+    ApplicationDate: new FormControl('')
   })
 
 
@@ -118,16 +122,58 @@ export class SlcpComponent implements OnInit {
 
   get f() { return this.SLCPForm.controls; }
 
+  ChangeStatus(): void {
+
+    console.log('ProjectRemarks value:', this.SLCPForm.get('ProjectRemarks').value);
+    console.log('VisitStatusId value:', this.SLCPForm.get('VisitStatusId').value);
+
+    if (this.SLCPForm.get('VisitStatusId').value == null || this.SLCPForm.get('VisitStatusId').value == undefined || this.SLCPForm.get('VisitStatusId').value == "" || this.SLCPForm.get('VisitStatusId').value == '' || this.SLCPForm.get('VisitStatusId').value == isNaN) {
+
+      abp.message.error("Project Status is required", "Please Select Status");
+      return;
+    }
+
+    var LoginUserId = localStorage.getItem('userId');
+    const status: FormData = new FormData();
+
+    if (this.ProjectId > 0) {
+      status.append("Id", this.ProjectId.toString());
+    }
+    status.append('LastModifiedById', LoginUserId);
+    status.append('Remarks', this.SLCPForm.get('ProjectRemarks').value);
+    status.append('ApprovalStatusId', this.SLCPForm.get('VisitStatusId').value);
+
+    this._HiggService.ProjectStatusChange(status).subscribe((Response) => {
+
+      // abp.message.info(Response.message)
+      if (Response.message == '1') {
+        abp.message.info("Successfully Saved!")
+        this.router.navigateByUrl('/app/home');
+
+      }
+      else if (Response.message == '2') {
+        abp.message.info("Project Status not set in Status Amount form for this Standard!")
+        ///this.router.navigateByUrl('/app/pages/sales/all-projects?'+this.ClientId);
+      }
+      else if (Response.message == '0') {
+        abp.message.error("Not Inserted!")
+      }
+      //this.router.navigateByUrl('/app/pages/sales/all-projects?'+this.ClientId);
+
+    })
+
+  }
+
   onSubmit() {
-    debugger
+
     this.SLCPForm.get('FromDate').value;
     this.SLCPForm.get('ToDate').value;
-    var  date1 = new Date(this.SLCPForm.get('FromDate').value); 
-    var date2 = new Date(this.SLCPForm.get('ToDate').value); 
-    
-      var Time = date2.getTime() - date1.getTime(); 
+    var  date1 = new Date(this.SLCPForm.get('FromDate').value);
+    var date2 = new Date(this.SLCPForm.get('ToDate').value);
+
+      var Time = date2.getTime() - date1.getTime();
       var Days = Time / (1000 * 3600 * 24);
-    
+
       if(Days<15)
       {
         abp.message.info("Duration should minimum 15 days between 'From Date' and 'To Date'")
@@ -152,8 +198,8 @@ else{
     // }
     // display form values on success
     //alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.SLCPForm.value, null, 4));
-  } 
-  
+  }
+
 
   datePipe = new DatePipe("en-US");
 
@@ -210,6 +256,7 @@ else{
   public UserStatusList = []
   public ProjectCode:string
   public ProjectStatus:string
+  public Registration:string
   public Revieweruser: boolean = false
   readonly allowedPageSizes = [5, 10, 'all'];
   readonly displayModes = [{ text: "Display Mode 'full'", value: "full" }, { text: "Display Mode 'compact'", value: "compact" }];
@@ -240,7 +287,7 @@ else{
   }
 
   ngOnInit(): void {
-    debugger
+
     this.editProject();
     //this.loadSecRoleForm()
     this.CheckReviewer();
@@ -280,14 +327,18 @@ else{
 
 
   editSLCPProject() {
-    debugger
- 
+
+
       this._SlcpService.GetProjectSLCPBYId(this.ProjectId).subscribe(data => {
         this.ClientSiteData = data.clientSitesModel;
         var ProjectSaData = data.projectSLCPModel;
-      
-     
-     
+        console.log(data)
+        this.Registration = data.clientProjectModel.registration_no
+
+
+
+
+
         this.SLCPFormControl.controls.AssessmentCompletedId.setValue(ProjectSaData.assessmentCompletedId);
         this.SLCPFormControl.controls.AccreditationId.setValue(ProjectSaData.accreditationId);
         this.SLCPFormControl.controls.CompletedStepId.setValue(ProjectSaData.completedStepId);
@@ -295,31 +346,31 @@ else{
         this.SLCPFormControl.controls.ModuleShareId.setValue(ProjectSaData.moduleShareId);
          this.SLCPFormControl.controls.ModuleYear.setValue(ProjectSaData.moduleYear)
 
-         
+
         this.SLCPFormControl.controls.MethodologyId.setValue(ProjectSaData.methodologyId);
 
         if (ProjectSaData.applicationDate != null && ProjectSaData.applicationDate != "" && ProjectSaData.applicationDate != undefined && ProjectSaData.applicationDate != NaN) {
           let application_Date = new Date(this.datePipe.transform(ProjectSaData.applicationDate, 'yyyy/MM/dd'))
-  
+
           this.SLCPFormControl.controls.ApplicationDate.setValue(this.datePipe.transform(application_Date, 'yyyy-MM-dd'))
         }
         if (ProjectSaData.toDate != null && ProjectSaData.toDate != "" && ProjectSaData.toDate != undefined && ProjectSaData.toDate != NaN) {
           let To_Date = new Date(this.datePipe.transform(ProjectSaData.toDate, 'yyyy/MM/dd'))
-  
+
           this.SLCPFormControl.controls.ToDate.setValue(this.datePipe.transform(To_Date, 'yyyy-MM-dd'))
         }
         if (ProjectSaData.fromDate != null && ProjectSaData.fromDate != "" && ProjectSaData.fromDate != undefined && ProjectSaData.fromDate != NaN) {
           let from_Date = new Date(this.datePipe.transform(ProjectSaData.fromDate, 'yyyy/MM/dd'))
-  
+
           this.SLCPFormControl.controls.FromDate.setValue(this.datePipe.transform(from_Date, 'yyyy-MM-dd'))
         }
         // this.SLCPForm.controls.BodySelectDate.setValue(ProjectSaData.bodySelectDate)
         if (ProjectSaData.bodySelectDate != null && ProjectSaData.bodySelectDate != "" && ProjectSaData.bodySelectDate != undefined && ProjectSaData.bodySelectDate != NaN) {
           let bodySelect_Date = new Date(this.datePipe.transform(ProjectSaData.bodySelectDate, 'yyyy/MM/dd'))
-  
+
           this.SLCPFormControl.controls.BodySelectDate.setValue(this.datePipe.transform(bodySelect_Date, 'yyyy-MM-dd'))
         }
-        
+
         this.SLCPFormControl.controls.ServicesTypeId.setValue(ProjectSaData.servicesTypeId);
         this.SLCPFormControl.controls.ModuleVersionId.setValue(ProjectSaData.moduleVersionId)
         this.SLCPFormControl.controls.NoOfMd.setValue(ProjectSaData.noOfMd);
@@ -338,7 +389,7 @@ else{
 
 
   onSubmitChangeRequest() {
-    debugger
+
         this.submitted = true;
 
 
@@ -346,14 +397,14 @@ else{
           return;
         }
         this.SLCPChangeRequest();
-   
+
       }
-      
+
       SLCPChangeRequest(): void {
-    
-        debugger
+
+
         const foData:FormData = new FormData();
-   
+
 
         Object.keys(this.SLCPFormControl.controls).forEach(key => {
 
@@ -361,32 +412,32 @@ else{
             var sname = key;
             //var sname= this.SAForm.controls[key].;
             var val = this.SLCPFormControl.controls[key].value;
-    
+
             foData.append(sname, val);
           }
         });
 
-     
+
         foData.append("Id",this.id.toString());
-        
-      
+
+
          foData.append("FormName","ProjectSLCP");
         foData.append('File',this.fileToUploadSLCP);
         foData.append('ContractForm',this.ContractfileToUploadSlcp);
-    
-        
-        
+
+
+
         var OrgId = localStorage.getItem('organizationId');
-   
+
         foData.append("OrganizationId",OrgId)
-    
+
         var userId = localStorage.getItem('userId');
-      
+
         foData.append("CreatedById",userId)
 
 
         this._SlcpService.SLCPChangeRequest(foData).subscribe((Response) => {
-    
+
           if (Response.message == '1') {
             abp.message.info("Please Submit For Review","Change Request Successfully Saved.!")
             this.router.navigateByUrl('/app/pages/sales/all-projects?' + this.ClientId);
@@ -403,19 +454,19 @@ else{
   CheckReviewer()
 {
   const UserModel=
-    
+
   {
-  
+
     StandardId: this.standardId,
     UserId:parseInt(localStorage.getItem('userId'))
- 
- 
-  
-    
+
+
+
+
   };
- 
+
   this._SlcpService.GetReviewerByStandard(UserModel).subscribe((Response)=>{
-    debugger
+
   var reviwerData = Response
   if(reviwerData==null || reviwerData==undefined ||reviwerData=="" ||reviwerData==''|| reviwerData==NaN )
   {
@@ -441,7 +492,7 @@ handleContractfileInputSlcp(e:any){
 }
 
   loadSecRoleForm() {
-    debugger
+
     // let secRoleForm = JSON.parse(localStorage.getItem('secRoleForm'))
     // let permission = secRoleForm.find(x => x.formCode != null && x.formCode == this.formCode)
 
@@ -462,7 +513,7 @@ handleContractfileInputSlcp(e:any){
       }
       else
       {
-        
+
         this.secRoleForm.authAllowed = false
       }
       if (this.secRoleForm.insertAllowed == false) {
@@ -496,7 +547,7 @@ handleContractfileInputSlcp(e:any){
       var ur;
       ur = window.location.href.split("/")[7];
       var com = [] = ur.split("?")[1];
-      
+
      if(this.secRoleForm.authAllowed==true)
      {
       if (com != undefined && com != null)
@@ -548,7 +599,7 @@ handleContractfileInputSlcp(e:any){
     this.SLCPForm.get('AccreditationId').disable();
     this.SLCPForm.get('ContractRemarks').disable();
     this.SLCPForm.get('Remarks').disable();
-    
+
   }
 
   Back(): void {
@@ -570,7 +621,7 @@ handleContractfileInputSlcp(e:any){
   //     //  this.onSearch(this.userUpdateId);
   //     //  }
 
-  //     //    
+  //     //
   //     //   var  ur ;
   //     //   ur=window.location.href.split("/")[7];
   //     //   var com=[]=ur.split("?")[1];
@@ -602,11 +653,11 @@ handleContractfileInputSlcp(e:any){
   //   this.ClientId = parseInt(localStorage.getItem('clientId'));
   //   this.standardId = parseInt(localStorage.getItem('standardId'));
   //   this.savebtn = true;
-  
-    
+
+
   // }
   editProject() {
-    debugger
+
     var  ur ;
     ur=window.location.href.split("/")[7];
     var com=[]=ur.split("?")[1];
@@ -616,7 +667,7 @@ handleContractfileInputSlcp(e:any){
       var Parameter2=com.split("&")[1];
       var Parameter3=com.split("&")[2];
 
-    
+
      if(Parameter1.split("=")[0]=="ProjectId")
      {
         this.ProjectId =Parameter1.split("=")[1];
@@ -629,7 +680,7 @@ handleContractfileInputSlcp(e:any){
      {
       this.ClientId =Parameter1.split("=")[1];
      }
-     
+
      if(Parameter2.split("=")[0]=="StandardId")
      {
         this.standardId =Parameter2.split("=")[1];
@@ -669,28 +720,28 @@ handleContractfileInputSlcp(e:any){
       this.btnChnageRequest = true
     }
     // else {
-     
+
     //   //this.ClientData();
     // }
-    
+
     this.OrganizationId = parseInt(localStorage.getItem('organizationId'));
     // this.ClientId = parseInt(localStorage.getItem('clientId'));
     // this.standardId = parseInt(localStorage.getItem('standardId'));
     this.savebtn = true;
-    
+
   }
 
   UpdateProject()
   {
-    debugger
+
 
     this._SlcpService.GetProjectSLCPBYId(this.ProjectId).subscribe(data => {
-debugger 
+
       this.ClientSiteData = data.clientSitesModel;
       var ProjectSaData = data.projectSLCPModel;
       var ClientProjectMod = data.clientProjectModel;
       //this.UserAuditList= data
-      debugger 
+
       this.standardId = ClientProjectMod.standardId;
 //        this._SlcpService.GetALLModuleVersion(this.standardId).subscribe((Response) => {
 //          this.ModuleVersionList = Response
@@ -747,7 +798,7 @@ this.id = ProjectSaData.id;
 
         this.SLCPForm.controls.BodySelectDate.setValue(this.datePipe.transform(bodySelect_Date, 'yyyy-MM-dd'))
       }
-      debugger
+
       //this.SLCPForm.controls.CompletedModuleId.setValue(ProjectSaData.completedModuleId);
       //this.SLCPForm.controls.WindowPeriodDate.setValue(ProjectSaData.windowPeriodDate);
       // if (ProjectSaData.windowPeriodDate != null && ProjectSaData.windowPeriodDate != "" && ProjectSaData.windowPeriodDate != undefined && ProjectSaData.windowPeriodDate != NaN) {
@@ -761,10 +812,10 @@ this.id = ProjectSaData.id;
      this.SLCPForm.controls.ModuleVersionId.setValue(ProjectSaData.moduleVersionId)
     //   this._HiggService.GetALLModuleVersion(ClientProjectMod.standardId).subscribe((Response)=>{
     //     this.ModuleVersionList = Response
-    //     debugger
+    //
     //      this.SLCPForm.controls.ModuleVersionId.setValue(ProjectSaData.moduleVersionId)
     //     console.log(ProjectSaData.moduleVersionId)
-        
+
     //  })
       this.SLCPForm.controls.NoOfMd.setValue(ProjectSaData.noOfMd);
       this.ProjectStatus="  "+ClientProjectMod.approvalStatusName;
@@ -802,7 +853,7 @@ this.id = ProjectSaData.id;
 
       }
 
-      
+
       //  if(ClientProjectMod.approvalStatusId==4 ||ClientProjectMod.approvalStatusId==2 )
       //  {
       //    this.savebtn=false
@@ -870,7 +921,7 @@ this.btnApproval=true
       else {
         this.deletebtn = false;
       }
-      
+
       if (ProjectSaData.applicationFormPath != null && ProjectSaData.applicationFormPath != undefined && ProjectSaData.applicationFormPath != "") {
         this.savedownload = true;
       }
@@ -925,18 +976,18 @@ this.btnApproval=true
   datadisplay = "none";
 
   Popup() {
-    debugger
-   
+
+
     this.datadisplay = "block";
-  
+
   }
- 
+
   close() {
     this.datadisplay = "none";
   }
 
   loadClientSites(): void {
-debugger
+
     if (this.ClientId > 0 && this.ClientId != null && this.ClientId != undefined) {
       this.ClientSiteList = null;
       this._SlcpService.GetAllClientSites(this.ClientId).subscribe((Response) => {
@@ -982,8 +1033,8 @@ debugger
 
 
   onSubmit1(): void {
-    
-    debugger
+
+
     const foData: FormData = new FormData();
 
 
@@ -1076,18 +1127,18 @@ debugger
   }
 
 
- 
-  // edit(e) {  
-  //          
+
+  // edit(e) {
+  //
   //   // var List = [];
-  //   // List=this.Liststandard                                                                             ; 
+  //   // List=this.Liststandard                                                                             ;
   //   // this.router.navigateByUrl('/app/pages/stock-management/library');
   //   this.ProjectId=e.row.data.id
   //   // var updateDate =this.StandardList.find(x => x.id == this.ProjectId );
 
-  //   // this._StandardService.GetStandardById(this.ProjectId).subscribe((res) => 
+  //   // this._StandardService.GetStandardById(this.ProjectId).subscribe((res) =>
   //   // {
-  //     
+  //
   //       this.UserAuditForm.controls.Organization.setValue(e.row.data.organization);
   //       this.UserAuditForm.controls.StandardId.setValue(e.row.data.standardId);
   //       this.UserAuditForm.controls.DurationDays.setValue(e.row.data.durationDays);
@@ -1098,7 +1149,7 @@ debugger
   //       this.UserAuditForm.controls.CertificationBodyId.setValue(e.row.data.CertificationBodyId);
 
 
-  //  }  
+  //  }
 
 
 
@@ -1122,7 +1173,7 @@ debugger
   //  NewRecord()
 
 
-  //  {  
+  //  {
   //   this.UserAuditForm.controls.Organization.setValue('');
   //   this.UserAuditForm.controls.StandardId.setValue('');
   //   this.UserAuditForm.controls.DurationDays.setValue('');
@@ -1145,7 +1196,7 @@ debugger
   //   // this.router.routeReuseStrategy.shouldReuseRoute = () => false;
   //   // this.router.onSameUrlNavigation = 'reload';
   //   // this.router.navigate([currentUrl]);
-  //    
+  //
   //  // this.router.navigateByUrl('/app/pages/certification-setups/module');
 
   // }
@@ -1165,7 +1216,7 @@ debugger
   handlefileInput(e: any) {
 
     this.fileToUpload = <File>e?.target?.files[0];
-    //this.url=e.target.value; 
+    //this.url=e.target.value;
 
 
   }
@@ -1239,7 +1290,7 @@ debugger
       const a = document.createElement('a');
       a.setAttribute('style', 'display:none;');
       document.body.appendChild(a);
-      // a.download =fillename;  
+      // a.download =fillename;
       // const fileName =
 
       //="farooq";
@@ -1258,7 +1309,7 @@ debugger
         undefined,
         (result: boolean) => {
           if (result) {
-            // this.SecUserService.Deleteuser(e.row.data.id).subscribe() 
+            // this.SecUserService.Deleteuser(e.row.data.id).subscribe()
             //     abp.message.info("Deleted successfully", "Status", {});
 
             this._SlcpService.DeleteProject(this.ProjectId).subscribe((Response) => {
@@ -1286,7 +1337,7 @@ debugger
   }
 
   loadModuleVersion(): void {
-debugger 
+
     this._SlcpService.GetALLModuleVersion(this.standardId).subscribe((Response) => {
       this.ModuleVersionList = Response
 
@@ -1327,7 +1378,7 @@ debugger
 
   }
 
-  
+
   Pdf() {
     let Today_Date = new Date(this.datePipe.transform(Date.now(), 'yyyy/MM/dd'))
 
@@ -1340,10 +1391,10 @@ debugger
 
     // Font bold = Font font = new Font(FontFamily.HELVETICA, 12, Font.BOLD);
     // Phrase p = new Phrase("NAME: ", bold);
-    //   this._ClientService.GeClientDatabyId(this.ClientId).subscribe((Response) => 
+    //   this._ClientService.GeClientDatabyId(this.ClientId).subscribe((Response) =>
     // {
 
-    //   this.clientinfo=Response;    
+    //   this.clientinfo=Response;
 
 
     // });
@@ -1397,7 +1448,7 @@ debugger
 
 
           //textTransform: 'uppercase',
-          // background: 
+          // background:
           // 'assets/img/ozone-group-logo.jpg',
 
 
@@ -1426,7 +1477,7 @@ debugger
 
 
         //   //textTransform: 'uppercase',
-        //   // background: 
+        //   // background:
         //   // 'assets/img/ozone-group-logo.jpg',
 
 
@@ -1481,7 +1532,7 @@ debugger
 
 
           textTransform: 'uppercase',
-          // background: 
+          // background:
           // 'assets/img/ozone-group-logo.jpg',
 
 
@@ -1500,7 +1551,7 @@ debugger
           margin: [0, 5, 0, 0]
 
           //textTransform: 'uppercase',
-          // background: 
+          // background:
           // 'assets/img/ozone-group-logo.jpg',
 
 
@@ -1516,7 +1567,7 @@ debugger
           margin: [0, 0, 0, 0]
 
           //textTransform: 'uppercase',
-          // background: 
+          // background:
           // 'assets/img/ozone-group-logo.jpg',
 
 
@@ -1532,7 +1583,7 @@ debugger
           margin: [0, 0, 0, 0],
           lineHeight: 1.5,
           //textTransform: 'uppercase',
-          // background: 
+          // background:
           // 'assets/img/ozone-group-logo.jpg',
 
 
@@ -1554,7 +1605,7 @@ debugger
           //pageBreak: 'before',
 
           //textTransform: 'uppercase',
-          // background: 
+          // background:
           // 'assets/img/ozone-group-logo.jpg',
 
 
@@ -1576,7 +1627,7 @@ debugger
           //pageBreak: 'before',
 
           //textTransform: 'uppercase',
-          // background: 
+          // background:
           // 'assets/img/ozone-group-logo.jpg',
 
 
@@ -1608,7 +1659,7 @@ debugger
           //pageBreak: 'before',
 
           //textTransform: 'uppercase',
-          // background: 
+          // background:
           // 'assets/img/ozone-group-logo.jpg',
 
 
@@ -1642,7 +1693,7 @@ debugger
         //   pageBreak: 'before',
 
         //   //textTransform: 'uppercase',
-        //   // background: 
+        //   // background:
         //   // 'assets/img/ozone-group-logo.jpg',
 
 
@@ -1671,7 +1722,7 @@ debugger
           //pageBreak: 'before',
 
           //textTransform: 'uppercase',
-          // background: 
+          // background:
           // 'assets/img/ozone-group-logo.jpg',
 
 
@@ -1755,7 +1806,7 @@ debugger
 
 
           //textTransform: 'uppercase',
-          // background: 
+          // background:
           // 'assets/img/ozone-group-logo.jpg',
 
 
@@ -1772,7 +1823,7 @@ debugger
           width: 50,
 
           //textTransform: 'uppercase',
-          // background: 
+          // background:
           // 'assets/img/ozone-group-logo.jpg',
 
 
@@ -1788,7 +1839,7 @@ debugger
 
 
           //textTransform: 'uppercase',
-          // background: 
+          // background:
           // 'assets/img/ozone-group-logo.jpg',
 
 
@@ -1799,7 +1850,7 @@ debugger
         // {
         //   columns: [
 
-        //     {	
+        //     {
         //       width: 120,
         //       text: 'SITE TO BE AUDITED: ',
         //       bold: true,
@@ -1831,7 +1882,7 @@ debugger
           //pageBreak: 'before',
 
           //textTransform: 'uppercase',
-          // background: 
+          // background:
           // 'assets/img/ozone-group-logo.jpg',
 
 
@@ -2005,7 +2056,7 @@ debugger
         //   pageBreak: 'before',
 
         //   //textTransform: 'uppercase',
-        //   // background: 
+        //   // background:
         //   // 'assets/img/ozone-group-logo.jpg',
 
 
@@ -2038,7 +2089,7 @@ debugger
           //pageBreak: 'before',
 
           //textTransform: 'uppercase',
-          // background: 
+          // background:
           // 'assets/img/ozone-group-logo.jpg',
 
 
@@ -2054,7 +2105,7 @@ debugger
           width: 50,
 
           //textTransform: 'uppercase',
-          // background: 
+          // background:
           // 'assets/img/ozone-group-logo.jpg',
 
 
@@ -2080,7 +2131,7 @@ debugger
           //width:50,
 
           //textTransform: 'uppercase',
-          // background: 
+          // background:
           // 'assets/img/ozone-group-logo.jpg',
 
 
@@ -2096,7 +2147,7 @@ debugger
 
 
           //textTransform: 'uppercase',
-          // background: 
+          // background:
           // 'assets/img/ozone-group-logo.jpg',
 
 
@@ -2126,7 +2177,7 @@ debugger
           //width:50,
 
           //textTransform: 'uppercase',
-          // background: 
+          // background:
           // 'assets/img/ozone-group-logo.jpg',
 
 
@@ -2237,55 +2288,55 @@ debugger
   onContractSubmit(): void {
     try{
       var fileName=this.fileToUpload.name.split("_")[0];
-      
+
       if(fileName==this.ProjectCode)
       {
-  
+
         if (this.fileToUpload == null || this.fileToUpload == undefined || this.fileToUpload == "" || this.fileToUpload == '' || this.fileToUpload == NaN) {
 
           abp.message.error("Contract file is required", "Please Upload Contract File");
           return;
         }
-    
-    
+
+
         var LoginUserId = localStorage.getItem('userId');
         const foData: FormData = new FormData();
-    
+
         if (this.ProjectId > 0) {
           foData.append("Id", this.ProjectId.toString());
         }
         foData.append('LastModifiedById', LoginUserId);
-    
+
         foData.append('ContractForm', this.fileToUpload);
         foData.append('Remarks', this.SLCPForm.get('ContractRemarks').value);
         // foData.append('ApprovalStatusId',this.SLCPForm.get('ContractStatusId').value);
-    
-    
+
+
         this._SlcpService.ContarctsSubmit(foData).subscribe((Response) => {
-    
+
           abp.message.info(Response.message)
-    
+
           this.router.navigateByUrl('/app/pages/sales/all-projects?' + this.ClientId);
-    
+
         })
       }
-      else{  
+      else{
         //this.SLCPForm.controls.File.setValue("");
         abp.message.error("File Name Is Incorrect, Project code must be include in File name. File name must be  "+this.ProjectCode +"_Contract File", "Please Upload Correct File")
     }
-      
+
     }
     catch(error)
     {
      // this.SLCPForm.controls.File.setValue("");
      abp.message.error("File Name Is Incorrect, Project code must be include in File name. File name must be  "+ this.ProjectCode +"_Contract File", "Please Upload Correct File")
-     
+
     }
-    
+
     console.log(this.fileToUpload.name)
-     
-  
-   
+
+
+
   }
 
   contractApproved(): void {
@@ -2311,7 +2362,7 @@ debugger
 
     this._SlcpService.ContractApproval(foData).subscribe((Response) => {
 
-      debugger
+
       //abp.message.info(Response.message)
       if(Response.message=='1')
       {
@@ -2327,7 +2378,7 @@ debugger
       else if(Response.message=='0')
       {
           abp.message.error("Not Inserted!")
-      } 
+      }
      // this.router.navigateByUrl('/app/pages/sales/all-projects?' + this.ClientId);
 
     })
@@ -2349,7 +2400,7 @@ debugger
       const a = document.createElement('a');
       a.setAttribute('style', 'display:none;');
       document.body.appendChild(a);
-      // a.download =fillename;  
+      // a.download =fillename;
       // const fileName =
 
       //="farooq";
@@ -2357,7 +2408,7 @@ debugger
       a.target = '_blank';
       a.click();
       document.body.removeChild(a);
-       
+
     })
   }
 

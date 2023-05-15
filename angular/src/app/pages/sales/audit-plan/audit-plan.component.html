@@ -478,6 +478,11 @@
                             (click)="onSubmitForReview()">
                             Submit For Review
                         </button>
+                        <button type="button" *ngIf="StageOne" class="btn-sm btn-success btn float-right mx-1 mt-4"
+                        (click)="onStageOne()"
+                        >
+                        Stage 01 
+                    </button>
                     </div>
                 </div>
                 <!-- <div class=" col-md-12 mx-2" *ngIf="btnSave">
@@ -494,7 +499,8 @@
                         [showRowLines]="true" [showColumnLines]="false" [allowColumnReordering]="true"
                         [dataSource]="DocumentsList" keyExpr="id">
                         <dxo-scrolling columnRenderingMode="virtual"></dxo-scrolling>
-
+                        <dxi-column dataField="visitLevel" caption="Visit Level" cssClass="cell-header">
+                        </dxi-column>
                         <dxi-column dataField="auditDocumentName" caption="Document Type" cssClass="cell-header">
                         </dxi-column>
                         <dxi-column dataField="createdDate" dataType="date" caption="Uploaded Date"
@@ -634,7 +640,7 @@
                                             </label>
                                             <select class="form-control form-control-sm col-md-12"
                                                 id="SurveillanceMethodId">
-                                                <!-- <option *ngFor="let item of SurveillanceMethodList" [value]="item.id">
+                                                 <option *ngFor="let item of SurveillanceMethodList" [value]="item.id">
                                                     {{ item.name }}
                                                 </option> 
                                             </select>

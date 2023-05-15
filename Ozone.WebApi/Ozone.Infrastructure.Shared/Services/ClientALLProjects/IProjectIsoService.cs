@@ -12,6 +12,8 @@ namespace Ozone.Infrastructure.Shared.Services
         Task<string> Create(ProjectIsoModel input);
         Task<string> ContractSubmit(ClientProjectModel input);
         Task<string> ContractApproval(ClientProjectModel input);
+        Task<string> ProjectStatusChange(ClientProjectModel input);
+
 
         // Task<GetPagedStandardModel> GetPagedStandardResponse(PagedResponseStandardModel model);
         // Task<GetPagedProjectSlcpModel> GetPagedProjectSlcp(PagedResponseModel model);

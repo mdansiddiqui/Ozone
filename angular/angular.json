@@ -6,7 +6,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "COI": {
+    "Ozone": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -101,21 +101,24 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "COI:build"
+            "browserTarget": "Ozone:build"
+           
           },
           "configurations": {
             "production": {
-              "browserTarget": "COI:build:production"
+              "browserTarget": "Ozone:build:production"
+              
             },
             "hmr": {
-              "browserTarget": "COI:build:hmr"
+              "browserTarget": "Ozone:build:hmr"
+              
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "COI:build"
+            "browserTarget": "Ozone:build"
           }
         },
         "test": {
@@ -173,7 +176,7 @@
         }
       }
     },
-    "COI-e2e": {
+    "Ozone-e2e": {
       "root": "",
       "sourceRoot": "",
       "projectType": "application",
@@ -182,7 +185,7 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "./protractor.conf.js",
-            "devServerTarget": "COI:serve"
+            "devServerTarget": "Ozone:serve"
           }
         },
         "lint": {
@@ -197,7 +200,7 @@
       }
     }
   },
-  "defaultProject": "COI",
+  "defaultProject": "Ozone",
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "app",

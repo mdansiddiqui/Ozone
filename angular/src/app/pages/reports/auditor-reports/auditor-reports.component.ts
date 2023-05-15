@@ -124,7 +124,7 @@ export class AuditorReportsComponent implements OnInit {
 
 
   loadStatus(a){
-    debugger
+     
     if( a == 2)
     { 
       this.Status = true
@@ -136,7 +136,7 @@ export class AuditorReportsComponent implements OnInit {
  				
 
   loadAgency(): void {
-    debugger
+     
     this.ProjectAmountReportsService.getAllAgency().subscribe((Response) => {
       this.OrganizationList = Response
 
@@ -144,7 +144,7 @@ export class AuditorReportsComponent implements OnInit {
         id: 0,
         name:'--- ALL ---',
      };
-     debugger
+      
         this.OrganizationList.push(item2);
         this.OrganizationList= this.OrganizationList.sort((a, b) => {
          return a.id - b.id;
@@ -155,13 +155,13 @@ export class AuditorReportsComponent implements OnInit {
 
 //   onSearch(){
       
-//     debugger
+//      
 //   //this.pagedDto.keyword = "";
 //   //this.pagedDto.authAllowed = this.secRoleForm.authAllowed
 //   this.pagedDto.pageSize = 3
 //   this._AuditorService.Get(this.pagedDto).subscribe((Response) => {
               
-//   debugger
+//    
 //      this.totalCount = Response.totalCount
 //     this.AuditorReport = Response.leadAuditorReportsModel
 //     //console.log(this.NaceCodeList)
@@ -174,7 +174,7 @@ reloadGrid() {
 }
 Search() {
  
-  debugger
+   
   if( parseInt(this.filterForm.get('ReportId').value) >0)
   {  
 
@@ -265,7 +265,7 @@ else
 
 
 ClientProjectReportSearch(){
-  debugger
+   
   if(this.filterForm.get('fromdate').value ==null ||this.filterForm.get('fromdate').value==undefined|| this.filterForm.get('fromdate').value=="")
   {  abp.message.error("From-Date can not be Empty","Alert")
   return
@@ -281,14 +281,14 @@ ClientProjectReportSearch(){
   return
   // MesseageError="Version is Empty";
   }
-    debugger
+     
     this.pagedDto.pageSize = 100
     this.ClientProjectsReport =[];
     this.totalCount =0;
     this.ReportName="Client Projects";
     this._AuditorService.GetClientProjectReport(this.filterForm.value).subscribe((Response) => {
                 
-    debugger
+     
        this.totalCount = Response.totalCount
       this.ClientProjectsReport = Response.clientProjectReportModel;
    
@@ -309,17 +309,17 @@ if(this.filterForm.get('todate').value ==null ||this.filterForm.get('todate').va
 return
 // MesseageError="Version is Empty";
 }
-  debugger
+   
   this.pagedDto.pageSize = 100
   this.AuditorReport=[];
   this.totalCount =0;
   this.ReportName="Auditor Audits";
   this._AuditorService.GetAuditorReport(this.filterForm.value).subscribe((Response) => {
               
-  debugger
+   
    // this.totalCount = Response.totalCount
     this.AuditorReport = Response
-
+    console.log(Response)
     //this.AuditorReportDetails();
    
     //console.log(this.NaceCodeList)
@@ -339,7 +339,7 @@ if(this.filterForm.get('todate').value ==null ||this.filterForm.get('todate').va
 return
 // MesseageError="Version is Empty";
 }
-  debugger
+   
   this.pagedDto.pageSize = 100
   this.AuditorReport=[];
   this.totalCount =0;
@@ -353,12 +353,13 @@ return
     StandardId:this.filterForm.get('StandardId').value,
     //LeadAuditorId:this.filterForm.get('LeadAuditorId').value,
  };
- debugger
+  
   this._AuditorService.GetAuditorReportDetails(Param).subscribe((Response) => {
               
-  debugger
+   
    // this.totalCount = Response.totalCount
     this.AuditorReportDetailsList = Response
+    console.log(Response);
    
     //console.log(this.NaceCodeList)
 
@@ -367,7 +368,7 @@ return
 
 }
 AuditorListReportSearch(){
-  debugger
+   
   // if(this.filterForm.get('fromdate').value ==null ||this.filterForm.get('fromdate').value==undefined|| this.filterForm.get('fromdate').value=="")
   // {  abp.message.error("From-Date can not be Empty","Alert")
   // return
@@ -378,13 +379,13 @@ AuditorListReportSearch(){
   // return
   // // MesseageError="Version is Empty";
   // }
-    debugger
+     
     this.pagedDto.pageSize = 100
     this.AuditorListsReport =[];
     this.ReportName="Auditor List";
     this._AuditorService.GetAuditorListReport(this.filterForm.value).subscribe((Response) => {
                 
-    debugger
+     
        this.totalCount = Response.totalCount
       this.AuditorListsReport = Response.sp_AuditorListReportModel;
       
@@ -393,17 +394,17 @@ AuditorListReportSearch(){
 }
 
 AuditorValidationScheduleReportSearch(){
-  debugger
+   
   if(parseInt(this.filterForm.get('StandardId').value) > 0 )
   { 
 
-    debugger
+     
     this.pagedDto.pageSize = 100
     this.AuditorScheduleList=[];
     this.ReportName="Auditor Validation Schedule";
     this._AuditorService.GetAuditorScheduleReport(this.filterForm.value).subscribe((Response) => {
                 
-    debugger
+     
        this.totalCount = Response.totalCount
       this.AuditorScheduleList = Response.sp_AuditorScheduleReportModel;
    
@@ -418,7 +419,7 @@ AuditorValidationScheduleReportSearch(){
 }
 
 ScheduleOfAuditReportSearch(){
-  debugger
+   
   if(this.filterForm.get('fromdate').value ==null ||this.filterForm.get('fromdate').value==undefined|| this.filterForm.get('fromdate').value=="")
   {  abp.message.error("From-Date can not be Empty","Alert")
   return
@@ -431,13 +432,13 @@ ScheduleOfAuditReportSearch(){
   }
   if(parseInt(this.filterForm.get('StandardId').value) == 7 )
   {  
-    debugger
+     
     this.pagedDto.pageSize = 100
     this.ScheduleOfAuditList =[];
     this.ReportName="Schedule Of Audit";
     this._AuditorService.GetScheduleOfAuditReport(this.filterForm.value).subscribe((Response) => {
                 
-    debugger
+     
        this.totalCount = Response.totalCount
       this.ScheduleOfAuditList = Response.sp_ScheduleOfAuditReportModel;
      
@@ -452,7 +453,7 @@ ScheduleOfAuditReportSearch(){
 }
 
 ImpartialityReviewReportSearch(){
-  debugger
+   
   if(this.filterForm.get('fromdate').value ==null ||this.filterForm.get('fromdate').value==undefined|| this.filterForm.get('fromdate').value=="")
   {  abp.message.error("From-Date can not be Empty","Alert")
   return
@@ -464,13 +465,13 @@ ImpartialityReviewReportSearch(){
   // MesseageError="Version is Empty";
   }
 
-    debugger
+     
     this.pagedDto.pageSize = 100
     this.ImpartialityReviewList = [];
     this.ReportName="Impartiality Review";
     this._AuditorService.GetImpartialityReviewReport(this.filterForm.value).subscribe((Response) => {
                 
-    debugger
+     
        this.totalCount = Response.totalCount
       this.ImpartialityReviewList = Response.sp_ImpartialityReviewReportModel;
     
@@ -488,7 +489,7 @@ loadAllCertification(): void {
      id: 0,
      name:'--- ALL ---',
   };
-  debugger
+   
      this.CertificationList.push(item2);
      this.standardList= this.CertificationList.sort((a, b) => {
       return a.id - b.id;
@@ -516,7 +517,7 @@ addItem(newItem: []) {
 
 
 CertifiedClientSearch(){
-  debugger
+   
   if(this.filterForm.get('fromdate').value ==null ||this.filterForm.get('fromdate').value==undefined|| this.filterForm.get('fromdate').value=="")
   {  abp.message.error("From-Date can not be Empty","Alert")
   return
@@ -529,14 +530,14 @@ CertifiedClientSearch(){
   }
   if(parseInt(this.filterForm.get('StandardId').value) == 7 )
   {  
-    debugger
+     
     this.pagedDto.pageSize = 100
     this.ScheduleOfAuditList =[];
     this.ReportName="Certified Client Monitoring";
     this._AuditorService.GetCertifiedClientReport(this.filterForm.value).subscribe((Response) => {
                 
 
-      debugger
+       
       this.CertifiedClientList = Response;
       console.log(Response);
      

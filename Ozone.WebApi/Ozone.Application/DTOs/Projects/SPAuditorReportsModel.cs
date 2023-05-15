@@ -30,7 +30,9 @@ namespace Ozone.Application.DTOs.Projects
         public long? Id { get; set; }
     public long? LeadAuditorId { get; set; }
     public string LeadAuditorName { get; set; }
-    public decimal? NoOfAudits { get; set; }
+    public string ClientName { get; set; }
+
+        public decimal? NoOfAudits { get; set; }
     public decimal? NCS { get; set; }
     public decimal? AVGNCS { get; set; }
     public decimal? AvgTAT { get; set; }

@@ -261,6 +261,19 @@ namespace Ozone.WebApi.Controllers.ClientALLProjects
 
         }
 
+        [Route("ProjectStatusChange")]
+        [HttpPut]
+        [Authorize]
+        public async Task<IActionResult> ProjectStatusChange([FromForm] ClientProjectModel input)
+        {
+
+            var result = await _projectIsoService.ProjectStatusChange(input);
+            return Ok(new Response { Status = result, Message = result });
+
+
+
+        }
+
         [HttpGet, DisableRequestSizeLimit]
         [Route("DownloadContract")]
         [Authorize]

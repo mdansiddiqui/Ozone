@@ -192,7 +192,7 @@ public editClientrecord:boolean=false
     this.loadSecRoleForm();
     this.UpdateProject();
     this.loadSecRoleForm1();
-    debugger
+     
     this.onSearch();
    
  
@@ -208,7 +208,7 @@ public editClientrecord:boolean=false
 // var OrganizationId = parseInt(localStorage.getItem('organizationId'));
 // this._DashboardService.GetDashboardData(OrganizationId,this.pagedDto).subscribe(data => {
 //  console.log("service");
-// debugger
+//  
 // this.totalCount = 3;
 //  this.ProjectStatus = data.projectDashboardStatusModel;
 //  this.ContractStatus = data.contractDashboardStatusModel;
@@ -223,7 +223,7 @@ public editClientrecord:boolean=false
    
   }
   review1(e)
-  {debugger
+  { 
    
     ///#/app/pages/sales/audit-plan?ProjectId=' + this.AllVisitDataList[_i].projectId + "&StandardId=" + this.AllVisitDataList[_i].standardId + "&ClientId=" + this.AllVisitDataList[_i].clientId + "&AuditVisitId=" + this.AllVisitDataList[_i].id
     // this.router.navigateByUrl('/app/pages/sales/audit-plan?'+e.row.data.projectId);
@@ -235,7 +235,7 @@ public editClientrecord:boolean=false
   displayStyle = "none"
 
   onpopup(e) {
-    debugger
+     
 
     this.displayStyle = "block"
 console.log(e);
@@ -299,11 +299,11 @@ console.log(e);
 
 // }
 
-  debugger
+   
   this._DashboardService.GetClientChangeDataById(parseInt(e.row.data.id),this.pagedDto).subscribe((Response) => {
    
     this.clientChangeDataList = Response
-debugger
+ 
     
     //this .Liststandard=this.StandardList;
   })
@@ -317,7 +317,7 @@ debugger
   projectdisplayStyle="none"
 
   Projectonpopup(e) {
-    debugger
+     
 
     this.projectdisplayStyle = "block"
 console.log(e);
@@ -405,7 +405,7 @@ this.ProjectChangeRequestFileUploadlist=[];
       this.ProjectChangeGrid = false 
     }
 
-debugger
+ 
     
     //this .Liststandard=this.StandardList;
   })
@@ -420,7 +420,7 @@ this.projectdisplayStyle="none"
   display = "none";
 
   openPopup(e){
-    debugger
+     
 
     this.CardForm.controls.ActivityLogId.setValue(e.row.data.id);
    
@@ -464,18 +464,18 @@ this.ClientSitesRemarksdisplay="none"
   RemarksDisplayStyle= "none"
 
   RemarksPopup(e){
-    debugger
+     
   this.RemarksDisplayStyle= "block"
   this.displayStyle = "none"
   this.display = "none"
 
 
   this.totalCount =0;
-  debugger
+   
   this._DashboardService.GetClientChangeRemarksDataById(e.row.data.id).subscribe((Response) => {
    
     this.clientChangeRemarksList = Response
-debugger
+ 
     
     //this .Liststandard=this.StandardList;
   })
@@ -497,11 +497,11 @@ debugger
     this.projectdisplayStyle="none"
 
     this.totalCount =0;
-    debugger
+     
     this._DashboardService.GetProjectSA8000RemarksDataById(e.row.data.id).subscribe((Response) => {
      
       this.projectChangeRemarksList = Response
-  debugger
+   
       
       //this .Liststandard=this.StandardList;
     })
@@ -522,11 +522,11 @@ this.ClientSitesMainPopupDisplay="none"
 
 
 this.totalCount =0;
-    debugger
+     
     this._DashboardService.GetClientSitesChangeRemarksDataById(e.row.data.id).subscribe((Response) => {
      
       this.clientSitesChangeRemarksList = Response
-  debugger
+   
       
       //this .Liststandard=this.StandardList;
     })
@@ -544,7 +544,7 @@ this.ClientSitesMainPopupDisplay="block"
 
   editdisplay="none"
   openPopupEdit(e){
-    debugger
+     
     this.RemarksDisplayStyle= "none"
     this.displayStyle = "none"
     this.display = "none"
@@ -567,7 +567,7 @@ this.CardForm.controls.NewValues.setValue(e.row.data.newValues);
 
   editProjectdisplay="none"
   openPopupProjectEdit(e){
-    debugger
+     
     if(e.row.data.formId == 22){
 this.standardId = 7
     }
@@ -697,7 +697,7 @@ this.standardId = 3
   }
 
   loadModuleVersion(): void {
-    debugger 
+      
     
   
         this._SlcpService.GetALLModuleVersion(this.standardId).subscribe((Response) => {
@@ -885,7 +885,7 @@ this.ClientSitesRemarksHistoryDisplay="block"
         
       };
       let ActivitylogId= parseInt(this.CardForm.get("ActivityLogId").value);
-      debugger;
+       ;
       this._DashboardService.ApprovedClientChange(ClientSitesModel).subscribe(
         (Response) => {
           abp.message.info(Response.message);
@@ -910,7 +910,7 @@ this.ClientSitesRemarksHistoryDisplay="block"
   }
 
   ResubmitProjectRequest(){
-debugger
+ 
     var newvalue=this.ProjectRemarks.get("NewValues").value;
     if (
      
@@ -938,7 +938,7 @@ debugger
       };
       let ActivitylogId= parseInt(this.ProjectRemarks.get("ActivityLogId").value);
 
-      debugger;
+       ;
       this._DashboardService.ApprovedProjectChange(projectSitesModel).subscribe(
         (Response) => {
           abp.message.info(Response.message);
@@ -986,7 +986,7 @@ debugger
         
       };
 
-      debugger;
+       ;
       this._DashboardService.ApprovedClientSitesChange(clientSitesResubmitModel).subscribe(
         (Response) => {
           abp.message.info(Response.message);
@@ -1008,7 +1008,7 @@ debugger
 
 
   Downloadfile(e): void {
-debugger
+ 
     this.id=e.row.data.id;
     var fullpath=e.row.data.filePath;
    var filename =  fullpath.replace(/^.*[\\\/]/, '')
@@ -1031,7 +1031,7 @@ debugger
 
 
   OldValuesDownloadfile(e): void {
-debugger
+ 
     this.id=e.row.data.id;
     var fullpath=e.row.data.oldValues;
    var filename =  fullpath.replace(/^.*[\\\/]/, '')
@@ -1058,7 +1058,7 @@ debugger
 
 
   NewValuesDownloadfile(e): void {
-debugger
+ 
     this.id=e.row.data.id;
     var fullpath=e.row.data.newValues;
  
@@ -1088,7 +1088,7 @@ var filename = filepath[0].replace(/^.*[\\\/]/, '');
 
 
   ProjectChangeRequestDownloadfile(e): void {
-    debugger
+     
         this.id=e.row.data.id;
         var fullpath=e.row.data.filePath;
        var filename =  fullpath.replace(/^.*[\\\/]/, '')
@@ -1111,7 +1111,7 @@ var filename = filepath[0].replace(/^.*[\\\/]/, '');
 
 
 ClientSitesDownloadfile(e):void{
-debugger
+ 
     this.id=e.row.data.id;
     var fullpath=e.row.data.filePath;
    var filename =  fullpath.replace(/^.*[\\\/]/, '')
@@ -1139,7 +1139,7 @@ debugger
 
 
   OnApprovalSubmit(): void {
-    debugger;
+     ;
     
 
     if (
@@ -1161,10 +1161,10 @@ debugger
         
       };
      let ActivitylogId= parseInt(this.CardForm.get("ActivityLogId").value);
-      debugger;
+       ;
       this._DashboardService.ApprovedClientChange(ClientSitesModel).subscribe(
         (Response) => {
-          debugger
+           
           abp.message.info(Response.message);
           if(Response.message=="Successfully Submited..")
           {
@@ -1188,7 +1188,7 @@ debugger
 
 
   OnProjectApprovalSubmit(): void{
-    debugger;
+     ;
     
 
     if (
@@ -1209,7 +1209,7 @@ debugger
 
       };
       let ActivitylogId= parseInt(this.ProjectRemarks.get("ActivityLogId").value);
-      debugger;
+       ;
       this._DashboardService.ApprovedProjectChange(projectSitesModel).subscribe(
         (Response) => {
           abp.message.info(Response.message);
@@ -1258,7 +1258,7 @@ debugger
         
       };
       let ActivitylogId= parseInt(this.ClientSitesRemarks.get("ActivityLogId").value);
-      debugger;
+       ;
       this._DashboardService.ApprovedClientSitesChange(clientSitesModel).subscribe(
         (Response) => {
           abp.message.info(Response.message);
@@ -1287,10 +1287,10 @@ debugger
   review(e)
   {
     
-    debugger
+     
    this._ClientService.GetProjectFormUrlById(e.row.data.standardId).subscribe((Response) => {
                
-  debugger
+   
      var FormPth  = Response.path
      
     //  localStorage.removeItem('clientId');
@@ -1306,7 +1306,7 @@ debugger
   onRowClick(e)
   
   {  
-      debugger
+       
 //this.pagedDto.page=1;
 //this.pagedDto.pageSize=7;
 this.projectgrid=true;
@@ -1327,7 +1327,7 @@ var name = "Project Applications"
   }
 
   ProjectchangeRequestRows(e){
-    debugger
+     
 
     this.projectgrid=false;
     this.auditgrid=false;
@@ -1347,10 +1347,10 @@ var name = "Project Applications"
   this.totalCount =0;
   this._DashboardService.GetAllProjectChangeRequest( e.data.id,this.pagedDto).subscribe((Response) => {
               
-  debugger
+   
 
   this.projectChangeRequestList = Response.activityLogModel
-debugger
+ 
     
     //this .Liststandard=this.StandardList;
   })
@@ -1423,11 +1423,11 @@ if(this.pagedDto.statusId ==3 && this.pagedDto.organizationId == 1)
 }
 
 
-debugger
+ 
 this._DashboardService.GetClientSitesChangeDataById(parseInt(e.row.data.id),this.pagedDto).subscribe((Response) => {
  
   this.ClientSitesChangeRequestStatuslist = Response
-debugger
+ 
   
   //this .Liststandard=this.StandardList;
 })
@@ -1441,7 +1441,7 @@ debugger
 
 
   ClientSiteschangeRequestRows(e){
-    debugger
+     
 
     this.projectgrid=false;
     this.auditgrid=false;
@@ -1461,12 +1461,12 @@ debugger
   this.totalCount =0;
   this._DashboardService.GetAllClientSitesChangeRequest( e.data.id,this.pagedDto).subscribe((Response) => {
               
-  debugger
+   
 
 
     
     this.clientSiteChangeRequestList = Response.activityLogModel
-debugger
+ 
     
     //this .Liststandard=this.StandardList;
   })
@@ -1476,7 +1476,7 @@ debugger
   ClientChangeRowClick(e)
   
   {  
-    debugger
+     
 
     this.projectgrid=false;
     this.auditgrid=false;
@@ -1496,12 +1496,12 @@ debugger
   this.totalCount =0;
   this._DashboardService.GetAllClientChange( e.data.id,this.pagedDto).subscribe((Response) => {
               
-  debugger
+   
 
 
     
     this.clientChangeRequestList = Response.activityLogModel
-debugger
+ 
     
     //this .Liststandard=this.StandardList;
   })
@@ -1518,7 +1518,7 @@ projectListData(PId:number)
   this.totalCount =0;
   this._DashboardService.GetAllProjects(PId,this.pagedDto).subscribe((Response) => {
               
-  debugger
+   
  
     this.totalCount = Response.totalCount
     this.ProjectsList = Response.clientProjectModel
@@ -1528,7 +1528,7 @@ projectListData(PId:number)
   onRowContractClick(e)
   
   {  
-      debugger
+       
 
       this.projectgrid=false;
       this.auditgrid=false;
@@ -1557,12 +1557,13 @@ this.clientSitesChangegrid=false;
     this.totalCount =0;
     this._DashboardService.GetAllProjects( e.data.id,this.pagedDto).subscribe((Response) => {
                 
-    debugger
+     
 
 
       this.totalCount = Response.totalCount
       this.ContractList = Response.clientProjectModel
-debugger
+      
+ 
       
       //this .Liststandard=this.StandardList;
     })
@@ -1572,7 +1573,7 @@ debugger
   onRowClick1(e)
   
   {  
-      debugger 
+        
 
 this.projectgrid=false;
 this.auditgrid=true;
@@ -1590,7 +1591,7 @@ var name =  "Audits Details"
     this.totalCount =0;
     this._DashboardService.GetAllAudits( e.data.id,this.pagedDto).subscribe((Response) => {
                 
-    debugger
+     
        
 
       this.totalCount = Response.totalCount
@@ -1605,7 +1606,7 @@ var name =  "Audits Details"
   reloadGrid()
  
 {
-debugger
+ 
   this.pagedDto.page =1;
   this.projectListData(this.id);
 
@@ -1623,7 +1624,7 @@ onTableSizeChange(event): void {
  }
  public Clientid:number
  onSearch(){
-   debugger
+    
    console.log("organizationId")
  // this.pagedDto.keyword = this.keyword
   // this.pagedDto.authAllowed = true
@@ -1640,7 +1641,7 @@ onTableSizeChange(event): void {
     this.pagedDto.organizationId = parseInt( localStorage.getItem('organizationId'));
     // this._DashboardService.GetAllProjects(this.pagedDto).subscribe((Response) => {
                 
-    // debugger
+    //  
     //   this.totalCount = Response.totalCount
     //   this.ProjectsList = Response.clientProjectModel
     //   //this .Liststandard=this.StandardList;
@@ -1649,7 +1650,7 @@ onTableSizeChange(event): void {
  }
 
  UpdateProject() {    
-   debugger
+    
    this.onSearch();
    //this.reloadGrid()
     this.pagedDto.page =1;
@@ -1659,7 +1660,7 @@ this.pagedDto.userId = parseInt(localStorage.getItem('userId'));
 this.pagedDto.organizationId = parseInt(localStorage.getItem('organizationId'));
   this._DashboardService.GetDashboardData(roleId,this.pagedDto).subscribe(data => {
     console.log("service");
-debugger
+ 
    //this.totalCount = 3;
     this.ProjectStatus = data.projectDashboardStatusModel;
     this.ContractStatus = data.contractDashboardStatusModel;
@@ -1684,7 +1685,7 @@ debugger
 
 }
 // onCellPrepared1(e){
-//   debugger
+//    
 // var text ="Zain"
 //   if (e.columnIndex === 3 && e.rowType === "data") {
 //     // Set the cell text to a link
@@ -1692,7 +1693,7 @@ debugger
 // }
 //   // if (e.data.affectedColumns === "ContractFilePath")
 //   //  {
-//   //   debugger
+//   //    
 //   //       e.rowElement.style.backgroundColor = "#099299";
 //   //       e.rowElement.style.color = "white";
 
@@ -1714,7 +1715,7 @@ debugger
 
 
 onTableDataChange(event) {
-  debugger
+   
   this.pagedDto.page = event;
   this.projectListData(this.id)
 }
@@ -1766,16 +1767,18 @@ readonly allowedPageSizes = [5, 10, 'all'];
   ManageAuditVisit(e) {
    
   
-   debugger
+    console.log(e.row.data.approvalStatusId)
    var manageAllowed =localStorage.getItem('manageAllowed');
     
-   if (e.row.data.approvalStatusId=="7" && manageAllowed=='1')
+   if (e.row.data.approvalStatusId=="7"  && manageAllowed=='1')
     {
     
        return !e.row.isEditing;
     
     
    
+  }else if(e.row.data.approvalStatusId=="3" || e.row.data.approvalStatusId=="13"){
+    return !e.row.isEditing;
   }
   else
   {
@@ -1786,7 +1789,7 @@ readonly allowedPageSizes = [5, 10, 'all'];
 
   ReciewForApproval(e) {
 
-    debugger
+     
     return e.row.isEditing;
    // var authorizerID =localStorage.getItem('authorizer');
     //  var tt= this.authorizer;
@@ -1814,7 +1817,7 @@ readonly allowedPageSizes = [5, 10, 'all'];
 
 
   onRowPrepared(e) {
-    debugger
+     
     if (e.rowType === "data") {
       if (e.row.data === "ContractFilePath") {
         e.rowElement.style.backgroundColor = "#099299";
@@ -1826,7 +1829,7 @@ readonly allowedPageSizes = [5, 10, 'all'];
 
   editViaible(e) {
    
-    debugger
+     
     var Insert_Allow =localStorage.getItem('InsertAllow');
   //  var tt= this.authorizer;
     if(Insert_Allow =="1")
@@ -1851,7 +1854,7 @@ readonly allowedPageSizes = [5, 10, 'all'];
 
 
   loadSecRoleForm1() {
-    debugger
+     
     // let secRoleForm = JSON.parse(localStorage.getItem('secRoleForm'))
     // let permission = secRoleForm.find(x => x.formCode != null && x.formCode == this.formCode)
 

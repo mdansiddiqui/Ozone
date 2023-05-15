@@ -9,8 +9,10 @@ namespace Ozone.Infrastructure.Shared.Services
 {
   public  interface IProjectSA8000Service
     {
-        
+       
            Task<string> Create(ProjectSA8000CreateModel input);
+
+        //Task<string> ProjectSA8000ProjectStatusChange(ClientProjectModel input);
 
         Task<string> SA8000ChangeRequest(ProjectSA8000Model input);
 

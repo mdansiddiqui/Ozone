@@ -232,7 +232,7 @@ export class AllProjectsComponent implements OnInit {
 
 
   onSearch(){
-    debugger
+     
       if(this.authorizer==true )
       {
         this.pagedDto.keyword = this.keyword;
@@ -262,7 +262,7 @@ export class AllProjectsComponent implements OnInit {
   }
   
   edit(e) { 
-    debugger
+     
     if(e.row.data.approvalStatusId==4 || e.row.data.approvalStatusId==2)
     {
       abp.message.error("Can not Manage this user Because this record has been send For Review")
@@ -464,7 +464,7 @@ delete(e) {
    review(e)
    {
   
-     debugger
+      
     this._ClientService.GetProjectFormUrlById(e.row.data.standardId).subscribe((Response) => {
                 
    
@@ -495,7 +495,7 @@ delete(e) {
    SubmitForreview(e) 
    
    {
-    debugger 
+      
     if(e.row.data.approvalStatusId==4 || e.row.data.approvalStatusId==2)
      {
        abp.message.error("Can not Manage this user Because this record has been send For Review")
@@ -585,8 +585,9 @@ FormRights(e)
 
 }
 editViaible(e) {
+  console.log(e.row.data)
    
-  debugger
+   
   var Insert_Allow =localStorage.getItem('InsertAllow');
 //  var tt= this.authorizer;
   if(Insert_Allow =="1")
@@ -616,7 +617,7 @@ editorPreparing(e) {
 }
 
 EditViaible(e) {
-   
+   console.log(e.row.data)
   
  if (this.authorizer==true)
   {
@@ -630,7 +631,7 @@ EditViaible(e) {
 
 ReciewForApproval(e) {
 
-  debugger
+   
    
  // var authorizerID =localStorage.getItem('authorizer');
   //  var tt= this.authorizer;
@@ -660,7 +661,7 @@ ReciewForApproval(e) {
 
 ManageVisit(e) {
    
-  
+  debugger
   var manageAllowed =localStorage.getItem('manageAllowed');
 //  var tt= this.authorizer;
   if(manageAllowed=='1')
@@ -676,10 +677,15 @@ ManageVisit(e) {
     return e.row.isEditing;
   }
 }
+// else if (e.row.data.approvalStatusId=="13" || e.row.data.approvalStatusId=="14" || e.row.data.approvalStatusId=="15") {
+//   return e.row.isEditing;
+// }
 else
 {
    return e.row.isEditing;
 }
+
+
 
 }
 
