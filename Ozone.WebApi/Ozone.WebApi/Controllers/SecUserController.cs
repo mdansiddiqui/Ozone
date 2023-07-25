@@ -934,6 +934,32 @@ namespace Ozone.WebApi.Controllers
 
 
         }
+        [Route("UserStatusChange")]
+        [HttpPost]
+        [Authorize]
+
+        public async Task<IActionResult> UserStatusChange(ResetPasswordModel input)
+        {
+
+            var result = await _secUserService.UserStatusChange(input);
+            return Ok(new Response { Status = result, Message = result });
+
+
+
+        }
+        [Route("ClientStatusChange")]
+        [HttpPost]
+        [Authorize]
+
+        public async Task<IActionResult> ClientStatusChange(ResetPasswordModel input)
+        {
+
+            var result = await _secUserService.ClientStatusChange(input);
+            return Ok(new Response { Status = result, Message = result });
+
+
+
+        }
         [HttpGet, DisableRequestSizeLimit]
         [Route("DownloadStandards")]
         [Authorize]

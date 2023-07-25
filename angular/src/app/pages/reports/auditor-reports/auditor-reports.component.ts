@@ -356,7 +356,7 @@ return
   
   this._AuditorService.GetAuditorReportDetails(Param).subscribe((Response) => {
               
-   
+   debugger
    // this.totalCount = Response.totalCount
     this.AuditorReportDetailsList = Response
     console.log(Response);

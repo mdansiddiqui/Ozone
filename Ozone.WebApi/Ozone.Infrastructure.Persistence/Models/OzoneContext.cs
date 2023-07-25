@@ -25,10 +25,12 @@ namespace Ozone.Infrastructure.Persistence.Models
         public virtual DbSet<ApprovalStatus> ApprovalStatus { get; set; }
         public virtual DbSet<AssessmentCompleted> AssessmentCompleted { get; set; }
         public virtual DbSet<AuditDocumentsType> AuditDocumentsType { get; set; }
+        public virtual DbSet<AuditManagerDocuments> AuditManagerDocuments { get; set; }
         public virtual DbSet<AuditReport> AuditReport { get; set; }
         public virtual DbSet<AuditReportDetail> AuditReportDetail { get; set; }
         public virtual DbSet<AuditReportHistory> AuditReportHistory { get; set; }
         public virtual DbSet<AuditReportMaster> AuditReportMaster { get; set; }
+        public virtual DbSet<AuditReviewerDocuments> AuditReviewerDocuments { get; set; }
         public virtual DbSet<AuditType> AuditType { get; set; }
         public virtual DbSet<AuditorTypes> AuditorTypes { get; set; }
         public virtual DbSet<Certification> Certification { get; set; }
@@ -45,6 +47,7 @@ namespace Ozone.Infrastructure.Persistence.Models
         public virtual DbSet<Countries> Countries { get; set; }
         public virtual DbSet<CourseType> CourseType { get; set; }
         public virtual DbSet<Department> Department { get; set; }
+        public virtual DbSet<DocumentAssignTo> DocumentAssignTo { get; set; }
         public virtual DbSet<DocumentType> DocumentType { get; set; }
         public virtual DbSet<Eacode> Eacode { get; set; }
         public virtual DbSet<EffluentTreatmentPlant> EffluentTreatmentPlant { get; set; }
@@ -54,6 +57,7 @@ namespace Ozone.Infrastructure.Persistence.Models
         public virtual DbSet<HolidayType> HolidayType { get; set; }
         public virtual DbSet<Legislation> Legislation { get; set; }
         public virtual DbSet<Library> Library { get; set; }
+        public virtual DbSet<MappingDocumentsWithStandard> MappingDocumentsWithStandard { get; set; }
         public virtual DbSet<Methodology> Methodology { get; set; }
         public virtual DbSet<Module> Module { get; set; }
         public virtual DbSet<ModuleShare> ModuleShare { get; set; }
@@ -114,6 +118,7 @@ namespace Ozone.Infrastructure.Persistence.Models
         public virtual DbSet<VisitLevel> VisitLevel { get; set; }
         public virtual DbSet<VisitStatus> VisitStatus { get; set; }
         public virtual DbSet<VisitType> VisitType { get; set; }
+        public virtual DbSet<WindowPeriodIntimation> WindowPeriodIntimation { get; set; }
         public virtual DbSet<Yourtable> Yourtable { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -212,6 +217,29 @@ namespace Ozone.Infrastructure.Persistence.Models
                     .WithMany(p => p.AuditDocumentsTypeLastModifiedBy)
                     .HasForeignKey(d => d.LastModifiedById)
                     .HasConstraintName("FK_AuditDocumentsType_SecUser1");
+            });
+
+            modelBuilder.Entity<AuditManagerDocuments>(entity =>
+            {
+                entity.HasOne(d => d.AuditDocumentType)
+                    .WithMany(p => p.AuditManagerDocuments)
+                    .HasForeignKey(d => d.AuditDocumentTypeId)
+                    .HasConstraintName("FK_AuditManagerDocuments_AuditDocumentsType");
+
+                entity.HasOne(d => d.ClientAuditVisit)
+                    .WithMany(p => p.AuditManagerDocuments)
+                    .HasForeignKey(d => d.ClientAuditVisitId)
+                    .HasConstraintName("FK_AuditManagerDocuments_ClientAuditVisit");
+
+                entity.HasOne(d => d.CreatedBy)
+                    .WithMany(p => p.AuditManagerDocumentsCreatedBy)
+                    .HasForeignKey(d => d.CreatedById)
+                    .HasConstraintName("FK_AuditManagerDocuments_SecUser");
+
+                entity.HasOne(d => d.LastUpdatedBy)
+                    .WithMany(p => p.AuditManagerDocumentsLastUpdatedBy)
+                    .HasForeignKey(d => d.LastUpdatedById)
+                    .HasConstraintName("FK_AuditManagerDocuments_SecUser1");
             });
 
             modelBuilder.Entity<AuditReport>(entity =>
@@ -314,6 +342,29 @@ namespace Ozone.Infrastructure.Persistence.Models
                     .WithMany(p => p.AuditReportMaster)
                     .HasForeignKey(d => d.ProjectId)
                     .HasConstraintName("FK_AuditReportMaster_ClientProjects");
+            });
+
+            modelBuilder.Entity<AuditReviewerDocuments>(entity =>
+            {
+                entity.HasOne(d => d.AuditDocumentType)
+                    .WithMany(p => p.AuditReviewerDocuments)
+                    .HasForeignKey(d => d.AuditDocumentTypeId)
+                    .HasConstraintName("FK_AuditReviewerDocuments_AuditDocumentsType");
+
+                entity.HasOne(d => d.ClientAuditVisit)
+                    .WithMany(p => p.AuditReviewerDocuments)
+                    .HasForeignKey(d => d.ClientAuditVisitId)
+                    .HasConstraintName("FK_AuditReviewerDocuments_ClientAuditVisit");
+
+                entity.HasOne(d => d.CreatedBy)
+                    .WithMany(p => p.AuditReviewerDocumentsCreatedBy)
+                    .HasForeignKey(d => d.CreatedById)
+                    .HasConstraintName("FK_AuditReviewerDocuments_SecUser");
+
+                entity.HasOne(d => d.LastUpdatedBy)
+                    .WithMany(p => p.AuditReviewerDocumentsLastUpdatedBy)
+                    .HasForeignKey(d => d.LastUpdatedById)
+                    .HasConstraintName("FK_AuditReviewerDocuments_SecUser1");
             });
 
             modelBuilder.Entity<CertificationBody>(entity =>
@@ -614,6 +665,11 @@ namespace Ozone.Infrastructure.Persistence.Models
                     .HasConstraintName("FK_Consultant_State");
             });
 
+            modelBuilder.Entity<DocumentAssignTo>(entity =>
+            {
+                entity.Property(e => e.Id).ValueGeneratedNever();
+            });
+
             modelBuilder.Entity<EffluentTreatmentPlant>(entity =>
             {
                 entity.HasOne(d => d.CreatedBy)
@@ -735,6 +791,29 @@ namespace Ozone.Infrastructure.Persistence.Models
                     .WithMany(p => p.Library)
                     .HasForeignKey(d => d.StatusId)
                     .HasConstraintName("FK_Library_Status");
+            });
+
+            modelBuilder.Entity<MappingDocumentsWithStandard>(entity =>
+            {
+                entity.HasOne(d => d.DocumentAssign)
+                    .WithMany(p => p.MappingDocumentsWithStandard)
+                    .HasForeignKey(d => d.DocumentAssignId)
+                    .HasConstraintName("FK_Mapping_Documents_With_Standard_DocumentAssignTo");
+
+                entity.HasOne(d => d.DocumentType)
+                    .WithMany(p => p.MappingDocumentsWithStandard)
+                    .HasForeignKey(d => d.DocumentTypeId)
+                    .HasConstraintName("FK_Mapping_Documents_With_Standard_DocumentType");
+
+                entity.HasOne(d => d.Standard)
+                    .WithMany(p => p.MappingDocumentsWithStandard)
+                    .HasForeignKey(d => d.StandardId)
+                    .HasConstraintName("FK_Mapping_Documents_With_Standard_Certification");
+
+                entity.HasOne(d => d.VisitLevel)
+                    .WithMany(p => p.MappingDocumentsWithStandard)
+                    .HasForeignKey(d => d.VisitLevelId)
+                    .HasConstraintName("FK_Mapping_Documents_With_Standard_VisitLevel");
             });
 
             modelBuilder.Entity<Methodology>(entity =>
@@ -1324,7 +1403,7 @@ namespace Ozone.Infrastructure.Persistence.Models
                 entity.HasOne(d => d.ApprovelStatus)
                     .WithMany(p => p.SecUser)
                     .HasForeignKey(d => d.ApprovelStatusId)
-                    .HasConstraintName("FK__SecUser__Approve__25DB9BFC");
+                    .HasConstraintName("FK__SecUser__Approve__2C88998B");
 
                 entity.HasOne(d => d.City)
                     .WithMany(p => p.SecUser)
@@ -1814,6 +1893,19 @@ namespace Ozone.Infrastructure.Persistence.Models
                     .WithMany(p => p.VisitLevelLastUpdatedBy)
                     .HasForeignKey(d => d.LastUpdatedById)
                     .HasConstraintName("FK_VisitLevel_SecUser1");
+            });
+
+            modelBuilder.Entity<WindowPeriodIntimation>(entity =>
+            {
+                entity.HasOne(d => d.CreateBy)
+                    .WithMany(p => p.WindowPeriodIntimation)
+                    .HasForeignKey(d => d.CreateById)
+                    .HasConstraintName("FK_WindowPeriodIntimation_SecUser");
+
+                entity.HasOne(d => d.Project)
+                    .WithMany(p => p.WindowPeriodIntimation)
+                    .HasForeignKey(d => d.ProjectId)
+                    .HasConstraintName("FK_WindowPeriodIntimation_ClientProjects");
             });
 
             modelBuilder.Entity<Yourtable>(entity =>

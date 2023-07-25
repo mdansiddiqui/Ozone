@@ -79,7 +79,7 @@
                                 <button type="button" class="btn bg-blue">
                                     <i class="fas fa-search"></i>
                                 </button>
-                                
+
                             </div>
                         </div> -->
                         <div class="container-fluid mb-2">
@@ -87,12 +87,12 @@
                                 <div class="col-md-4" style="font-size:large;">
 
                                     <label class="mb-0" for="Code" style="color: black;">
-                                        {{ "User Name : "}} 
+                                        {{ "User Name : "}}
                                         <u><b style="color:blue;">{{UserName}}</b></u>
                                     </label>
-                                   
-                                    
-                                    
+
+
+
                                 </div>
 
                             </div>
@@ -154,7 +154,7 @@
                                         <label class="mb-0" for="Institution">Institution</label>
                                         <input type="text" formControlName="Institution"
                                             class="form-control form-control-sm col-md-12" id="Institution" required [ngClass]="{ 'is-invalid': submitted && f.Institution.errors }"/>
-                                    
+
                                             <div *ngIf="submitted && f.Institution.errors" class="invalid-feedback">
                                                 <div *ngIf="f.Institution.errors.required">Institution is required</div>
                                             </div>
@@ -222,16 +222,16 @@
                                 <dxi-column dataField="startYear" alignment='left' caption="Start Year"></dxi-column>
                                 <dxi-column dataField="endYear" alignment='left' caption="End Year"></dxi-column>
                                 <dxi-column type="buttons" caption="Download">
-                                    <dxi-button 
+                                    <dxi-button
                         hint="Download File"
                         icon="download"
                        [onClick]="Downloadfile"
                        ></dxi-button>
                                 </dxi-column>
                                 <dxi-column type="buttons" caption="Action">
-                                    <dxi-button icon="edit"   hint="Edit"[onClick]="edit" [(visible)]="isAddShown"></dxi-button>
+                                    <dxi-button icon="edit"   hint="Edit"[onClick]="edit" [(visible)]="editVsible"></dxi-button>
 
-                                    <dxi-button icon="deleterow"  hint="Delete"  [onClick]="delete" [(visible)]="isAddShown">
+                                    <dxi-button icon="deleterow"  hint="Delete"  [onClick]="delete" [(visible)]="editVsible">
                                     </dxi-button>
 
                                 </dxi-column>
@@ -261,7 +261,7 @@
                                         </pagination-controls>
                                     </div>
                                     <!-- <div class="col-sm-2 col-12 ">
-    
+
                                 <div class="d-flex flex-row-reverse bd-highlight mb-2">
                                     <div class="p-2 bd-highlight">
                                         <select (change)="onTableSizeChange($event)" class="custom-select">

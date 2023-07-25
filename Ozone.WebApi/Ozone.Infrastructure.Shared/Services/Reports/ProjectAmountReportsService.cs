@@ -49,7 +49,7 @@ namespace Ozone.Infrastructure.Shared.Services
         public async Task<List<OrganizationModel>> GetAllAgency()
         {
             var result = new List<OrganizationModel>();
-            var list = await Task.Run(() => _dbContext.Organization.Where(x => x.IsActive == true && x.OrganizationTypeId == 2).ToList());
+            var list = await Task.Run(() => _dbContext.Organization.Where(x => x.IsActive == true && x.OrganizationTypeId == 2 && x.IsDeleted==false).ToList());
             result = _mapper.Map<List<OrganizationModel>>(list);
             return result;
         }

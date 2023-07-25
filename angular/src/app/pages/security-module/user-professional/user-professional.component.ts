@@ -60,7 +60,7 @@ export class UserProfessionalComponent implements OnInit {
     EndYear: new FormControl(''),
     File: new FormControl(''),
     // IsDeleted: new FormControl(''),
-   
+
   })
   datePipe = new DatePipe("en-US");
   public UserName:string;
@@ -71,19 +71,21 @@ export class UserProfessionalComponent implements OnInit {
   public pagedDto: PagedRequestModel = new PagedRequestModel()
   pageNumber : number = 1
   pageSize : number = 10
-  public isEditShown : boolean  
-  public isViewShown : boolean  
-  public isAddShown : boolean  
+  public isEditShown : boolean
+  public isViewShown : boolean
+  public isAddShown : boolean
   public keyword : string = ''
+  public OID : number
   public StandardList = [];
   public UserProsissionalList = [];
+  public StatusId:number
 
   submitted = false;
 
   fileToUpload: any;
 
  public UserStatusList=[]
- 
+
   readonly allowedPageSizes = [5, 10, 'all'];
   readonly displayModes = [{ text: "Display Mode 'full'", value: "full" }, { text: "Display Mode 'compact'", value: "compact" }];
   displayMode = "full";
@@ -96,8 +98,8 @@ export class UserProfessionalComponent implements OnInit {
   get isCompactMode() {
       return this.displayMode === "compact";
   }
-  
-  constructor( 
+
+  constructor(
   //  private http: HttpClient,
     private _UserStandardService: UserStandardService,
     // private route: Router,
@@ -107,7 +109,7 @@ export class UserProfessionalComponent implements OnInit {
      private route: ActivatedRoute,
     private _makerAuthorizerFormService: MakerAuthorizerFormService
      //public StandardService: StandardService
-    ) 
+    )
     {    this.edit = this.edit.bind(this);
       this.delete = this.delete.bind(this);
      this.DownloadProfesional=this.DownloadProfesional.bind(this)  }
@@ -117,58 +119,112 @@ export class UserProfessionalComponent implements OnInit {
 
 
     //this.onSearch();
-   
+
   }
   ngAfterViewInit() : void {
     this.editUser()
-   
+
   }
+  editVsible(e) {
+    debugger
+    var organizationId =  parseInt( localStorage.getItem('organizationId'));
+    // console.log(roleId)
+    let oid = parseInt(localStorage.getItem('UserOrganizationID'));
+    var userstatusId =  parseInt( localStorage.getItem('userstatusId'));
+    if(userstatusId==2)
+    {
+     return e.row.isEditing;
+    }
+    if (organizationId === oid)
+     {
+     return !e.row.isEditing;
+   }else {
+    return e.row.isEditing;
+   }
+   }
+  // editVsible(e) {
+  //   var roleId = parseInt(localStorage.getItem('roleId'));
+  //   var userstatusId =  parseInt( localStorage.getItem('userstatusId'));
+  //   if(userstatusId==2)
+  //   {
+  //    return e.row.isEditing;
+  //   }
+  //   // console.log(roleId)
+  //   if (roleId === 2)
+  //    {
+  //    return e.row.isEditing;
+  //  }
+
+  //    else
+  //    {
+
+  //      return !e.row.isEditing;
+  //    }
+
+
+  //  }
   Userid: number
   editUser()
   {
-       
-      var  ur ;
-      ur=window.location.href.split("/")[7];
-      var com=[]=ur.split("?")[1];
-      if(com!=undefined && com!=null)
-      {
-      var PId=com.split("=")[0];
-      this.Userid=PId;
+
+    var ur = window.location.href.split("/")[7];
+    var com = ur.split("?")[1];
+
+  if (com != undefined && com != null) {
+    var PId = com.split("=")[0]
+    // var org = com.split("&")[1]
+    // var oid = org.split("=")[1]
+    // this.OID=parseInt(oid);
+    // var params = new URLSearchParams(com);
+
+    // // var NId = params.get("NId");
+    // var OId = params.get("OrganzationId");
+    //   console.log(PId);
+    //   console.log(OId);
+    //   this.OID = +OId
+    this.Userid= +PId;
+    // localStorage.removeItem('UserOrganizationID');
+    // localStorage.setItem('UserOrganizationID', this.OID.toString());
       this.SecUserService.GetUserbyId(this.Userid).subscribe(data => {
         this.UserName  = data.userName
-            
+        this.StatusId=data.approvelStatusId;
+        this.OID=data.organizationId;
+        localStorage.removeItem('UserOrganizationID');
+        localStorage.setItem('UserOrganizationID', this.OID.toString());
+        localStorage.removeItem('userstatusId');
+        localStorage.setItem('userstatusId', this.StatusId.toString());
       })
       this.onSearch();
     // this._UserStandardService.GetUserDeclaration(this.Userid).subscribe(data => {
-        
+
     //   this.UserDeclarationList= data
-      
+
     // })
   //  this.onSearch(this.userUpdateId);
   }
-    
+
   }
   handlefileInput(e: any)
   {
 
 this.fileToUpload= <File>e?.target?.files[0];
-//this.url=e.target.value; 
+//this.url=e.target.value;
 
 
   }
 
   get f() { return this.UserProfessionalForm.controls; }
 
-  onSubmit(): void 
+  onSubmit(): void
   {
     this.submitted = true;
-    
+
     // stop here if form is invalid
     if (this.UserProfessionalForm.invalid) {
       abp.message.error("Some fields are required ");
       return;
     }
-  
+
     // if(this.SecUserForm.get('UserName').value ==null ||this.SecUserForm.get('UserName').value==undefined|| this.SecUserForm.get('UserName').value=="")
     // {  abp.message.error("User Name required","Alert")
     // return
@@ -189,7 +245,7 @@ this.fileToUpload= <File>e?.target?.files[0];
   if (this.id != undefined && this.id != null && this.id>0 ) {
     foData.append("Id",this.id.toString());
   }
-  else 
+  else
   {
     if (this.fileToUpload != null && this.fileToUpload != "" && this.fileToUpload != undefined && this.fileToUpload != undefined && this.fileToUpload != NaN && this.fileToUpload != undefined && this.fileToUpload != "" && this.fileToUpload != undefined && this.fileToUpload != '') {
 
@@ -201,58 +257,58 @@ this.fileToUpload= <File>e?.target?.files[0];
       return;
     }
   }
- 
+
   foData.append('UserId',this.Userid.toString());
   foData.append('Details',this.UserProfessionalForm.get('Details').value);
    foData.append('Body',this.UserProfessionalForm.get('Body').value);
    foData.append('Year',this.UserProfessionalForm.get('Year').value);
- 
+
    foData.append('DocumentFile',this.fileToUpload);
    var LoginUserId =localStorage.getItem('userId');
- 
+
    foData.append('CreatedBy',LoginUserId);
- 
+
 
 
 
 this._UserStandardService.UserProfessionalCreateWithFile(foData).subscribe((Response)=>{
- 
+
      abp.message.info(Response.message)
     // window.location.reload();
   this.reloadGrid();
   this.ClearAllFielsd();
-    
+
     })
-  
-      
+
+
  }
- 
+
 
 
 
 id: number
-  edit(e) {  
-           
+  edit(e) {
+
     // var List = [];
-    // List=this.Liststandard                                                                             ; 
+    // List=this.Liststandard                                                                             ;
     // this.router.navigateByUrl('/app/pages/stock-management/library');
     this.id=e.row.data.id
     // var updateDate =this.StandardList.find(x => x.id == this.id );
 
-    // this._StandardService.GetStandardById(this.id).subscribe((res) => 
+    // this._StandardService.GetStandardById(this.id).subscribe((res) =>
     // {
-      
+
         this.UserProfessionalForm.controls.Qualification.setValue(e.row.data.qualification);
         this.UserProfessionalForm.controls.Details.setValue(e.row.data.details);
         this.UserProfessionalForm.controls.Body.setValue(e.row.data.body);
         this.UserProfessionalForm.controls.Year.setValue(e.row.data.year);
         this.UserProfessionalForm.controls.Year.setValue(e.row.data.year);
-       
-        
 
 
-   }  
- 
+
+
+   }
+
 
 onTableDataChange(event) {
   this.pagedDto.page = event;
@@ -272,14 +328,14 @@ onTableSizeChange(event): void {
 }
 
 onSearch(){
-  
-    
+
+
   this.pagedDto.keyword = this.Userid.toString();
   this.pagedDto.authAllowed = true;
   //this.pagedDto.pageSize = 3
   this._UserStandardService.GetPagedUserProfessional(this.pagedDto).subscribe((Response) => {
-              
-  
+
+
     this.totalCount = Response.totalCount
     this.UserProsissionalList = Response.userProfessionalModel
     //this .Liststandard=this.StandardList;
@@ -295,39 +351,39 @@ ClearAllFielsd()
   this.id=0;
 }
   reloadGrid()
- 
+
  {
 
    this.pagedDto.page =1;
    this.onSearch();
 
-  
+
  }
 
- 
+
 delete(e) {
-  
+
      abp.message.confirm((""),
      undefined,
          (result: boolean) => {
              if (result) {
-               // this.SecUserService.Deleteuser(e.row.data.id).subscribe() 
+               // this.SecUserService.Deleteuser(e.row.data.id).subscribe()
                //     abp.message.info("Deleted successfully", "Status", {});
- 
+
                    this._UserStandardService.UserProfessionalDeleteById(e.row.data.id).subscribe((Response)=>{
-  
+
                      abp.message.info(Response.message)
                      this.onSearch();
-                    
+
                     })
-                   
+
              }
            }
       )}
 
   editRecord(e)
   {
-    
+
     // var userId=item;
     var urlink=e;
     this.router.navigateByUrl(e+this.Userid)
@@ -336,35 +392,35 @@ delete(e) {
 
 
   Downloadfile(e): void {
-     
-  
+
+
     this.id=e.row.data.id;
     var fillename=e.row.data.title;
-   
+
   //   this.LibraryResourceService.downloadFile(this.id).subscribe((result:Blob)=>{
   //     const Blb =new Blob([result], { type: result.type });
   //     // const url=window.URL.createObjectURL(Blb);
   //     // window.open(url);
   //     // console.log("success");
-    
-  //     
+
+  //
   //     const a = document.createElement('a');
   //       a.setAttribute('style', 'display:none;');
   //       document.body.appendChild(a);
-  //      a.download =fillename;  
+  //      a.download =fillename;
   //      // const fileName =
-        
+
   //       //="farooq";
   //       a.href = URL.createObjectURL(Blb);
   //       a.target = '_blank';
   //       a.click();
   //       document.body.removeChild(a);
-        
+
   //   })
    }
 
    DownloadProfesional(e): void {
-     
+
     if(e.row.data.documentsFilePath!=null && e.row.data.documentsFilePath!=undefined && e.row.data.documentsFilePath!=NaN && e.row.data.documentsFilePath!="" && e.row.data.documentsFilePath!='')
     {
     this.id=e.row.data.id;
@@ -375,20 +431,20 @@ delete(e) {
       // const url=window.URL.createObjectURL(Blb);
       // window.open(url);
       // console.log("success");
-    
-      
+
+
       const a = document.createElement('a');
         a.setAttribute('style', 'display:none;');
         document.body.appendChild(a);
-      // a.download =fillename;  
+      // a.download =fillename;
        // const fileName =
-        
+
         //="farooq";
         a.href = URL.createObjectURL(Blb);
         a.target = '_blank';
         a.click();
         document.body.removeChild(a);
-        
+
     })
   }
   else{abp.message.error("File Not Exsit", "Alert")}

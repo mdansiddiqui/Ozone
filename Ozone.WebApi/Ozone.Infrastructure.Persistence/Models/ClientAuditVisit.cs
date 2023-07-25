@@ -12,9 +12,11 @@ namespace Ozone.Infrastructure.Persistence.Models
     {
         public ClientAuditVisit()
         {
+            AuditManagerDocuments = new HashSet<AuditManagerDocuments>();
             AuditReport = new HashSet<AuditReport>();
             AuditReportHistory = new HashSet<AuditReportHistory>();
             AuditReportMaster = new HashSet<AuditReportMaster>();
+            AuditReviewerDocuments = new HashSet<AuditReviewerDocuments>();
             QcHistory = new HashSet<QcHistory>();
             QcMasterComments = new HashSet<QcMasterComments>();
         }
@@ -110,12 +112,16 @@ namespace Ozone.Infrastructure.Persistence.Models
         [ForeignKey(nameof(VisitTypeId))]
         [InverseProperty("ClientAuditVisit")]
         public virtual VisitType VisitType { get; set; }
+        [InverseProperty("ClientAuditVisit")]
+        public virtual ICollection<AuditManagerDocuments> AuditManagerDocuments { get; set; }
         [InverseProperty("AuditVisit")]
         public virtual ICollection<AuditReport> AuditReport { get; set; }
         [InverseProperty("ClientAuditVisit")]
         public virtual ICollection<AuditReportHistory> AuditReportHistory { get; set; }
         [InverseProperty("ClientAuditVisit")]
         public virtual ICollection<AuditReportMaster> AuditReportMaster { get; set; }
+        [InverseProperty("ClientAuditVisit")]
+        public virtual ICollection<AuditReviewerDocuments> AuditReviewerDocuments { get; set; }
         [InverseProperty("ClientAuditVisit")]
         public virtual ICollection<QcHistory> QcHistory { get; set; }
         [InverseProperty("ClientAuditVisit")]

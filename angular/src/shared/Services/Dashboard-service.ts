@@ -297,6 +297,14 @@ debugger
         return this.http.get(`${environment.apiUrl}/api/Client/ClientSitesdownloadFile?id=${id}`,{responseType:'blob'})
      
       }
+      windowperiod(value): Observable<any> {
 
+        let headers = new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('token')),
+        });
+        let options = { headers: headers };
+        return this.http.post<any>(`${environment.apiUrl}/api/Dashboard/windowperiod`, value ,options);
+      }
 
 }

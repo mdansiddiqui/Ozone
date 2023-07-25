@@ -1,16 +1,55 @@
 ﻿using AutoMapper;
 using Ozone.Application;
 using Ozone.Application.DTOs;
+using Ozone.Application.DTOs.Security;
 
-using Ozone.Application.Interfaces;
-using Ozone.Application.Interfaces.Setup;
-using Ozone.Application.Repository;
-using Ozone.Infrastructure.Persistence.Models;
+
+//using Ozone.Domain.Entities;
+using Ozone.Infrastructure.Persistence;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Ozone.Infrastructure.Persistence.Models;
+using Ozone.Application.Interfaces.Service;
+using Ozone.Application.Parameters;
+using Ozone.Application.Interfaces;
+//using Ozone.Infrastructure.Persistence.Repository;
+using Ozone.Infrastructure.Persistence.Entities;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using Ozone.Application.Repository;
+using System.IO;
+using Microsoft.Extensions.Configuration;
+using Ozone.Application.DTOs.Reports;
+using Ozone.Application.DTOs.Projects;
+using System.Data;
+using Microsoft.Data.SqlClient;
+using System.Security.Cryptography;
+using Ozone.Application.Interfaces.Setup;
+
+
+
+////using Ozone.Domain.Entities;
+//using Ozone.Infrastructure.Persistence;
+
+//using Ozone.Application.Interfaces.Service;
+//using Ozone.Application.Parameters;
+
+////using Ozone.Infrastructure.Persistence.Repository;
+//using Ozone.Infrastructure.Persistence.Entities;
+//using Microsoft.EntityFrameworkCore;
+
+//using System.IO;
+//using Microsoft.Extensions.Configuration;
+//using Microsoft.AspNetCore.Http;
+//using static System.Net.Mime.MediaTypeNames;
+////using static System.Net.Mime.MediaTypeNames;
+//using System.Web;
+////using System.IO;
+//using System.Drawing;
+//using Microsoft.AspNetCore.Http.Internal;
 
 namespace Ozone.Infrastructure.Shared.Services
 {
@@ -149,6 +188,126 @@ namespace Ozone.Infrastructure.Shared.Services
             }
             // return "User Already Exists!";
         }
+
+        public async Task<string> DelMSWD(long id)
+        {
+            // OzoneContext ozonedb = new OzoneContext();
+            using (var transaction = _unitOfWork.BeginTransaction())
+            {
+
+
+                MappingDocumentsWithStandard DbDocument = _dbContext.MappingDocumentsWithStandard.Where(u => u.Id == id).FirstOrDefault();
+
+
+                if (DbDocument != null)
+                {
+                    // SecUser user = _secuserRepository.GetUserByUserName(input.UserName);
+
+                    try
+                    {
+
+
+                        DbDocument.IsDeleted = true;
+                        _dbContext.MappingDocumentsWithStandard.Update(DbDocument);
+                        await _unitOfWork.SaveChangesAsync();
+
+
+
+
+
+                        transaction.Commit();
+
+
+                        return "Successfully Deleted!";
+
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+                        return "Not Deleted!";
+                    }
+                }
+                else
+                {
+                    return "Client not Exists!";
+                }
+
+
+            }
+            // return "User Already Exists!";
+        }
+
+        public async Task<string> createMSWD(MappingDocumentsWithStandardModel input)
+        {
+            using (var transaction = _unitOfWork.BeginTransaction())
+            {
+                MappingDocumentsWithStandard DbStandard = await Task.Run(() => _dbContext.MappingDocumentsWithStandard.Where(x => x.IsDeleted == false && x.Id == input.Id).FirstOrDefault());
+                try
+                {
+                    long newid;
+                    bool New = false;
+                    if (DbStandard == null)
+                    {
+                        New = true;
+                        DbStandard = new MappingDocumentsWithStandard();
+                    }
+                    //DbModules.Id = input.Id;
+                    DbStandard.Id = input.Id;
+                    DbStandard.StandardId = input.StandardId;
+                    DbStandard.VisitLevelId = input.VisitLevelId;
+                    DbStandard.DocumentTypeId = input.DocumentTypeId;
+                    DbStandard.IsActive = input.IsActive;
+                    DbStandard.IsRequired = input.IsRequired;
+                   // DbStandard.DocumentForReviewer = input.DocumentForReviewer;
+                    DbStandard.DocumentAssignId = input.DocumentAssignId;
+                    if (New == true)
+                    {
+                        DbStandard.IsDeleted = false;
+                        await _dbContext.MappingDocumentsWithStandard.AddAsync(DbStandard);
+                    }
+                    else
+                    {
+                        _dbContext.MappingDocumentsWithStandard.Update(DbStandard);
+                    }
+
+                    var result = await _unitOfWork.SaveChangesAsync();
+
+                    newid = DbStandard.Id;
+
+                    transaction.Commit();
+                    return "Successfully Saved!";
+
+                }
+
+                catch
+                {
+                    transaction.Rollback();
+                    return "Not Inserted!";
+                }
+
+
+
+            }
+
+        }
+        public async Task<List<MappingDocumentsWithStandardModel>> GetMSWD(PagedResponseModel model)
+        {
+            try
+            {
+
+                var result = new GetPagedDocumentsTypeModel();
+                var productDenoList = new List<MappingDocumentsWithStandardModel>();
+
+                var list = await Task.Run(() => _dbContext.MappingDocumentsWithStandard.Include(x => x.Standard).Include(x => x.DocumentType).Include(x => x.VisitLevel).Include(x=>x.DocumentAssign).Where(x => x.IsDeleted == false).ToList());
+                productDenoList = _mapper.Map<List<MappingDocumentsWithStandardModel>>(list);
+                return productDenoList;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
 
         public async Task<DocumentsTypeModel> GetDocumentsTypeBYId(long id)
         {

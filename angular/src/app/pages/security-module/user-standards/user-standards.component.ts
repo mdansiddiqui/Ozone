@@ -56,7 +56,7 @@ export class UserStandardsComponent implements OnInit {
     PreValidDate: new FormControl(''),
     ValidationDate: new FormControl(''),
      ApprovalStatusId: new FormControl(''),
-    
+
 
     // IsDeleted: new FormControl(''),
 
@@ -76,6 +76,8 @@ export class UserStandardsComponent implements OnInit {
   public isViewShown: boolean
   public isAddShown: boolean
   public keyword: string = ''
+  public OID: number
+  public StatusId: number
   public StandardList = [];
   public UserStandardList = [];
   public ApprovalList = [];
@@ -114,12 +116,13 @@ export class UserStandardsComponent implements OnInit {
     this.delete = this.delete.bind(this)
     this.Downloadfile=this.Downloadfile.bind(this)
     this.SubmitForreview=this.SubmitForreview.bind(this);
-
+    this.SubmitForReviewVisible=this.SubmitForReviewVisible.bind(this);
+    this.review=this.review.bind(this)
   }
 
   ngOnInit(): void {
-  
-    
+
+
     this.loadStandard()
     this.loadAuditorType()
 
@@ -131,26 +134,121 @@ export class UserStandardsComponent implements OnInit {
 
   }
   changings(){
-    
+
   }
 
   ngAfterViewInit(): void {
     this.onSearch();
 
   }
+  ManageVisit(e) {
+    debugger
+    // var roleId = localStorage.getItem('roleId');
+    // if (+roleId === 2 ) {
+    //   if (e.row.data.approvalStatusId === 1 || e.row.data.approvalStatusId === 10003)
+    //   {
+    //   return e.row.isEditing;
+    //   }
+    //   else
+    //   {
+    //     return !e.row.isEditing;
+    //   }
+    // }
+    // if (e.row.data.approvalStatusId === 2)
+    //  {
+    //  return e.row.isEditing;
+    //  }
+    //  else
+    //  {
+    //    return !e.row.isEditing;
+    //  }
+    var organizationId =  parseInt( localStorage.getItem('organizationId'));
+    // console.log(roleId)
+    let oid = parseInt(localStorage.getItem('UserOrganizationID'));
+    if (organizationId === oid && e.row.data.approvalStatusId === 10003)
+     {
+     return !e.row.isEditing;
+   }else {
+    return e.row.isEditing;
+   }
+  }
+  review(e)
+  {
+    this.router.navigateByUrl('/app/pages/security-module/user-review?'+ e.row.data.userId)
+
+  }
+  SubmitForReviewVisible (e) {
+    debugger
+    if (e.row.data.approvalStatusId === 1)
+     {
+     return !e.row.isEditing;
+   }
+
+     else
+     {
+
+       return e.row.isEditing;
+     }
+  }
   Userid: number
   editUser() {
-    
-    var ur;
-    ur = window.location.href.split("/")[7];
-    var com = [] = ur.split("?")[1];
+
+    // var ur;
+    // ur = window.location.href.split("/")[7];
+    // var com = [] = ur.split("?")[1];
+    // if (com != undefined && com != null) {
+    //   debugger
+    //   var PId = com.split("=")[0];
+    //   var OId = com.split("=")[1];
+    //   console.log(PId)
+    //   console.log(OId)
+    var ur = window.location.href.split("/")[7];
+    var com = ur.split("?")[1];
+
     if (com != undefined && com != null) {
-      var PId = com.split("=")[0];
-      this.Userid = PId;
       debugger
+      var PId = com.split("=")[0]
+      //var org = com.split("&")[1]
+      //var oid = org.split("=")[1]
+      //var Status = com.split("&")[2]
+      //var statusId = Status.split("=")[1]
+      //this.StatusId=parseInt(statusId)
+     
+      //this.OID=parseInt(oid);
+
+      // var params = com.split("&");
+      // var NId = null;
+      // var OId = null;
+
+      // for (var i = 0; i < params.length; i++) {
+      //   var keyValue = params[i].split("=");
+
+      //   if (keyValue.length === 2) {
+      //     var key = keyValue[0];
+      //     var value = keyValue[1];
+
+      //     if (key === "NId") {
+      //       NId = value !== "" ? value : null;
+      //     } else if (key === "OrganizationId") {
+      //       OId = value !== "" ? value : null;
+      //     }
+      //   }
+      // }
+
+      console.log(PId);
+      // console.log(OId);
+      // this.OID = +OId
+      this.Userid = +PId;
+    
       this.SecUserService.GetUserbyId(this.Userid).subscribe(data => {
+        debugger
         this.UserName  = data.userName
-            
+        this.StatusId=data.approvelStatusId;
+        this.OID=data.organizationId;
+        localStorage.removeItem('UserOrganizationID');
+        localStorage.setItem('UserOrganizationID', this.OID.toString());
+  
+
       })
       // this.pagedDto.keyword = this.Userid.toString();
       // this.pagedDto.authAllowed = true;
@@ -201,9 +299,9 @@ export class UserStandardsComponent implements OnInit {
   get f() { return this.UserStandardForm.controls; }
 
   onSubmit(): void {
-debugger
+
     this.submitted = true;
-    
+
     // stop here if form is invalid
     if (this.UserStandardForm.invalid) {
       abp.message.error("Some fields are required ");
@@ -225,13 +323,13 @@ debugger
     //else{this.UserStandar.PreValidDate=null}
     if (this.UserStandardForm.get('ValidationDate').value != null && this.UserStandardForm.get('ValidationDate').value != undefined && this.UserStandardForm.get('ValidationDate').value != NaN && this.UserStandardForm.get('ValidationDate').value != "" && this.UserStandardForm.get('ValidationDate').value != '') { this.UserStandar.ValidationDate = this.UserStandardForm.get('ValidationDate').value }
     //else{this.UserStandar.ValidationDate=null}
-    
+
       // if (this.fileToUpload != null && this.fileToUpload != "" && this.fileToUpload != undefined && this.fileToUpload != undefined && this.fileToUpload != NaN) {
-  
-  
+
+
       // }
       // else {
-  
+
       //   abp.message.error("Please Upload Document File!", "Document File required");
       //   return;
       // }
@@ -258,7 +356,7 @@ debugger
         var sname = key;
         //var sname= this.SLCPForm.controls[key].;
         var val = this.UserStandardForm.controls[key].value;
-    
+
         foData.append(sname, val);
       }
     }),
@@ -282,7 +380,7 @@ debugger
     //    foData.append('CreatedBy',LoginUserId);
     //    foData.append('UserId', this.Userid.toString());
 
-    
+
     this._UserStandardService.create(foData).subscribe((Response) => {
 
       abp.message.info(Response.message)
@@ -295,16 +393,16 @@ debugger
 
   id: number
   edit(e) {
-    debugger
+
     // var List = [];
-    // List=this.Liststandard                                                                             ; 
+    // List=this.Liststandard                                                                             ;
     // this.router.navigateByUrl('/app/pages/stock-management/library');
     this.id = e.row.data.id
     // var updateDate =this.StandardList.find(x => x.id == this.id );
 
-    // this._StandardService.GetStandardById(this.id).subscribe((res) => 
+    // this._StandardService.GetStandardById(this.id).subscribe((res) =>
     // {
-    
+
     this.UserStandardForm.controls.StandardId.setValue(e.row.data.standardId);
     this.UserStandardForm.controls.AuditorTypeId.setValue(e.row.data.auditorTypeId);
     this.UserStandardForm.controls.CourseTypeId.setValue(e.row.data.courseTypeId);
@@ -314,14 +412,14 @@ debugger
       this.UserStandardForm.get('CourseDate').setValue(this.datePipe.transform(req, 'yyyy-MM-dd'))
     }
     if (e.row.data.preValidDate != null && e.row.data.preValidDate != undefined && e.row.data.preValidDate != NaN && e.row.data.preValidDate != "" && e.row.data.preValidDate != '') {
-   
+
     let PreValid_Date = new Date(this.datePipe.transform(e.row.data.preValidDate, 'yyyy/MM/dd'))
 
     this.UserStandardForm.get('PreValidDate').setValue(this.datePipe.transform(PreValid_Date, 'yyyy-MM-dd'))
-   
-     } 
+
+     }
      if (e.row.data.validationDate != null && e.row.data.validationDate != undefined && e.row.data.validationDate != NaN && e.row.data.validationDate != "" && e.row.data.validationDate != '') {
-   
+
      let Validation_Date = new Date(this.datePipe.transform(e.row.data.validationDate, 'yyyy/MM/dd'))
 
     this.UserStandardForm.get('ValidationDate').setValue(this.datePipe.transform(Validation_Date, 'yyyy-MM-dd'))
@@ -350,14 +448,14 @@ debugger
   }
 
   onSearch() {
-    
+
 
     this.pagedDto.keyword = this.Userid.toString();
     this.pagedDto.authAllowed = true;
     //this.pagedDto.pageSize = 3
     this._UserStandardService.Get(this.pagedDto).subscribe((Response) => {
 
-      
+
       this.totalCount = Response.totalCount
       this.UserStandardList = Response.userStandardModel
 console.log(this.UserStandardList)
@@ -379,33 +477,33 @@ console.log(this.UserStandardList)
     this.id = 0;
     // var updateDate =this.StandardList.find(x => x.id == this.id );
 
-    // this._StandardService.GetStandardById(this.id).subscribe((res) => 
+    // this._StandardService.GetStandardById(this.id).subscribe((res) =>
     // {
-    
+
     this.UserStandardForm.controls.StandardId.setValue('');
     this.UserStandardForm.controls.AuditorTypeId.setValue('');
     this.UserStandardForm.controls.CourseTypeId.setValue('');
-   
+
       this.UserStandardForm.get('CourseDate').setValue('')
-    
-    
+
+
     this.UserStandardForm.get('PreValidDate').setValue('')
-   
-     
-    
+
+
+
     this.UserStandardForm.get('ValidationDate').setValue('')
-     
+
     //this.UserStandardForm.controls.ApprovalStatusId.setValue(e.row.data.approvalStatusId);
 
 
   }
   delete(e) {
-    
+
     abp.message.confirm((""),
       undefined,
       (result: boolean) => {
         if (result) {
-          // this.SecUserService.Deleteuser(e.row.data.id).subscribe() 
+          // this.SecUserService.Deleteuser(e.row.data.id).subscribe()
           //     abp.message.info("Deleted successfully", "Status", {});
 
           this._UserStandardService.Delete(e.row.data.id).subscribe((Response) => {
@@ -421,25 +519,25 @@ console.log(this.UserStandardList)
   }
 
   editRecord(e) {
-    
+
     // var userId=item;
     var urlink = e;
     this.router.navigateByUrl(e + this.Userid)
-    
+
   }
 
   handlefileInput(e: any)
   {
 
 this.fileToUpload= <File>e?.target?.files[0];
-//this.url=e.target.value; 
+//this.url=e.target.value;
 
 
   }
 
   Downloadfile(e): void {
-     debugger
-  
+
+
     this.id=e.row.data.id;
    // var fillename=e.row.data.title;
    var fillename="Document File";
@@ -448,20 +546,20 @@ this.fileToUpload= <File>e?.target?.files[0];
       // const url=window.URL.createObjectURL(Blb);
       // window.open(url);
       // console.log("success");
-    
-      
+
+
       const a = document.createElement('a');
         a.setAttribute('style', 'display:none;');
         document.body.appendChild(a);
-       a.download =fillename;  
+       a.download =fillename;
        // const fileName =
-        
+
         //="farooq";
         a.href = URL.createObjectURL(Blb);
         a.target = '_blank';
         a.click();
         document.body.removeChild(a);
-        
+
     })
    }
 //     forReview(e) : void
@@ -469,12 +567,12 @@ this.fileToUpload= <File>e?.target?.files[0];
 //  this.UserStandardForm = e.row.data.approvalStatusId()
 
 //  this.UserStandar.ApprovelStatusId =(this.UserStandardForm.get('ApprovalStatusId').value)
-   
+
 // }
 
-SubmitForreview(e) 
-{ 
-  // debugger
+SubmitForreview(e)
+{
+  //
   // if(e.row.data.approvalStatusId==1  )
   // {
   //   abp.message.error("Can not Manage this user Because this record has been send For Review")
@@ -483,41 +581,50 @@ SubmitForreview(e)
   // else{
 
   //this.id=e.row.data.approvelStatusId=10003;
-  
+
   abp.message.confirm(("Please make sure all the required information is entered. Are you sure to submit your application for review?"),
   undefined,
       (result: boolean) => {
           if (result) {
-            // this.SecUserService.Deleteuser(e.row.data.id).subscribe() 
+            // this.SecUserService.Deleteuser(e.row.data.id).subscribe()
             //     abp.message.info("Deleted successfully", "Status", {});
 
                 this._UserStandardService. SubmitForReviewStatus(e.row.data.id).subscribe((Response)=>{
 
                   abp.message.info(Response.message)
                   this.onSearch();
-                 
+
                  })
-                
+
           }
         }
    )
      // }
 
 }
-btnforReview(e) 
+btnforReview(e)
 {
-   
-  
- if (e.row.data.approvalStatusId=="1" || e.row.data.approvalStatusId=="10002" ||e.row.data.approvalStatusId=="2")
-  {
-  return e.row.isEditing;
-}
 
-  else
-  {
-    
-    return !e.row.isEditing;
+  var organizationId =  parseInt( localStorage.getItem('organizationId'));
+  // console.log(roleId)
+  let oid = parseInt(localStorage.getItem('UserOrganizationID'));
+  if (organizationId === oid)
+   {
+    if (e.row.data.approvalStatusId=="1" || e.row.data.approvalStatusId=="10002" ||e.row.data.approvalStatusId=="2")
+    {
+    return e.row.isEditing;
   }
+
+    else
+    {
+
+      return !e.row.isEditing;
+    }
+ }else {
+  return e.row.isEditing;
+ }
+
+
 
 
 }

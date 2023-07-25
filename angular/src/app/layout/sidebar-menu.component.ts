@@ -220,6 +220,12 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
                     this.permissionCheck('VisitLevel')
                 ),
                 new MenuItem(
+                    'Map Standard With Doc',
+                    '/app/pages/master-setups/mapping-standard-with-document',
+                    'fas fa-arrow-circle-right',
+                    this.permissionCheck('MappingStandardWithDocument')
+                ),
+                new MenuItem(
                     'Standard',
                     '/app/pages/certification-setups/certificate',
                     'fas fa-arrow-circle-right',

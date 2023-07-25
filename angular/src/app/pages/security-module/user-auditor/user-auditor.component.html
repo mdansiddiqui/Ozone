@@ -79,7 +79,7 @@
                                 <button type="button" class="btn bg-blue">
                                     <i class="fas fa-search"></i>
                                 </button>
-                                
+
                             </div>
                         </div> -->
                         <div class="container-fluid mb-2">
@@ -87,12 +87,12 @@
                                 <div class="col-md-4" style="font-size:large;">
 
                                     <label class="mb-0" for="Code" style="color: black;">
-                                        {{ "User Name : "}} 
+                                        {{ "User Name : "}}
                                         <u><b style="color:blue;">{{UserName}}</b></u>
                                     </label>
-                                   
-                                    
-                                    
+
+
+
                                 </div>
 
                             </div>
@@ -202,21 +202,23 @@
                                 <dxi-column dataField="eacodeName" alignment='left' caption="EA Code"></dxi-column>
                                 <dxi-column dataField="nacecodeName" caption="Nace Code"></dxi-column>
 
-                                <dxi-column   dataField="approvalStatus"  
-                                caption="Approval Status" ></dxi-column> 
+                                <dxi-column   dataField="approvalStatus"
+                                caption="Approval Status" ></dxi-column>
 
                                 <dxi-column type="buttons" caption="Action">
-                                    <dxi-button icon="edit" [onClick]="edit"   hint="Edit" [(visible)]="isAddShown"></dxi-button>
+                                    <dxi-button icon="edit" [onClick]="edit"   hint="Edit" [(visible)]="editVsible"></dxi-button>
 
-                                    <dxi-button icon="deleterow"   hint="Delete" [onClick]="delete" [(visible)]="isAddShown">
+                                    <dxi-button icon="deleterow"   hint="Delete" [onClick]="delete" [(visible)]="editVsible">
                                     </dxi-button>
 
-                                    <dxi-button 
+                                    <dxi-button
                                     hint="Submit For Review" icon="exportselected"
                                     [onClick]="AuditorSubmitForreview"   [visible]="btnforReview">
-                                    
+
                                     </dxi-button>
-                                    
+                                    <dxi-button hint="View Record" icon="fas fa-eye text-secondary" [(visible)]="SubmitForReviewVisible" [onClick]="review">
+                                    </dxi-button>
+
                                 </dxi-column>
 
 
@@ -244,7 +246,7 @@
                                         </pagination-controls>
                                     </div>
                                     <!-- <div class="col-sm-2 col-12 ">
-    
+
                                 <div class="d-flex flex-row-reverse bd-highlight mb-2">
                                     <div class="p-2 bd-highlight">
                                         <select (change)="onTableSizeChange($event)" class="custom-select">

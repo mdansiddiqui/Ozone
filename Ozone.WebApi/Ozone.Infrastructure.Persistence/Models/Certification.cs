@@ -14,6 +14,7 @@ namespace Ozone.Infrastructure.Persistence.Models
         {
             ClientProjects = new HashSet<ClientProjects>();
             Library = new HashSet<Library>();
+            MappingDocumentsWithStandard = new HashSet<MappingDocumentsWithStandard>();
             ModuleVersion = new HashSet<ModuleVersion>();
             OrgCertification = new HashSet<OrgCertification>();
             ProjectAmount = new HashSet<ProjectAmount>();
@@ -45,6 +46,8 @@ namespace Ozone.Infrastructure.Persistence.Models
         public virtual ICollection<ClientProjects> ClientProjects { get; set; }
         [InverseProperty("Certification")]
         public virtual ICollection<Library> Library { get; set; }
+        [InverseProperty("Standard")]
+        public virtual ICollection<MappingDocumentsWithStandard> MappingDocumentsWithStandard { get; set; }
         [InverseProperty("Standard")]
         public virtual ICollection<ModuleVersion> ModuleVersion { get; set; }
         [InverseProperty("Certification")]

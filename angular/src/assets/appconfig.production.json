@@ -1,6 +1,6 @@
 {
   "remoteServiceBaseUrl": "https://localhost:44324",
-  "appBaseUrl": "http://localhost:4250",
+  "appBaseUrl": "http://localhost:5201",
   "localeMappings": [
     {
       "from": "pt-BR",

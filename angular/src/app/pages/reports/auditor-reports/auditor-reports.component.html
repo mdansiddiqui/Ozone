@@ -35,7 +35,7 @@
                                 </option>
                             </select>
                         </div>
-                       
+
                     </div>
                     <div class="row  mt-1 mx-2">
                         <div class="col-md-4">
@@ -50,7 +50,7 @@
                             </select>
                         </div>
                         <div class="col-md-4">
-                            
+
                             <label class="mb-0 " for="ReportId">Report Name</label>
                             <select formControlName="ReportId"
                                 class="form-control form-control-sm col-md-12"  (change)="loadStatus($event.target.value)"
@@ -62,7 +62,7 @@
                             </select>
                         </div>
 
-                        
+
                         <div class="col-md-4" *ngIf="Status">
                             <label class="mb-0 " for="Agency">Status</label>
                             <select  class="form-control form-control-sm col-md-12" formControlName="StatusId" id="StatusId">
@@ -71,7 +71,7 @@
                                 </option>
                             </select>
                         </div>
-                     
+
                     </div>
 
                     <div class="row  mt-1 mx-2">
@@ -80,7 +80,7 @@
                         <div class="col-md-6">
                             <button type="button"
                                 class="btn-sm btn btn-primary float-right mx-2 px-4 mt-2 pt-2 pb-2 mt-3 fas fa-search" (click)="Search()" type="submit"> <i
-                                    class="fas fa-search"  
+                                    class="fas fa-search"
                                     ></i> Search</button>
                         </div>
                     </div>
@@ -95,16 +95,16 @@
         <div class="container-fluid mt-2">
             <div class="row">
                 <div class="col-md-12">
-                    
+
                     <div class="card" *ngIf="AuditReport">
-                       
-                       
-                        
+
+
+
                         <div class="card-body table-responsive p-0">
 
 
                             <div class="long-title">
-                                <h3 
+                                <h3
                                 class="modal-title"
                                 style="
                                   text-align: center;
@@ -128,8 +128,8 @@
                                 [showPageSizeSelector]="true"
                                 [allowedPageSizes]="[10, 25, 50, 100]"
                               ></dxo-pager>
-                             
-                             
+
+
                               <dxo-scrolling  columnRenderingMode="virtual"></dxo-scrolling>
                               <dxo-search-panel class="mt-10 mb-3"[visible]="true" [width]="240" placeholder="Search...">
                               </dxo-search-panel>
@@ -146,32 +146,32 @@
 
                               <!-- <dxi-column dataField="avgTAT" caption="Average TAT ( )"  cssClass="cell-header"  alignment="left"> </dxi-column> -->
                               <dxi-column dataField="avgTAT_1" caption="Average TAT (Audit Conduct to Submited QC)"  cssClass="cell-header"  alignment="left"> </dxi-column>
-                            
+
                               <dxi-column dataField="avgTAT_2" caption="Average TAT (Submited QC to Reject)"  cssClass="cell-header"  alignment="left"> </dxi-column>
                               <dxi-column dataField="avgTAT_3" caption="Average TAT (Reject QC to Resubmit)"  cssClass="cell-header"  alignment="left"> </dxi-column>
                               <dxi-column dataField="avgTAT_4" caption="Average TAT (Resubmit to Approved)"  cssClass="cell-header"  alignment="left"> </dxi-column>
                               <dxi-column dataField="avgTAT_5" caption="Average TAT (Submit QC to Approved)"  cssClass="cell-header"  alignment="left"> </dxi-column>
                               <!-- <dxi-column dataField="avgTAT_5" caption="Average TAT including all stages of reviews, resubmission (days)"  cssClass="cell-header"  alignment="left"> </dxi-column> -->
-                              
+
                               <dxo-export [enabled]="true" [allowExportSelectedData]="true"></dxo-export>
-              
+
                               <dxo-summary>
                                 <dxi-total-item column="leadAuditorName" summaryType="count"> </dxi-total-item>
                             </dxo-summary>
                             <dxo-export [enabled]="true" [allowExportSelectedData]="true"></dxo-export>
-                           
+
                             <dxo-master-detail [enabled]="true" template="detail"></dxo-master-detail>
                             <div *dxTemplate="let employee of 'detail'">
                               <div class="master-detail-caption">{{
                                 "Audits Details"
                                 }}</div>
-                              <app-auditor-audit-details [key]="employee.key" [auditorReportDetailsList]="AuditorReportDetailsList" 
+                              <app-auditor-audit-details [key]="employee.key" [auditorReportDetailsList]="AuditorReportDetailsList"
                                 (newItemEvent)="addItem($event)">
                               </app-auditor-audit-details>
                             </div>
                             </dx-data-grid>
                                 <!-- <div class="col-sm-2 col-12 ">
-        
+
                                     <div class="d-flex flex-row-reverse bd-highlight mb-2">
                                         <div class="p-2 bd-highlight">
                                             <select (change)="onTableSizeChange($event)" class="custom-select">
@@ -182,14 +182,14 @@
                                         </div>
                                     </div>
                                 </div> -->
-              
+
                           </div>
                     </div>
 
 
                     <div class="card" *ngIf="ClientProjectReport">
-                       
-                        
+
+
                         <div class="card-body table-responsive p-0">
 
 
@@ -212,14 +212,14 @@
                               [showRowLines]="true" [columnAutoWidth]="true" [showColumnLines]="true" [allowColumnReordering]="true"
                               [dataSource]="ClientProjectsReport" keyExpr="s_No"
                               (onExporting)="onExporting($event)"
-                              
+
                               >
                               <dxo-paging [pageSize]="10"></dxo-paging>
                               <dxo-pager
                                 [showPageSizeSelector]="true"
                                 [allowedPageSizes]="[10, 25, 50, 100]"
                               ></dxo-pager>
-                             
+
                               <dxo-grouping [autoExpandAll]="true"></dxo-grouping>
                               <dxo-selection mode="multiple"></dxo-selection>
                               <dxo-scrolling  columnRenderingMode="virtual"></dxo-scrolling>
@@ -229,7 +229,7 @@
                               <dxi-column dataField="s_No" caption="S.No"  cssClass="cell-header"></dxi-column>
 
                               <dxi-column dataField="statusCode" caption="Status"  cssClass="cell-header"></dxi-column>
-                  
+
                               <dxi-column dataField="registration_no" caption="Registration No."  cssClass="cell-header"></dxi-column>
 
                               <dxi-column dataField="clientName" caption="Name of Client"  cssClass="cell-header"></dxi-column>
@@ -251,13 +251,13 @@
                             [formats]="['pdf']"
                             [allowExportSelectedData]="true"
                           ></dxo-export> -->
-                            
-          
+
+
                           </div>
                     </div>
 
                     <div class="card" *ngIf="AuditorListReport">
-                       
+
 
 
                         <div class="card-body table-responsive p-0">
@@ -288,7 +288,7 @@
                                 [showPageSizeSelector]="true"
                                 [allowedPageSizes]="[10, 25, 50, 100]"
                               ></dxo-pager>
-                             
+
                               <dxo-grouping [autoExpandAll]="true"></dxo-grouping>
                               <dxo-selection mode="multiple"></dxo-selection>
                               <dxo-scrolling  columnRenderingMode="virtual"></dxo-scrolling>
@@ -299,7 +299,7 @@
 
                               <dxi-column dataField="status" caption="Status"  cssClass="cell-header"></dxi-column>
                               <dxi-column dataField="fullName" caption="Name Of Personnel"  cssClass="cell-header"></dxi-column>
-                  
+
 
                               <dxi-column dataField="auditorLevel" caption="Auditor Level"  cssClass="cell-header"></dxi-column>
                               <dxi-column dataField="typeOfEnrollment" caption="Type Of Enrollment"  cssClass="cell-header"></dxi-column>
@@ -308,20 +308,20 @@
 
                               <dxi-column dataField="country" caption="Country"  cssClass="cell-header"></dxi-column>
 
-                            
+
                               <dxi-column dataField="naceApproved" caption="Nace Approved"  cssClass="cell-header"></dxi-column>
                               <dxo-export [enabled]="true" [allowExportSelectedData]="true"></dxo-export>
                               <dxo-summary>
                                 <dxi-total-item column="s_No" summaryType="count"> </dxi-total-item>
                             </dxo-summary>
                             </dx-data-grid>
-              
-              
+
+
                           </div>
                     </div>
 
                     <div class="card" *ngIf="AuditorValidationScheduleReport">
-                       
+
 
 
                         <div class="card-body table-responsive p-0">
@@ -351,8 +351,8 @@
                                 [showPageSizeSelector]="true"
                                 [allowedPageSizes]="[10, 25, 50, 100]"
                               ></dxo-pager>
-                             
-                             
+
+
                               <dxo-scrolling  columnRenderingMode="virtual"></dxo-scrolling>
                               <dxo-grouping [autoExpandAll]="true"></dxo-grouping>
                               <dxo-selection mode="multiple"></dxo-selection>
@@ -362,7 +362,7 @@
                               <dxi-column dataField="s_No" caption="S. No."  cssClass="cell-header"></dxi-column>
 
                               <dxi-column dataField="auditorName" caption="Name"  cssClass="cell-header"></dxi-column>
-                  
+
                               <dxi-column dataField="auditorGrade" caption="Auditor Name"  cssClass="cell-header"></dxi-column>
 
                               <dxi-column dataField="joiningDate" caption="Joining Date"  cssClass="cell-header" dataType="date"></dxi-column>
@@ -371,19 +371,19 @@
 
                               <dxi-column dataField="nextDueDate" caption="Next Due Date"  cssClass="cell-header" dataType="date"></dxi-column>
 
-                           
+
                               <dxo-export [enabled]="true" [allowExportSelectedData]="true"></dxo-export>
                               <dxo-summary>
                                 <dxi-total-item column="s_No" summaryType="count"> </dxi-total-item>
                             </dxo-summary>
                             </dx-data-grid>
-              
-              
+
+
                           </div>
                     </div>
 
                     <div class="card" *ngIf="ScheduleOfAuditReport">
-                       
+
 
 
                         <div class="card-body table-responsive p-0">
@@ -413,7 +413,7 @@
                                 [showPageSizeSelector]="true"
                                 [allowedPageSizes]="[10, 25, 50, 100]"
                               ></dxo-pager>
-                             
+
                               <dxo-grouping [autoExpandAll]="true"></dxo-grouping>
                               <dxo-selection mode="multiple"></dxo-selection>
                               <dxo-scrolling  columnRenderingMode="virtual"></dxo-scrolling>
@@ -424,7 +424,7 @@
                               <dxi-column dataField="s_No" caption="S.No"  cssClass="cell-header"></dxi-column>
 
                               <dxi-column dataField="registration_no" caption="Registration NO."  cssClass="cell-header"></dxi-column>
-                  
+
                               <dxi-column dataField="clientName" caption="Client"  cssClass="cell-header"></dxi-column>
 
                               <dxi-column dataField="projectCode" caption="Project Code"  cssClass="cell-header"></dxi-column>
@@ -433,14 +433,14 @@
 
                               <dxi-column dataField="naceCode" caption="Nace Code"  cssClass="cell-header"></dxi-column>
 
-                           
+
 
                               <dxi-column dataField="stage_1" caption="Stage-1" dataType="date" cssClass="cell-header"></dxi-column>
 
-                              
+
                               <dxi-column dataField="stage_2" caption="Stage-2"  cssClass="cell-header"  dataType="date"></dxi-column>
                               <dxi-column dataField="surveillance_Frequency" caption="Surveillance Frequency"  cssClass="cell-header"></dxi-column>
-                            
+
                               <dxi-column dataField="certificationIssueDate" caption="Certification Issue Date" dataType="date" cssClass="cell-header"></dxi-column>
                               <dxi-column dataField="surv_1" caption="Surv 1"  cssClass="cell-header"  dataType="date"></dxi-column>
 
@@ -461,13 +461,13 @@
                                 <dxi-total-item column="s_No" summaryType="count"> </dxi-total-item>
                             </dxo-summary>
                             </dx-data-grid>
-              
-              
+
+
                           </div>
                     </div>
 
                     <div class="card" *ngIf="ImpartialityReviewReport">
-                       
+
 
 
                         <div class="card-body table-responsive p-0">
@@ -497,7 +497,7 @@
                                 [showPageSizeSelector]="true"
                                 [allowedPageSizes]="[10, 25, 50, 100]"
                               ></dxo-pager>
-                             
+
                               <dxo-grouping [autoExpandAll]="true"></dxo-grouping>
                               <dxo-selection mode="multiple"></dxo-selection>
                               <dxo-scrolling  columnRenderingMode="virtual"></dxo-scrolling>
@@ -507,7 +507,7 @@
                               <dxi-column dataField="s_No" caption="S.No"  cssClass="cell-header"></dxi-column>
 
                               <dxi-column dataField="projectNo" caption="Project No."  cssClass="cell-header"></dxi-column>
-                  
+
                               <dxi-column dataField="clientName" caption="Client Name"  cssClass="cell-header"></dxi-column>
 
                               <dxi-column dataField="consultant" caption="Consultant"  cssClass="cell-header"></dxi-column>
@@ -526,12 +526,12 @@
                                 <dxi-total-item column="s_No" summaryType="count"> </dxi-total-item>
                             </dxo-summary>
                             </dx-data-grid>
-              
-              
+
+
                           </div>
                     </div>
                     <div class="card" *ngIf="CertifiedClientReport">
-                       
+
 
 
                       <div class="card-body table-responsive p-0">
@@ -561,7 +561,7 @@
                               [showPageSizeSelector]="true"
                               [allowedPageSizes]="[10, 25, 50, 100]"
                             ></dxo-pager>
-                           
+
                             <dxo-grouping [autoExpandAll]="true"></dxo-grouping>
                             <dxo-selection mode="multiple"></dxo-selection>
                             <dxo-scrolling  columnRenderingMode="virtual"></dxo-scrolling>
@@ -573,18 +573,18 @@
                             <dxi-column dataField="clientName" caption="Certified Organization"  cssClass="cell-header"></dxi-column>
                             <dxi-column dataField="country" caption="Country"  cssClass="cell-header"></dxi-column>
                             <dxi-column dataField="certificationStatus" caption="Certification status."  cssClass="cell-header"></dxi-column>
-                
-                            
+
+
 
                             <dxi-column dataField="currentState" caption="Current state"  cssClass="cell-header"></dxi-column>
 
                             <dxi-column dataField="registration_no" caption="Registration no."  cssClass="cell-header"></dxi-column>
 
-                            <dxi-column dataField="certificationIssueDate" caption="Date of initial certification"  cssClass="cell-header"></dxi-column>
-                            <dxi-column dataField="certificationIssueDate" caption="Date of expiry"  cssClass="cell-header"></dxi-column>
-                            <dxi-column dataField="cycle" caption="Cycle"  cssClass="cell-header"></dxi-column>
+                            <dxi-column dataField="certificationIssueDate" caption="Date of initial certification"   dataType="date" cssClass="cell-header"></dxi-column>
+                            <dxi-column dataField="certificationExpiryDate" caption="Date of expiry"   dataType="date" cssClass="cell-header"></dxi-column>
+                            <dxi-column dataField="cycleCode" caption="Cycle Code"  cssClass="cell-header"></dxi-column>
                             <dxi-column dataField="surveillance_Frequency" caption="Surv Frequency"  cssClass="cell-header"></dxi-column>
-                            
+
                             <dxi-column caption="Surv 1" cssClass="cell-header" alignment="center">
                             <dxi-column dataField="intimationdateSurv_1" caption="Intimation date Surv 1" dataType="date" cssClass="cell-header"></dxi-column>
 
@@ -597,7 +597,7 @@
                             <!-- <dxi-column dataField="surv_1" caption="Surv 1"  cssClass="cell-header"  dataType="date"></dxi-column> -->
                             <dxi-column caption="Followup review-1" cssClass="cell-header" alignment="center">
                             <dxi-column dataField="windowperiod_Sart_FUP_1" caption="Window period : FUP-1 Start" dataType="date"  cssClass="cell-header" ></dxi-column>
-                            <dxi-column dataField="windowperiod_end_FUP_1" caption="Window period : FUP-1 End" dataType="date"  cssClass="cell-header" ></dxi-column> 
+                            <dxi-column dataField="windowperiod_end_FUP_1" caption="Window period : FUP-1 End" dataType="date"  cssClass="cell-header" ></dxi-column>
                           </dxi-column>
 
 
@@ -614,7 +614,7 @@
                             <!-- <dxi-column dataField="surv_2" caption="surv 2"  cssClass="cell-header"  dataType="date"></dxi-column> -->
                             <dxi-column caption="Followup review-2" cssClass="cell-header" alignment="center">
                               <dxi-column dataField="windowperiod_Sart_FUP_2" caption="Window period : FUP-2 Start" dataType="date"  cssClass="cell-header" ></dxi-column>
-                              <dxi-column dataField="windowperiod_end_FUP_2" caption="Window period : FUP-2  End" dataType="date"  cssClass="cell-header" ></dxi-column> 
+                              <dxi-column dataField="windowperiod_end_FUP_2" caption="Window period : FUP-2  End" dataType="date"  cssClass="cell-header" ></dxi-column>
                             </dxi-column>
 
 
@@ -622,13 +622,13 @@
 
                             <dxi-column caption="Recertification" cssClass="cell-header" alignment="center">
                               <dxi-column dataField="recertificationIntimationdate" caption="Intimation" dataType="date"  cssClass="cell-header" ></dxi-column>
-                              <dxi-column dataField="recertification_Windowperiod_start_Surv_2" caption="Start" dataType="date"  cssClass="cell-header" ></dxi-column> 
-                              <dxi-column dataField="recertification_Windowperiod_end_Surv_2" caption="End" dataType="date"  cssClass="cell-header" ></dxi-column> 
+                              <dxi-column dataField="recertification_Windowperiod_start_Surv_2" caption="Start" dataType="date"  cssClass="cell-header" ></dxi-column>
+                              <dxi-column dataField="recertification_Windowperiod_end_Surv_2" caption="End" dataType="date"  cssClass="cell-header" ></dxi-column>
                             </dxi-column>
 
                             <dxi-column caption="Followup-Recertification" cssClass="cell-header" alignment="center">
                               <dxi-column dataField="followup_Recert_Start" caption="Window period : FUP Start" dataType="date"  cssClass="cell-header" ></dxi-column>
-                              <dxi-column dataField="followup_Recert_end" caption="Window period : FUP End" dataType="date"  cssClass="cell-header" ></dxi-column> 
+                              <dxi-column dataField="followup_Recert_end" caption="Window period : FUP End" dataType="date"  cssClass="cell-header" ></dxi-column>
                             </dxi-column>
                             <!-- <dxi-column dataField="surv_3" caption="Surv 3"  cssClass="cell-header"  dataType="date"></dxi-column>
 
@@ -641,8 +641,8 @@
                               <dxi-total-item column="s_No" summaryType="count"> </dxi-total-item>
                           </dxo-summary>
                           </dx-data-grid>
-            
-            
+
+
                         </div>
                   </div>
                 </div>
@@ -651,7 +651,7 @@
 
 
 
-   
-   
+
+
     </section>
 </form> <br><br>

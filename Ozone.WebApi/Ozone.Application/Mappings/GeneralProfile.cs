@@ -440,6 +440,14 @@ namespace Ozone.Application.Mappings
             .ReverseMap();
 
 
+            CreateMap<MappingDocumentsWithStandard, MappingDocumentsWithStandardModel>()
+         .ForMember(x => x.StandardName, opt => opt.MapFrom(src => src.Standard.Name))
+         .ForMember(x => x.DocumentName, opt => opt.MapFrom(src => src.DocumentType.Name))
+         .ForMember(x => x.VisitLevelName, opt => opt.MapFrom(src => src.VisitLevel.Name))
+         .ForMember(x => x.DocumentAssignName, opt => opt.MapFrom(src =>src.DocumentAssign.Name ))
+         
+            .ReverseMap();
+
             CreateMap<AuditDocumentsType, AuditDocumentsTypeModel>();
 
 
@@ -510,6 +518,17 @@ namespace Ozone.Application.Mappings
            //.ForMember(x => x.Year, opt => opt.MapFrom(src => Convert.ToDateTime(src.StartDate).Year))
            .ForMember(x => x.Duration, opt => opt.MapFrom(src => src.Duration))
            .ReverseMap();
+
+
+            CreateMap<AuditReviewerDocuments, AuditReviewerDocumentModel>()
+             .ForMember(x => x.AuditDocumentTypename, opt => opt.MapFrom(src => src.AuditDocumentType.Name))
+                .ReverseMap();
+
+            CreateMap<AuditManagerDocuments, AuditMangerDocumentModel>()
+            .ForMember(x => x.AuditDocumentTypename, opt => opt.MapFrom(src => src.AuditDocumentType.Name))
+              .ReverseMap();
+
+            
         }
     }
 

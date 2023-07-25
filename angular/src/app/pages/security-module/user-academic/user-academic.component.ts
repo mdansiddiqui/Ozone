@@ -48,8 +48,8 @@ import{ UserDeclarationModel} from'@shared/Dto/user-declaration-model';
   styleUrls: ['./user-academic.component.css']
 })
 export class UserAcademicComponent implements OnInit {
- 
- 
+
+
   //public UserDeclaration: UserDeclarationModel = new UserDeclarationModel();
   UserAcademicForm = new FormGroup({
     // Id: new FormControl(''),
@@ -60,7 +60,7 @@ export class UserAcademicComponent implements OnInit {
     EndYear: new FormControl(''),
     File: new FormControl(''),
     // IsDeleted: new FormControl(''),
-   
+
   })
   datePipe = new DatePipe("en-US");
   public UserName:string;
@@ -71,33 +71,34 @@ export class UserAcademicComponent implements OnInit {
   public pagedDto: PagedRequestModel = new PagedRequestModel()
   pageNumber : number = 1
   pageSize : number = 10
-  public isEditShown : boolean  
-  public isViewShown : boolean  
-  public isAddShown : boolean  
+  public isEditShown : boolean
+  public isViewShown : boolean
+  public isAddShown : boolean
   public keyword : string = ''
   public StandardList = [];
   public UserAcademicList = [];
   submitted = false;
-
+  public StatusId: number;
 
   fileToUpload: any;
 
  public UserStatusList=[]
- 
+
   readonly allowedPageSizes = [5, 10, 'all'];
   readonly displayModes = [{ text: "Display Mode 'full'", value: "full" }, { text: "Display Mode 'compact'", value: "compact" }];
   displayMode = "full";
   showPageSizeSelector = true;
   showInfo = true;
   showNavButtons = true;
+
   customizeColumns(columns) {
       columns[0].width = 70;
   }
   get isCompactMode() {
       return this.displayMode === "compact";
   }
-  
-  constructor( 
+
+  constructor(
   //  private http: HttpClient,
     private _UserStandardService: UserStandardService,
     // private route: Router,
@@ -107,9 +108,9 @@ export class UserAcademicComponent implements OnInit {
      private route: ActivatedRoute,
     private _makerAuthorizerFormService: MakerAuthorizerFormService
      //public StandardService: StandardService
-    ) 
+    )
     {    this.edit = this.edit.bind(this);
-      this.delete = this.delete.bind(this) 
+      this.delete = this.delete.bind(this)
     this.Downloadfile=this.Downloadfile.bind(this) }
 
   ngOnInit(): void {
@@ -117,60 +118,96 @@ export class UserAcademicComponent implements OnInit {
 
 
     //this.onSearch();
-   
+
   }
   ngAfterViewInit() : void {
     this.editUser()
-   
+
   }
   Userid: number
+  public OID:number;
   editUser()
   {
-       
-      var  ur ;
-      ur=window.location.href.split("/")[7];
-      var com=[]=ur.split("?")[1];
-      if(com!=undefined && com!=null)
-      {
-      var PId=com.split("=")[0];
-      this.Userid=PId;
+
+    var ur = window.location.href.split("/")[7];
+    var com = ur.split("?")[1];
+
+  if (com != undefined && com != null) {
+    var PId = com.split("=")[0]
+    this.Userid= +PId;
+    // var org = com.split("&")[1]
+    // var oid = org.split("=")[1]
+    // this.OID=parseInt(oid);
+
+    // // var params = new URLSearchParams(com);
+    // // // var NId = params.get("NId");
+    // // var OId = params.get("OrganzationId");
+    // //   console.log(PId);
+    // //   console.log(OId);
+    // //   this.OID = +OId
+
+    // localStorage.removeItem('UserOrganizationID');
+    // localStorage.setItem('UserOrganizationID', this.OID.toString());
       this.SecUserService.GetUserbyId(this.Userid).subscribe(data => {
         this.UserName  = data.userName
-            
+        this.StatusId=data.approvelStatusId;
+        this.OID=data.organizationId;
+        localStorage.removeItem('UserOrganizationID');
+        localStorage.setItem('UserOrganizationID', this.OID.toString());
+        localStorage.removeItem('userstatusId');
+        localStorage.setItem('userstatusId', this.StatusId.toString());
       })
       this.onSearch();
     // this._UserStandardService.GetUserDeclaration(this.Userid).subscribe(data => {
-        
+
     //   this.UserDeclarationList= data
-      
+
     // })
   //  this.onSearch(this.userUpdateId);
   }
-    
+
   }
   handlefileInput(e: any)
   {
 
 this.fileToUpload= <File>e?.target?.files[0];
-//this.url=e.target.value; 
+//this.url=e.target.value;
 
 
   }
+
   get f() { return this.UserAcademicForm.controls; }
-  onSubmit(): void 
+  editVsible(e) {
+    debugger
+    var organizationId =  parseInt( localStorage.getItem('organizationId'));
+    // console.log(roleId)
+    let oid = parseInt(localStorage.getItem('UserOrganizationID'));
+    var userstatusId =  parseInt( localStorage.getItem('userstatusId'));
+    if(userstatusId==2)
+    {
+     return e.row.isEditing;
+    }
+    if (organizationId === oid)
+     {
+     return !e.row.isEditing;
+   }else {
+    return e.row.isEditing;
+   }
+   }
+  onSubmit(): void
   {
 
-    
-  
+
+
     this.submitted = true;
-    
+
     // stop here if form is invalid
     if (this.UserAcademicForm.invalid) {
       abp.message.error("Some fields are required ");
       return;
     }
   const foData:FormData = new FormData();
-  
+
   if (this.id != undefined && this.id != null && this.id>0 ) {
     foData.append("Id",this.id.toString());
   }
@@ -205,13 +242,13 @@ this.fileToUpload= <File>e?.target?.files[0];
   //  foData.append('Institution',this.UserAcademicForm.get('Institution').value);
   //  foData.append('StartYear',this.UserAcademicForm.get('StartYear').value);
   //  foData.append('EndYear',this.UserAcademicForm.get('EndYear').value);
-   
- 
-  
+
+
+
 
 //formData
 
-// 
+//
 // let data ={
 //   File:this.fileToUpload,
 //   Title:'Title',
@@ -227,30 +264,30 @@ this.fileToUpload= <File>e?.target?.files[0];
 //}
 
 this._UserStandardService.UserAcademicCreateWithFile(foData).subscribe((Response)=>{
- 
+
      abp.message.info(Response.message)
      this.reloadGrid();
      this.ClearAllFields();
-    
+
     })
    // window.location.reload();
     // this.LibraryResourceService.create(this.item).subscribe((Response)=>{
- 
+
     // //  abp.message.info(Response.message)
-     
+
     //  })
 
-  
-  
+
+
 
       //this.LibraryResourceService.create(this.item).subscribe((Response)=>{
-      
+
  }
- 
+
 //   onSubmit(): void {
-//     
-   
-   
+//
+
+
 //     if (this.id != undefined || this.id != null) {
 //       this.UserDeclaration.Id=this.id;
 //     }
@@ -259,11 +296,11 @@ this._UserStandardService.UserAcademicCreateWithFile(foData).subscribe((Response
 //     this.UserDeclaration.Institution=this.UserAcademicForm.get('Institution').value
 //     this.UserDeclaration.StartYear=this.UserAcademicForm.get('StartYear').value
 //     this.UserDeclaration.EndYear=this.UserAcademicForm.get('EndYear').value
-   
+
 //     this.UserDeclaration.ApprovalStatusId=this.UserAcademicForm.get('ApprovalStatusId').value
 
-   
-  
+
+
 //   var LoginUserId =localStorage.getItem('userId');
 //    this.UserDeclaration.CreatedBy=parseInt(LoginUserId)
 //    this.UserDeclaration.UserId= this.Userid
@@ -280,45 +317,45 @@ this._UserStandardService.UserAcademicCreateWithFile(foData).subscribe((Response
 //   //    foData.append('ValidationDate',this.UserStandardForm.get('ValidationDate').value);
 //   //    foData.append('ApprovalStatusId',this.UserStandardForm.get('ApprovalStatusId').value);
 
-    
+
 //   //    foData.append('ValidationDate',this.UserStandardForm.get('ValidationDate').value);
 //   //    foData.append('ApprovalStatusId',this.UserStandardForm.get('ApprovalStatusId').value);
 //   //    var LoginUserId =localStorage.getItem('userId');
 //   //    foData.append('CreatedBy',LoginUserId);
 //   //    foData.append('UserId', this.Userid.toString());
 
-//      
+//
 //       this._UserStandardService.CreateUserDeclaration(this.UserDeclaration).subscribe((Response)=>{
- 
+
 //     abp.message.info(Response.message)
 //     this.reloadGrid();
-   
+
 //    })
 // }
 
 
 id: number
-  edit(e) {  
-           
+  edit(e) {
+
     // var List = [];
-    // List=this.Liststandard                                                                             ; 
+    // List=this.Liststandard                                                                             ;
     // this.router.navigateByUrl('/app/pages/stock-management/library');
     this.id=e.row.data.id
     // var updateDate =this.StandardList.find(x => x.id == this.id );
 
-    // this._StandardService.GetStandardById(this.id).subscribe((res) => 
+    // this._StandardService.GetStandardById(this.id).subscribe((res) =>
     // {
-      
+
         this.UserAcademicForm.controls.Qualification.setValue(e.row.data.qualification);
         this.UserAcademicForm.controls.Details.setValue(e.row.data.details);
         this.UserAcademicForm.controls.Institution.setValue(e.row.data.institution);
         this.UserAcademicForm.controls.StartYear.setValue(e.row.data.startYear);
         this.UserAcademicForm.controls.EndYear.setValue(e.row.data.endYear)
-        
 
 
-   }  
- 
+
+   }
+
 
 onTableDataChange(event) {
   this.pagedDto.page = event;
@@ -338,14 +375,14 @@ onTableSizeChange(event): void {
 }
 
 onSearch(){
-  
-    
+
+
   this.pagedDto.keyword = this.Userid.toString();
   this.pagedDto.authAllowed = true;
   //this.pagedDto.pageSize = 3
   this._UserStandardService.GetPagedUserAcademic(this.pagedDto).subscribe((Response) => {
-              
-  
+
+
     this.totalCount = Response.totalCount
     this.UserAcademicList = Response.userAcademicModel
     //this .Liststandard=this.StandardList;
@@ -364,38 +401,38 @@ ClearAllFields()
   this.id=0;
 }
   reloadGrid()
- 
+
  {
 
    this.pagedDto.page =1;
    this.onSearch();
-  
+
  }
 
 
 delete(e) {
-  
+
      abp.message.confirm((""),
      undefined,
          (result: boolean) => {
              if (result) {
-               // this.SecUserService.Deleteuser(e.row.data.id).subscribe() 
+               // this.SecUserService.Deleteuser(e.row.data.id).subscribe()
                //     abp.message.info("Deleted successfully", "Status", {});
- 
+
                    this._UserStandardService.UserAcademicDeleteById(e.row.data.id).subscribe((Response)=>{
-  
+
                      abp.message.info(Response.message)
                      this.onSearch();
-                    
+
                     })
-                   
+
              }
            }
       )}
 
   editRecord(e)
   {
-    
+  debugger
     // var userId=item;
     var urlink=e;
     this.router.navigateByUrl(e+this.Userid)
@@ -404,8 +441,8 @@ delete(e) {
 
 
   Downloadfile(e): void {
-     
-  
+
+
     this.id=e.row.data.id;
    // var fillename=e.row.data.title;
    var fillename="Document File";
@@ -414,23 +451,23 @@ delete(e) {
       // const url=window.URL.createObjectURL(Blb);
       // window.open(url);
       // console.log("success");
-    
-      
+
+
       const a = document.createElement('a');
         a.setAttribute('style', 'display:none;');
         document.body.appendChild(a);
-       a.download =fillename;  
+       a.download =fillename;
        // const fileName =
-        
+
         //="farooq";
         a.href = URL.createObjectURL(Blb);
         a.target = '_blank';
         a.click();
         document.body.removeChild(a);
-        
+
     })
    }
 
- 
+
 
 }

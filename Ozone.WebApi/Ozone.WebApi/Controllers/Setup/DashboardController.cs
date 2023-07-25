@@ -15,6 +15,7 @@ using System.IO;
 using Ozone.Infrastructure;
 using Ozone.Application.DTOs.Projects;
 using Ozone.Application.Interfaces;
+using Ozone.Application.DTOs.Reports;
 
 namespace Ozone.WebApi.Controllers.Setup
 {
@@ -157,5 +158,17 @@ namespace Ozone.WebApi.Controllers.Setup
         }
 
 
+
+        [Route("windowperiod")]
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> windowperiod(WindowperiodCreateModel model)
+        {
+
+            var result = await _dashboardService.windowperiod(model);
+            return Ok(new Response { Status = result, Message = result });
+
+            //return new JsonResult(result);
+        }
     }
 }

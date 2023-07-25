@@ -12,8 +12,11 @@ namespace Ozone.Infrastructure.Persistence.Models
     {
         public AuditDocumentsType()
         {
+            AuditManagerDocuments = new HashSet<AuditManagerDocuments>();
             AuditReport = new HashSet<AuditReport>();
             AuditReportDetail = new HashSet<AuditReportDetail>();
+            AuditReviewerDocuments = new HashSet<AuditReviewerDocuments>();
+            MappingDocumentsWithStandard = new HashSet<MappingDocumentsWithStandard>();
         }
 
         [Key]
@@ -38,8 +41,14 @@ namespace Ozone.Infrastructure.Persistence.Models
         [InverseProperty(nameof(SecUser.AuditDocumentsTypeLastModifiedBy))]
         public virtual SecUser LastModifiedBy { get; set; }
         [InverseProperty("AuditDocumentType")]
+        public virtual ICollection<AuditManagerDocuments> AuditManagerDocuments { get; set; }
+        [InverseProperty("AuditDocumentType")]
         public virtual ICollection<AuditReport> AuditReport { get; set; }
         [InverseProperty("AuditDocumentType")]
         public virtual ICollection<AuditReportDetail> AuditReportDetail { get; set; }
+        [InverseProperty("AuditDocumentType")]
+        public virtual ICollection<AuditReviewerDocuments> AuditReviewerDocuments { get; set; }
+        [InverseProperty("DocumentType")]
+        public virtual ICollection<MappingDocumentsWithStandard> MappingDocumentsWithStandard { get; set; }
     }
 }

@@ -262,7 +262,7 @@ namespace Ozone.WebApi.Controllers.ClientALLProjects
         }
 
         [Route("ProjectStatusChange")]
-        [HttpPut]
+        [HttpPost]
         [Authorize]
         public async Task<IActionResult> ProjectStatusChange([FromForm] ClientProjectModel input)
         {

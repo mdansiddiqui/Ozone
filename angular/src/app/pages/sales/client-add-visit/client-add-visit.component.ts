@@ -134,6 +134,7 @@ export class ClientAddVisitComponent implements OnInit {
   ) {
     this.edit = this.edit.bind(this);
     this.NewRecord = this.NewRecord.bind(this);
+    this.review1=this.review1.bind(this);
     this.delete = this.delete.bind(this);
     this.deleteVisit = this.deleteVisit.bind(this);
     this.recordEdit = this.recordEdit.bind(this);
@@ -227,6 +228,27 @@ export class ClientAddVisitComponent implements OnInit {
       item.binary = r.result
     }
     r.readAsArrayBuffer(event.target.files[0]);
+  }
+  review1(e)
+  {
+    debugger
+    console.log(e.row.data, 'FullData')
+    console.log(e.row.data, 'FullData')
+    console.log(e.row.data, 'FullData')
+    console.log(e.row.data, 'FullData')
+    console.log(e.row.data, 'FullData')
+
+    this.router.navigateByUrl('/app/pages/sales/audit-plan?ProjectId=' + e.row.data.projectId + "&StandardId=" + e.row.data.standardId + "&ClientId=" + e.row.data.clientId + "&AuditVisitId=" + e.row.data.id);
+  }
+  NavigateToClient(): void {
+    debugger
+    console.log('Inside The Function',this.clientId)
+    console.log('Inside The Function',this.clientId)
+    console.log('Inside The Function',this.clientId)
+    console.log('Inside The Function',this.clientId)
+    console.log('Inside The Function',this.clientId)
+    console.log('Inside The Function',this.clientId)
+    this.router.navigateByUrl('/app/pages/sales/task-board?'+ this.clientId);
   }
   loadSecRoleForm() {
 
@@ -369,12 +391,23 @@ export class ClientAddVisitComponent implements OnInit {
   LoadProjectCode(): void {
 
 debugger
-console.log();
     this._ClientAuditVisitService.GetProjectCodeById(this.projectId).subscribe((Response) => {
       //this.projyctcodelist = Response
-      console.log(Response);
+      console.log('its magic', Response);
+      console.log('its magic', Response);
+      console.log('its magic', Response);
+      console.log('its magic', Response);
+      console.log('its magic', Response);
+      console.log('its magic', Response);
+      console.log('its magic', Response);
+
       this.Projectcode = Response.projectCode;
       this.clientId=Response.clientId;
+      console.log('its magic', this.clientId);
+      console.log('its magic', this.clientId);
+      console.log('its magic', this.clientId);
+      console.log('its magic', this.clientId);
+
       this.ClientVisitForm.controls.ProjectCode.setValue(Response.projectCode);
       this.ClientVisitForm.get('ProjectCode').disable();
       //this.StandardName=Response.standardName

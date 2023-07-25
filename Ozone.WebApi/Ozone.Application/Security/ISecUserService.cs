@@ -17,6 +17,9 @@ namespace Ozone.Application.Interfaces.Security
 
 
         Task<string> UCreate(ResetPasswordModel input);
+
+        Task<string> UserStatusChange(ResetPasswordModel input);
+        Task<string> ClientStatusChange(ResetPasswordModel input);
         Task<string> Approval(SecUserModel input);
         
          Task<string> Update(SecUserModel input);

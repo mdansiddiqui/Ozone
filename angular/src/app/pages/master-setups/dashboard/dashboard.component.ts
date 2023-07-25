@@ -117,6 +117,7 @@ export class DashboardComponent implements OnInit {
           this.onRowClick=this.onRowClick.bind(this);
            this.onRowContractClick=this.onRowContractClick.bind(this);
           this.onRowClick1=this.onRowClick1.bind(this);
+          this.onWindowPeriod=this.onWindowPeriod.bind(this);
            this.OnManageVisit=this.OnManageVisit.bind(this);
            this.Downloadfile = this.Downloadfile.bind(this);
            this.onRowPrepared = this.onRowPrepared.bind(this);
@@ -126,6 +127,7 @@ export class DashboardComponent implements OnInit {
            this.OldValuesDownloadfile = this.OldValuesDownloadfile.bind(this);
            this.NewValuesDownloadfile = this.NewValuesDownloadfile.bind(this);
            this.ProjectchangeRequestRows=this.ProjectchangeRequestRows.bind(this);
+           this.MarkComplete=this.MarkComplete.bind(this);
           }
 
   tableSizes = [3, 5, 10, 15, 20, 25];
@@ -166,6 +168,7 @@ export class DashboardComponent implements OnInit {
   public OrganizationId: number
   public ActivityLogId: number
   public NewValuesList = [];
+  public WindowPeriod = [];
 public projectgrid:boolean= false
 public contractgrid:boolean=false
 public clientChangegrid:boolean=false
@@ -173,6 +176,7 @@ public projectChangegrid:boolean=false
 public clientSitesChangegrid:boolean=false
 public RecordeviewClient:boolean=false
 public auditgrid:boolean=false
+public windowPeriodgrid:boolean=false
 public editClientrecord:boolean=false
   public CurrentName: string
   public UpdatedName:string
@@ -185,10 +189,21 @@ public editClientrecord:boolean=false
   public standardId: number
   public clientChangeRequestList = [];
   public projectChangeRequestList = [];
-
+  public CertifiedClientModel=[];
   public clientSiteChangeRequestList = [];
+  public IntimationdateSurv_1 = [];
+  public Windowperiod_start_Surv_1 = [];
+  public Windowperiod_Start_FUP_1 = [];
+  public IntimationdateSurv_2 = [];
+  public Windowperiod_start_Surv_2 = [];
+  public Windowperiod_Sart_FUP_2 = [];
+  public Recertification_Windowperiod_start_Surv_2 = [];
+  public Followup_Recert_Start = [];
+   public CertifiedClientList=[];
+
   
   ngOnInit() : void{
+    debugger
     this.loadSecRoleForm();
     this.UpdateProject();
     this.loadSecRoleForm1();
@@ -1315,6 +1330,7 @@ this.contractgrid=false;
 this.clientChangegrid=false;
 this.projectChangegrid=false;
 this.clientSitesChangegrid=false;
+this.windowPeriodgrid=false;
   this.id=e.data.id;
 var name = "Project Applications"
 
@@ -1335,7 +1351,7 @@ var name = "Project Applications"
     this.clientChangegrid=false;
     this.projectChangegrid=true;
     this.clientSitesChangegrid=false;
-
+    this.windowPeriodgrid=false;
     
 
   var name =  "Project Change Request"
@@ -1449,7 +1465,7 @@ this._DashboardService.GetClientSitesChangeDataById(parseInt(e.row.data.id),this
     this.clientChangegrid=false;
     this.projectChangegrid=false;
     this.clientSitesChangegrid=true;
-
+    this.windowPeriodgrid=false;
     
 
   var name =  "Client Sites Change Request"
@@ -1484,7 +1500,7 @@ this._DashboardService.GetClientSitesChangeDataById(parseInt(e.row.data.id),this
     this.clientChangegrid=true;
     this.projectChangegrid=false;
     this.clientSitesChangegrid=false;
-
+    this.windowPeriodgrid=false;
     
 
   var name =  "Client Change Request"
@@ -1533,7 +1549,7 @@ projectListData(PId:number)
       this.projectgrid=false;
       this.auditgrid=false;
       this.contractgrid=true;
-
+      this.windowPeriodgrid=false;
 
 this.clientChangegrid=false;
 this.projectChangegrid=false;
@@ -1581,7 +1597,7 @@ this.contractgrid=false;
 this.clientChangegrid=false;
 this.projectChangegrid=false;
 this.clientSitesChangegrid=false;
-
+this.windowPeriodgrid=false;
 var name =  "Audits Details"
 
       this.CurrentName= name +"  "+"("+e.data.name +")"
@@ -1669,7 +1685,20 @@ this.pagedDto.organizationId = parseInt(localStorage.getItem('organizationId'));
     this.clientChangeDataList = data.GetClientChangeDataById;
    this.ProjectChangeRequestStatus= data.projectRequestDashboardStatusModel;
    this.ClientSiteChangeRequestStatus= data.clientSitetRequestDashboardStatusModel;
+   this.WindowPeriod=data.windiwPeriodModel;
+   this.CertifiedClientModel=data.certifiedClientModel;
+
+   debugger
+   console.log(data);
+   this.IntimationdateSurv_1 = data.intimationdateSurv_1;
+   this.Windowperiod_start_Surv_1 = data.windowperiod_start_Surv_1;
+   this.Windowperiod_Start_FUP_1 = data.windowperiod_Start_FUP_1;
+   this.Windowperiod_start_Surv_2 = data.windowperiod_start_Surv_2;
+   this.Windowperiod_Sart_FUP_2 =data.windowperiod_Sart_FUP_2
+   this.Recertification_Windowperiod_start_Surv_2 = data.recertification_Windowperiod_start_Surv_2;
+   this.Followup_Recert_Start = data.followup_Recert_Start;
     //this.reloadGrid()
+    
     //this.pagedDto.page =1;
     this.onSearch();
     this.reloadGrid();
@@ -1892,4 +1921,95 @@ readonly allowedPageSizes = [5, 10, 'all'];
 
   }
 
+
+
+  
+  onWindowPeriod(e)
+  
+  {  
+        
+
+this.projectgrid=false;
+this.auditgrid=false;
+this.contractgrid=false;
+this.clientChangegrid=false;
+this.projectChangegrid=false;
+this.clientSitesChangegrid=false;
+this.windowPeriodgrid=true
+
+var name =  "Window Period"
+
+      this.CurrentName=  e.data.name;
+    console.log(e.data.id)
+  
+    this.pagedDto.organizationId = parseInt( localStorage.getItem('organizationId'));
+    this.totalCount =0;
+    this.CertifiedClientList=[];
+     if(e.data.id==1)
+     {
+      this.CertifiedClientList=this.IntimationdateSurv_1;
+     }
+     if(e.data.id==2)
+     {
+      this.CertifiedClientList=this.Windowperiod_start_Surv_1;
+     }
+     if(e.data.id==3)
+     {
+      this.CertifiedClientList=this.Windowperiod_Start_FUP_1;
+     }
+     if(e.data.id==4)
+     {
+      this.CertifiedClientList=this.Windowperiod_start_Surv_2;
+     }
+     if(e.data.id==5)
+     {
+      this.CertifiedClientList=this.Windowperiod_Sart_FUP_2;
+     }
+     if(e.data.id==6)
+     {
+      this.CertifiedClientList=this.Recertification_Windowperiod_start_Surv_2;
+     }
+     if(e.data.id==7)
+     {
+      this.CertifiedClientList=this.Followup_Recert_Start;
+     }
+
+    
+
+      this.totalCount = this.CertifiedClientList.length;
+     
+  
+
+  }
+
+
+  MarkComplete(e)
+  {
+    const windowperiodModel = {
+      Id: e.row.data.projectId,
+      type: this.CurrentName,
+      CreatedById: localStorage.getItem("userId"),
+
+      
+    };
+  //  alert(e.row.data.projectId);
+   this._DashboardService.windowperiod(windowperiodModel).subscribe(data => {
+debugger
+
+if (data.message=="1")
+{
+  this.UpdateProject();
+  this.windowPeriodgrid=false;
+  abp.message.info("Record Marked");
+
+}
+else 
+{
+  abp.message.error("Record Not Marked");
+}
+
+
+   });
+
+  }
 }

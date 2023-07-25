@@ -155,6 +155,7 @@ export class HiggComponent implements OnInit {
   public authorizer: boolean = false
   fileToUpload: any;
   public savebtn: boolean = false
+  public RoleBaseHide: boolean = false
   public deletebtn: boolean = false
   public btnApproval: boolean = false
   public ProjectStatus:string
@@ -206,7 +207,10 @@ export class HiggComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    var roleId = localStorage.getItem('roleId');
+    if (+roleId === 2 ) {
+      this.RoleBaseHide = true
+    }
     //this.loadSecRoleForm()
     this.editProject();
     this.CheckReviewer();
@@ -869,6 +873,7 @@ export class HiggComponent implements OnInit {
   //       )
 
   //     }
+
 
 
   loadAllApprovalStatus(): void {

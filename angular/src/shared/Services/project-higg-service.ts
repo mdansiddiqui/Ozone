@@ -71,7 +71,7 @@ export class HiggService {
     return this.http.get<any>(`${environment.apiUrl}/api/ProjectHigg/GetAllProjectType`, options)
   }
   GetAllConsultantList(id: number): Observable<any> {
-    
+
     let headers = new HttpHeaders({
 
       'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('token')),
@@ -143,7 +143,7 @@ export class HiggService {
     return this.http.get<any>(`${environment.apiUrl}/api/ProjectHigg/GetALLEffluentTreatmentPlant`, options)
   }
   GetAllClientSites(id: number): Observable<any> {
-    
+
     let headers = new HttpHeaders({
 
       'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('token')),
@@ -155,7 +155,7 @@ export class HiggService {
 
 
   GetProjectHiggBYId(id) {
-    
+
     let headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('token')),
@@ -166,44 +166,44 @@ export class HiggService {
 
 
 
-  HiggChangeRequest(values): Observable<any> 
-   
-  {   
+  HiggChangeRequest(values): Observable<any>
+
+  {
     debugger
     let headers = new HttpHeaders({
-  
+
     'Authorization' : 'Bearer ' + JSON.parse(localStorage.getItem('token')),
-     
+
   });
   let options = { headers: headers };
      return this.http.post<any>(`${environment.apiUrl}/api/ProjectHigg/higgChangeRequest`,values,options)
-   
+
   }
 
 
 
   downloadApplicationForm(id: number) {
-    
+
     return this.http.get(`${environment.apiUrl}/api/ProjectHigg/DownloadApplicationForm?id=${id}`, { responseType: 'blob' })
 
   }
 
 
   GetProjectRemarks(value): Observable<any> {
-    
+
     let headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('token')),
     });
     let options = { headers: headers };
-    
+
     return this.http.post<any>(`${environment.apiUrl}/api/ProjectHigg/GetPagedPrjectRemarks`, value, options);
     // return this.http.post<any>(`${environment.apiUrl}​/api​/Standard​/GetPagedStandard`, value, options);
 
   }
 
   GetALLProjectStatus(id) {
-    
+
     let headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('token')),
@@ -227,7 +227,7 @@ export class HiggService {
   SubmitForReview(id: number): Observable<any> {
 
     var loginUserId = localStorage.getItem('userId');
-    
+
     let headers = new HttpHeaders({
 
       'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('token')),
@@ -244,14 +244,14 @@ export class HiggService {
       'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('token')),
     });
     let options = { headers: headers };
-    
+
     return this.http.post<any>(`${environment.apiUrl}/api/ProjectHigg/ProjectHiggDeleteById?id=${id}`, options)
 
   }
 
   GetALLModuleVersion(id:number): Observable<any> {
 
-    debugger 
+    debugger
     let headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('token')),
@@ -276,7 +276,7 @@ export class HiggService {
       'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('token')),
 
     });
-    
+
     let options = { headers: headers };
     return this.http.post<any>(`${environment.apiUrl}/api/ProjectSLCP/ContractApproval`, values, options)
 
@@ -288,27 +288,27 @@ export class HiggService {
       'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('token')),
 
     });
-    
+
     let options = { headers: headers };
-    return this.http.put<any>(`${environment.apiUrl}/api/ProjectIso/ProjectStatusChange`, values, options)
+    return this.http.post<any>(`${environment.apiUrl}/api/ProjectIso/ProjectStatusChange`, values, options)
 
   }
 
   downloadContract(id: number) {
-    
+
     return this.http.get(`${environment.apiUrl}/api/ProjectSLCP/DownloadContract?id=${id}`, { responseType: 'blob' })
 
   }
 
-  ContarctsSubmit(values): Observable<any> 
-   
+  ContarctsSubmit(values): Observable<any>
+
   {    let headers = new HttpHeaders({
-  
+
     'Authorization' : 'Bearer ' + JSON.parse(localStorage.getItem('token')),
-     
+
   });
   let options = { headers: headers };
      return this.http.post<any>(`${environment.apiUrl}/api/ProjectHigg/ContractSubmit`,values,options)
-   
+
   }
 }

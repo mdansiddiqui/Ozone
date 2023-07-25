@@ -56,12 +56,12 @@ export class UserEmploymentComponent implements OnInit {
     Organization: new FormControl(''),
     BusinessScope: new FormControl(''),
     StartYear: new FormControl(''),
-  
-  
+
+
     EndYear: new FormControl(''),
-    
+
     // IsDeleted: new FormControl(''),
-   
+
   })
   datePipe = new DatePipe("en-US");
   public UserName:string;
@@ -72,22 +72,23 @@ export class UserEmploymentComponent implements OnInit {
   public pagedDto: PagedRequestModel = new PagedRequestModel()
   pageNumber : number = 1
   pageSize : number = 10
-  public isEditShown : boolean  
-  public isViewShown : boolean  
-  public isAddShown : boolean  
+  public isEditShown : boolean
+  public isViewShown : boolean
+  public isAddShown : boolean
   public keyword : string = ''
+  public OID : number
   public StandardList = [];
   public UserEmploymentList = [];
   public ApprovalList = [];
-
+  public StatusId:number
   submitted = false;
- 
+
 
  get f() { return this.UserEmploymentForm.controls; }
   fileToUpload: any;
 
  public UserStatusList=[]
- 
+
   readonly allowedPageSizes = [5, 10, 'all'];
   readonly displayModes = [{ text: "Display Mode 'full'", value: "full" }, { text: "Display Mode 'compact'", value: "compact" }];
   displayMode = "full";
@@ -100,8 +101,8 @@ export class UserEmploymentComponent implements OnInit {
   get isCompactMode() {
       return this.displayMode === "compact";
   }
-  
-  constructor( 
+
+  constructor(
   //  private http: HttpClient,
     private _UserStandardService: UserStandardService,
     // private route: Router,
@@ -111,9 +112,9 @@ export class UserEmploymentComponent implements OnInit {
      private route: ActivatedRoute,
     private _makerAuthorizerFormService: MakerAuthorizerFormService
      //public StandardService: StandardService
-    ) 
+    )
     {    this.edit = this.edit.bind(this);
-      this.delete = this.delete.bind(this); 
+      this.delete = this.delete.bind(this);
       this.editRecord=this.editRecord.bind(this);
      }
 
@@ -122,49 +123,95 @@ export class UserEmploymentComponent implements OnInit {
 
    //this.loadApprovalStatus()
    //this.loadContractType()
-   
+
     //this.onSearch();
-   
+
   }
   ngAfterViewInit() : void {
     this.editUser()
-   
+
   }
+  // editVsible(e) {
+  //   debugger
+  //   var organizationId =  parseInt( localStorage.getItem('organizationId'));
+  //   // console.log(roleId)
+  //   let oid = parseInt(localStorage.getItem('UserOrganizationID'));
+  //   if (organizationId === oid)
+  //    {
+  //    return !e.row.isEditing;
+  //  }else {
+  //   return e.row.isEditing;
+  //  }
+
+  //  }
+  editVsible(e) {
+    debugger
+    var organizationId =  parseInt( localStorage.getItem('organizationId'));
+    // console.log(roleId)
+    let oid = parseInt(localStorage.getItem('UserOrganizationID'));
+    var userstatusId =  parseInt( localStorage.getItem('userstatusId'));
+    if(userstatusId==2)
+    {
+     return e.row.isEditing;
+    }
+    if (organizationId === oid)
+     {
+     return !e.row.isEditing;
+   }else {
+    return e.row.isEditing;
+   }
+   }
   Userid: number
   editUser()
   {
-       
-      var  ur ;
-      ur=window.location.href.split("/")[7];
-      var com=[]=ur.split("?")[1];
-      if(com!=undefined && com!=null)
-      {
-      var PId=com.split("=")[0];
-      this.Userid=PId;
+
+    var ur = window.location.href.split("/")[7];
+    var com = ur.split("?")[1];
+
+  if (com != undefined && com != null) {
+    var PId = com.split("=")[0]
+    // var org = com.split("&")[1]
+    // var oid = org.split("=")[1]
+    // this.OID=parseInt(oid);
+    // var params = new URLSearchParams(com);
+    // // var NId = params.get("NId");
+    // var OId = params.get("OrganzationId");
+    //   console.log(PId);
+    //   console.log(OId);
+    //   this.OID = +OId
+    this.Userid= +PId;
+    // localStorage.removeItem('UserOrganizationID');
+    // localStorage.setItem('UserOrganizationID', this.OID.toString());
       this.SecUserService.GetUserbyId(this.Userid).subscribe(data => {
         this.UserName  = data.userName
-            
+        this.StatusId=data.approvelStatusId;
+        this.OID=data.organizationId;
+        localStorage.removeItem('UserOrganizationID');
+        localStorage.setItem('UserOrganizationID', this.OID.toString());
+        localStorage.removeItem('userstatusId');
+        localStorage.setItem('userstatusId', this.StatusId.toString());
+
       })
       this.onSearch();
 
      var testid= this.route.snapshot.params.id;
     // this._UserStandardService.GetUserEmployment(this.Userid).subscribe(data => {
-        
+
     //   this.UserEmploymentList= data
-      
+
     // })
   //  this.onSearch(this.userUpdateId);
   }
-    
+
   }
- 
- 
+
+
   onSubmit(): void {
-    
+
 
 
     this.submitted = true;
-    
+
     // stop here if form is invalid
     if (this.UserEmploymentForm.invalid) {
       abp.message.error("Some fields are required ");
@@ -173,8 +220,8 @@ export class UserEmploymentComponent implements OnInit {
     this.UserEmployment= new UserEmploymentModel();
 
 
-   
-   
+
+
     if (this.id != undefined && this.id != null && this.id >0) {
       this.UserEmployment.Id=this.id;
     }
@@ -183,19 +230,19 @@ export class UserEmploymentComponent implements OnInit {
     this.UserEmployment.BusinessScope=this.UserEmploymentForm.get('BusinessScope').value
     this.UserEmployment.StartYear=parseInt(this.UserEmploymentForm.get('StartYear').value)
     this.UserEmployment.EndYear=parseInt(this.UserEmploymentForm.get('EndYear').value)
-   
-   
 
-   
-  
+
+
+
+
   var LoginUserId =localStorage.getItem('userId');
    this.UserEmployment.CreatedBy=parseInt(LoginUserId)
    this.UserEmployment.UserId=this.Userid
 
 
-     
+
       this._UserStandardService.CreateUserEmployment(this.UserEmployment).subscribe((Response)=>{
- 
+
     abp.message.info(Response.message)
     this.reloadGrid();
     this.NewRecord();
@@ -204,27 +251,27 @@ export class UserEmploymentComponent implements OnInit {
 
 
 id: number
-  edit(e) {  
-           
+  edit(e) {
+
     // var List = [];
-    // List=this.Liststandard                                                                             ; 
+    // List=this.Liststandard                                                                             ;
     // this.router.navigateByUrl('/app/pages/stock-management/library');
     this.id=e.row.data.id
     // var updateDate =this.StandardList.find(x => x.id == this.id );
 
-    // this._StandardService.GetStandardById(this.id).subscribe((res) => 
+    // this._StandardService.GetStandardById(this.id).subscribe((res) =>
     // {
-      
+
         this.UserEmploymentForm.controls.JobTitle.setValue(e.row.data.jobTitle);
         this.UserEmploymentForm.controls.Organization.setValue(e.row.data.organization);
         this.UserEmploymentForm.controls.BusinessScope.setValue(e.row.data.businessScope);
         this.UserEmploymentForm.controls.StartYear.setValue(e.row.data.startYear);
         this.UserEmploymentForm.controls.EndYear.setValue(e.row.data.endYear)
-      
 
 
-   }  
- 
+
+   }
+
 
 onTableDataChange(event) {
   this.pagedDto.page = event;
@@ -244,14 +291,14 @@ onTableSizeChange(event): void {
 }
 
 onSearch(){
-  
-    
+
+
   this.pagedDto.keyword = this.Userid.toString();
   this.pagedDto.authAllowed = true;
   //this.pagedDto.pageSize = 3
   this._UserStandardService.GetUserEmployment(this.pagedDto).subscribe((Response) => {
-              
-  
+
+
     this.totalCount = Response.totalCount
     this.UserEmploymentList = Response.userEmploymentModel
     //this .Liststandard=this.StandardList;
@@ -260,7 +307,7 @@ onSearch(){
 
 
   reloadGrid()
- 
+
  {
 
    this.pagedDto.page =1;
@@ -269,8 +316,8 @@ onSearch(){
 
  NewRecord()
 
- 
- {  
+
+ {
   this.UserEmploymentForm.controls.JobTitle.setValue('');
         this.UserEmploymentForm.controls.Organization.setValue('');
         this.UserEmploymentForm.controls.BusinessScope.setValue('');
@@ -279,28 +326,28 @@ onSearch(){
         this.id=0;
 }
 delete(e) {
-  
+
      abp.message.confirm((""),
      undefined,
          (result: boolean) => {
              if (result) {
-               // this.SecUserService.Deleteuser(e.row.data.id).subscribe() 
+               // this.SecUserService.Deleteuser(e.row.data.id).subscribe()
                //     abp.message.info("Deleted successfully", "Status", {});
- 
+
                    this._UserStandardService.DeleteUserEmployment(e.row.data.id).subscribe((Response)=>{
-  
+
                      abp.message.info(Response.message)
                      this.onSearch();
-                    
+
                     })
-                   
+
              }
            }
       )}
 
   editRecord(e)
   {
-    
+
     // var userId=item;
     var urlink=e;
     this.router.navigateByUrl(e+this.Userid)
@@ -310,6 +357,6 @@ delete(e) {
 
 
 
- 
+
 
 }

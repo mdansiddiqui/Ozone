@@ -110,6 +110,7 @@ GetAllDocumentsType() : Observable<any> {
 
   return this.http.get<any>(`${environment.apiUrl}/api/ClientAuditVisit/GetALLAuditDoucmentsType`,options)
  }
+
  SubmitForReview(value: any) : Observable<any>
 
  {
@@ -156,4 +157,82 @@ GetAllDocumentsType() : Observable<any> {
     return this.http.post<any>(`${environment.apiUrl}/api/ClientAuditVisit/AuditComplete`, content_, options)
 }
 
+GetAllAuditReviewerDocuments(id:number): Observable<any> {
+
+  let headers = new HttpHeaders({
+     'Content-Type': 'application/json',
+     'Authorization' : 'Bearer ' + JSON.parse(localStorage.getItem('token')),
+  });
+  let options = { headers: headers };
+  
+  return this.http.get<any>(`${environment.apiUrl}/api/ClientAuditVisit/GetAllAuditReviewerDocuments?id=${id}`,options);
+  // return this.http.post<any>(`${environment.apiUrl}​/api​/Standard​/GetPagedStandard`, value, options);
+  
+  }
+
+  CreateAuditReviewerDocument(values): Observable<any>
+
+{    let headers = new HttpHeaders({
+
+  'Authorization' : 'Bearer ' + JSON.parse(localStorage.getItem('token')),
+
+});
+let options = { headers: headers };
+   return this.http.post<any>(`${environment.apiUrl}/api/ClientAuditVisit/CreateAuditReviewerDocument`,values,options)
+
+}
+
+
+DownloadReviewerfile(id:number)
+{
+  return this.http.get(`${environment.apiUrl}/api/ClientAuditVisit/DownloadAuditReviewerDocuments?id=${id}`,{responseType:'blob'})
+
+}
+
+//Manager
+CreateAuditManagerDocument(values): Observable<any>
+
+{    let headers = new HttpHeaders({
+
+  'Authorization' : 'Bearer ' + JSON.parse(localStorage.getItem('token')),
+
+});
+let options = { headers: headers };
+   return this.http.post<any>(`${environment.apiUrl}/api/ClientAuditVisit/AuditManagerDocumentCreate`,values,options)
+
+}
+
+DownloadManagerfile(id:number)
+{
+  return this.http.get(`${environment.apiUrl}/api/ClientAuditVisit/DownloadAuditManagerDocuments?id=${id}`,{responseType:'blob'})
+
+}
+
+
+GetAllAuditManagerDocuments(id:number): Observable<any> {
+
+  let headers = new HttpHeaders({
+     'Content-Type': 'application/json',
+     'Authorization' : 'Bearer ' + JSON.parse(localStorage.getItem('token')),
+  });
+  let options = { headers: headers };
+  
+  return this.http.get<any>(`${environment.apiUrl}/api/ClientAuditVisit/GetAllAuditManagerDocuments?id=${id}`,options);
+  // return this.http.post<any>(`${environment.apiUrl}​/api​/Standard​/GetPagedStandard`, value, options);
+  
+  }
+
+
+
+AuditManagerDocumentDeactiveById(id) {
+  let headers = new HttpHeaders({
+  'Content-Type': 'application/json',
+  'Authorization' : 'Bearer ' + JSON.parse(localStorage.getItem('token')),
+  });
+  let options = {headers : headers};
+  
+  return this.http.post<any>(`${environment.apiUrl}/api/ClientAuditVisit/AuditManagerDocumentDeactiveById?id=${id}`,options)
+  
+  }
+ 
     }

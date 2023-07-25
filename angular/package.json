@@ -5,12 +5,12 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "build-serve": "node --max_old_space_size=8048 ./node_modules/@angular/cli/bin/ng serve --port 4250",
-    "start": "node --max_old_space_size=8048 ./node_modules/@angular/cli/bin/ng serve --host 0.0.0.0 --port 4250",
+    "build-serve": "node --max_old_space_size=8048 ./node_modules/@angular/cli/bin/ng serve --port 5201",
+    "start": "node --max_old_space_size=8048 ./node_modules/@angular/cli/bin/ng serve --host 0.0.0.0 --port 5201",
     "test": "ng test",
     "pree2e": "webdriver-manager update --standalone false --gecko false",
     "e2e": "protractor",
-    "hmr": "ng serve --host 0.0.0.0 --port 4250 --hmr",
+    "hmr": "ng serve --host 0.0.0.0 --port 5201 --hmr",
     "lint": "tslint --force --project src/tsconfig.json src/**/*.ts -t verbose",
     "build": "node --max_old_space_size=8048 ./node_modules/@angular/cli/bin/ng build --prod"
   },

@@ -51,7 +51,7 @@ namespace Ozone.Infrastructure.Persistence.Models
         public long? ApprovedById { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime? ApprovedDate { get; set; }
-        [Column(TypeName = "decimal(18, 0)")]
+        [Column(TypeName = "decimal(18, 2)")]
         public decimal? DurationSurvVisit { get; set; }
 
         [ForeignKey(nameof(AccreditationId))]

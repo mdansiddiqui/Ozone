@@ -1083,6 +1083,102 @@ namespace Ozone.Infrastructure.Shared.Services
                 }
 
             }
+        public async Task<string> UserStatusChange(ResetPasswordModel input)
+        {
+            using (var transaction = _unitOfWork.BeginTransaction())
+            {
+                SecUser userdb = await Task.Run(() => _dbContext.SecUser.Where(x => x.IsDeleted == false && x.Id == input.Id).FirstOrDefault());
+
+                //string password = _secPolicyRepo.GetPasswordComplexityRegexPolicy().ToString();
+
+
+                try
+                {
+
+                    if (userdb != null)
+                    {
+
+                        userdb.IsActive = input.IsActive;
+                        userdb.LastModifiedBy = input.LastModifiedById;
+                        userdb.LastModifiedDate = DateTime.Now;
+
+
+                        await base.UpdateAsync(userdb);
+
+
+                        var result = await _unitOfWork.SaveChangesAsync();
+
+
+
+                        transaction.Commit();
+
+                        return "Successfully Changed Status!";
+                    }
+                    return "Not Updated";
+                    
+
+                }
+
+                catch (Exception ex)
+                {
+                    var Exception = ex;
+                    transaction.Rollback();
+                    return "User Status Not Change";
+                }
+
+
+
+            }
+
+        }
+        public async Task<string> ClientStatusChange(ResetPasswordModel input)
+        {
+            using (var transaction = _unitOfWork.BeginTransaction())
+            {
+                Client clientdb = await Task.Run(() => _dbContext.Client.Where(x => x.IsDeleted == false && x.Id == input.Id).FirstOrDefault());
+
+                //string password = _secPolicyRepo.GetPasswordComplexityRegexPolicy().ToString();
+
+
+                try
+                {
+
+                    if (clientdb != null)
+                    {
+
+                        clientdb.IsActive = input.IsActive;
+                        //userdb.LastModifiedBy = input.LastModifiedById;
+                        //userdb.LastModifiedDate = DateTime.Now;
+
+
+                         _dbContext.Update(clientdb);
+
+
+                        var result = await _unitOfWork.SaveChangesAsync();
+
+
+
+                        transaction.Commit();
+
+                        return "Successfully Changed Status!";
+                    }
+                    return "Not Updated";
+
+
+                }
+
+                catch (Exception ex)
+                {
+                    var Exception = ex;
+                    transaction.Rollback();
+                    return "User Status Not Change";
+                }
+
+
+
+            }
+
+        }
 
         public async Task<SecUserModel> DownloadImage(long id)
         {

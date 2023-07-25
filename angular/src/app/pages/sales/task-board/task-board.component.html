@@ -1,7 +1,7 @@
 <!-- <nav>
     <div class="nav nav-tabs" id="nav-tab" role="tablist">
       <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab"  role="tab" aria-controls="nav-home" aria-selected="true">Client Basic Information</a>
-      
+
     </div>
 </nav> -->
 
@@ -29,7 +29,7 @@
                                 <button type="button" class="btn bg-blue">
                                     <i class="fas fa-search"></i>
                                 </button>
-                                
+
                             </div>
                         </div> -->
               <div class="container-fluid mb-2">
@@ -208,21 +208,21 @@
                                     <label class="mb-0" for="denomination">
                                         {{ "Country" }}
                                     </label>
-                                    <select class="form-control form-control-sm col-md-12 " formControlName="CountryId" 
+                                    <select class="form-control form-control-sm col-md-12 " formControlName="CountryId"
                                     id="CountryId">
                                     <option *ngFor="let item of CountryList" [value]="item.id">
                                       {{ item.name }}
                                     </option>
                                   </select>
 
-                                   
-                                  
+
+
                                 </div>
                                 <div class="col-md-4">
                                     <label class="mb-0" for="denomination">
                                         {{ "State" }}
                                     </label>
-                                    <select class="form-control form-control-sm col-md-12 " formControlName="StateId" 
+                                    <select class="form-control form-control-sm col-md-12 " formControlName="StateId"
                                     id="StateId"  >
                                     <option *ngFor="let item of StateList" [value]="item.id">
                                       {{ item.name }}
@@ -233,14 +233,14 @@
                                     <label class="mb-0" for="denomination">
                                         {{ "City" }}
                                     </label>
-                                    <select class="form-control form-control-sm col-md-12 " formControlName="CityId" 
+                                    <select class="form-control form-control-sm col-md-12 " formControlName="CityId"
                                     id="CityId"  >
                                     <option *ngFor="let item of CityList" [value]="item.id">
                                       {{ item.name }}
                                     </option>
                                   </select>
                                 </div>
-                            
+
                             </div> -->
                 <div class="row mt-1 mx-2">
                   <div class="col-md-4">
@@ -520,7 +520,7 @@
                   <!-- <input  class="form-control form-control-sm col-md-12" id="indent" /> -->
                   <!-- <button type="button"
                                         class="btn-sm btn-success btn float-right mx-3 px-4 mt-3 pt-2 pb-2" style="margin: 5px;" (click)="onSubmit()">Submit</button>
-                                   
+
                                     <button class="btn-sm btn btn-dark col-md-3 float-right" style="margin: 5px;">
                                         Back
                                     </button> -->
@@ -528,7 +528,7 @@
                     <button
                       type="button"
                       class="btn-sm btn-success btn float-right mx-1 px-4 mt-2 pt-2 pb-2 mt-3"
-                      *ngIf="change"
+                      *ngIf="change && VisibleBtns"
                       (click)="onpopup()"
                     >
                       <i class="fa fa-save"></i> Change Request
@@ -537,6 +537,7 @@
                       type="button"
                       class="btn-sm btn-success btn float-right mx-1 px-4 mt-2 pt-2 pb-2 mt-3"
                       (click)="onSubmit()"
+                      *ngIf="saveBtns"
                     >
                       <i class="fa fa-save"></i> Submit
                     </button>

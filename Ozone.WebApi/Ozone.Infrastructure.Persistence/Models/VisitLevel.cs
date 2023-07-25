@@ -13,6 +13,7 @@ namespace Ozone.Infrastructure.Persistence.Models
         public VisitLevel()
         {
             ClientAuditVisit = new HashSet<ClientAuditVisit>();
+            MappingDocumentsWithStandard = new HashSet<MappingDocumentsWithStandard>();
         }
 
         [Key]
@@ -39,5 +40,7 @@ namespace Ozone.Infrastructure.Persistence.Models
         public virtual SecUser LastUpdatedBy { get; set; }
         [InverseProperty("VisitLevel")]
         public virtual ICollection<ClientAuditVisit> ClientAuditVisit { get; set; }
+        [InverseProperty("VisitLevel")]
+        public virtual ICollection<MappingDocumentsWithStandard> MappingDocumentsWithStandard { get; set; }
     }
 }

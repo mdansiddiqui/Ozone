@@ -1023,7 +1023,7 @@ export class GeneralFormComponent implements OnInit {
 
       abp.message.info(Response.message)
       //this.reloadGrid();
-      this.router.navigateByUrl('/app/home');
+      this.router.navigateByUrl('app/pages/master-setups/dashboard');
 
     })
   }
@@ -2122,7 +2122,7 @@ export class GeneralFormComponent implements OnInit {
       //abp.message.info(Response.message)
       if (Response.message == '1') {
         abp.message.info("Successfully Saved!")
-        this.router.navigateByUrl('/app/home');
+        this.router.navigateByUrl('app/pages/master-setups/dashboard');
 
       }
       else if (Response.message == '2') {

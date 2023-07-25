@@ -231,6 +231,7 @@ else{
   public  ClientId: number
   public cllientSiteId:number
   public savedownload: boolean = false
+  public RoleBaseHide: boolean = false
   public ClientSiteList = [];
   public VerificationTypeList = [];
   public ProjectTypeList = [];
@@ -287,7 +288,10 @@ else{
   }
 
   ngOnInit(): void {
-
+    var roleId = localStorage.getItem('roleId');
+    if (+roleId === 2 ) {
+      this.RoleBaseHide = true
+    }
     this.editProject();
     //this.loadSecRoleForm()
     this.CheckReviewer();

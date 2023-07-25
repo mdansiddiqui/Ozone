@@ -24,6 +24,7 @@ namespace Ozone.Infrastructure.Persistence.Models
             ProjectSlcp = new HashSet<ProjectSlcp>();
             QcHistory = new HashSet<QcHistory>();
             QcMasterComments = new HashSet<QcMasterComments>();
+            WindowPeriodIntimation = new HashSet<WindowPeriodIntimation>();
         }
 
         [Key]
@@ -63,6 +64,7 @@ namespace Ozone.Infrastructure.Persistence.Models
         public DateTime? CertificateIssueDate { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime? CertificationExpiryDate { get; set; }
+        public string CycleCode { get; set; }
 
         [ForeignKey(nameof(ApprovalStatusId))]
         [InverseProperty(nameof(ProjectsApprovalStatus.ClientProjects))]
@@ -124,5 +126,7 @@ namespace Ozone.Infrastructure.Persistence.Models
         public virtual ICollection<QcHistory> QcHistory { get; set; }
         [InverseProperty("Project")]
         public virtual ICollection<QcMasterComments> QcMasterComments { get; set; }
+        [InverseProperty("Project")]
+        public virtual ICollection<WindowPeriodIntimation> WindowPeriodIntimation { get; set; }
     }
 }

@@ -517,10 +517,18 @@ namespace Ozone.Infrastructure.Shared.Services.MasterSetups
 
                 var result = new GetPagedClientModel();
                 var ClientList = new List<ClientModel>();
-
-                if (model.AuthAllowed == true)
+                if (orgid == 1)
                 {
-                    var list = await _dbContext.Client.Where(x => x.IsDeleted == false && x.IsActive == true && x.OrganizationId== orgid &&
+                    var list = await _dbContext.Client.Include(x => x.Organization).Where(x => x.IsDeleted == false &&
+                        (x.Name.ToLower().Contains(model.Keyword.ToLower())
+                      )).OrderByDescending(x => x.Id).ToListAsync();
+                    ClientList = _mapper.Map<List<ClientModel>>(list);
+
+                }
+
+                else if (model.AuthAllowed == true)
+                {
+                    var list = await _dbContext.Client.Include(x => x.Organization).Where(x => x.IsDeleted == false && x.OrganizationId== orgid &&
                                   (x.Name.ToLower().Contains(model.Keyword.ToLower())
                                 )).OrderByDescending(x => x.Id).ToListAsync();
                     ClientList = _mapper.Map<List<ClientModel>>(list);
@@ -545,7 +553,12 @@ namespace Ozone.Infrastructure.Shared.Services.MasterSetups
             // OzoneContext ozonedb = new OzoneContext();
             using (var transaction = _unitOfWork.BeginTransaction())
             {
+                var dbproject = _dbContext.ClientProjects.Where(u => u.ClientId == id && u.IsDeleted==false).ToList();
 
+                if (dbproject.Count > 0) 
+                {
+                    return "You can not delete this client, if you want to delete Please delete the projects of this client ";
+                }
 
                 Client dbresult = _dbContext.Client.Where(u => u.Id == id).FirstOrDefault();
                
@@ -594,7 +607,7 @@ namespace Ozone.Infrastructure.Shared.Services.MasterSetups
 
             List<UserStandards> dbdata = new List<UserStandards>();
             var result = new List<UserStandardModel>();
-            dbdata = await Task.Run(() => _dbContext.UserStandards.Include(x => x.User).Where(x => x.StandardId == id && x.User.OrganizationId == OrganizationId && x.User.ApprovelStatusId == 2 && x.AuditorTypeId == 2 && x.IsDeleted == false  && x.User.IsDeleted == false).ToListAsync());
+            dbdata = await Task.Run(() => _dbContext.UserStandards.Include(x => x.User).Where(x => x.StandardId == id && x.User.IsActive == true && x.User.OrganizationId == OrganizationId && x.User.ApprovelStatusId == 2 && x.AuditorTypeId == 2 && x.IsDeleted == false  && x.User.IsDeleted == false).ToListAsync());
             //var LeadAuditordata = await Task.Run(() => _dbContext.UserStandards.Include(x => x.User).Where(x => x.StandardId == id && x.User.OrganizationId == OrganizationId && x.User.ApprovelStatusId == 2 && x.AuditorTypeId == 2 && x.IsDeleted == false).ToListAsync());
 
             //dbdata.AddRange(LeadAuditordata);
@@ -615,7 +628,7 @@ namespace Ozone.Infrastructure.Shared.Services.MasterSetups
 
             List<UserStandards> dbdata = new List<UserStandards>();
             var result = new List<UserStandardModel>();
-             dbdata = await Task.Run(() => _dbContext.UserStandards.Include(x=>x.User).Where(x=>x.StandardId == id && x.User.OrganizationId==OrganizationId && x.User.ApprovelStatusId==2 && x.AuditorTypeId == 1 && x.IsDeleted==false  && x.User.IsDeleted == false).ToListAsync());
+             dbdata = await Task.Run(() => _dbContext.UserStandards.Include(x=>x.User).Where(x=>x.StandardId == id && x.User.IsActive == true && x.User.OrganizationId==OrganizationId && x.User.ApprovelStatusId==2 && x.AuditorTypeId == 1 && x.IsDeleted==false  && x.User.IsDeleted == false).ToListAsync());
            // var LeadAuditordata = await Task.Run(() => _dbContext.UserStandards.Include(x => x.User).Where(x => x.StandardId == id && x.User.OrganizationId == OrganizationId && x.User.ApprovelStatusId == 2 && x.AuditorTypeId == 2 && x.IsDeleted == false).ToListAsync());
 
             //dbdata.AddRange(LeadAuditordata);

@@ -83,6 +83,19 @@ namespace Ozone.WebApi
             // CORS
             services.AddCorsExtension();
             services.AddHealthChecks();
+            var provider = services.BuildServiceProvider();
+            var configuration = provider.GetRequiredService<IConfiguration>();
+            services.AddCors(option =>
+            {
+                var reactURl = configuration.GetValue<string>("reactUrl");
+                option.AddDefaultPolicy(pol =>
+                {
+                    pol.WithOrigins(reactURl).AllowAnyMethod().AllowAnyHeader();
+                });
+            });
+
+
+
             // API version
             services.AddApiVersioningExtension();
             // API explorer

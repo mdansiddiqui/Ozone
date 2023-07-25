@@ -133,11 +133,14 @@
                                         {{ "Justified Person" }}
                                     </label>
 
-                                    <select formControlName="JustifiedPersonId"  class="form-control" id="JustifiedPersonId">
+                                    <select formControlName="JustifiedPersonId"  class="form-control" id="JustifiedPersonId"  required [ngClass]="{ 'is-invalid': submitted && f.JustifiedPersonId.errors }">
                                         <option *ngFor="let item of JustifiedPersonList" [value]="item.id">
                                           {{item.fullName }}
                                         </option>
                                       </select>
+                                      <div *ngIf="submitted && f.JustifiedPersonId.errors" class="invalid-feedback">
+                                        <div *ngIf="f.JustifiedPersonId.errors.required">Justified Person is required</div>
+                                    </div>
                                 </div>
 
 
@@ -146,25 +149,29 @@
                                         {{ "Technical Expert" }}
                                     </label>
 
-                                    <select formControlName="TechnicalExpertId"  class="form-control" id="TechnicalExpertId">
+                                    <select formControlName="TechnicalExpertId"  class="form-control" id="TechnicalExpertId" required [ngClass]="{ 'is-invalid': submitted && f.TechnicalExpertId.errors }">
                                         <option *ngFor="let item of TechnicalExpertList" [value]="item.id">
                                           {{item.fullName }}
                                         </option>
                                       </select>
+                                      <div *ngIf="submitted && f.TechnicalExpertId.errors" class="invalid-feedback">
+                                        <div *ngIf="f.TechnicalExpertId.errors.required">Technical Expert required</div>
+                                    </div>
+
 
                                 </div>
                                 <div class="col-md-4">
                                     <label class="mb-0" for="Duration">Duration</label>
-                                    <input type="text" formControlName="Duration" class="form-control form-control-sm col-md-12" id="Duration"/>
-
+                                    <input type="text" formControlName="Duration" class="form-control form-control-sm col-md-12" id="Duration" required [ngClass]="{ 'is-invalid': submitted && f.Duration.errors }"/>
+                                    <div *ngIf="submitted && f.Duration.errors" class="invalid-feedback">
+                                        <div *ngIf="f.Duration.errors.required">Duration required</div>
+                                    </div>
                                     <!-- <select formControlName="Duration"  class="form-control" id="Duration"  required [ngClass]="{ 'is-invalid': submitted && f.Duration.errors }">
                                         <option *ngFor="let item of DurationList" [value]="item.id">
                                           {{item.code }}
                                         </option>
                                       </select> -->
-                                      <div *ngIf="submitted && f.Duration.errors" class="invalid-feedback">
-                                        <div *ngIf="f.Duration.errors.required">Duration is required</div>
-                                    </div>
+                                    
                                 </div>
                             </div>
                             <div class="row mt-1 mx-2">
@@ -300,7 +307,7 @@
                                         <div *ngIf="f.ReviewerId.errors.required">Reviewer is required</div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <!-- <div class="col-md-4">
                                     <label class="mb-0" for="ReviewDate">Review Date</label>
                                     <input type="date" disabled formControlName="ReviewDate" class="form-control form-control-sm col-md-12" id="ReviewDate" />
 
@@ -309,7 +316,7 @@
                                     <label class="mb-0" for="SubmisionDate">Submision Date</label>
                                     <input type="date"disabled formControlName="SubmisionDate" class="form-control form-control-sm col-md-12" id="SubmisionDate" />
 
-                                </div>
+                                </div> -->
 
 
 
@@ -350,9 +357,9 @@
                                 <div class="col-md-4">
 
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-2">
                                           </div>
-                                <div class="col-md-4" >
+                                <div class="col-md-6" >
                                     <br />
                                     <button type="button" *ngIf="auditcompletebtn"
                                     class="btn-sm btn-success btn float-right ml-1" (click)="onSubmit()"><i class="fa fa-save"></i> Submit</button>
@@ -360,9 +367,8 @@
                                     class="btn-sm btn-primary btn float-right ml-1" (click)="NewRecord()"><i class="fas fa-plus-square"></i> New</button>
                                     <button type="button"
                                     class="btn-sm btn btn-dark btn  float-right ml-1" (click)="Back()"><i class="fa fa-arrow-circle-left"></i> Go to Contract()</button>
-
-
-
+                                    <button type="button"
+                                    class="btn-sm btn btn-secondary btn  float-right" (click)="NavigateToClient()"><i class="fa fa-arrow-circle-left"></i> Go to Client</button>
                                 </div>
 
 
@@ -414,11 +420,13 @@
                             ></dxi-button>
 
                             <dxi-button
-                            hint="View"  icon="fas fa-eye text-secondary" alignment='left'
-                            [onClick]="edit"
+                            hint="View Audit Plan"  icon="fas fa-eye text-secondary" alignment='left'
+                            [onClick]="review1"
+
 
 
                             ></dxi-button>
+                            <!-- [onClick]="edit" -->
                             <dxi-button   icon="deleterow"
                              [onClick]="delete"
                              [(visible)]="deleteVisit"

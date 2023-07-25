@@ -71,6 +71,8 @@ export class TaskBoardComponent implements OnInit {
   isManageAllowed: boolean = false
   isShownDeclineRemarks: boolean = false
   isShownRejectOrAuthButton: boolean = false
+  VisibleBtns: boolean = true
+  saveBtns: boolean = true
   isMakerButtons: boolean = false
   isDeclineRemarks: boolean = false
   public isShown: boolean = false
@@ -128,6 +130,12 @@ export class TaskBoardComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit(): void {
+    const RoleId = parseInt(localStorage.getItem('roleId'));
+    console.log(RoleId)
+    if(RoleId === 2 || RoleId === 21) {
+      this.VisibleBtns = false;
+      this.saveBtns= false;
+    }
     this.loadSecRoleForm()
     this.loadSecRoleForm()
     //this.loadCities()
@@ -209,7 +217,7 @@ export class TaskBoardComponent implements OnInit {
         if (this.userUpdateId != undefined) {
 
           this.ClientForm.get('Code').setValue(agencyData.code);
-          
+
           this.ClientEditForm.get('name').setValue(agencyData.name);
           this.ClientEditForm.get('address1').setValue(agencyData.address1);
           this.ClientEditForm.get('countryId').setValue(agencyData.countryId);
@@ -222,9 +230,11 @@ export class TaskBoardComponent implements OnInit {
           this.ClientEditForm.get('postalCode').setValue(agencyData.postalCode);
           this.ClientEditForm.get('email').setValue(agencyData.email);
 
-          
-        }
 
+        }
+        
+    
+      
       })
 
     }
@@ -327,13 +337,31 @@ export class TaskBoardComponent implements OnInit {
             this.ClientForm.get('IsActive').disable();
             this.ClientForm.get('Multisite').disable();
             this.change = true
-
+          
+            this.saveBtns= false;
 
           } else {
             this.change = false
           }
 
+          const RoleId = parseInt(localStorage.getItem('roleId'));
+          if(RoleId === 2 || RoleId === 21) {
+            this.VisibleBtns = false
+            this.saveBtns= false;
+          }
 
+         
+          // this._ClientService.GetAllProjects(this.id,this.pagedDto).subscribe((Response) => {
+      
+      
+          //   this.totalCount = Response.totalCount
+          //    var ProjectsList = Response.clientProjectModel
+          //    if(ProjectsList.length>0)
+          //    {
+          //     this.VisibleBtns=false;
+          //    }
+          //   //this .Liststandard=this.StandardList;
+          // })
           // this.AgencyForm.get('Password').disable();
           // this.AgencyForm.get('ConfirmPassword').disable();
           // this.AgencyForm.get('ConfirmPassword').setValue("Pakistan@123");
@@ -359,22 +387,25 @@ export class TaskBoardComponent implements OnInit {
     }
 
   }
+  loadProject(): void {
 
+  
+}
   // loadCities(): void {
-  //   
+  //
   // this.SecUserService.getCities().subscribe((Response)=>{
   //   this.CityList = Response
   // })
   // }
   // loadCountries(): void {
-  //   
+  //
   //   this.SecUserService.getCountries().subscribe((Response)=>{
   //     this.CountryList = Response
   //   })
   //   }
   //   loadState(): void
   //    {
-  //     
+  //
   //     this.SecUserService.getState().subscribe((Response)=>{
   //       this.StateList = Response
   //     })
@@ -427,7 +458,7 @@ export class TaskBoardComponent implements OnInit {
   {
 
 this.fileToUpload= <File>e?.target?.files[0];
-//this.url=e.target.value; 
+//this.url=e.target.value;
 
 
   }
@@ -446,7 +477,7 @@ this.fileToUpload= <File>e?.target?.files[0];
     this.ChangeRequest();
   }
 
-  
+
   ChangeRequest() {
     debugger
 // if(this.ClientEditForm.get('stateId').value ==null || this.ClientEditForm.get('stateId').value=="" ||this.ClientEditForm.get('stateId').value==undefined || this.ClientEditForm.get('stateId').value=='' || this.ClientEditForm.get('stateId').value==isNaN )
@@ -495,7 +526,7 @@ this.fileToUpload= <File>e?.target?.files[0];
     foData.append('File',this.fileToUpload);
 
     console.log(this.fileToUpload);
-    
+
     var OrgId = localStorage.getItem('organizationId');
     // this.Client.OrganizationId = parseInt(OrgId);
     foData.append("OrganizationId",OrgId)
@@ -503,7 +534,7 @@ this.fileToUpload= <File>e?.target?.files[0];
     var userId = localStorage.getItem('userId');
     // this.Client.CreatorUserId = parseInt(userId);
     foData.append("CreatorUserId",userId)
-   
+
 
 
     this._ClientService.CreateChangeClient(foData).subscribe((Response) => {
@@ -513,8 +544,8 @@ this.fileToUpload= <File>e?.target?.files[0];
             }else {
               abp.message.error(Response.message)
             }
-      
-      
+
+
           })
 
   }
@@ -547,7 +578,7 @@ this.fileToUpload= <File>e?.target?.files[0];
     debugger
     var codelength = this.ClientForm.get('Code').value
 
-   
+
 
     if (this.id > 0) {
       if (codelength.length != 12) {
@@ -614,7 +645,7 @@ this.fileToUpload= <File>e?.target?.files[0];
     this.Client.Email = this.ClientForm.get('Email').value;
     this.Client.Website = this.ClientForm.get('Website').value;
 
-   
+
 
     if (this.ClientForm.get('Multisite').value == '1') {
       this.Client.Multisite = true;
@@ -641,8 +672,8 @@ this.fileToUpload= <File>e?.target?.files[0];
 
     // this.Agncy.IsActive = this.AgencyForm.get('IsActive').value
 
- 
-   
+
+
 
 
     this._ClientService.create(this.Client).subscribe((Response) => {

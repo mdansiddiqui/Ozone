@@ -21,6 +21,7 @@ import { LegislationComponent } from './legislation/legislation.component';
 import { AudditorTypeComponent } from './audditor-type/audditor-type.component';
 import { ProjectAmountComponent } from './project-amount/project-amount.component';
 import { VisitLevelComponent } from './visit-level/visit-level.component';
+import { MappingStandardWithDocumentComponent } from './mapping-standard-with-document/mapping-standard-with-document.component';
 //import { DashboardComponent } from './dashboard/dashboard.component';
 
 
@@ -31,6 +32,7 @@ import { VisitLevelComponent } from './visit-level/visit-level.component';
   declarations: [
     DocumentTypeComponent,
     VisitLevelComponent,
+    MappingStandardWithDocumentComponent
   ],
   imports: [
     CommonModule,

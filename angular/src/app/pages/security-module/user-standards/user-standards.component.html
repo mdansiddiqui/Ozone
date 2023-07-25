@@ -27,7 +27,7 @@
             aria-selected="true">AUDITS</a>
 
         <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" role="tab" aria-controls="nav-home"
-            aria-selected="true">AUDITOR NACE</a> 
+            aria-selected="true">AUDITOR NACE</a>
     </div>
 
 </nav> -->
@@ -38,7 +38,7 @@
 
         <!-- <a class="nav-item nav-link" id="nav-profile-tab" href="#" style=" color: white;background-color: #304570;border-color: whitesmoke;"
         (click)="editRecord('/app/pages/security-module/user-remarks?')"
-      
+
         data-toggle="tab" role="tab"
         aria-controls="nav-profile" aria-selected="false">Authorizer Remarks </a> -->
         <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" role="tab" aria-controls="nav-home"
@@ -116,7 +116,7 @@
                                 <button type="button" class="btn bg-blue">
                                     <i class="fas fa-search"></i>
                                 </button>
-                                
+
                             </div>
                         </div> -->
                             <div class="container-fluid mb-2">
@@ -124,12 +124,12 @@
                                     <div class="col-md-4" style="font-size:large;">
 
                                         <label class="mb-0" for="Code" style="color: black;">
-                                            {{ "User Name : "}} 
+                                            {{ "User Name : "}}
                                             <u><b style="color:blue;">{{UserName}}</b></u>
                                         </label>
-                                       
-                                        
-                                        
+
+
+
                                     </div>
 
                                 </div>
@@ -250,7 +250,7 @@
 
 
                             <dx-data-grid id="dataGrid" [rowAlternationEnabled]="true" [showRowLines]="true"
-                                [showColumnLines]="true" [allowColumnReordering]="true" [dataSource]="UserStandardList | paginate
+                            [showColumnLines]="true" [allowColumnReordering]="true" [dataSource]="UserStandardList | paginate
                         : {
                             id: 'server',
                             itemsPerPage: this.pagedDto.pageSize,
@@ -289,14 +289,17 @@
                                 <dxi-button icon="key"  [onClick]="changings"></dxi-button>
 
                                 <dxi-column type="buttons" caption="Action">
-                                    <dxi-button icon="edit" [onClick]="edit" hint="Edit" [(visible)]="isAddShown">
+                                    <dxi-button icon="edit" [onClick]="edit" hint="Edit" [(visible)]="ManageVisit">
                                     </dxi-button>
 
-                                    <dxi-button icon="deleterow" [onClick]="delete" [(visible)]="isAddShown"
+                                    <dxi-button icon="deleterow" [onClick]="delete" [(visible)]="ManageVisit"
                                         hint="Delete"></dxi-button>
 
                                     <dxi-button hint="Submit For Review" icon="exportselected"
                                         [onClick]="SubmitForreview" [visible]="btnforReview"></dxi-button>
+
+                                        <dxi-button hint="View Record" icon="fas fa-eye text-secondary" [(visible)]="SubmitForReviewVisible" [onClick]="review">
+                                        </dxi-button>
 
                                 </dxi-column>
 
@@ -325,7 +328,7 @@
                                         </pagination-controls>
                                     </div>
                                     <!-- <div class="col-sm-2 col-12 ">
-    
+
                                 <div class="d-flex flex-row-reverse bd-highlight mb-2">
                                     <div class="p-2 bd-highlight">
                                         <select (change)="onTableSizeChange($event)" class="custom-select">

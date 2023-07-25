@@ -18,6 +18,7 @@ using Ozone.Application.Interfaces;
 //using Ozone.Infrastructure.Persistence.Repository;
 using Ozone.Infrastructure.Persistence.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Ozone.Application.Repository;
 using System.IO;
 using Microsoft.Extensions.Configuration;
@@ -376,6 +377,37 @@ namespace Ozone.Infrastructure.Shared.Services
             var result = new ClientAuditVisitModel();
             var DbData = await Task.Run(() => _dbContext.ClientAuditVisit.Include(x=>x.Project).Include(x=>x.VisitStatus).Include(x => x.VisitType).Include(x=>x.VisitLevel) .Include(x=>x.Auditor1).Include(x => x.Auditor2).Include(x => x.Auditor3).Include(x => x.Auditor4).Include(x => x.Auditor5).Include(x => x.LeadAuditor).Include(x => x.JustifiedPerson).Include(x => x.TechnicalExpert).Include(x=>x.Reviewer).Where(x => x.Id == id).OrderByDescending(x=>x.Id).FirstOrDefault());
             result = _mapper.Map<ClientAuditVisitModel>(DbData);
+            return result;
+        }
+
+
+        public async Task<List<MappingDocumentsWithStandardModel>> GetAllRequiredDocumentBYId(long id)
+        {
+            var result = new List<MappingDocumentsWithStandardModel>();
+
+            var DbData = await Task.Run(() => _dbContext.ClientAuditVisit.Where(x => x.Id == id).OrderByDescending(x => x.Id).FirstOrDefault());
+            var clientproject = await Task.Run(() => _dbContext.ClientProjects.Where(x => x.Id == DbData.ProjectId).OrderByDescending(x => x.Id).FirstOrDefault());
+
+            var DocumentList = await Task.Run(() => _dbContext.MappingDocumentsWithStandard.Include(x=>x.DocumentType).Where(x => x.IsDeleted == false && x.IsRequired == true && x.IsActive == true && x.StandardId== clientproject.StandardId && x.VisitLevelId==DbData.VisitLevelId  && x.DocumentAssignId==1).ToList());
+            result = _mapper.Map<List<MappingDocumentsWithStandardModel>>(DocumentList);
+
+            //var DbData = await Task.Run(() => _dbContext.ClientAuditVisit.Include(x => x.Project).Include(x => x.VisitStatus).Include(x => x.VisitType).Include(x => x.VisitLevel).Include(x => x.Auditor1).Include(x => x.Auditor2).Include(x => x.Auditor3).Include(x => x.Auditor4).Include(x => x.Auditor5).Include(x => x.LeadAuditor).Include(x => x.JustifiedPerson).Include(x => x.TechnicalExpert).Include(x => x.Reviewer).Where(x => x.Id == id).OrderByDescending(x => x.Id).FirstOrDefault());
+            //result = _mapper.Map<ClientAuditVisitModel>(DbData);
+            return result;
+        }
+
+        public async Task<List<MappingDocumentsWithStandardModel>> GetAllDocumentsTypeWSVLAS(long id)
+        {
+            var result = new List<MappingDocumentsWithStandardModel>();
+
+            var DbData = await Task.Run(() => _dbContext.ClientAuditVisit.Where(x => x.Id == id).OrderByDescending(x => x.Id).FirstOrDefault());
+            var clientproject = await Task.Run(() => _dbContext.ClientProjects.Where(x => x.Id == DbData.ProjectId).OrderByDescending(x => x.Id).FirstOrDefault());
+
+            var DocumentList = await Task.Run(() => _dbContext.MappingDocumentsWithStandard.Include(x => x.DocumentType).Where(x => x.IsDeleted == false && x.IsActive == true && x.StandardId == clientproject.StandardId && x.VisitLevelId == DbData.VisitLevelId &&  x.DocumentAssignId==1).ToList());
+            result = _mapper.Map<List<MappingDocumentsWithStandardModel>>(DocumentList);
+
+            //var DbData = await Task.Run(() => _dbContext.ClientAuditVisit.Include(x => x.Project).Include(x => x.VisitStatus).Include(x => x.VisitType).Include(x => x.VisitLevel).Include(x => x.Auditor1).Include(x => x.Auditor2).Include(x => x.Auditor3).Include(x => x.Auditor4).Include(x => x.Auditor5).Include(x => x.LeadAuditor).Include(x => x.JustifiedPerson).Include(x => x.TechnicalExpert).Include(x => x.Reviewer).Where(x => x.Id == id).OrderByDescending(x => x.Id).FirstOrDefault());
+            //result = _mapper.Map<ClientAuditVisitModel>(DbData);
             return result;
         }
         public async Task<List<ClientAuditVisitModel>>GetClientAuditVisitByOrganizationId(long id)
@@ -786,6 +818,7 @@ namespace Ozone.Infrastructure.Shared.Services
 
         public async Task<GetPagedProjectStatusModel> ProjectStatus(long id, PagedResponseModel Pagemodel)
         {
+         
             try
             {
                 PagedResponseModel model = Pagemodel;
@@ -799,6 +832,7 @@ namespace Ozone.Infrastructure.Shared.Services
                 var clientDashboardStatus = new List<ClientDashboardStatusModel>();
                 var projectDashboardStatus = new List<ProjectRequestDashboardStatusModel>();
                 var clientSitetRequestDashboardStatus = new List<ClientSitetRequestDashboardStatusModel>();
+                var windowPeriodList = new List<windiwPeriodModel>();
                 List<long> Ids = new List<long>() { 22, 10037 , 37 };
 
                 var clientAuditVisit = new List<ClientAuditVisit>();
@@ -1504,10 +1538,218 @@ namespace Ozone.Infrastructure.Shared.Services
                 }
 
 
+                List<CertifiedClientModel> tWindowperiod = await GetWindowperiodforDashboard(Pagemodel.organizationId);
+                List<CertifiedClientModel> CertifiedClientModel = new List<CertifiedClientModel>();
+                var I1 = tWindowperiod.Where(x => x.IntimationdateSurv_1 !=null).ToList();
+                var W2 = tWindowperiod.Where(x => x.Windowperiod_start_Surv_1 !=null).ToList();
+                var w3 = tWindowperiod.Where(x => x.Windowperiod_Start_FUP_1 != null).ToList();
+                var w4 = tWindowperiod.Where(x => x.IntimationdateSurv_2 != null).ToList();
+                var w5 = tWindowperiod.Where(x => x.Windowperiod_start_Surv_2 != null).ToList();
+                var w6 = tWindowperiod.Where(x => x.Windowperiod_Sart_FUP_2 != null).ToList();
+                var w7 = tWindowperiod.Where(x => x.Recertification_Windowperiod_start_Surv_2 != null).ToList();
+                var w8 = tWindowperiod.Where(x => x.Followup_Recert_Start != null).ToList();
+
+               
+                //var IntimationdateSurv_1 = tWindowperiod.Where(x=> x.IntimationdateSurv_1 > DateTime.Now.AddDays(-1) &&  x.IntimationdateSurv_1 < DateTime.Now.AddDays(8)).ToList();
+                //var Windowperiod_start_Surv_1 = tWindowperiod.Where(x => x.Windowperiod_start_Surv_1 > DateTime.Now.AddDays(-1) && x.Windowperiod_start_Surv_1 < DateTime.Now.AddDays(8)).ToList();
+                //var Windowperiod_Start_FUP_1 = tWindowperiod.Where(x => x.Windowperiod_Start_FUP_1 > DateTime.Now.AddDays(-1) &&  x.Windowperiod_Start_FUP_1 < DateTime.Now.AddDays(8)).ToList();
+                //var IntimationdateSurv_2= tWindowperiod.Where(x => x.IntimationdateSurv_2 > DateTime.Now.AddDays(-1) && x.IntimationdateSurv_2 < DateTime.Now.AddDays(8)).ToList();
+                //var Windowperiod_start_Surv_2 = tWindowperiod.Where(x => x.Windowperiod_start_Surv_2 > DateTime.Now.AddDays(-1) && x.Windowperiod_start_Surv_2 <DateTime.Now.AddDays(8)).ToList();
+                //var Windowperiod_Sart_FUP_2 = tWindowperiod.Where(x => x.Windowperiod_Sart_FUP_2 > DateTime.Now.AddDays(-1) && x.Windowperiod_Sart_FUP_2 < DateTime.Now.AddDays(8)).ToList();
+                //var Recertification_Windowperiod_start_Surv_2 = tWindowperiod.Where(x => x.Recertification_Windowperiod_start_Surv_2 > DateTime.Now.AddDays(-1) && x.Recertification_Windowperiod_start_Surv_2 < DateTime.Now.AddDays(8)).ToList();
+                //var Followup_Recert_Start = tWindowperiod.Where(x => x.Followup_Recert_Start > DateTime.Now.AddDays(-1) && x.Followup_Recert_Start < DateTime.Now.AddDays(8)).ToList();
+
+                var IntimationdateSurv_1 = tWindowperiod.Where(x => x.IntimationdateSurv_1 < DateTime.Now.AddDays(8)).ToList();
+                var Windowperiod_start_Surv_1 = tWindowperiod.Where(x => x.Windowperiod_start_Surv_1 < DateTime.Now.AddDays(8)).ToList();
+                var Windowperiod_Start_FUP_1 = tWindowperiod.Where(x => x.Windowperiod_Start_FUP_1 < DateTime.Now.AddDays(8)).ToList();
+                var IntimationdateSurv_2 = tWindowperiod.Where(x =>  x.IntimationdateSurv_2 < DateTime.Now.AddDays(8)).ToList();
+                var Windowperiod_start_Surv_2 = tWindowperiod.Where(x => x.Windowperiod_start_Surv_2 < DateTime.Now.AddDays(8)).ToList();
+                var Windowperiod_Sart_FUP_2 = tWindowperiod.Where(x => x.Windowperiod_Sart_FUP_2 < DateTime.Now.AddDays(8)).ToList();
+                var Recertification_Windowperiod_start_Surv_2 = tWindowperiod.Where(x =>  x.Recertification_Windowperiod_start_Surv_2 < DateTime.Now.AddDays(8)).ToList();
+                var Followup_Recert_Start = tWindowperiod.Where(x => x.Followup_Recert_Start < DateTime.Now.AddDays(8)).ToList();
 
 
 
+                List<CertifiedClientModel> intomationServ1 = new List<CertifiedClientModel>();
+                foreach (var Intimatiom in IntimationdateSurv_1)
+                {
+                    
+
+                   var windowResult = _dbContext.WindowPeriodIntimation.Where(x => x.ProjectId == Intimatiom.ProjectId && x.IntimationdateSurv1==true && x.IsDeleted == false).ToList();
+
+
+                    if (windowResult.Count == 0)
+                    {
+                        intomationServ1.Add(Intimatiom);
+                        //CertifiedClientModel.AddRange(IntimationdateSurv_1);
+                    }
+
+
+                }
+                List<CertifiedClientModel> WindowperiodstartSurv1 = new List<CertifiedClientModel>();
+                foreach (var Surv1 in Windowperiod_start_Surv_1)
+                {
+
+
+                    var windowResult = _dbContext.WindowPeriodIntimation.Where(x => x.ProjectId == Surv1.ProjectId && x.WindowperiodStartSurv1 == true && x.IsDeleted == false).ToList();
+
+
+                    if (windowResult.Count == 0)
+                    {
+                        WindowperiodstartSurv1.Add(Surv1);
+                        //CertifiedClientModel.AddRange(Windowperiod_start_Surv_1);
+                    }
+
+
+                }
+                List<CertifiedClientModel> FUP_1 = new List<CertifiedClientModel>();
+                foreach (var FUP1 in Windowperiod_Start_FUP_1)
+                {
+
+
+                    var windowResult = _dbContext.WindowPeriodIntimation.Where(x => x.ProjectId == FUP1.ProjectId && x.WindowperiodStartFup1 == true && x.IsDeleted == false).ToList();
+
+
+                    if (windowResult.Count == 0)
+                    {
+                        FUP_1.Add(FUP1);
+                        //CertifiedClientModel.AddRange(Windowperiod_Start_FUP_1);
+                    }
+
+
+                }
+
+                List<CertifiedClientModel> WindowperiodstartSurv2 = new List<CertifiedClientModel>();
+                foreach (var Serv2 in Windowperiod_start_Surv_2)
+                {
+
+
+                    var windowResult = _dbContext.WindowPeriodIntimation.Where(x => x.ProjectId == Serv2.ProjectId && x.WindowperiodStartSurv2 == true && x.IsDeleted == false).ToList();
+
+
+                    if (windowResult.Count == 0)
+                    {
+                        WindowperiodstartSurv2.Add(Serv2);
+                        //CertifiedClientModel.AddRange(Windowperiod_Start_FUP_1);
+                    }
+
+
+                }
+                
+                 List<CertifiedClientModel> WindowperiodSartFUP2 = new List<CertifiedClientModel>();
+                foreach (var FUP2 in Windowperiod_Sart_FUP_2)
+                {
+
+
+                    var windowResult = _dbContext.WindowPeriodIntimation.Where(x => x.ProjectId == FUP2.ProjectId && x.WindowperiodSartFup2 == true && x.IsDeleted == false).ToList();
+
+
+                    if (windowResult.Count == 0)
+                    {
+                        WindowperiodSartFUP2.Add(FUP2);
+                        //CertifiedClientModel.AddRange(Windowperiod_Start_FUP_1);
+                    }
+
+
+                }
+
+                List<CertifiedClientModel> RecertificationServ2 = new List<CertifiedClientModel>();
+                foreach (var RecServ2 in Recertification_Windowperiod_start_Surv_2)
+                {
+
+
+                    var windowResult = _dbContext.WindowPeriodIntimation.Where(x => x.ProjectId == RecServ2.ProjectId && x.RecertificationWindowperiodStartSurv2 == true && x.IsDeleted == false).ToList();
+
+
+                    if (windowResult.Count == 0)
+                    {
+                        RecertificationServ2.Add(RecServ2);
+                        //CertifiedClientModel.AddRange(Windowperiod_Start_FUP_1);
+                    }
+
+
+                }
+
+                List<CertifiedClientModel> FollowupRecertStart = new List<CertifiedClientModel>();
+                foreach (var RecFup in Followup_Recert_Start)
+                {
+
+
+                    var windowResult = _dbContext.WindowPeriodIntimation.Where(x => x.ProjectId == RecFup.ProjectId && x.FollowupRecertStart == true && x.IsDeleted == false).ToList();
+
+
+                    if (windowResult.Count == 0)
+                    {
+                        FollowupRecertStart.Add(RecFup);
+                        //CertifiedClientModel.AddRange(Windowperiod_Start_FUP_1);
+                    }
+
+
+                }
+                // CertifiedClientModel.AddRange(IntimationdateSurv_2);
+                //CertifiedClientModel.AddRange(Windowperiod_start_Surv_2);
+                //CertifiedClientModel.AddRange(Windowperiod_Sart_FUP_2);
+                //CertifiedClientModel.AddRange(Recertification_Windowperiod_start_Surv_2);
+                //CertifiedClientModel.AddRange(Followup_Recert_Start);
+
+                //result.CertifiedClientModel = CertifiedClientModel;
+
+                result.IntimationdateSurv_1 = intomationServ1;
+                result.Windowperiod_start_Surv_1 = WindowperiodstartSurv1;
+                result.Windowperiod_Start_FUP_1 = FUP_1;
+                result.Windowperiod_start_Surv_2 = WindowperiodstartSurv2;
+                result.Windowperiod_Sart_FUP_2 = WindowperiodSartFUP2;
+                result.Recertification_Windowperiod_start_Surv_2 = Recertification_Windowperiod_start_Surv_2;
+                result.Followup_Recert_Start = FollowupRecertStart;
+
+                windiwPeriodModel windiwPeriod = new windiwPeriodModel();
+                windiwPeriod = new windiwPeriodModel();
+                windiwPeriod.Id = 1;
+                windiwPeriod.Name = "Intimation Surv_1";
+                windiwPeriod.Count = intomationServ1.Count();
+                windowPeriodList.Add(windiwPeriod);
+
+
+                windiwPeriod = new windiwPeriodModel();
+                windiwPeriod.Id = 2;
+                windiwPeriod.Name = "Window Period Surv_1";
+                windiwPeriod.Count = WindowperiodstartSurv1.Count();
+                windowPeriodList.Add(windiwPeriod);
+
+                windiwPeriod = new windiwPeriodModel();
+                windiwPeriod.Id = 3;
+                windiwPeriod.Name = "Follow Up Review_1";
+                windiwPeriod.Count = FUP_1.Count();
+                windowPeriodList.Add(windiwPeriod);
+
+                windiwPeriod = new windiwPeriodModel();
+                windiwPeriod.Id = 4;
+                windiwPeriod.Name = "Window Period Surv_2";
+                windiwPeriod.Count = WindowperiodstartSurv2.Count();
+                windowPeriodList.Add(windiwPeriod);
+
+                windiwPeriod = new windiwPeriodModel();
+                windiwPeriod.Id = 5;
+                windiwPeriod.Name = "Follow Up Review_2";
+                windiwPeriod.Count = WindowperiodSartFUP2.Count();
+                windowPeriodList.Add(windiwPeriod);
+
+                windiwPeriod = new windiwPeriodModel();
+                windiwPeriod.Id = 6;
+                windiwPeriod.Name = "Window Period Recertification";
+                windiwPeriod.Count = RecertificationServ2.Count();
+                windowPeriodList.Add(windiwPeriod);
+
+                windiwPeriod = new windiwPeriodModel();
+                windiwPeriod.Id = 7;
+                windiwPeriod.Name = "Followup_Recert_Start";
+                windiwPeriod.Count = FollowupRecertStart.Count();
+                windowPeriodList.Add(windiwPeriod);
+
+                result.WindiwPeriodModel = windowPeriodList;
                 //PS.Count
+
+
 
                 //result.ClientAuditModel = GetPage(List, model.Page, model.PageSize);
                 //result.TotalCount = List.Count();
@@ -1517,6 +1759,554 @@ namespace Ozone.Infrastructure.Shared.Services
             {
                 throw ex;
             }
+        }
+
+
+
+        public async Task<List<CertifiedClientModel>> GetWindowperiodforDashboard(long? organizationId )
+        {
+            try
+            {
+
+                string StandardId = "";
+                string LeadAuditorId = "";
+                CertifiedClientModel SHOfAudit = new CertifiedClientModel();
+                string? fromdate = null;
+                DateTime todate = DateTime.Now;
+                string OrganizationId = null;
+
+
+                fromdate = "2020-01-01";
+
+                if (organizationId == 1)
+                {
+                    OrganizationId = null;
+                }
+                else 
+                {
+                    OrganizationId = organizationId.ToString();
+                }
+               
+                   StandardId = "7";
+                    
+                
+                //long? OrgId;
+                //if (OrganizationId != null && OrganizationId !="" && OrganizationId != string.Empty) 
+                //{
+                //    OrgId = Convert.ToInt64(OrganizationId);
+
+
+                //}
+                List<CertifiedClientModel> SHALIst = new List<CertifiedClientModel>();
+
+                await EnsureConnectionOpenAsync();
+                using (var command = _dbContext.Database.GetDbConnection().CreateCommand())
+                {
+
+                    command.CommandText = "sp_ScheduleOfAudit_with_Windowperiod";
+                    //command.CommandText = "sp_AVG_Tat_AuditorReport";
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddRange(new[]
+                    {
+                    new SqlParameter("@FromDate",Convert.ToDateTime(fromdate)),
+                    new SqlParameter("@ToDate",Convert.ToDateTime(todate)),
+                    //new SqlParameter("@StandardId",StandardId),
+                    //new SqlParameter("@LeadAuditorId",LeadAuditorId),
+                    
+                    
+                    new SqlParameter("@StandardId",(StandardId == "" ? null : StandardId)),
+
+                    new SqlParameter("@OrganizationId",(OrganizationId == "" ? null : OrganizationId)),
+                    //new SqlParameter("@OrganizationId",OrganizationId),
+                    });
+                    //  command.Transaction = GetActiveTransaction();
+
+                    using (var dataReader = command.ExecuteReader())
+                    {
+                        if (dataReader.HasRows)
+                        {
+                            var i = 1;
+                            while (dataReader.Read())
+                            {
+                                CertifiedClientModel SHA = new CertifiedClientModel();
+                                SHA.S_No = i++;
+                                SHA.ProjectId= Convert.ToInt64(dataReader["ProjectId"]);
+                                SHA.ProjectCode = (!(dataReader["ProjectCode"] is DBNull)) ? dataReader["ProjectCode"].ToString() : null;
+                                SHA.ClientName = (!(dataReader["ClientName"] is DBNull)) ? dataReader["ClientName"].ToString() : null;
+                                SHA.Country = (!(dataReader["Country"] is DBNull)) ? dataReader["Country"].ToString() : null;
+                                SHA.CertificationStatus = (!(dataReader["CertificationStatus"] is DBNull)) ? dataReader["CertificationStatus"].ToString() : null;
+                                SHA.currentState = (!(dataReader["currentState"] is DBNull)) ? dataReader["currentState"].ToString() : null;
+                                SHA.Registration_no = (!(dataReader["Registration_no"] is DBNull)) ? dataReader["Registration_no"].ToString() : null;
+                                SHA.CertificationIssueDate = (!(dataReader["CertificationIssueDate"] is DBNull)) ? Convert.ToDateTime(dataReader["CertificationIssueDate"]) : (DateTime?)null;
+                                SHA.CertificationExpiryDate = (!(dataReader["CertificationExpiryDate"] is DBNull)) ? Convert.ToDateTime(dataReader["CertificationExpiryDate"]).AddDays(-2) : (DateTime?)null;
+                                SHA.Surveillance_Frequency = (!(dataReader["Surveillance_Frequency"] is DBNull)) ? dataReader["Surveillance_Frequency"].ToString() : null;
+                                SHA.IntimationdateSurv_1 = (!(dataReader["IntimationdateSurv_1"] is DBNull)) ? Convert.ToDateTime(dataReader["IntimationdateSurv_1"]) : (DateTime?)null;
+                                SHA.Windowperiod_start_Surv_1 = (!(dataReader["Windowperiod_start_Surv_1"] is DBNull)) ? Convert.ToDateTime(dataReader["Windowperiod_start_Surv_1"]) : (DateTime?)null;
+                                SHA.Windowperiod_end_Surv_1 = (!(dataReader["Windowperiod_end_Surv_1"] is DBNull)) ? Convert.ToDateTime(dataReader["Windowperiod_end_Surv_1"]) : (DateTime?)null;
+                                SHA.Surv_1_due = (!(dataReader["Surv_1_due"] is DBNull)) ? Convert.ToDateTime(dataReader["Surv_1_due"]) : (DateTime?)null;
+                                SHA.Windowperiod_Start_FUP_1 = (!(dataReader["Windowperiod_Sart_FUP_1"] is DBNull)) ? Convert.ToDateTime(dataReader["Windowperiod_Sart_FUP_1"]) : (DateTime?)null;
+                                SHA.Windowperiod_end_FUP_1 = (!(dataReader["Windowperiod_end_FUP_1"] is DBNull)) ? Convert.ToDateTime(dataReader["Windowperiod_end_FUP_1"]) : (DateTime?)null;
+
+                                SHA.IntimationdateSurv_2 = (!(dataReader["IntimationdateSurv_2"] is DBNull)) ? Convert.ToDateTime(dataReader["IntimationdateSurv_2"]) : (DateTime?)null;
+
+                                SHA.Windowperiod_start_Surv_2 = (!(dataReader["Windowperiod_start_Surv_2"] is DBNull)) ? Convert.ToDateTime(dataReader["Windowperiod_start_Surv_2"]) : (DateTime?)null;
+                                SHA.Windowperiod_end_Surv_2 = (!(dataReader["Windowperiod_end_Surv_2"] is DBNull)) ? Convert.ToDateTime(dataReader["Windowperiod_end_Surv_2"]) : (DateTime?)null;
+                                SHA.Surv_2_due = (!(dataReader["Surv_2_due"] is DBNull)) ? Convert.ToDateTime(dataReader["Surv_2_due"]) : (DateTime?)null;
+                                SHA.Windowperiod_Sart_FUP_2 = (!(dataReader["Windowperiod_Sart_FUP_2"] is DBNull)) ? Convert.ToDateTime(dataReader["Windowperiod_Sart_FUP_2"]) : (DateTime?)null;
+                                SHA.Windowperiod_end_FUP_2 = (!(dataReader["Windowperiod_end_FUP_2"] is DBNull)) ? Convert.ToDateTime(dataReader["Windowperiod_end_FUP_2"]) : (DateTime?)null;
+
+                                SHA.RecertificationIntimationdate = (!(dataReader["RecertificationIntimationdate"] is DBNull)) ? Convert.ToDateTime(dataReader["RecertificationIntimationdate"]) : (DateTime?)null;
+
+                                SHA.Recertification_Windowperiod_start_Surv_2 = (!(dataReader["Recertification_Windowperiod_start_Surv_2"] is DBNull)) ? Convert.ToDateTime(dataReader["Recertification_Windowperiod_start_Surv_2"]) : (DateTime?)null;
+                                SHA.Recertification_Windowperiod_end_Surv_2 = (!(dataReader["Recertification_Windowperiod_end_Surv_2"] is DBNull)) ? Convert.ToDateTime(dataReader["Recertification_Windowperiod_end_Surv_2"]) : (DateTime?)null;
+                                SHA.Followup_Recert_Start = (!(dataReader["Followup_Recert_Start"] is DBNull)) ? Convert.ToDateTime(dataReader["Followup_Recert_Start"]) : (DateTime?)null;
+                                SHA.Followup_Recert_end = (!(dataReader["Followup_Recert_end"] is DBNull)) ? Convert.ToDateTime(dataReader["Followup_Recert_end"]) : (DateTime?)null;
+                                SHA.CycleCode = (!(dataReader["CycleCode"] is DBNull)) ? dataReader["CycleCode"].ToString() : null;
+
+
+                                SHALIst.Add(SHA);
+                                //}); ;
+                            }
+                        }
+                    }
+                }
+
+                return SHALIst;
+
+
+            }
+
+            catch (Exception ex)
+            {
+                // throw ex;
+                return null;
+            }
+        }
+
+        public async Task<List<AuditReviewerDocumentModel>> GetAllAuditReviewerDocuments(long clientauditvisitId)
+        {
+            var result = new List<AuditReviewerDocumentModel>();
+
+        
+
+            var DocumentList = await Task.Run(() => _dbContext.AuditReviewerDocuments.Include(x => x.AuditDocumentType).Where(x => x.IsDeleted == false && x.ClientAuditVisitId== clientauditvisitId).ToList());
+            result = _mapper.Map<List<AuditReviewerDocumentModel>>(DocumentList);
+
+
+            foreach (var auditlist in result)
+            {
+                if (auditlist.DocumentPath != null)
+                {
+                    string[] subs = auditlist.DocumentPath.Split('\\');
+                    var FileName = subs.LastOrDefault();
+                    //string[] sub = auditlist.DocumentFilePath.Split('_');
+                    var filename2 = FileName.Split(new char[] { '_' }, 3);
+                    string reportname = filename2.LastOrDefault();
+                    auditlist.DocumentPath = reportname;
+
+
+                }
+            }
+
+            //var DbData = await Task.Run(() => _dbContext.ClientAuditVisit.Include(x => x.Project).Include(x => x.VisitStatus).Include(x => x.VisitType).Include(x => x.VisitLevel).Include(x => x.Auditor1).Include(x => x.Auditor2).Include(x => x.Auditor3).Include(x => x.Auditor4).Include(x => x.Auditor5).Include(x => x.LeadAuditor).Include(x => x.JustifiedPerson).Include(x => x.TechnicalExpert).Include(x => x.Reviewer).Where(x => x.Id == id).OrderByDescending(x => x.Id).FirstOrDefault());
+            //result = _mapper.Map<ClientAuditVisitModel>(DbData);
+            return result;
+        }
+
+
+        public async Task<string> AuditReviewerDocumentCreate(AuditReviewerDocumentModel input)
+        {
+            using (var transaction = _unitOfWork.BeginTransaction())
+            {
+                AuditReviewerDocuments DbResult = await Task.Run(() => _dbContext.AuditReviewerDocuments.Where(x => x.Id == input.Id && x.IsDeleted==false).FirstOrDefault());
+
+                if (input.File != null || DbResult.DocumentPath != null)
+                {
+                    //string password = _secPolicyRepo.GetPasswordComplexityRegexPolicy().ToString();
+
+
+                    try
+                    {
+                        long newid;
+                        bool New = false;
+                        if (DbResult == null)
+                        {
+                            New = true;
+                            DbResult = new AuditReviewerDocuments();
+                        }
+
+                        DbResult.ClientAuditVisitId = input.ClientAuditVisitId;
+                        DbResult.AuditDocumentTypeId = input.AuditDocumentTypeId;
+                        DbResult.IsDeleted = false;
+
+                       
+
+
+                      
+                        if (New == true)
+                        {
+                            DbResult.CreatedById = input.CreatedById;
+                            DbResult.CreatedDate = DateTime.Now;
+                            _dbContext.AuditReviewerDocuments.Add(DbResult);
+                        }
+                        else
+                        {
+                            DbResult.LastUpdatedById = input.CreatedById;
+                            DbResult.CreatedDate = DateTime.Now;
+                            _dbContext.AuditReviewerDocuments.Update(DbResult);
+                        }
+                        //await base.AddAsync(secuserEntity);
+                        //await SecUser.(secuserEntity);
+                        // _dbContext.SecUser.Add(secuserEntity);
+                        //  ozonedb.Add
+                        //  await _secuserRepository.CreateUser(secuserEntity);
+                        // await _unitOfWork.SaveChangesAsync();
+                        var result = await _unitOfWork.SaveChangesAsync();
+
+                        newid = DbResult.Id;
+
+                        transaction.Commit();
+                        if (input.File != null)
+                        {
+                            string filename = Path.GetFileName(input.File.FileName);
+                            string ContentType = input.File.ContentType;
+
+                            string reportPath = _configuration["Reporting:AuditReviewerDocumentsPath"];
+
+                            // string newFileName = @"D:\Update work\LIbrary_Documents\" + +newid + "_" + filename;
+
+                            string newFileName = reportPath + +newid + "_" + Guid.NewGuid() + "_" + filename;
+                            // string newFileName = @"G:\OzoneDocuments\LibraryDocument\" + +newid + "_" + filename;
+                            using (var stream = new FileStream(newFileName, FileMode.Create))
+                            {
+                                await input.File.CopyToAsync(stream);
+
+                            }
+                            DbResult.DocumentPath = newFileName;
+                            DbResult.DocumentContentType = ContentType;
+                            _dbContext.AuditReviewerDocuments.Update(DbResult);
+                            var result2 = await _unitOfWork.SaveChangesAsync();
+                        }
+                        return "Successfully Inserted!";
+
+
+
+                    }
+                    catch (Exception ex)
+                    {
+                        var Exception = ex;
+                        transaction.Rollback();
+                        return "Not Inserted!";
+                    }
+
+
+
+                }
+                else
+                {
+                    return "Please Select Document !";
+                }
+                //return "User Already Exists!";
+            }
+
+        }
+
+        public async Task<string> AuditReviewerDocumentDeleteById(long id)
+        {
+            // OzoneContext ozonedb = new OzoneContext();
+            using (var transaction = _unitOfWork.BeginTransaction())
+            {
+
+
+                AuditReviewerDocuments dbresult = _dbContext.AuditReviewerDocuments.Where(u => u.Id == id).FirstOrDefault();
+
+
+                if (dbresult != null)
+                {
+                    // SecUser user = _secuserRepository.GetUserByUserName(input.UserName);
+
+                    try
+                    {
+
+
+                        dbresult.IsDeleted = true;
+                        _dbContext.AuditReviewerDocuments.Update(dbresult);
+                        await _unitOfWork.SaveChangesAsync();
+
+
+
+
+
+                        transaction.Commit();
+
+
+                        return "Successfully Deleted!";
+
+                    }
+                    catch (Exception ex)
+                    {
+                        var Exception = ex;
+                        transaction.Rollback();
+                        return "Not Deleted!";
+                    }
+                }
+                else
+                {
+                    return "Record not Exists!";
+                }
+
+
+            }
+            // return "User Already Exists!";
+        }
+
+
+        public async Task<AuditReviewerDocumentModel> DownloadAuditReviewerDocuments(long id)
+        {
+            // OzoneContext ozonedb = new OzoneContext();
+            using (var transaction = _unitOfWork.BeginTransaction())
+            {
+                AuditReviewerDocuments Dbresult = await Task.Run(() => _dbContext.AuditReviewerDocuments.Where(x => x.Id == id).FirstOrDefault());
+
+                AuditReviewerDocumentModel Li = new AuditReviewerDocumentModel();
+                if (Dbresult != null)
+                {
+                    Li.DocumentPath = Dbresult.DocumentPath;
+                    Li.DocumentContentType = Dbresult.DocumentContentType;
+
+                    //string password = _secPolicyRepo.GetPasswordComplexityRegexPolicy().ToString();
+                }
+                return Li;
+            }
+
+        }
+
+
+        public async Task<List<MappingDocumentsWithStandardModel>> GetAllDocumentsTypeforReviewer(long id)
+        {
+            var result = new List<MappingDocumentsWithStandardModel>();
+
+            var DbData = await Task.Run(() => _dbContext.ClientAuditVisit.Where(x => x.Id == id).OrderByDescending(x => x.Id).FirstOrDefault());
+            var clientproject = await Task.Run(() => _dbContext.ClientProjects.Where(x => x.Id == DbData.ProjectId).OrderByDescending(x => x.Id).FirstOrDefault());
+
+            var DocumentList = await Task.Run(() => _dbContext.MappingDocumentsWithStandard.Include(x => x.DocumentType).Where(x => x.IsDeleted == false && x.IsActive == true && x.StandardId == clientproject.StandardId && x.VisitLevelId == DbData.VisitLevelId && x.DocumentAssignId==2).ToList());
+            result = _mapper.Map<List<MappingDocumentsWithStandardModel>>(DocumentList);
+
+          
+            return result;
+        }
+
+        public async Task<List<MappingDocumentsWithStandardModel>> GetAllManagerDocumentsType(long id)
+        {
+            var result = new List<MappingDocumentsWithStandardModel>();
+
+            var DbData = await Task.Run(() => _dbContext.ClientAuditVisit.Where(x => x.Id == id).OrderByDescending(x => x.Id).FirstOrDefault());
+            var clientproject = await Task.Run(() => _dbContext.ClientProjects.Where(x => x.Id == DbData.ProjectId).OrderByDescending(x => x.Id).FirstOrDefault());
+
+            var DocumentList = await Task.Run(() => _dbContext.MappingDocumentsWithStandard.Include(x => x.DocumentType).Where(x => x.IsDeleted == false && x.IsActive == true && x.StandardId == clientproject.StandardId && x.VisitLevelId == DbData.VisitLevelId && x.DocumentAssignId==3).ToList());
+            result = _mapper.Map<List<MappingDocumentsWithStandardModel>>(DocumentList);
+
+
+            return result;
+        }
+
+        public async Task<List<AuditMangerDocumentModel>> GetAllAuditManagerDocuments(long clientauditvisitId)
+        {
+            var result = new List<AuditMangerDocumentModel>();
+
+
+
+            var DocumentList = await Task.Run(() => _dbContext.AuditManagerDocuments.Include(x => x.AuditDocumentType).Where(x => x.IsDeleted == false && x.ClientAuditVisitId == clientauditvisitId).ToList());
+            result = _mapper.Map<List<AuditMangerDocumentModel>>(DocumentList);
+
+
+            foreach (var auditlist in result)
+            {
+                if (auditlist.DocumentPath != null)
+                {
+                    string[] subs = auditlist.DocumentPath.Split('\\');
+                    var FileName = subs.LastOrDefault();
+                    //string[] sub = auditlist.DocumentFilePath.Split('_');
+                    var filename2 = FileName.Split(new char[] { '_' }, 3);
+                    string reportname = filename2.LastOrDefault();
+                    auditlist.DocumentPath = reportname;
+
+
+                }
+            }
+
+            //var DbData = await Task.Run(() => _dbContext.ClientAuditVisit.Include(x => x.Project).Include(x => x.VisitStatus).Include(x => x.VisitType).Include(x => x.VisitLevel).Include(x => x.Auditor1).Include(x => x.Auditor2).Include(x => x.Auditor3).Include(x => x.Auditor4).Include(x => x.Auditor5).Include(x => x.LeadAuditor).Include(x => x.JustifiedPerson).Include(x => x.TechnicalExpert).Include(x => x.Reviewer).Where(x => x.Id == id).OrderByDescending(x => x.Id).FirstOrDefault());
+            //result = _mapper.Map<ClientAuditVisitModel>(DbData);
+            return result;
+        }
+
+
+        public async Task<string> AuditManagerDocumentCreate(AuditMangerDocumentModel input)
+        {
+            using (var transaction = _unitOfWork.BeginTransaction())
+            {
+                AuditManagerDocuments DbResult = await Task.Run(() => _dbContext.AuditManagerDocuments.Where(x => x.Id == input.Id && x.IsDeleted == false).FirstOrDefault());
+
+                if (input.File != null || DbResult.DocumentPath != null)
+                {
+                    //string password = _secPolicyRepo.GetPasswordComplexityRegexPolicy().ToString();
+
+
+                    try
+                    {
+                        long newid;
+                        bool New = false;
+                        if (DbResult == null)
+                        {
+                            New = true;
+                            DbResult = new AuditManagerDocuments();
+                        }
+
+                        DbResult.ClientAuditVisitId = input.ClientAuditVisitId;
+                        DbResult.AuditDocumentTypeId = input.AuditDocumentTypeId;
+                        DbResult.IsDeleted = false;
+                        DbResult.Deactive = false;
+
+
+
+
+
+                        if (New == true)
+                        {
+                            DbResult.CreatedById = input.CreatedById;
+                            DbResult.CreatedDate = DateTime.Now;
+                            _dbContext.AuditManagerDocuments.Add(DbResult);
+                        }
+                        else
+                        {
+                            DbResult.LastUpdatedById = input.CreatedById;
+                            DbResult.CreatedDate = DateTime.Now;
+                            _dbContext.AuditManagerDocuments.Update(DbResult);
+                        }
+                        //await base.AddAsync(secuserEntity);
+                        //await SecUser.(secuserEntity);
+                        // _dbContext.SecUser.Add(secuserEntity);
+                        //  ozonedb.Add
+                        //  await _secuserRepository.CreateUser(secuserEntity);
+                        // await _unitOfWork.SaveChangesAsync();
+                        var result = await _unitOfWork.SaveChangesAsync();
+
+                        newid = DbResult.Id;
+
+                        transaction.Commit();
+                        if (input.File != null)
+                        {
+                            string filename = Path.GetFileName(input.File.FileName);
+                            string ContentType = input.File.ContentType;
+
+                            string reportPath = _configuration["Reporting:AuditManagerDocumentsPath"];
+
+                            // string newFileName = @"D:\Update work\LIbrary_Documents\" + +newid + "_" + filename;
+
+                            string newFileName = reportPath + +newid + "_" + Guid.NewGuid() + "_" + filename;
+                            // string newFileName = @"G:\OzoneDocuments\LibraryDocument\" + +newid + "_" + filename;
+                            using (var stream = new FileStream(newFileName, FileMode.Create))
+                            {
+                                await input.File.CopyToAsync(stream);
+
+                            }
+                            DbResult.DocumentPath = newFileName;
+                            DbResult.DocumentContentType = ContentType;
+                            _dbContext.AuditManagerDocuments.Update(DbResult);
+                            var result2 = await _unitOfWork.SaveChangesAsync();
+                        }
+                        return "Successfully Inserted!";
+
+
+
+                    }
+                    catch (Exception ex)
+                    {
+                        var Exception = ex;
+                        transaction.Rollback();
+                        return "Not Inserted!";
+                    }
+
+
+
+                }
+                else
+                {
+                    return "Please Select Document !";
+                }
+                //return "User Already Exists!";
+            }
+
+        }
+
+        public async Task<string> AuditManagerDocumentDeactiveById(long id)
+        {
+            // OzoneContext ozonedb = new OzoneContext();
+            using (var transaction = _unitOfWork.BeginTransaction())
+            {
+
+
+                AuditManagerDocuments dbresult = _dbContext.AuditManagerDocuments.Where(u => u.Id == id).FirstOrDefault();
+
+
+                if (dbresult != null)
+                {
+                    // SecUser user = _secuserRepository.GetUserByUserName(input.UserName);
+
+                    try
+                    {
+
+
+                        dbresult.Deactive = true;
+                        _dbContext.AuditManagerDocuments.Update(dbresult);
+                        await _unitOfWork.SaveChangesAsync();
+
+
+
+
+
+                        transaction.Commit();
+
+
+                        return "Successfully Deleted!";
+
+                    }
+                    catch (Exception ex)
+                    {
+                        var Exception = ex;
+                        transaction.Rollback();
+                        return "Not Deleted!";
+                    }
+                }
+                else
+                {
+                    return "Record not Exists!";
+                }
+
+
+            }
+            // return "User Already Exists!";
+        }
+
+
+        public async Task<AuditMangerDocumentModel> DownloadAudiorManagerDocuments(long id)
+        {
+            // OzoneContext ozonedb = new OzoneContext();
+            using (var transaction = _unitOfWork.BeginTransaction())
+            {
+                AuditManagerDocuments Dbresult = await Task.Run(() => _dbContext.AuditManagerDocuments.Where(x => x.Id == id).FirstOrDefault());
+
+                AuditMangerDocumentModel Li = new AuditMangerDocumentModel();
+                if (Dbresult != null)
+                {
+                    Li.DocumentPath = Dbresult.DocumentPath;
+                    Li.DocumentContentType = Dbresult.DocumentContentType;
+
+                    //string password = _secPolicyRepo.GetPasswordComplexityRegexPolicy().ToString();
+                }
+                return Li;
+            }
+
         }
 
     }

@@ -94,6 +94,31 @@ namespace Ozone.WebApi.Controllers.ClientALLProjects
 
         }
 
+        [Route("GetAllRequiredDocumentBYId")]
+        [HttpGet]
+        [Authorize]
+
+        public async Task<IActionResult> GetAllRequiredDocumentBYId(int id)
+        {
+            var list = await _clientAuditVisitService.GetAllRequiredDocumentBYId(id);
+            return new JsonResult(list);
+
+
+        }
+
+
+        [Route("GetAllDocumentsTypeWSVLAS")]
+        [HttpGet]
+        [Authorize]
+
+        public async Task<IActionResult> GetAllDocumentsTypeWSVLAS(int id)
+        {
+            var list = await _clientAuditVisitService.GetAllDocumentsTypeWSVLAS(id);
+            return new JsonResult(list);
+
+
+        }
+
         [Route("GetClientAuditVisitByOrganizationId")]
         [HttpGet]
         [Authorize]
@@ -560,5 +585,148 @@ namespace Ozone.WebApi.Controllers.ClientALLProjects
         //    var result = await _AllDropdownService.CreateUserVisitLevel(input);
         //    return Ok(new Response { Status = result, Message = result });
         //}
+
+
+        [HttpPost]
+        [Route("CreateAuditReviewerDocument")]
+        [Authorize]
+
+        public async Task<IActionResult> CreateAuditReviewerDocument([FromForm] AuditReviewerDocumentModel input)
+        {
+           
+            var result = await _clientAuditVisitService.AuditReviewerDocumentCreate(input);
+            return Ok(new Response { Status = result, Message = result });
+
+        }
+
+
+
+
+        [HttpGet, DisableRequestSizeLimit]
+        [Route("DownloadAuditReviewerDocuments")]
+        [Authorize]
+
+        public async Task<IActionResult> DownloadAuditReviewerDocuments(long id)
+        {
+
+            var result = await _clientAuditVisitService.DownloadAuditReviewerDocuments(id);
+            //  var fileName = @"G:/OzoneDocuments/LibraryDocument/10_AD Requirement.txt";
+            var fileName = result.DocumentPath;
+            var memory = new MemoryStream();
+            using (var stream = new FileStream(fileName, FileMode.Open))
+            {
+                await stream.CopyToAsync(memory);
+            }
+            memory.Position = 0;
+     
+            var contenpe = result.DocumentContentType;
+            var fileNM = Path.GetFileName(fileName);
+          
+            return File(memory, contenpe, fileNM);
+        }
+
+        [Route("GetAllAuditReviewerDocuments")]
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> GetAllAuditReviewerDocuments(long id)
+        {
+
+            var list = await _clientAuditVisitService.GetAllAuditReviewerDocuments(id);
+
+            return new JsonResult(list);
+        }
+
+        [HttpPost]
+        [Route("AuditReviewerDocumentDeleteById")]
+        [Authorize]
+
+        public async Task<IActionResult> AuditReviewerDocumentDeleteById(long id)
+        {
+            // SecUserService secuserservice = new SecUserService();
+            var result = await _clientAuditVisitService.AuditReviewerDocumentDeleteById(id);
+            return Ok(new Response { Status = result, Message = result });
+
+        }
+        [Route("GetAllReviewerDocumentsType")]
+        [HttpGet]
+        [Authorize]
+
+        public async Task<IActionResult> GetAllReviewerDocumentsType(int id)
+        {
+            var list = await _clientAuditVisitService.GetAllDocumentsTypeforReviewer(id);
+            return new JsonResult(list);
+
+
+        }
+        [Route("GetAllManagerDocumentsType")]
+        [HttpGet]
+        [Authorize]
+
+        public async Task<IActionResult> GetAllManagerDocumentsType(int id)
+        {
+            var list = await _clientAuditVisitService.GetAllManagerDocumentsType(id);
+            return new JsonResult(list);
+
+
+        }
+
+
+        [Route("GetAllAuditManagerDocuments")]
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> GetAllAuditManagerDocuments(long id)
+        {
+
+            var list = await _clientAuditVisitService.GetAllAuditManagerDocuments(id);
+
+            return new JsonResult(list);
+        }
+
+        [HttpPost]
+        [Route("AuditManagerDocumentDeactiveById")]
+        [Authorize]
+
+        public async Task<IActionResult> AuditManagerDocumentDeactiveById(long id)
+        {
+            // SecUserService secuserservice = new SecUserService();
+            var result = await _clientAuditVisitService.AuditManagerDocumentDeactiveById(id);
+            return Ok(new Response { Status = result, Message = result });
+
+        }
+
+        [HttpPost]
+        [Route("AuditManagerDocumentCreate")]
+        [Authorize]
+
+        public async Task<IActionResult> AuditManagerDocumentCreate([FromForm] AuditMangerDocumentModel input)
+        {
+
+            var result = await _clientAuditVisitService.AuditManagerDocumentCreate(input);
+            return Ok(new Response { Status = result, Message = result });
+
+        }
+
+        [HttpGet, DisableRequestSizeLimit]
+        [Route("DownloadAuditManagerDocuments")]
+        [Authorize]
+
+        public async Task<IActionResult> DownloadAuditManagerDocuments(long id)
+        {
+
+            var result = await _clientAuditVisitService.DownloadAudiorManagerDocuments(id);
+            //  var fileName = @"G:/OzoneDocuments/LibraryDocument/10_AD Requirement.txt";
+            var fileName = result.DocumentPath;
+            var memory = new MemoryStream();
+            using (var stream = new FileStream(fileName, FileMode.Open))
+            {
+                await stream.CopyToAsync(memory);
+            }
+            memory.Position = 0;
+
+            var contenpe = result.DocumentContentType;
+            var fileNM = Path.GetFileName(fileName);
+
+            return File(memory, contenpe, fileNM);
+        }
     }
 }

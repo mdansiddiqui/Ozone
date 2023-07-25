@@ -57,13 +57,13 @@ export class UserAuditsComponent implements OnInit {
     Duration: new FormControl(''),
     Year: new FormControl('', Validators.minLength(4)),
     EacodeId: new FormControl(''),
-  
+
     NaceCodeId: new FormControl(''),
     AuditTypeId: new FormControl(''),
     CertificationBodyId: new FormControl(''),
     AuditLevel: new FormControl(''),
     // IsDeleted: new FormControl(''),
-   
+
   })
   datePipe = new DatePipe("en-US");
   public UserName:string;
@@ -74,10 +74,11 @@ export class UserAuditsComponent implements OnInit {
   public pagedDto: PagedRequestModel = new PagedRequestModel()
   pageNumber : number = 1
   pageSize : number = 10
-  public isEditShown : boolean  
-  public isViewShown : boolean  
-  public isAddShown : boolean  
+  public isEditShown : boolean
+  public isViewShown : boolean
+  public isAddShown : boolean
   public keyword : string = ''
+  public OID : number
   public StandardList = [];
   public UserAuditList = [];
   public ApprovalList = [];
@@ -88,12 +89,13 @@ export class UserAuditsComponent implements OnInit {
   public AuditTypeList=[];
   public CertificationBodyList=[];
   submitted = false;
+  public StatusId:number
 
  get f() { return this.UserAuditForm.controls; }
   fileToUpload: any;
 
  public UserStatusList=[]
- 
+
   readonly allowedPageSizes = [5, 10, 'all'];
   readonly displayModes = [{ text: "Display Mode 'full'", value: "full" }, { text: "Display Mode 'compact'", value: "compact" }];
   displayMode = "full";
@@ -106,8 +108,8 @@ export class UserAuditsComponent implements OnInit {
   get isCompactMode() {
       return this.displayMode === "compact";
   }
-  
-  constructor( 
+
+  constructor(
   //  private http: HttpClient,
     private _UserStandardService: UserStandardService,
     // private route: Router,
@@ -117,7 +119,7 @@ export class UserAuditsComponent implements OnInit {
      private route: ActivatedRoute,
     private _makerAuthorizerFormService: MakerAuthorizerFormService
      //public StandardService: StandardService
-    ) 
+    )
     {    this.edit = this.edit.bind(this);
       this.delete = this.delete.bind(this);
       this.editRecord =this.editRecord.bind(this); }
@@ -130,85 +132,99 @@ this.loadStandard();
    this.loadAuditTypeId();
    this.loadCertificationBody();
     //this.onSearch();
-   
+
   }
   ngAfterViewInit() : void {
     this.editUser()
-   
+
   }
   Userid: number
   editUser()
   {
-       
-      var  ur ;
-      ur=window.location.href.split("/")[7];
-      var com=[]=ur.split("?")[1];
-      if(com!=undefined && com!=null)
-      {
-      var PId=com.split("=")[0];
-      this.Userid=PId;
+
+    var ur = window.location.href.split("/")[7];
+    var com = ur.split("?")[1];
+
+  if (com != undefined && com != null) {
+    var PId = com.split("=")[0]
+    // var org = com.split("&")[1]
+    // var oid = org.split("=")[1]
+    // this.OID=parseInt(oid);
+    // var params = new URLSearchParams(com);
+    // // var NId = params.get("NId");
+    // var OId = params.get("OrganzationId");
+    //   console.log(PId);
+    //   console.log(OId);
+    //   this.OID = OId
+    this.Userid= +PId;
       this.SecUserService.GetUserbyId(this.Userid).subscribe(data => {
         this.UserName  = data.userName
-            
+        this.StatusId=data.approvelStatusId;
+        this.OID=data.organizationId;
+        localStorage.removeItem('UserOrganizationID');
+        localStorage.setItem('UserOrganizationID', this.OID.toString());
+        localStorage.removeItem('userstatusId');
+        localStorage.setItem('userstatusId', this.StatusId.toString());
+
       })
       this.onSearch();
     // this._UserStandardService.GetUserAudit(this.Userid).subscribe(data => {
-        
+
     //   this.UserAuditList= data
-      
+
     // })
   //  this.onSearch(this.userUpdateId);
   }
-    
+
   }
   // loadNaceCode(): void {
-      
+
   //   this._UserStandardService.getAllNaceCode().subscribe((Response)=>{
   //     this.NaceCodeList = Response
-        
+
   //   })
   // }
 
   loadNaceCode(eacodeId): void {
-     
+
         this._UserStandardService.getAllNaceCodeByEaCode(eacodeId).subscribe((Response) => {
           this.NaceCodeList = Response
-     
+
          // riskLevelId=
           // this.ClientForm.controls.RiskId.setValue(this.NaceCodeList[0].riskLevelId);
-          
+
          // console.log(this.NaceCodeList[0].riskLevelId);
-    
+
         })
       }
   // loadEaCode(): void {
-      
+
   //   this._UserStandardService.getAllEACode().subscribe((Response)=>{
   //     this.EAcodeList = Response
-        
+
   //   })
   // }
 
   loadEaCode(): void {
-     
+
         this._UserStandardService.getAllEACode().subscribe((Response) => {
           this.EACodeList = Response
           let eacodeId = 0;
           this.loadNaceCode(eacodeId);
-    
+
         })
       }
   onSubmit(): void {
     this.UserAudit= new UserAuditModel();
     this.submitted = true;
-    
+
         // stop here if form is invalid
         if (this.UserAuditForm.invalid) {
           abp.message.error("Some fields are required ");
           return;
         }
 
-   
+
     if (this.id != undefined || this.id != null&& this.id>0) {
       this.UserAudit.Id=this.id;
     }
@@ -221,14 +237,14 @@ this.loadStandard();
     this.UserAudit.Duration=parseInt(this.UserAuditForm.get('Duration').value)
     this.UserAudit.Year=parseInt(this.UserAuditForm.get('Year').value)
     this.UserAudit.NaceCodeId=parseInt(this.UserAuditForm.get('NaceCodeId').value)
-   
+
     this.UserAudit.EacodeId=parseInt(this.UserAuditForm.get('EacodeId').value)
     this.UserAudit.AuditTypeId=parseInt(this.UserAuditForm.get('AuditTypeId').value)
     this.UserAudit.CertificationBodyId=parseInt(this.UserAuditForm.get('CertificationBodyId').value)
     this.UserAudit.AuditLevel=this.UserAuditForm.get('AuditLevel').value
-   
-   
-  
+
+
+
   var LoginUserId =localStorage.getItem('userId');
    this.UserAudit.CreatedBy=parseInt(LoginUserId)
    this.UserAudit.UserId= this.Userid
@@ -245,16 +261,16 @@ this.loadStandard();
   //    foData.append('ValidationDate',this.UserStandardForm.get('ValidationDate').value);
   //    foData.append('EacodeId',this.UserStandardForm.get('EacodeId').value);
 
-    
+
   //    foData.append('ValidationDate',this.UserStandardForm.get('ValidationDate').value);
   //    foData.append('EacodeId',this.UserStandardForm.get('EacodeId').value);
   //    var LoginUserId =localStorage.getItem('userId');
   //    foData.append('CreatedBy',LoginUserId);
   //    foData.append('UserId', this.Userid.toString());
 
-     
+
       this._UserStandardService.UserAuditCreate(this.UserAudit).subscribe((Response)=>{
- 
+
     abp.message.info(Response.message)
     this.reloadGrid();
     this.NewRecord();
@@ -263,17 +279,17 @@ this.loadStandard();
 
 
 id: number
-  edit(e) {  
-           
+  edit(e) {
+
     // var List = [];
-    // List=this.Liststandard                                                                             ; 
+    // List=this.Liststandard                                                                             ;
     // this.router.navigateByUrl('/app/pages/stock-management/library');
     this.id=e.row.data.id
     // var updateDate =this.StandardList.find(x => x.id == this.id );
 
-    // this._StandardService.GetStandardById(this.id).subscribe((res) => 
+    // this._StandardService.GetStandardById(this.id).subscribe((res) =>
     // {
-      
+
         this.UserAuditForm.controls.Organization.setValue(e.row.data.organization);
         this.UserAuditForm.controls.StandardId.setValue(e.row.data.standardId);
         this.UserAuditForm.controls.Duration.setValue(e.row.data.duration);
@@ -285,10 +301,10 @@ id: number
         this.UserAuditForm.controls.AuditTypeId.setValue(e.row.data.auditTypeId);
         this.UserAuditForm.controls.CertificationBodyId.setValue(e.row.data.certificationBodyId);
         this.UserAuditForm.controls.AuditLevel.setValue(e.row.data.auditLevel);
-        
 
-   }  
- 
+
+   }
+
 
 onTableDataChange(event) {
   this.pagedDto.page = event;
@@ -312,21 +328,30 @@ editViaible(e) {
   return e.row.isEditing;
 }
 
-  else
-  {
-    
-    return !e.row.isEditing;
-  }
+ var organizationId =  parseInt( localStorage.getItem('organizationId'));
+    // console.log(roleId)
+    let oid = parseInt(localStorage.getItem('UserOrganizationID'));
+    var userstatusId =  parseInt( localStorage.getItem('userstatusId'));
+    if(userstatusId==2)
+    {
+     return e.row.isEditing;
+    }
+    if (organizationId === oid)
+     {
+     return !e.row.isEditing;
+   }else {
+    return e.row.isEditing;
+   }
 
 
 }
 onSearch(){
-  
-    
+
+
   this.pagedDto.keyword = this.Userid.toString();
   this.pagedDto.authAllowed = true;
   //this.pagedDto.pageSize = 3
-  
+
   this._UserStandardService.GetPagedUserAudit(this.pagedDto).subscribe((Response) => {
     this.totalCount = Response.totalCount
     this.UserAuditList = Response.userAuditModel
@@ -336,7 +361,7 @@ onSearch(){
 
 
   reloadGrid()
- 
+
  {
 
    this.pagedDto.page =1;
@@ -345,8 +370,8 @@ onSearch(){
 
  NewRecord()
 
- 
- {  
+
+ {
   this.UserAuditForm.controls.Organization.setValue('');
   this.UserAuditForm.controls.StandardId.setValue('');
   //this.UserConsultancyForm.controls.StandardId.setValue('');
@@ -357,14 +382,14 @@ onSearch(){
   this.UserAuditForm.controls.AuditTypeId.setValue('');
   this.UserAuditForm.controls.CertificationBodyId.setValue('');
   this.UserAuditForm.controls.AuditLevel.setValue('');
-  
-  
+
+
   this.id=0;
   //  window.location.reload();
   // this.ModuleForm.controls.Name.setValue('');
   //   this.ModuleForm.controls.Description.setValue('');
   //   this.ModuleForm.controls.Code.setValue('');
-   
+
 
 
 
@@ -372,33 +397,33 @@ onSearch(){
   // this.router.routeReuseStrategy.shouldReuseRoute = () => false;
   // this.router.onSameUrlNavigation = 'reload';
   // this.router.navigate([currentUrl]);
-   
+
  // this.router.navigateByUrl('/app/pages/certification-setups/module');
 
 }
 delete(e) {
-  
+
      abp.message.confirm((""),
      undefined,
          (result: boolean) => {
              if (result) {
-               // this.SecUserService.Deleteuser(e.row.data.id).subscribe() 
+               // this.SecUserService.Deleteuser(e.row.data.id).subscribe()
                //     abp.message.info("Deleted successfully", "Status", {});
- 
+
                    this._UserStandardService.UserAuditDeleteById(e.row.data.id).subscribe((Response)=>{
-  
+
                      abp.message.info(Response.message)
                      this.onSearch();
-                    
+
                     })
-                   
+
              }
            }
       )}
 
   editRecord(e)
   {
-    
+
     // var userId=item;
     var urlink=e;
     this.router.navigateByUrl(e+this.Userid)
@@ -408,24 +433,24 @@ delete(e) {
 
 
   loadStandard(): void {
-      
+
     this._UserStandardService.getAllStandard().subscribe((Response)=>{
       this.StandardList = Response
-        
+
     })
   }
   loadAuditTypeId(): void {
-      
+
     this._UserStandardService.GetAllAuditType().subscribe((Response)=>{
       this.AuditTypeList = Response
-        
+
     })
   }
   loadCertificationBody(): void {
-      
+
     this._UserStandardService.GetAllCertificationBody().subscribe((Response)=>{
       this.CertificationBodyList = Response
-        
+
     })
   }
 

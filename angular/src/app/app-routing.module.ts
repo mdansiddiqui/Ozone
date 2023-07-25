@@ -106,6 +106,7 @@ import { DashboardComponent } from './pages/master-setups/dashboard/dashboard.co
 import { AuditorReportsComponent } from './pages/reports/auditor-reports/auditor-reports.component';
 import { InvoiceComponent } from './pages/reports/invoice/invoice.component';
 import { AuditorAuditDetailsComponent } from './pages/reports/auditor-audit-details/auditor-audit-details.component';
+import { MappingStandardWithDocumentComponent } from './pages/master-setups/mapping-standard-with-document/mapping-standard-with-document.component';
 
 
 
@@ -211,6 +212,7 @@ import { AuditorAuditDetailsComponent } from './pages/reports/auditor-audit-deta
                     //Master Setups
                     { path: 'pages/master-setups/document-type', component: DocumentTypeComponent },
                     { path: 'pages/master-setups/visit-level', component: VisitLevelComponent },
+                    { path: 'pages/master-setups/mapping-standard-with-document', component: MappingStandardWithDocumentComponent },
                     { path: 'pages/master-setups/standard-type', component: StandardTypeComponent },
                     { path: 'pages/master-setups/country', component: CountryComponent },
                     { path: 'pages/master-setups/state', component: StateComponent },

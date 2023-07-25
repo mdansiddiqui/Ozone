@@ -71,7 +71,6 @@ namespace Ozone.Application.DTOs
 
         public string FormName { get; set; }
 
-
         public IFormFile File { get; set; }
 
         public string FilePath { get; set; }

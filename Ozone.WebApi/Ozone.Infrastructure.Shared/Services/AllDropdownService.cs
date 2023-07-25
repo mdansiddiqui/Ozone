@@ -375,7 +375,7 @@ namespace Ozone.Infrastructure.Shared.Services
 
             var Project = await Task.Run(() => _dbContext.ClientProjects.Include(x => x.Client).Where(x => x.Id == id).FirstOrDefault());
            
-            var list = await Task.Run(() => _dbContext.UserAuditorNace.Include(x => x.User).Where(x => x.IsDeleted == false && x.NaceCodeId == Project.Client.NaceCodeId && x.ApprovalStatusId == 2).ToList());
+            var list = await Task.Run(() => _dbContext.UserAuditorNace.Include(x => x.User).Where(x => x.IsDeleted == false && x.User.IsActive ==  true && x.NaceCodeId == Project.Client.NaceCodeId && x.ApprovalStatusId == 2).ToList());
 
             result = _mapper.Map<List<UserAuditorNaceModel>>(list);
 
@@ -446,7 +446,7 @@ namespace Ozone.Infrastructure.Shared.Services
 
             //    }
             //}
-            var list = await Task.Run(() => _dbContext.UserAuditorNace.Include(x => x.User).Where(x => x.IsDeleted == false && x.StandardId == Project.StandardId && x.NaceCodeId == Project.Client.NaceCodeId && x.EacodeId == Project.Client.EacodeId && x.ApprovalStatusId == 2).ToList());
+            var list = await Task.Run(() => _dbContext.UserAuditorNace.Include(x => x.User).Where(x => x.IsDeleted == false && x.User.IsActive == true && x.StandardId == Project.StandardId && x.NaceCodeId == Project.Client.NaceCodeId && x.EacodeId == Project.Client.EacodeId && x.ApprovalStatusId == 2).ToList());
             result = _mapper.Map<List<UserAuditorNaceModel>>(list);
 
             foreach (var user in result)

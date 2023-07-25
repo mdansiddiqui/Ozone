@@ -28,6 +28,8 @@ using System.Web;
 //using System.IO;
 using System.Drawing;
 using Microsoft.AspNetCore.Http.Internal;
+using Ozone.Application.DTOs.Projects;
+
 namespace Ozone.Infrastructure.Shared.Services
 {
     public class AuditReportService : GenericRepositoryAsync<AuditReportDetail>, IAuditReportService
@@ -469,7 +471,9 @@ namespace Ozone.Infrastructure.Shared.Services
                 var result = new GetPagedAuditVisitReportMasterModel();
                 var AuditReportList = new List<AuditVisitReportMasterModel>();
                 var auditreportMSmodel= new AuditReportMSModel();
-                
+                var DocumentRequiredListModel = new List<MappingDocumentsWithStandardModel>();
+
+
                 //if (model.AuthAllowed == true)
                 //{
                 //var list = await _dbContext.Module.Include("Module").Include("Status").Where(x => x.IsDeleted == false && x.IsActive == true &&
@@ -477,6 +481,7 @@ namespace Ozone.Infrastructure.Shared.Services
                 //             x.ModuleId.ToString().ToLower().Contains(model.Keyword.ToLower()))).OrderByDescending(x => x.Id).ToListAsync();
                 //productDenoList = _mapper.Map<List<ModulesModel>>(list);
                 // return list;
+             
 
                 var listMaster = await Task.Run(() => _dbContext.AuditReportMaster.Include(x=>x.Project).Include(x=>x.ApprovalStatus).Where(x=> x.IsDeleted == false && x.ClientAuditVisitId == id).FirstOrDefault());
                 auditreportMSmodel = _mapper.Map<AuditReportMSModel>(listMaster);
@@ -526,6 +531,7 @@ namespace Ozone.Infrastructure.Shared.Services
                 //  var list = await _productDenominationRepository.GetPagedProductDenominationReponseAsync(model);
 
                 //result.AuditVisitReportMasterModel = GetPage(AuditReportList, model.Page, model.PageSize);
+
                 result.AuditVisitReportMasterModel = AuditReportList;
                 result.TotalCount = AuditReportList.Count();
                 result.AuditVisitReportModel = auditreportMSmodel;
@@ -927,12 +933,18 @@ namespace Ozone.Infrastructure.Shared.Services
                                     var standard=_dbContext.Certification.Where(x => x.Id == ClientProject2.StandardId && x.IsActive == true && x.IsDeleted == false).FirstOrDefault();
                                     string Standardcode=standard.Code;
                                     DateTime Date = System.DateTime.Now;
-                                    string year = Date.ToString("yy");
+                                    string year = Date.ToString("yyyy");
                                     string Month = Date.ToString("MM");
                                     string Day = Date.ToString("dd");
                                     int? ProjectCount = _dbContext.ClientProjects.Where(x => x.CertificateIssueDate != null && x.IsDeleted == false).Count();
                                     ProjectCount = ProjectCount + 1;
                                     string RegistrationNo = Standardcode + "-" + year + Month + Day+ "-" + ProjectCount;
+
+                                    int? cycleCount = _dbContext.ClientProjects.Where(x => x.CertificateIssueDate != null && x.RegistrationNo!=null && x.StandardId==ClientProject2.StandardId && x.ClientId==ClientProject2.ClientId && x.IsDeleted == false).Count();
+                                    cycleCount = cycleCount + 1;
+                                  
+                                    string cycleCode = Standardcode + "-" + year + "-" + cycleCount;
+                                    ClientProject2.CycleCode = cycleCode;
 
                                     ClientProject2.RegistrationNo = RegistrationNo;
                                     _dbContext.ClientProjects.Update(ClientProject2);

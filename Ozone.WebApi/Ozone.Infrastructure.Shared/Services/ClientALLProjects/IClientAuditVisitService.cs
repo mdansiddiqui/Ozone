@@ -21,11 +21,25 @@ namespace Ozone.Infrastructure.Shared.Services
         Task<string> ClientAuditVisitDeleteById(long id);
         Task<GetPagedClientAuditVisitModel> AuditPlan(long id,PagedResponseModel model);
         Task<ClientAuditVisitModel> DownloadAuditPlan(long id);
+        Task<List<MappingDocumentsWithStandardModel>> GetAllRequiredDocumentBYId(long id);
 
+        Task<List<MappingDocumentsWithStandardModel>> GetAllDocumentsTypeWSVLAS(long id);
         //Task<string> AuditPlaneSubmitForReview(long id, long loginUserId);
-       // Task<string> AuditComplete(long id);
+        // Task<string> AuditComplete(long id);
         Task<string> AuditComplete(ClientAuditVisitModel input);
         Task<GetPagedProjectStatusModel> ProjectStatus(long id , PagedResponseModel model);
+
+        Task<List<AuditReviewerDocumentModel>> GetAllAuditReviewerDocuments(long clientauditvisitId);
+        Task<string> AuditReviewerDocumentCreate(AuditReviewerDocumentModel input);
+
+        Task<AuditReviewerDocumentModel> DownloadAuditReviewerDocuments(long id);
+        Task<string> AuditReviewerDocumentDeleteById(long id);
+        Task<List<MappingDocumentsWithStandardModel>> GetAllDocumentsTypeforReviewer(long id);
+        Task<List<MappingDocumentsWithStandardModel>> GetAllManagerDocumentsType(long id);
+        Task<List<AuditMangerDocumentModel>> GetAllAuditManagerDocuments(long clientauditvisitId);
+        Task<string> AuditManagerDocumentCreate(AuditMangerDocumentModel input);
+        Task<string> AuditManagerDocumentDeactiveById(long id);
+        Task<AuditMangerDocumentModel> DownloadAudiorManagerDocuments(long id);
 
     }
 }

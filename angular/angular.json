@@ -101,17 +101,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "Ozone:build"
+            "browserTarget": "Ozone:build",
+            "port":5201
            
           },
           "configurations": {
             "production": {
-              "browserTarget": "Ozone:build:production"
-              
+              "browserTarget": "Ozone:build:production",
+              "port":5201
             },
             "hmr": {
               "browserTarget": "Ozone:build:hmr"
-              
+           
             }
           }
         },

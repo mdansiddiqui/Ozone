@@ -1,5 +1,6 @@
 ﻿using Ozone.Application.DTOs;
 using Ozone.Application.DTOs.Projects;
+using Ozone.Application.DTOs.Reports;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,6 +16,7 @@ namespace Ozone.Application.Interfaces
         Task<ActivityLogModel> oldValuesDownloadfile(long id);
 
         Task<ActivityLogModel> NewValuesDownloadfile(long id);
+        Task<string> windowperiod(WindowperiodCreateModel model);
 
     }
 }

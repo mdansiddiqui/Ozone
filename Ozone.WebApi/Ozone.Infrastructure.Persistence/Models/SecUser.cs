@@ -20,6 +20,8 @@ namespace Ozone.Infrastructure.Persistence.Models
             AssessmentCompletedLastModifiedBy = new HashSet<AssessmentCompleted>();
             AuditDocumentsTypeCreatedBy = new HashSet<AuditDocumentsType>();
             AuditDocumentsTypeLastModifiedBy = new HashSet<AuditDocumentsType>();
+            AuditManagerDocumentsCreatedBy = new HashSet<AuditManagerDocuments>();
+            AuditManagerDocumentsLastUpdatedBy = new HashSet<AuditManagerDocuments>();
             AuditReportCreatedBy = new HashSet<AuditReport>();
             AuditReportDetailCreatedBy = new HashSet<AuditReportDetail>();
             AuditReportDetailLastModifiedBy = new HashSet<AuditReportDetail>();
@@ -27,6 +29,8 @@ namespace Ozone.Infrastructure.Persistence.Models
             AuditReportLastModifiedBy = new HashSet<AuditReport>();
             AuditReportMasterCreatedBy = new HashSet<AuditReportMaster>();
             AuditReportMasterLastModifiedBy = new HashSet<AuditReportMaster>();
+            AuditReviewerDocumentsCreatedBy = new HashSet<AuditReviewerDocuments>();
+            AuditReviewerDocumentsLastUpdatedBy = new HashSet<AuditReviewerDocuments>();
             CertificationBodyCreatedByNavigation = new HashSet<CertificationBody>();
             CertificationBodyLastModifiedyNavigation = new HashSet<CertificationBody>();
             ClientAuditVisitAuditor1 = new HashSet<ClientAuditVisit>();
@@ -155,6 +159,7 @@ namespace Ozone.Infrastructure.Persistence.Models
             VerificationTypeLastUpdatedBy = new HashSet<VerificationType>();
             VisitLevelCreatedBy = new HashSet<VisitLevel>();
             VisitLevelLastUpdatedBy = new HashSet<VisitLevel>();
+            WindowPeriodIntimation = new HashSet<WindowPeriodIntimation>();
         }
 
         [Key]
@@ -276,6 +281,10 @@ namespace Ozone.Infrastructure.Persistence.Models
         public virtual ICollection<AuditDocumentsType> AuditDocumentsTypeCreatedBy { get; set; }
         [InverseProperty(nameof(AuditDocumentsType.LastModifiedBy))]
         public virtual ICollection<AuditDocumentsType> AuditDocumentsTypeLastModifiedBy { get; set; }
+        [InverseProperty(nameof(AuditManagerDocuments.CreatedBy))]
+        public virtual ICollection<AuditManagerDocuments> AuditManagerDocumentsCreatedBy { get; set; }
+        [InverseProperty(nameof(AuditManagerDocuments.LastUpdatedBy))]
+        public virtual ICollection<AuditManagerDocuments> AuditManagerDocumentsLastUpdatedBy { get; set; }
         [InverseProperty(nameof(AuditReport.CreatedBy))]
         public virtual ICollection<AuditReport> AuditReportCreatedBy { get; set; }
         [InverseProperty(nameof(AuditReportDetail.CreatedBy))]
@@ -290,6 +299,10 @@ namespace Ozone.Infrastructure.Persistence.Models
         public virtual ICollection<AuditReportMaster> AuditReportMasterCreatedBy { get; set; }
         [InverseProperty(nameof(AuditReportMaster.LastModifiedBy))]
         public virtual ICollection<AuditReportMaster> AuditReportMasterLastModifiedBy { get; set; }
+        [InverseProperty(nameof(AuditReviewerDocuments.CreatedBy))]
+        public virtual ICollection<AuditReviewerDocuments> AuditReviewerDocumentsCreatedBy { get; set; }
+        [InverseProperty(nameof(AuditReviewerDocuments.LastUpdatedBy))]
+        public virtual ICollection<AuditReviewerDocuments> AuditReviewerDocumentsLastUpdatedBy { get; set; }
         [InverseProperty(nameof(CertificationBody.CreatedByNavigation))]
         public virtual ICollection<CertificationBody> CertificationBodyCreatedByNavigation { get; set; }
         [InverseProperty(nameof(CertificationBody.LastModifiedyNavigation))]
@@ -546,5 +559,7 @@ namespace Ozone.Infrastructure.Persistence.Models
         public virtual ICollection<VisitLevel> VisitLevelCreatedBy { get; set; }
         [InverseProperty(nameof(VisitLevel.LastUpdatedBy))]
         public virtual ICollection<VisitLevel> VisitLevelLastUpdatedBy { get; set; }
+        [InverseProperty("CreateBy")]
+        public virtual ICollection<WindowPeriodIntimation> WindowPeriodIntimation { get; set; }
     }
 }

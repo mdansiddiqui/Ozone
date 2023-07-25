@@ -1,33 +1,33 @@
 <nav>
     <div class="nav nav-tabs" id="nav-tab" role="tablist">
-       
+
         <!-- <a class="nav-item nav-link" id="nav-profile-tab" href="#" style=" color: white;background-color: #304570;border-color: whitesmoke;"
         (click)="editRecord('/app/pages/security-module/user-remarks?')"
-      
+
         data-toggle="tab" role="tab"
         aria-controls="nav-profile" aria-selected="false">Authorizer Remarks </a> -->
         <a class="nav-item nav-link" id="nav-profile-tab" href="#" style=" color: white;background-color: #304570;border-color: whitesmoke;"
         (click)="editRecord('/app/pages/security-module/user-standards?')"
-      
+
         data-toggle="tab" role="tab"
         aria-controls="nav-profile" aria-selected="false">Standards </a>
 
- 
+
     <a class="nav-item nav-link" id="nav-profile-tab" href="#" style=" color: white;background-color: #304570;border-color: whitesmoke;"
     (click)="editRecord('/app/pages/security-module/user-declaration?')"
-       
+
          data-toggle="tab" role="tab"
         aria-controls="nav-profile" aria-selected="false">Declaration </a>
         <a class="nav-item nav-link" id="nav-profile-tab" href="#" style=" color: white;background-color: #304570;border-color: whitesmoke;"
         (click)="editRecord('/app/pages/security-module/user-academic?')"
-          
+
              data-toggle="tab" role="tab"
             aria-controls="nav-profile" aria-selected="false"> Academic</a>
 
         <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab"  role="tab" aria-controls="nav-home" aria-selected="true">Professional</a>
-  
 
-   
+
+
 
     <a class="nav-item nav-link" id="nav-profile-tab" href="#" style=" color: white;background-color: #304570;border-color: whitesmoke;"
     (click)="editRecord('/app/pages/security-module/user-employment?')"
@@ -35,7 +35,7 @@
         aria-controls="nav-profile" aria-selected="false">Employment </a>
 
     <a class="nav-item nav-link" id="nav-profile-tab" href="#" style=" color: white;background-color: #304570;border-color: whitesmoke;"
-       
+
         (click)="editRecord('/app/pages/security-module/user-cpd?')"
          data-toggle="tab" role="tab"
         aria-controls="nav-profile" aria-selected="false">CPD </a>
@@ -56,8 +56,8 @@
       data-toggle="tab" role="tab"
         aria-controls="nav-profile" aria-selected="false">Auditor Nace </a>
     </div>
-  </nav> 
- 
+  </nav>
+
 
 
   <section class="content-header pt-0 pb-0 mt-0 mx-0 mb-0 md-0">
@@ -85,7 +85,7 @@
                                 <button type="button" class="btn bg-blue">
                                     <i class="fas fa-search"></i>
                                 </button>
-                                
+
                             </div>
                         </div> -->
                         <div class="container-fluid mb-2">
@@ -93,12 +93,12 @@
                                 <div class="col-md-4" style="font-size:large;">
 
                                     <label class="mb-0" for="Code" style="color: black;">
-                                        {{ "User Name : "}} 
+                                        {{ "User Name : "}}
                                         <u><b style="color:blue;">{{UserName}}</b></u>
                                     </label>
-                                   
-                                    
-                                    
+
+
+
                                 </div>
 
                             </div>
@@ -112,7 +112,7 @@
                                     <div *ngIf="submitted && f.Body.errors" class="invalid-feedback">
                                         <div *ngIf="f.Body.errors.required">Body is required</div>
                                     </div>
-                                
+
                                 </div>
                                 <div class="col-md-4">
                                     <label class="mb-0" for="Year">Year</label>
@@ -133,11 +133,11 @@
                                     </div>
                                 </div>
                                 <div class="col-md-4">
-                                  
+
 
                                         <label class="mb-0" for="file"> Document (PDF)</label>
                                         <input type="file" id="File" (change)="handlefileInput($event)" name="File" formControlName="File">
-                                 
+
                                 </div>
 
                             </div>
@@ -148,7 +148,7 @@
                                 </div>
 
                                 <div class="col-md-4">
-                                
+
                                     <br/>
                                     <button class="btn-sm btn-success btn col-md-4 ml-1 float-right" (click)="onSubmit()">
                                         Save
@@ -157,9 +157,9 @@
                                     <button class="btn-sm btn btn-dark col-md-4 ml-1 float-right"(click)="ClearAllFielsd()">
                                         New
                                     </button>
-                               
+
                                 </div>
-                            
+
 
                             </div>
                         </div>
@@ -173,9 +173,9 @@
             <div class="col-md-12">
                 <div class="card">
                 <div class="card-body table-responsive p-0">
-    
-                  
-    
+
+
+
                     <dx-data-grid id="dataGrid"  [rowAlternationEnabled]="true" [showRowLines]="true"
                         [showColumnLines]="true" [allowColumnReordering]="true" [dataSource]="UserProsissionalList | paginate
                         : {
@@ -189,53 +189,53 @@
 
                         <!-- <dxo-search-panel [visible]="true" [width]="240" placeholder="Search...">
                         </dxo-search-panel> -->
-                        <dxi-column   dataField="body"  
+                        <dxi-column   dataField="body"
                         caption="Body" ></dxi-column>
-                        <dxi-column   dataField="qualification"  
+                        <dxi-column   dataField="qualification"
                         caption="Qualification"></dxi-column>
-                        <dxi-column   dataField="details"  
+                        <dxi-column   dataField="details"
                         caption="Details"></dxi-column>
-                       
-                        <dxi-column   dataField="year"  alignment='left' 
+
+                        <dxi-column   dataField="year"  alignment='left'
                         caption="Year"></dxi-column>
-                       
+
                         <dxi-column type="buttons"caption="Download">
-                        <dxi-button 
+                        <dxi-button
                         hint="Download File"
                         icon="download"
                        [onClick]="DownloadProfesional"
                        ></dxi-button>
                        </dxi-column>
-                          <dxi-column type="buttons"caption="Action"  >  
+                          <dxi-column type="buttons"caption="Action"  >
                             <dxi-button   icon="edit"
                             [onClick]="edit"
                             hint="Edit"
-                            [(visible)]="isAddShown"
-                            ></dxi-button>  
-                      
+                            [(visible)]="editVsible"
+                            ></dxi-button>
+
                             <dxi-button   icon="deleterow"
                              [onClick]="delete"
-                             [(visible)]="isAddShown"
+                             [(visible)]="editVsible"
                              hint="Delete"
-                             ></dxi-button>  
-                       
-                          </dxi-column>   
-                         
-                         
-                  
-    
-    
-    
+                             ></dxi-button>
+
+                          </dxi-column>
+
+
+
+
+
+
                     </dx-data-grid>
                     <div class="card-footer table-card-footer pb-0 border-top">
                         <div class="row">
                             <div class="col-sm-2 col-12 text-sm-left text-center">
                                 <button class="btn btn-sm">
                                     <i class="fas fa-redo text-info"(click)="reloadGrid()"></i>
-                               
-                               
+
+
                                 </button>
-    
+
                             </div>
                             <div class="col-sm-6 col-12">
                                 <!-- <pagination-controls id="server" (pageChange)="onTableDataChange($event)">
@@ -246,7 +246,7 @@
                                 </pagination-controls>
                             </div>
                             <!-- <div class="col-sm-2 col-12 ">
-    
+
                                 <div class="d-flex flex-row-reverse bd-highlight mb-2">
                                     <div class="p-2 bd-highlight">
                                         <select (change)="onTableSizeChange($event)" class="custom-select">
@@ -264,10 +264,10 @@
                             [showNavigationButtons]="true">
                         </dxo-pager>
                     </dx-tree-list> -->
-    
-    
-    
-    
+
+
+
+
                 </div>
             </div></div>
         </div>

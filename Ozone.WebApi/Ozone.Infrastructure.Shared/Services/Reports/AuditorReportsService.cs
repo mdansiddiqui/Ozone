@@ -1061,13 +1061,13 @@ namespace Ozone.Infrastructure.Shared.Services
                                 SHA.currentState = (!(dataReader["currentState"] is DBNull)) ? dataReader["currentState"].ToString() : null;
                                 SHA.Registration_no = (!(dataReader["Registration_no"] is DBNull)) ? dataReader["Registration_no"].ToString() : null;
                                 SHA.CertificationIssueDate = (!(dataReader["CertificationIssueDate"] is DBNull)) ? Convert.ToDateTime(dataReader["CertificationIssueDate"]) : (DateTime?)null;
-                                SHA.CertificationExpiryDate = (!(dataReader["CertificationExpiryDate"] is DBNull)) ? Convert.ToDateTime(dataReader["CertificationExpiryDate"]) : (DateTime?)null;
+                                SHA.CertificationExpiryDate = (!(dataReader["CertificationExpiryDate"] is DBNull)) ? Convert.ToDateTime(dataReader["CertificationExpiryDate"]).AddDays(-2) : (DateTime?)null;
                                 SHA.Surveillance_Frequency = (!(dataReader["Surveillance_Frequency"] is DBNull)) ? dataReader["Surveillance_Frequency"].ToString() : null;
                                 SHA.IntimationdateSurv_1 = (!(dataReader["IntimationdateSurv_1"] is DBNull)) ? Convert.ToDateTime(dataReader["IntimationdateSurv_1"]) : (DateTime?)null;
                                 SHA.Windowperiod_start_Surv_1 = (!(dataReader["Windowperiod_start_Surv_1"] is DBNull)) ? Convert.ToDateTime(dataReader["Windowperiod_start_Surv_1"]) : (DateTime?)null;
                                 SHA.Windowperiod_end_Surv_1 = (!(dataReader["Windowperiod_end_Surv_1"] is DBNull)) ? Convert.ToDateTime(dataReader["Windowperiod_end_Surv_1"]) : (DateTime?)null;
                                 SHA.Surv_1_due = (!(dataReader["Surv_1_due"] is DBNull)) ? Convert.ToDateTime(dataReader["Surv_1_due"]) : (DateTime?)null;
-                                SHA.Windowperiod_Sart_FUP_1 = (!(dataReader["Windowperiod_Sart_FUP_1"] is DBNull)) ? Convert.ToDateTime(dataReader["Windowperiod_Sart_FUP_1"]) : (DateTime?)null;
+                                SHA.Windowperiod_Start_FUP_1 = (!(dataReader["Windowperiod_Sart_FUP_1"] is DBNull)) ? Convert.ToDateTime(dataReader["Windowperiod_Sart_FUP_1"]) : (DateTime?)null;
                                 SHA.Windowperiod_end_FUP_1 = (!(dataReader["Windowperiod_end_FUP_1"] is DBNull)) ? Convert.ToDateTime(dataReader["Windowperiod_end_FUP_1"]) : (DateTime?)null;
 
                                 SHA.IntimationdateSurv_2 = (!(dataReader["IntimationdateSurv_2"] is DBNull)) ? Convert.ToDateTime(dataReader["IntimationdateSurv_2"]) : (DateTime?)null;
@@ -1084,7 +1084,7 @@ namespace Ozone.Infrastructure.Shared.Services
                                 SHA.Recertification_Windowperiod_end_Surv_2 = (!(dataReader["Recertification_Windowperiod_end_Surv_2"] is DBNull)) ? Convert.ToDateTime(dataReader["Recertification_Windowperiod_end_Surv_2"]) : (DateTime?)null;
                                 SHA.Followup_Recert_Start = (!(dataReader["Followup_Recert_Start"] is DBNull)) ? Convert.ToDateTime(dataReader["Followup_Recert_Start"]) : (DateTime?)null;
                                 SHA.Followup_Recert_end = (!(dataReader["Followup_Recert_end"] is DBNull)) ? Convert.ToDateTime(dataReader["Followup_Recert_end"]) : (DateTime?)null;
-
+                                SHA.CycleCode = (!(dataReader["CycleCode"] is DBNull)) ? dataReader["CycleCode"].ToString() : null;
 
 
                                 SHALIst.Add(SHA);

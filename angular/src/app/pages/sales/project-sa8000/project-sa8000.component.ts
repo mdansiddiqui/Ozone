@@ -143,6 +143,7 @@ export class ProjectSA8000Component implements OnInit {
   public deletebtn: boolean = false
   public btnApproval: boolean = false
   public btnChnageRequest: boolean = false
+  public RoleBaseHide: boolean = false
   public ApprovalList = [];
   public NaceCodeList = [];
   public savedownload: boolean = false
@@ -226,7 +227,10 @@ export class ProjectSA8000Component implements OnInit {
   }
 
   ngOnInit(): void {
-
+    var roleId = localStorage.getItem('roleId');
+    if (+roleId === 2 ) {
+      this.RoleBaseHide = true
+    }
     this.editProject();
     //  this.loadSecRoleForm()
     this.CheckReviewer()

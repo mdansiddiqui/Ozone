@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Ozone.Application.DTOs.Projects;
 
 namespace Ozone.WebApi.Controllers.Setup
 {
@@ -54,6 +55,33 @@ namespace Ozone.WebApi.Controllers.Setup
 
         }
 
+        [Route("createMSWD")]
+        [HttpPost]
+        [Authorize]
+
+        public async Task<IActionResult> createMSWD(MappingDocumentsWithStandardModel input)
+        {
+
+            var result = await _DocumentTypeService.createMSWD(input);
+
+            return Ok(new Response { Status = result, Message = result });
+
+
+
+        }
+
+
+        [Route("GetMSWD")]
+        [HttpPost]
+        [Authorize]
+
+        public async Task<IActionResult> GetMSWD(PagedResponseModel model)
+        {
+            var list = await _DocumentTypeService.GetMSWD(model);
+            return new JsonResult(list);
+        }
+
+
         [Route("GetPagedDocumentType")]
         [HttpPost]
         [Authorize]
@@ -87,6 +115,15 @@ namespace Ozone.WebApi.Controllers.Setup
 
         }
 
-       
+        [HttpPost]
+        [Route("DelMSWD")]
+        [Authorize]
+
+        public async Task<IActionResult> DelMSWD(long id)
+        {
+            var result = await _DocumentTypeService.DelMSWD(id);
+            return Ok(new Response { Status = result, Message = result });
+        }
+
     }
 }

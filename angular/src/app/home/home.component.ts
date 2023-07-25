@@ -62,14 +62,14 @@ public auditgrid:boolean=false
   
   ngOnInit() : void{
 
-    this.UpdateProject();
-    debugger
-    this.onSearch();
+  //   this.UpdateProject();
+  //   debugger
+  //   this.onSearch();
    
-  this.checkPermission()
-  this.pagedDto.page =1;
-  // this.pageSize=3;
-  this.pagedDto.organizationId = parseInt( localStorage.getItem('organizationId'));
+  // this.checkPermission()
+  // this.pagedDto.page =1;
+  // // this.pageSize=3;
+  // this.pagedDto.organizationId = parseInt( localStorage.getItem('organizationId'));
 
  
 

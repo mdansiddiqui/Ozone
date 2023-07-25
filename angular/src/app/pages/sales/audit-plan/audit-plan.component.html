@@ -2,7 +2,7 @@
     <div class="nav nav-tabs" id="nav-tab" role="tablist">
         <!-- <a class="nav-item nav-link" id="nav-profile-tab" href="#" style=" color: white;background-color: #304570;border-color: whitesmoke;"
         (click)="editRecord('/app/pages/security-module/user-remarks?')"
-      
+
         data-toggle="tab" role="tab"
         aria-controls="nav-profile" aria-selected="false">Authorizer Remarks </a> -->
         <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" role="tab" aria-controls="nav-home"
@@ -22,8 +22,8 @@
             style="color: white; background-color: #1d690a; border-color: whitesmoke" data-toggle="tab" role="tab"
             aria-controls="nav-profile" aria-selected="false">{{ ApprovalStatus }}</a>
 
-       
-        <!-- <button class="nav-item nav-link"  id="nav-profile-tab" 
+
+        <!-- <button class="nav-item nav-link"  id="nav-profile-tab"
             style=" color: white;background-color: #1d690a;border-color: whitesmoke;" data-toggle="tab" role="tab"
             aria-controls="nav-profile" aria-selected="false" onclick="openPopup()">Changes</button>
             -->
@@ -33,14 +33,14 @@
 <form [formGroup]="ClientVisitForm" #clientVisitForm="ngForm">
     <!-- <section class="content-header pt-0 pb-0 mt-0 mx-0 mb-0 md-0">
 
-        
+
         <div class="container-fluid mx-0 px-0 mx-0 mb-0">
-    
+
             <div class="row md-0 mb-1 mt-0">
                 <div class="col-sm-12 px-0">
                     <div class="alert alert-info alert-dismissible center" style="text-align: center">
                         <h4 style="text-align: center ;font-family: 'Times New Roman'; font-weight: bold;">AUDIT</h4>
-                     
+
                     </div>
                 </div>
             </div>
@@ -80,25 +80,25 @@
                         </label> -->
 
                     <!-- <div class="row" style="background-color: rgb(45 67 114)">
-  
+
                             <div class="col-md-12 nav-user-menu"  style=" color: white;background-color: rgb(35 52 86);border-color: whitesmoke; border-radius: 50px;  display: flex;
                             justify-content: center;
                             align-items: center;
                             margin: 5px 0px 5px 0px;
-                            
-                            "> 
-                            
+
+                            ">
+
                             <li class="nav-item dropdown nav-user-menu" dropdown>
-                            
-                             
+
+
                               <a href="javascript:;" class="nav-link" dropdownToggle>
-                                <img 
+                                <img
                                   class=" user-image img-circle  mb-1 elevation-2"
                                   src=" \assets\img\user.png"
                                   alt="User Image"
                                 />
                               </a>
-                              
+
                               <div class="dropdown-menu dropdown-menu-right" *dropdownMenu style="z-index: 9;">
                                 <a class="dropdown-item" [routerLink]="['update-password']">
                                   <i class="fas fa-user-edit"></i> {{ "Reset Password" | localize }}
@@ -230,7 +230,7 @@
                         {{ ReviewerName }}
                     </div>
 
-                    <div class="col-md-4">
+                    <!-- <div class="col-md-4">
                         <label class="mb-0" for="Code">
                             {{ "Review Date : " }}
                         </label>
@@ -241,7 +241,7 @@
                             {{ "Submision Date : " }}
                         </label>
                         {{ SubmisionDate }}
-                    </div>
+                    </div> -->
 
                     <div class="col-md-4">
                         <label class="mb-0" for="Code">
@@ -263,6 +263,11 @@
                             Audit Pending
                         </button>
                     </div>
+
+                    <button class="btn-sm btn-danger col-md-5 ml-1 mt-3 float-right" icon="download"
+                            (click)=" Pdf()">
+                            Certifiacte Template
+                        </button>
                     <!-- <div class="col-md-4">
                         <button type="button" class="btn-sm btn btn-success  mb-2 float-left"
                             (click)="DownloadAuditPlan()"> <i class="fa fa-download"></i> Download Audit Plan</button>
@@ -289,28 +294,28 @@
         <!-- <div class="modal center modal-dialog-lg" tabindex="-1" role="dialog" [ngStyle]="{'display':displayStyle}">
             <div class="modal-dialog " role="document">
               <div class="modal-content">
-               
+
                 <div class="modal-body modal">
                   <div class="container-fluid">
                   <div class="card mx-2 pt-3 pb-2">
-                    <app-slcp  
+                    <app-slcp
                     [id]="projectId">
-            
+
                 </app-slcp>
                   </div>
                   </div>
                 </div>
 
-                  
 
-                
+
+
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" (click)="closePopup()">
                         Close
                       </button>
-                 
-                 
-                 
+
+
+
                 </div>
               </div>
               </div>
@@ -321,7 +326,7 @@
                 <div class="modal-content" style="width: 1500px; align-items: center;">
 
                     <div class="modal-body" style="width: 1500px; align-items: center;">
-                      
+
                         <app-slcp [id]="projectId">
 
                         </app-slcp>
@@ -329,13 +334,13 @@
                         <button type="button" class="btn btn-danger float-right" (click)="closePopup()">
                             Close
                         </button>
-                      
+
                     </div>
 
 
 
 
-                  
+
                 </div>
             </div>
         </div> -->
@@ -442,8 +447,8 @@
                             required [ngClass]="{
                 'is-invalid': submitted && f.AuditDocumentTypeId.errors
               }" id="AuditDocumentTypeId">
-                            <option *ngFor="let item of DocumentsTypeList" [value]="item.id">
-                                {{ item.name }}
+                            <option *ngFor="let item of DocumentsTypeList" [value]="item.documentTypeId">
+                                {{ item.documentName }}
                             </option>
                         </select>
                         <div *ngIf="submitted && f.AuditDocumentTypeId.errors" class="invalid-feedback">
@@ -479,18 +484,17 @@
                             Submit For Review
                         </button>
                         <button type="button" *ngIf="StageOne" class="btn-sm btn-success btn float-right mx-1 mt-4"
-                        (click)="onStageOne()"
-                        >
-                        Stage 01 
-                    </button>
+                            (click)="onStageOne()">
+                            Stage 01
+                        </button>
                     </div>
                 </div>
                 <!-- <div class=" col-md-12 mx-2" *ngIf="btnSave">
 
                      <button type="button" class="btn-sm btn btn-primary float-right mx-1  mt-4 " (click)="openPopup()">
                         <i class="fa fa-download"></i>Download Documents
-                    </button> 
-                  
+                    </button>
+
 
                 </div> -->
 
@@ -498,14 +502,16 @@
                     <dx-data-grid id="gridContainer" class="mx-3" [showBorders]="true" [rowAlternationEnabled]="true"
                         [showRowLines]="true" [showColumnLines]="false" [allowColumnReordering]="true"
                         [dataSource]="DocumentsList" keyExpr="id">
+                        <dxo-search-panel [visible]="true" [width]="240" placeholder="Search...">
+                        </dxo-search-panel>
                         <dxo-scrolling columnRenderingMode="virtual"></dxo-scrolling>
                         <dxi-column dataField="visitLevel" caption="Visit Level" cssClass="cell-header">
                         </dxi-column>
                         <dxi-column dataField="auditDocumentName" caption="Document Type" cssClass="cell-header">
                         </dxi-column>
-                        <dxi-column dataField="createdDate" dataType="date" caption="Uploaded Date"
+                        <!-- <dxi-column dataField="createdDate" dataType="date" caption="Uploaded Date"
                             cssClass="cell-header">
-                        </dxi-column>
+                        </dxi-column> -->
                         <dxi-column dataField="documentFilePath" caption="Uploaded File Name" cssClass="cell-header">
                         </dxi-column>
                         <dxi-column type="buttons" caption="Download" cssClass="cell-header">
@@ -514,9 +520,9 @@
                         </dxi-column>
 
                         <dxi-column type="buttons" caption="Action" cssClass="cell-header">
-                            <dxi-button icon="edit" [onClick]="edit" [(visible)]="btnSave" ></dxi-button>
+                            <dxi-button icon="edit" [onClick]="edit" [(visible)]="btnSave"></dxi-button>
 
-                            <dxi-button icon="deleterow" [onClick]="delete"  [(visible)]="btnSave"></dxi-button>
+                            <dxi-button icon="deleterow" [onClick]="delete" [(visible)]="btnSave"></dxi-button>
                         </dxi-column>
                     </dx-data-grid>
                 </div>
@@ -562,129 +568,199 @@
                 </div>
             </div>
         </div>
+
+
+
+        
+
+    </section>
+</form>
+<form [formGroup]="AuditReviewerForm" #uditReviewerForm="ngForm">
+    <section class="content-header pt-0 pb-0 mt-3 mx-0 mb-0 md-0">
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-header">
+                    <h3 style="
+              text-align: center;
+              color: rgb(35 52 86);
+              font-family: 'Times New Roman';
+              font-weight: bold;
+              text-decoration: underline;
+            ">
+                        Reviewer Reports
+                    </h3>
+                </div>
+             
+                <div class="row md-0 px-3 pb-2" *ngIf="showReviewDocument">
+                    <div class="col-md-4">
+                        <label class="mb-0" for="ReviewerDocumentTypeId">Document Type</label>
+                        <select class="form-control form-control-sm col-md-12" formControlName="ReviewerDocumentTypeId"
+                            required [ngClass]="{
+                'is-invalid': reviewersubmitted && f.ReviewerDocumentTypeId.errors
+              }" id="ReviewerDocumentTypeId">
+                            <option *ngFor="let item of AuditReviewerDocumentsTypeList" [value]="item.documentTypeId">
+                                {{ item.documentName }}
+                            </option>
+                        </select>
+                        <div *ngIf="reviewersubmitted && f.ReviewerDocumentTypeId.errors" class="invalid-feedback">
+                            <div *ngIf="f.ReviewerDocumentTypeId.errors.required">
+                                Document is required
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="mb-0" for="ReviewerFile">Upload Document (PDF)</label>
+                        <input type="file" class="form-control-sm col-md-12" id="ReviewerFile"
+                            (change)="handlefileInput($event)" name="ReviewerFile" formControlName="ReviewerFile" />
+                    </div>
+                </div>
+                <div class="row md-0 px-3 pb-2" *ngIf="showReviewDocument">
+                    <div class="col-md-12" *ngIf="showReviewDocument">
+                        <button type="button" class="btn-sm btn btn-primary float-right mt-4" (click)="NewRecordreviewer()">
+                            New
+                        </button>
+
+                        <button type="button" class="btn-sm btn-success btn float-right mx-1 mt-4" (click)="onSubmitReviewerReport()">
+                            Save
+                        </button>
+                        
+                    </div>
+                </div>
+                <!-- <div class=" col-md-12 mx-2" *ngIf="btnSave">
+
+                     <button type="button" class="btn-sm btn btn-primary float-right mx-1  mt-4 " (click)="openPopup()">
+                        <i class="fa fa-download"></i>Download Documents
+                    </button>
+
+
+                </div> -->
+
+                <div class="card-body table-responsive px-2">
+                    <dx-data-grid id="gridContainer" class="mx-3" [showBorders]="true" [rowAlternationEnabled]="true"
+                        [showRowLines]="true" [showColumnLines]="false" [allowColumnReordering]="true"
+                        [dataSource]="AuditReviewerDocumentsList" keyExpr="id">
+                        <dxo-search-panel [visible]="true" [width]="240" placeholder="Search...">
+                        </dxo-search-panel>
+                        <dxo-scrolling columnRenderingMode="virtual"></dxo-scrolling>
+        
+                        <dxi-column dataField="auditDocumentTypename" caption="Document" cssClass="cell-header">
+                        </dxi-column>
+                        <!-- <dxi-column dataField="createdDate" dataType="date" caption="Uploaded Date"
+                            cssClass="cell-header">
+                        </dxi-column> -->
+                        <dxi-column dataField="documentPath" caption="Uploaded File Name" cssClass="cell-header">
+                        </dxi-column>
+                        <dxi-column type="buttons" caption="Download" cssClass="cell-header">
+                            <dxi-button hint="Download File" icon="download" [onClick]="DownloadReviewerfile">
+                            </dxi-button>
+                        </dxi-column>
+
+                        <dxi-column type="buttons" caption="Action" cssClass="cell-header">
+                            <dxi-button icon="edit" [onClick]="edit" [(visible)]="btnSave"></dxi-button>
+
+                            <dxi-button icon="deleterow" [onClick]="delete" [(visible)]="btnSave"></dxi-button>
+                        </dxi-column>
+                    </dx-data-grid>
+                </div>
+            </div>
+        </div>
+    </section>
+</form>
+<form [formGroup]="ManagerForm" #managerForm="ngForm">
+    <section class="content-header pt-0 pb-0 mt-3 mx-0 mb-0 md-0">
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-header">
+                    <h3 style="
+              text-align: center;
+              color: rgb(35 52 86);
+              font-family: 'Times New Roman';
+              font-weight: bold;
+              text-decoration: underline;
+            ">
+                        Country Manager Reports
+                    </h3>
+                </div>
+             
+                <div class="row md-0 px-3 pb-2" *ngIf="showManagerDocument">
+                    <div class="col-md-4">
+                        <label class="mb-0" for="ManagerDocumentTypeId">Document Type</label>
+                        <select class="form-control form-control-sm col-md-12" formControlName="ManagerDocumentTypeId"
+                            required [ngClass]="{
+                                'is-invalid': Managersubmitted && f.ManagerDocumentTypeId.errors
+                                }" id="ManagerDocumentTypeId">
+                            <option *ngFor="let item of AuditManagerDocumentsTypeList" [value]="item.documentTypeId">
+                                {{ item.documentName }}
+                            </option>
+                        </select>
+                        <div *ngIf="Managersubmitted && f.ManagerDocumentTypeId.errors" class="invalid-feedback">
+                            <div *ngIf="f.ManagerDocumentTypeId.errors.required">
+                                Document is required
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="mb-0" for="ManagerFile">Upload Document (PDF)</label>
+                        <input type="file" class="form-control-sm col-md-12" id="ManagerFile"
+                            (change)="handlefileInput($event)" name="ManagerFile" formControlName="ManagerFile" />
+                    </div>
+                </div>
+                <div class="row md-0 px-3 pb-2" *ngIf="showManagerDocument">
+                    <div class="col-md-12" *ngIf="showManagerDocument">
+                        <button type="button" class="btn-sm btn btn-primary float-right mt-4" (click)="NewRecordManager()">
+                            New
+                        </button>
+
+                        <button type="button" class="btn-sm btn-success btn float-right mx-1 mt-4" (click)="onSubmitManagerReport()">
+                            Save
+                        </button>
+                        
+                    </div>
+                </div>
+                <!-- <div class=" col-md-12 mx-2" *ngIf="btnSave">
+
+                     <button type="button" class="btn-sm btn btn-primary float-right mx-1  mt-4 " (click)="openPopup()">
+                        <i class="fa fa-download"></i>Download Documents
+                    </button>
+
+
+                </div> -->
+
+                <div class="card-body table-responsive px-2">
+                    <dx-data-grid id="gridContainer" class="mx-3" [showBorders]="true" [rowAlternationEnabled]="true"
+                        [showRowLines]="true" [showColumnLines]="false" [allowColumnReordering]="true"
+                        [dataSource]="AuditManagerDocumentsList" keyExpr="id">
+                        <dxo-search-panel [visible]="true" [width]="240" placeholder="Search...">
+                        </dxo-search-panel>
+                        <dxo-scrolling columnRenderingMode="virtual"></dxo-scrolling>
+        
+                        <dxi-column dataField="auditDocumentTypename" caption="Document" cssClass="cell-header">
+                        </dxi-column>
+                     
+                        <!-- <dxi-column dataField="createdDate" dataType="date" caption="Uploaded Date"
+                            cssClass="cell-header">
+                        </dxi-column> -->
+                        <dxi-column dataField="documentPath" caption="Uploaded File Name" cssClass="cell-header">
+                        </dxi-column>
+                        <dxi-column type="buttons" caption="Download" cssClass="cell-header">
+                            <dxi-button hint="Download File" icon="download" [onClick]="DownloadManagerfile">
+                            </dxi-button>
+                        </dxi-column>
+                        <dxi-column dataField="deactive" caption="Deactive" cssClass="cell-header">
+                        </dxi-column>
+                        <dxi-column type="buttons" caption="Action" cssClass="cell-header">
+                            <dxi-button icon="clearsquare"  hint="Deactive" [onClick]="deactiveManagerDocument"></dxi-button>
+
+                           
+                        </dxi-column>
+                    </dx-data-grid>
+                </div>
+            </div>
+        </div>
     </section>
 </form>
 <br />
 <br />
 
-<!-- <form>
-    <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{ display: displayStyle }">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content" style="width: 700px">
-                <div class="modal-header">
-                    <h4 class="modal-title" style="color: #304570">
-                        Project Change Request
-                    </h4>
-                </div>
-                <div class="modal-body">
-                    <div class="container-fluid mb-2">
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <b>
-                                            <a class="nav-item nav-link active" id="nav-profile-tab" data-toggle="tab"
-                                                data-toggle="tab" role="tab" style="text-decoration: underline"
-                                                aria-controls="nav-profile" aria-selected="false">FINANCIAL:</a></b>
-                                        <div class="container-fluid mb-2">
-                                            <div class="row mx-2">
-                                                <div class="col-md-6">
-                                                    <label class="mb-0" for="Assessmentfee">Assessment fee</label>
-                                                    <input type="number" class="form-control form-control-sm col-md-12"
-                                                        id="Assessmentfee" />
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <label class="mb-0" for="Survfee">Surv fee</label>
-                                                    <input type="number" class="form-control form-control-sm col-md-12"
-                                                        id="Survfee" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <div class="card-header">
-                                <b>
-                                    <a class="nav-item nav-link active" id="nav-profile-tab" data-toggle="tab"
-                                        data-toggle="tab" role="tab" style="text-decoration: underline"
-                                        aria-controls="nav-profile" aria-selected="false">PLANNING:
-                                    </a></b>
-                                <div class="container-fluid mb-2">
-                                    <div class="row mx-2">
-                                        <div class="col-md-6">
-                                            <label class="mb-0" for="DurationStage2">Duration Stage 2</label>
-                                            <input type="text" class="form-control form-control-sm col-md-12"
-                                                id="DurationStage2" />
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            <label class="mb-0">
-                                                {{ "Surveillance visit frequency" }}
-                                            </label>
-                                            <select class="form-control form-control-sm col-md-12"
-                                                id="SurveillanceVisitFrequencyId">
-                                                 <option *ngFor="let item of SurveillanceVisitFrequencyList" [value]="item.id">
-                                                    {{ item.name }}
-                                                </option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="row mt-1 mx-2">
-                                        <div class="col-md-6">
-                                            <label class="mb-0" for="SurveillanceMethodId">
-                                                {{ "Surveillance Method" }}
-                                            </label>
-                                            <select class="form-control form-control-sm col-md-12"
-                                                id="SurveillanceMethodId">
-                                                 <option *ngFor="let item of SurveillanceMethodList" [value]="item.id">
-                                                    {{ item.name }}
-                                                </option> 
-                                            </select>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label class="mb-0" for="NoOfSurveillanceVisits">
-                                                {{ "No.of Surveillance Visits" }}
-                                            </label>
-                                            <input type="text" class="form-control form-control-sm col-md-12"
-                                                id="NoOfSurveillanceVisits" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <b>
-                                <a class="nav-item nav-link active" id="nav-profile-tab" data-toggle="tab"
-                                    data-toggle="tab" role="tab" style="text-decoration: underline"
-                                    aria-controls="nav-profile" aria-selected="false">PROJECT:
-                                </a></b>
-
-                            <div class="row mt-1 mx-2">
-                                <div class="col-md-12">
-                                    <label class="mb-0" for="Scope">Scope</label>
-                                    <textarea type="text" class="form-control form-control-sm col-md-12"
-                                        id="Scope"></textarea>
-                                        <br>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" (click)="closePopup()">
-                        Close
-                    </button>
-                    <button type="button" class="btn-success btn">Submit</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</form>
-<br />
-<br /> -->

@@ -41,27 +41,39 @@ export class TaskBoardListComponent implements OnInit {
     public SecUserService : SecUserService,
     public _ClientService :  ClientService,
     private router : Router
-  ) {  
-    this.edit = this.edit.bind(this);  
+  ) {
+    this.edit = this.edit.bind(this);
     this.ManageRecord=this.ManageRecord.bind(this);
-    this.delete=this.delete.bind(this);}
+    this.delete=this.delete.bind(this);
+    this.ActiveDropdown= this.ActiveDropdown.bind(this);
+  }
   @Output() tabIndexEmitter = new EventEmitter<object>();
   @Input() formName : string
   @Input() locationId: number
 
   public tabIndex: number = 1;
   secRoleForm
-  isManageAllowed: boolean 
-  public isAddShown : boolean 
-  public isEditShown : boolean  
-  public isViewShown : boolean  
+  isManageAllowed: boolean
+  public isAddShown : boolean
+  public isEditShown : boolean
+  public isViewShown : boolean
+  public HeadOffice : boolean = true
+  public userdata:any;
+  public ActiveStatusList = [];
   public keyword : string = ''
   tableSizes = [3, 5, 10, 15, 20, 25];
   public totalCount: number
   public ClientList = [];
+  public OrganizationList = [];
+  submitted = false;
   public pagedDto: PagedRequestModel = new PagedRequestModel()
-
-
+  ClientStatusChange = new FormGroup({
+    IsActive: new FormControl(''),
+    })
+    OrganizationDropdown = new FormGroup({
+      ParentAgencyId: new FormControl(''),
+      ClientName: new FormControl('')
+      })
   readonly allowedPageSizes = [5, 10, 'all'];
   readonly displayModes = [{ text: "Display Mode 'full'", value: "full" }, { text: "Display Mode 'compact'", value: "compact" }];
   displayMode = "full";
@@ -105,7 +117,7 @@ export class TaskBoardListComponent implements OnInit {
     //   contact:"123456789",
     //   cityState:"asdf\nzxcvb",
     //   multiside:"Yes"
-    // },    
+    // },
 
     {serial:"01",  code:"141204",   companyName:"Artistic Apparels Pvt Ltd Unit 2	    					",    companyPerson : "Mr. Saqib Amin		",    contact:"	92 111 786 135		" ,    cityState:" Karachi	",		email:"saqib.amin@artisticapparels.com			"},
     {serial:"02",  code:"7229",	   companyName:"Artistic Fabric Mills (Pvt.) Ltd	    					",    companyPerson : "Mr Suhaib 			",    contact:"	92 21 35025217-20	" ,    cityState:" Karachi	",		email:"suhaib@artisticfabricmills.com			"},
@@ -130,7 +142,7 @@ export class TaskBoardListComponent implements OnInit {
    // {serial:"21",  code:"139782",   companyName:"Artistic Milliners (PVT) Limited AM-10						",    name : "Khawaja Faheem	    ",    contact:"    92 300 3591003	" ,    cityState:" Karachi	",		email:"environment@artisticmilliners.com	"},
     {serial:"22",  code:"204",	   companyName:"Artistic Milliners - AM 2									",    companyPerson : "Khawaja Faheem	    ",    contact:"    93 300 3591003	" ,    cityState:" Karachi	",		email:"environment@artisticmilliners.com	"},
     {serial:"23",  code:"256",	   companyName:"Artistic Milliners - AM6									",    companyPerson : "Khawaja Faheem	    ",    contact:"    94 300 3591003	" ,    cityState:" Karachi	",		email:"environment@artisticmilliners.com	"},
-    {serial:"24",  code:"142444",   companyName:"Bari Textile Mills Pvt Ltd 4								",    companyPerson : "Mr Osama Bari		",        contact:"	92 21 3257663-7		" ,    cityState:" Karachi	",	email:"Osama.bari@barimills.com.pk"},																													
+    {serial:"24",  code:"142444",   companyName:"Bari Textile Mills Pvt Ltd 4								",    companyPerson : "Mr Osama Bari		",        contact:"	92 21 3257663-7		" ,    cityState:" Karachi	",	email:"Osama.bari@barimills.com.pk"},
      {serial:"25",  code:"135591",   companyName:"Chottani Industries											",    companyPerson :"Malik Farooq Awan		",    contact:"0333-2163793			" ,    cityState:"Karachi		",	email:"admin@chottani.com		"},
     {serial:"26",  code:"138084",   companyName:"Cosy International Pvt Ltd									",    companyPerson :"Muhammad Rizwan Irshad",     contact:"	041-8520456			" ,    cityState:"Faisalabad	",	email:"rizwan@cosyint.com										"},
    // {serial:"27",  code:"133876",   companyName:"Green Clothing Pvt LTD (Unit-II)	   						",    name :"Adnan Khan				",    contact:"0300 8458190			" ,    cityState:"Karachi",			email:"					"},
@@ -138,18 +150,18 @@ export class TaskBoardListComponent implements OnInit {
     //{serial:"30",  code:"149095",   companyName:"H Nizam Din and Sons Pvt Limited Main / Wash Unit			",    name :"Adnan Fareed			",    contact:"345 8204303			" ,    cityState:"Lahore		",	email:"hse@nizamapparel.com	"},
     {serial:"31",  code:"133333",   companyName:"Ijaz Apparel (pvt) Ltd										",    companyPerson :"Shoukat Ali				",    contact:"					" ,    cityState:"Lahore		",	email:"shoukat@ijazapparel.com.pk		"},
      {serial:"32",  code:"132793",   companyName:"KM Ashraf & Sons (Pvt.) Ltd.								",    companyPerson :"Muhammad Noman Awan		",    contact:"0300 6124661			" ,    cityState:"Sialkot		",	email:"hr@kmashraf.com.pk		"},
-     {serial:"33",  code:"148537",   companyName:"S.M Traders													",    companyPerson:"						",    contact:"						" ,    cityState:"",				email:""},																			                           
+     {serial:"33",  code:"148537",   companyName:"S.M Traders													",    companyPerson:"						",    contact:"						" ,    cityState:"",				email:""},
      {serial:"34",  code:"129305",   companyName:"Shafi Texcel Limited										",    companyPerson :"Faisal Khalil 			",    contact:"042 35393612-14		" ,    cityState:"Lahore		",	email:"faisal.khalil@shafitexcel.com	"},
     {serial:"35",  code:"148455",   companyName:"Siddiqsons Limited (D-53)									",    companyPerson :"Sarmad Naeem			",    contact:"0344 2078687", 		    cityState:"Karachi		",	email:"sarmad@siddiqsonsgroup.com	"},
     {serial:"36",  code:"131865",   companyName:"UMAR GARMENTS												",    companyPerson :"Mubashir Meher			",    contact:"92 321 2441551		" ,    cityState:"Karachi		",	email:"mubashir@umar-garments.com"},
-    
-    
+
+
   ]
   // listDataSource = new DataSource({
-  
+
   //   paginate: true,
   //   pageSize: 10
-   
+
   // });
 
    dataSource: Employee[];
@@ -161,53 +173,108 @@ export class TaskBoardListComponent implements OnInit {
   // showNavButtons = true;
 
 
- 
-  
+
+
 
   ngOnInit(): void {
+    this.SecUserService.getAllAgency().subscribe((Response) => {
+      this.OrganizationList = Response
+    })
+    var OID = parseInt(localStorage.getItem('organizationId'));
+    if (OID != 1) {
+      this.OrganizationDropdown.controls.ParentAgencyId.setValue(OID);
+      this.OrganizationDropdown.get('ParentAgencyId').disable();
+    }
     this.loadSecRoleForm()
     this.onSearch()
+    this.loadActiveStatus()
+
+  }
+
+  displayActiveStyle = "none"
+  userId:number
+  ActiveDropdown(e) {
+    this.userId=0;
+    this.userId=e.row.data.id;
+    this.userdata=e.row.data;
+    this.displayActiveStyle = "block";
+  }
+  loadActiveStatus(): void {
+
+    this.SecUserService.getActiveStatus().subscribe((Response) => {
+      this.ActiveStatusList = Response
+    })
   }
   id: number
-  edit(e) {  
-     
+  edit(e) {
+
 
     this.id=e.row.data.id;
 // this.router.navigateByUrl('/app/pages/stock-management/library');
 //this.id=e.row.data.id;
   // this.router.navigate(['app/pages/stock-management/library']);
     //this.router.navigate(["account/login"]);
-this.router.navigateByUrl('/app/pages/sales/task-board?'+this.id);  
-}  
+this.router.navigateByUrl('/app/pages/sales/task-board?'+this.id);
+}
+get f() { return this.ClientStatusChange.controls; }
  onTableDataChange(event) {
-  
+
    this.pagedDto.page = event;
    this.onSearch();
  }
+ closeActivePopup () {
+  this.displayActiveStyle = "none"
+}
+IsActive: Boolean
+ClientActiveSubmit(): void {
+    console.log('hello')
+    this.submitted = true;
+    debugger
+    if(this.ClientStatusChange.get('IsActive').value==1)
+    {
+      this.IsActive=true;
+    }
+    else
+    {
+      this.IsActive=false;
+    }
+    var LoginUserId = localStorage.getItem('userId');
+    const UserModel =
+    {
+      Id:this.userId ,
+      IsActive: this.IsActive,
+      LastModifiedById: LoginUserId.toString(),
+    }
+    this.SecUserService.ClientStatusChange(UserModel).subscribe((Response) => {
+      abp.message.info(Response.message)
+      this.onSearch();
+      this.closeActivePopup();
+    })
+}
  reloadGrid()
- 
+
  {
 
    this.pagedDto.page =1;
    this.onSearch();
  }
  loadSecRoleForm() {
-     
+
    this.formName = "Clients"
    this._makerAuthorizerFormService.getSecRoleForm().subscribe((data) => {
-       
+
      let formName = (this.formName == undefined ? localStorage.getItem('formName') : this.formName)
-       
+
      this.secRoleForm = data.find(x => x.formCode != null && x.formCode == this.formName)
      if(this.secRoleForm.manageAllowed == true)
-     { 
+     {
        this.isManageAllowed = true
 
      }
      else
      {
        this.isManageAllowed = false;
-   
+
      }
    //this.isEditShown= this.secRoleForm.authAllowed
    // this.isViewShown = this.secRoleForm.authAllowed
@@ -241,15 +308,17 @@ this.router.navigateByUrl('/app/pages/sales/task-board?'+this.id);
    }
      //this.isViewShown = this.secRoleForm.authAllowed
    })
-     
+
  }
  onTableSizeChange(event): void {
-  
+
   this.pagedDto.pageSize = event.target.value;
   this.onSearch();
 }
 onSearch(){
-  
+  debugger
+  var AgencyId = this.OrganizationDropdown.get('ParentAgencyId').value;
+  var ClientName = this.OrganizationDropdown.get('ClientName').value;
   var OrganId;
   var  ur ;
    ur=window.location.href.split("/")[7];
@@ -267,18 +336,18 @@ onSearch(){
   {
     OrganId=localStorage.getItem('organizationId');
   }
-  
-  this.pagedDto.keyword = this.keyword
+  this.pagedDto.keyword = ClientName
   this.pagedDto.authAllowed = this.secRoleForm.authAllowed
  // this.pagedDto.pageSize = 3
-  this._ClientService.Get(this.pagedDto).subscribe((Response) => 
+  this._ClientService.GetOrganization(this.pagedDto, AgencyId).subscribe((Response) =>
   {
-            
-   
+
+
     this.totalCount = Response.totalCount
     this.ClientList = Response.clientModel
   })
 }
+
 ManageRecord(e)
 { this.id=e.row.data.id;
 //   if(e.row.data.multisite==true)
@@ -292,24 +361,56 @@ ManageRecord(e)
   //}
 }
 delete(e) {
-  
+
      abp.message.confirm((""),
      undefined,
          (result: boolean) => {
              if (result) {
-               // this.SecUserService.Deleteuser(e.row.data.id).subscribe() 
+               // this.SecUserService.Deleteuser(e.row.data.id).subscribe()
                //     abp.message.info("Deleted successfully", "Status", {});
- 
+
                    this._ClientService.Deleteuser(e.row.data.id).subscribe((Response)=>{
-  
+
                      abp.message.info(Response.message)
                      this.onSearch();
-                    
+
                     })
-                   
+
              }
            }
       )}
-   
 
+      changestatus(e){
+        debugger
+        var RoleId =  parseInt( localStorage.getItem('roleId'));
+      if (RoleId == 2) {
+        return !e.row.isEditing;
+       }
+       else{
+        return e.row.isEditing;
+       }
+       }
+      //  deletebtn(e){
+      //   debugger
+      //   this.pagedDto.keyword = this.keyword;
+      //   this.pagedDto.authAllowed = true;
+      //   let Clientid=e.row.data.id;
+      //   this._ClientService.GetAllProjects(Clientid,this.pagedDto).subscribe((Response) => {
+
+      //     debugger
+         
+      //     var ProjectsList = Response.clientProjectModel
+      //     if(ProjectsList.length>0)
+      //     {
+      //       return e.row.isEditing;
+
+      //     }
+      //     else{
+      //       return !e.row.isEditing;
+      //      }
+      //     //this .Liststandard=this.StandardList;
+      //   })
+      //  }
+
+       
 }

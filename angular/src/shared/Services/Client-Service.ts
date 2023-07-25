@@ -22,30 +22,30 @@ export class ClientService {
   constructor(private http: HttpClient) {}
   private data = new BehaviorSubject<any>(Response);
 
-  CreateChangeClient(values): Observable<any> 
-   
+  CreateChangeClient(values): Observable<any>
+
   {    let headers = new HttpHeaders({
-  
+
     'Authorization' : 'Bearer ' + JSON.parse(localStorage.getItem('token')),
-     
+
   });
   let options = { headers: headers };
      return this.http.post<any>(`${environment.apiUrl}/api/Client/CreateChangeClient`,values,options)
-   
+
   }
 
 
 
-  CreateChangeClienSite(values): Observable<any> 
-   
+  CreateChangeClienSite(values): Observable<any>
+
   {    let headers = new HttpHeaders({
-  
+
     'Authorization' : 'Bearer ' + JSON.parse(localStorage.getItem('token')),
-     
+
   });
   let options = { headers: headers };
      return this.http.post<any>(`${environment.apiUrl}/api/Client/CreateChangeClienSite`,values,options)
-   
+
   }
 
 
@@ -91,6 +91,20 @@ export class ClientService {
     let options = { headers: headers };
 
     var id = parseInt(localStorage.getItem("organizationId"));
+    return this.http.post<any>(
+      `${environment.apiUrl}/api/Client/GetPagedClient?id=${id}`,
+      value,
+      options
+    );
+  }
+  GetOrganization(value, OrganId:number): Observable<any> {
+    let headers = new HttpHeaders({
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + JSON.parse(localStorage.getItem("token")),
+    });
+    let options = { headers: headers };
+
+    var id = OrganId
     return this.http.post<any>(
       `${environment.apiUrl}/api/Client/GetPagedClient?id=${id}`,
       value,

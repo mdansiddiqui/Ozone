@@ -80,6 +80,59 @@ export class ClientAuditVisitService {
         return this.http.get<any>(`${environment.apiUrl}/api/ClientAuditVisit/GetClientAuditVisitBYId?id=${id}`, options);
     }
 
+    GetAllRequiredDocumentBYId(id) {
+
+        let headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('token')),
+        });
+        let options = { headers: headers };
+
+        return this.http.get<any>(`${environment.apiUrl}/api/ClientAuditVisit/GetAllRequiredDocumentBYId?id=${id}`, options);
+    }
+
+    GetAllDocumentsTypeWSVLAS(id) {
+
+        let headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('token')),
+        });
+        let options = { headers: headers };
+
+        return this.http.get<any>(`${environment.apiUrl}/api/ClientAuditVisit/GetAllDocumentsTypeWSVLAS?id=${id}`, options);
+    }
+
+    GetAllReviewerDocumentsType(id:number) {
+
+        let headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('token')),
+        });
+        let options = { headers: headers };
+
+        return this.http.get<any>(`${environment.apiUrl}/api/ClientAuditVisit/GetAllReviewerDocumentsType?id=${id}`, options);
+    }
+
+    GetAllManagerDocumentsType(id:number) {
+
+        let headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('token')),
+        });
+        let options = { headers: headers };
+
+        return this.http.get<any>(`${environment.apiUrl}/api/ClientAuditVisit/GetAllManagerDocumentsType?id=${id}`, options);
+    }
+    GetAllAuditReviewerDocuments(id:number) {
+
+        let headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('token')),
+        });
+        let options = { headers: headers };
+
+        return this.http.get<any>(`${environment.apiUrl}/api/ClientAuditVisit/GetAllAuditReviewerDocuments?id=${id}`, options);
+    }
     GetClientAuditVisitByOrganizationId(id) {
 
         let headers = new HttpHeaders({
@@ -144,7 +197,7 @@ export class ClientAuditVisitService {
 
         return this.http.get<any>(`${environment.apiUrl}/api/ClientAuditVisit/GetAllAgencywithHeadOffice`, options)
     }
-    
+
     GetAllProjectCode(): Observable<any> {
 
         let headers = new HttpHeaders({

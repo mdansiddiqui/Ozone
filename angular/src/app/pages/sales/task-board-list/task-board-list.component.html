@@ -11,16 +11,27 @@
     </div>
 </section>
 
-
+<form [formGroup]="OrganizationDropdown" #organizationDropdown="ngForm">
 <section class="content px-2">
     <div class="container-fluid">
         <div class="card">
             <div class="card-header">
                 <div class="row">
-                    <div class="col-md-10">
+                    <div class="col-md-4">
+                        <label class="mb-0" for="ParentAgencyId">
+                            {{ "Branch Office" }}
+                        </label>
+                        <select formControlName="ParentAgencyId" class="form-control form-control-sm col-md-12" id="ParentAgencyId">
+                            <option *ngFor="let item of OrganizationList" [value]="item.id">
+                            {{ item.name }}
+                            </option>
+                        </select>
+
+                    </div>
+                    <div class="col-md-6" style="margin-top: 15px;">
                         <div class="input-group">
-                            <input type="text" class="form-control col-md-12" name="keyword" [(ngModel)]="keyword"
-                            [placeholder]="'Search'" />
+                            <input type="text" class="form-control col-md-12" formControlName="ClientName"
+                            [placeholder]="'Search Client Name Here'" />
                             <div class="input-group-prepend">
                                 <button type="button" class="btn bg-blue" (click)="onSearch()">
                                     <i class="fas fa-search"></i>
@@ -29,7 +40,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-2">
+                    <div class="col-md-2" style="margin-top: 15px;">
                         <button type="button" [routerLink]="['/app/pages/sales/task-board']" data-toggle="tab"
                             role="tab" class="btn-sm btn-primary col-md-8 float-right mx-0  mt-0 pt-2 pb-2">Add
                         </button>
@@ -43,9 +54,9 @@
             <div class="col-md-12">
                 <div class="card">
                 <div class="card-body table-responsive p-0">
-    
-                  
-    
+
+
+
                     <dx-data-grid id="dataGrid" [rowAlternationEnabled]="true" [showRowLines]="true"[columnAutoWidth]="true"
                         [showColumnLines]="true" [allowColumnReordering]="true" [dataSource]="ClientList | paginate
                         : {
@@ -53,64 +64,67 @@
                             itemsPerPage: this.pagedDto.pageSize,
                             currentPage: this.pagedDto.page,
                             totalItems: this.totalCount
-                          }"
+                            }"
                         keyExpr="id" >
                         <dxo-scrolling columnRenderingMode="virtual"></dxo-scrolling>
-                       
-                        <dxi-column   dataField="code"  
+                        <dxi-column   dataField="organizationName"
+                        caption="Branch Office" ></dxi-column>
+                        <dxi-column   dataField="code"
                         caption="Code" ></dxi-column>
-                        <dxi-column   dataField="name"  
+                        <dxi-column   dataField="name"
                         caption="Name"></dxi-column>
-                        <dxi-column   dataField="address1"  
+                        <dxi-column   dataField="address1"
                         caption="Address_1"></dxi-column>
-                       
-                       
-    
-                
-                          <dxi-column type="buttons"caption="Action"  >  
+                        <dxi-column   dataField="isActive"
+                        caption="status"></dxi-column>
+
+
+
+                            <dxi-column type="buttons"caption="Action"  >
+                            <dxi-button icon="fas fa-check" hint="change Status"[(visible)]="changestatus" [onClick]="ActiveDropdown"></dxi-button>
                             <dxi-button   icon="edit"
                             [onClick]="edit"
                             hint="Edit"
                             [(visible)]="isAddShown"
-                            ></dxi-button>  
+                            ></dxi-button>
                             <dxi-button   icon="fas fa-tasks"
                             [onClick]="ManageRecord"
                             hint="Client Sites & Projects"
                             [(visible)]="isAddShown"
                             >
-                        </dxi-button>  
-                           
+                        </dxi-button>
+
                             <dxi-button   icon="deleterow"
                             [onClick]="delete"
                             [(visible)]="isAddShown"
                             hint="Delete"
-                            ></dxi-button>  
+                            ></dxi-button>
                             <!-- <i class="fas fa-tasks"></i> -->
                             <!-- <dxi-button
                             hint="Download File"
                             icon="download"
-                           [onClick]="Downloadfile"></dxi-button> -->
-                           <!-- <dxi-button   icon="edit"
-                           [routerLink]='["/app/pages/stock-management/library"]'
-                             [(visible)]="isAddShown"
-                             ></dxi-button>   -->
-                          </dxi-column>   
-                         
-                         
-                  
-    
-    
-    
+                            [onClick]="Downloadfile"></dxi-button> -->
+                            <!-- <dxi-button   icon="edit"
+                            [routerLink]='["/app/pages/stock-management/library"]'
+                                [(visible)]="isAddShown"
+                                ></dxi-button>   -->
+                            </dxi-column>
+
+
+
+
+
+
                     </dx-data-grid>
                     <div class="card-footer table-card-footer pb-0 border-top">
                         <div class="row">
                             <div class="col-sm-2 col-12 text-sm-left text-center">
                                 <button class="btn btn-sm">
                                     <i class="fas fa-redo text-info"(click)="reloadGrid()"></i>
-                               
-                               
+
+
                                 </button>
-    
+
                             </div>
                             <div class="col-sm-6 col-12">
                                 <!-- <pagination-controls id="server" (pageChange)="onTableDataChange($event)">
@@ -121,7 +135,7 @@
                                 </pagination-controls>
                             </div>
                             <!-- <div class="col-sm-2 col-12 ">
-    
+
                                 <div class="d-flex flex-row-reverse bd-highlight mb-2">
                                     <div class="p-2 bd-highlight">
                                         <select (change)="onTableSizeChange($event)" class="custom-select">
@@ -139,16 +153,16 @@
                             [showNavigationButtons]="true">
                         </dxo-pager>
                     </dx-tree-list> -->
-    
-    
-    
-    
+
+
+
+
                 </div>
             </div></div>
         </div>
     </div>
 
-   
+
 
 
 
@@ -157,3 +171,59 @@
 
 
 </section><br><br>
+</form>
+
+
+<form [formGroup]="ClientStatusChange" #clientStatusChange="ngForm">
+    <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayActiveStyle}">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">User Status Change Request</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="card mx-2 pt-3 pb-2">
+                            <div class="row">
+                                <!-- <div class="col-sm-12"> -->
+
+                                <!-- <div class="col-md-10 mx-2 ">
+                                    <label class="mb-0" for="EmailForgotPassword">Email</label>
+                                    <input type="text" formControlName="EmailForgotPassword"
+                                        class="form-control float-right  form-control-sm col-md-12"
+                                        id="EmailForgotPassword" />
+                                </div> -->
+
+
+                                <div class="col-md-10 mx-2">
+                                    <label class="mb-0" for="IsActive">
+                                      {{ "Active Status" }}
+                                    </label>
+                                    <select formControlName="IsActive" class="form-control form-control-sm col-md-12" id="IsActive"
+                                      required [ngClass]="{ 'is-invalid': submitted && f.IsActive.errors }">
+                                      <option *ngFor="let item of ActiveStatusList" [value]="item.id">
+                                        {{ item.name }}
+                                      </option>
+                                    </select>
+                                    <div *ngIf="submitted && f.IsActive.errors" class="invalid-feedback">
+                                      <div *ngIf="f.IsActive.errors.required">Active is required</div>
+                                    </div>
+                                  </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" (click)="closeActivePopup()">
+                        Close
+                    </button>
+                    <button type="button" class=" btn-success btn " (click)="ClientActiveSubmit()">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form> <br> <br>

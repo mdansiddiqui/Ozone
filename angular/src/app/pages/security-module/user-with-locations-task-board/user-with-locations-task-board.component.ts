@@ -83,6 +83,7 @@ export class UserWithLocationsTaskBoardComponent implements OnInit {
   secRoleForm
   isManageAllowed: boolean
   public isAddShown : boolean
+  public ActiveStatusList = [];
   //public deletedbtn:boolean
   public isEditShown : boolean
   public isViewShown : boolean
@@ -91,6 +92,7 @@ export class UserWithLocationsTaskBoardComponent implements OnInit {
   tableSizes = [3, 5, 10, 15, 20, 25];
   public totalCount: number
   public user = []
+  submitted = false;
   public pagedDto: PagedRequestModel = new PagedRequestModel()
 
   ResetPasswordForm = new FormGroup({
@@ -98,6 +100,10 @@ export class UserWithLocationsTaskBoardComponent implements OnInit {
      NewConfirmPassword: new FormControl(''),
      EmailForgotPassword: new FormControl(''),
     })
+
+    UserStatusChange = new FormGroup({
+      IsActive: new FormControl(''),
+      })
 
   readonly allowedPageSizes = [5, 10, 'all'];
   readonly displayModes = [{ text: "Display Mode 'full'", value: "full" }, { text: "Display Mode 'compact'", value: "compact" }];
@@ -124,6 +130,9 @@ export class UserWithLocationsTaskBoardComponent implements OnInit {
     this.SubmitForreview=this.SubmitForreview.bind(this);
     this.Remarks=this.Remarks.bind(this);
     this.resetpassword= this.resetpassword.bind(this);
+    this.ActiveDropdown= this.ActiveDropdown.bind(this);
+    // this.manageVisible= this.manageVisible.bind(this);
+    // this.reviewVisible= this.reviewVisible.bind(this);
     //  this.editIconClick = this.editIconClick.bind(this);
     // this.Downloadfile=this.Downloadfile.bind(this);
   }
@@ -142,6 +151,7 @@ export class UserWithLocationsTaskBoardComponent implements OnInit {
 
     this.loadSecRoleForm()
     this.reloadGrid()
+    this.loadActiveStatus();
     //this.onSearch()
   }
   ngAfterViewInit() : void {
@@ -157,6 +167,49 @@ export class UserWithLocationsTaskBoardComponent implements OnInit {
     this.pagedDto.page = event;
     this.onSearch();
   }
+  loadActiveStatus(): void {
+
+    this.SecUserService.getActiveStatus().subscribe((Response) => {
+      this.ActiveStatusList = Response
+    })
+  }
+  editVsible(e) {
+    debugger
+    var organizationId =  parseInt( localStorage.getItem('organizationId'));
+    // console.log(roleId)
+    let oid = parseInt(localStorage.getItem('UserOrganizationID'));
+    if  (e.row.data.approvelStatusId === 1 || e.row.data.approvelStatusId === 2)
+     {
+     return e.row.isEditing;
+   }else if (organizationId === e.row.data.organizationId) {
+    return !e.row.isEditing;
+   }else{
+    return e.row.isEditing;
+   }
+   }
+    manageVisible(e){
+      debugger
+      var organizationId =  parseInt( localStorage.getItem('organizationId'));
+    if (organizationId === e.row.data.organizationId) {
+      return !e.row.isEditing;
+     }else{
+      return e.row.isEditing;
+     }
+     }
+    reviewVisible(e) {
+      debugger
+      var organizationId =  parseInt( localStorage.getItem('organizationId'));
+      // console.log(roleId)
+      let oid = parseInt(localStorage.getItem('UserOrganizationID'));
+      if  (e.row.data.approvelStatusId === 1 || e.row.data.approvelStatusId === 2)
+       {
+       return e.row.isEditing;
+     }else if (organizationId === e.row.data.organizationId) {
+      return !e.row.isEditing;
+     }else{
+      return e.row.isEditing;
+     }
+    }
   reloadGrid()
 
   {
@@ -181,6 +234,9 @@ export class UserWithLocationsTaskBoardComponent implements OnInit {
       {
         this.isManageAllowed = true
 
+      }
+      else if (this.secRoleForm.manageAllowed == true || parseInt(localStorage.getItem('roleId')) === 2) {
+        this.isManageAllowed = false;
       }
       else
       {
@@ -297,7 +353,7 @@ export class UserWithLocationsTaskBoardComponent implements OnInit {
       this.user = Response.secUserModel
     })
   }
-
+  get f() { return this.UserStatusChange.controls; }
   // id: number
   // editIconClick(e) {
   //
@@ -320,6 +376,13 @@ export class UserWithLocationsTaskBoardComponent implements OnInit {
     this.displayStyle = "block";
 
   //this.router.navigateByUrl('/app/pages/stock-management/library?'+this.id);
+  }
+  displayActiveStyle = "none"
+  ActiveDropdown(e) {
+    this.userId=0;
+    this.userId=e.row.data.id;
+    this.userdata=e.row.data;
+    this.displayActiveStyle = "block";
   }
 
   edit(e) {
@@ -344,6 +407,9 @@ export class UserWithLocationsTaskBoardComponent implements OnInit {
   // openPopup() {
   //   this.displayStyle = "block";
   // }
+  closeActivePopup () {
+    this.displayActiveStyle = "none"
+  }
 
   closePopup() {
     this.displayStyle = "none";
@@ -384,7 +450,6 @@ export class UserWithLocationsTaskBoardComponent implements OnInit {
 
                     abp.message.info(Response.message)
                     this.onSearch();
-
                    })
 
             }
@@ -404,6 +469,7 @@ export class UserWithLocationsTaskBoardComponent implements OnInit {
 
    // var userId=item;
     //var urlink=e;
+
     this.router.navigateByUrl('/app/pages/security-module/user-standards?'+this.id)
 
   }}
@@ -476,23 +542,57 @@ export class UserWithLocationsTaskBoardComponent implements OnInit {
 
     })
   }
+  IsActive: Boolean
+  UserActiveSubmit(): void {
+      console.log('hello')
+      this.submitted = true;
+      debugger
+      if(this.UserStatusChange.get('IsActive').value==1)
+      {
+        this.IsActive=true;
+      }
+      else
+      {
+        this.IsActive=false;
+      }
+      var LoginUserId = localStorage.getItem('userId');
+      const UserModel =
+      {
+        Id:this.userId ,
+        IsActive: this.IsActive,
+        LastModifiedById: LoginUserId.toString(),
+      }
+      this.SecUserService.URCCreate(UserModel).subscribe((Response) => {
+        abp.message.info(Response.message)
+        this.onSearch();
+        this.closeActivePopup();
+      })
+  }
+
+
 
   deletedbtn(e) {
 
-
+    // var roleId = parseInt(localStorage.getItem('roleId'));
     var LoginUserId =parseInt(localStorage.getItem('userId'));
-  //  var tt= this.authorizer;
-    if(LoginUserId == parseInt(e.row.data.id))
-    {
+    // console.log(roleId)
 
-    return e.row.isEditing;
-    }
+  //  }
+  var organizationId =  parseInt( localStorage.getItem('organizationId'));
+  // console.log(roleId)
+  if(LoginUserId == parseInt(e.row.data.id))
+  {
 
-    else
-    {
-
-      return !e.row.isEditing;
-    }
+  return e.row.isEditing;
+  }
+  else if  (e.row.data.approvelStatusId === 1 || e.row.data.approvelStatusId === 2)
+   {
+   return e.row.isEditing;
+ }else if (organizationId === e.row.data.organizationId) {
+  return !e.row.isEditing;
+ }else{
+  return e.row.isEditing;
+ }
 
 
 
