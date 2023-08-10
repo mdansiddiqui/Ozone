@@ -65,6 +65,7 @@ namespace Ozone.Application.DTOs
         public string ContentType { get; set; }
 
         public long? OrganizationId { get; set; }
+        public long? ProjectsCount { get; set; }
 
     }
 }

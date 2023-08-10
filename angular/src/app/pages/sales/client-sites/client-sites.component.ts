@@ -619,6 +619,26 @@ this.ClientSitesForm.get('CityId').disable();
           this.Multisite= this.clientinfo.multisite;
         }
     }
-
+    editViaible(e) {
+      console.log(e.row.data)
+    
+    
+    
+    //  var tt= this.authorizer;
+      if(parseInt(e.row.data.ProjectsCount) > 0 )
+      {
+    
+      return !e.row.isEditing;
+    }
+    
+      else
+      {
+    
+        return e.row.isEditing;
+      }
+    
+   
+    
+    }
   }
   

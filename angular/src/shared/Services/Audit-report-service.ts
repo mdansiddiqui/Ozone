@@ -234,5 +234,16 @@ AuditManagerDocumentDeactiveById(id) {
   return this.http.post<any>(`${environment.apiUrl}/api/ClientAuditVisit/AuditManagerDocumentDeactiveById?id=${id}`,options)
   
   }
+  AuditReviewerDocumentDeleteById(id) {
+    let headers = new HttpHeaders({
+    'Content-Type': 'application/json',
+    'Authorization' : 'Bearer ' + JSON.parse(localStorage.getItem('token')),
+    });
+    let options = {headers : headers};
+    
+    return this.http.post<any>(`${environment.apiUrl}/api/ClientAuditVisit/AuditReviewerDocumentDeleteById?id=${id}`,options)
+    
+    }
+  
  
     }

@@ -263,11 +263,16 @@
                             Audit Pending
                         </button>
                     </div>
-
-                    <button class="btn-sm btn-danger col-md-5 ml-1 mt-3 float-right" icon="download"
+                    <div class="col-md-6">
+                        <button class="btn-sm btn-danger col-md-4 ml-1 mb-1 float-right" icon="download"
                             (click)=" Pdf()">
                             Certifiacte Template
                         </button>
+                    </div>
+                        <!-- <button class="btn-sm btn-danger col-md-3 ml-1 mt-3 float-right" icon="download"
+                        (click)=" Pdf2()">
+                        Certifiacte
+                    </button> -->
                     <!-- <div class="col-md-4">
                         <button type="button" class="btn-sm btn btn-success  mb-2 float-left"
                             (click)="DownloadAuditPlan()"> <i class="fa fa-download"></i> Download Audit Plan</button>
@@ -575,7 +580,7 @@
 
     </section>
 </form>
-<form [formGroup]="AuditReviewerForm" #uditReviewerForm="ngForm">
+<form [formGroup]="AuditReviewerForm" #auditReviewerForm="ngForm">
     <section class="content-header pt-0 pb-0 mt-3 mx-0 mb-0 md-0">
         <div class="container-fluid">
             <div class="card">
@@ -596,7 +601,7 @@
                         <label class="mb-0" for="ReviewerDocumentTypeId">Document Type</label>
                         <select class="form-control form-control-sm col-md-12" formControlName="ReviewerDocumentTypeId"
                             required [ngClass]="{
-                'is-invalid': reviewersubmitted && f.ReviewerDocumentTypeId.errors
+'is-invalid': reviewersubmitted && f.ReviewerDocumentTypeId.errors
               }" id="ReviewerDocumentTypeId">
                             <option *ngFor="let item of AuditReviewerDocumentsTypeList" [value]="item.documentTypeId">
                                 {{ item.documentName }}
@@ -657,9 +662,9 @@
                         </dxi-column>
 
                         <dxi-column type="buttons" caption="Action" cssClass="cell-header">
-                            <dxi-button icon="edit" [onClick]="edit" [(visible)]="btnSave"></dxi-button>
+                            <dxi-button icon="edit" [onClick]="edit" [(visible)]="showReviewDocument"></dxi-button>
 
-                            <dxi-button icon="deleterow" [onClick]="delete" [(visible)]="btnSave"></dxi-button>
+                            <dxi-button icon="deleterow" [onClick]="deactiveReviewerDocument" [(visible)]="showReviewDocument"></dxi-button>
                         </dxi-column>
                     </dx-data-grid>
                 </div>
@@ -751,7 +756,7 @@
                         <dxi-column dataField="deactive" caption="Deactive" cssClass="cell-header">
                         </dxi-column>
                         <dxi-column type="buttons" caption="Action" cssClass="cell-header">
-                            <dxi-button icon="clearsquare"  hint="Deactive" [onClick]="deactiveManagerDocument"></dxi-button>
+                            <dxi-button icon="clearsquare"  hint="Deactive" [onClick]="deactiveManagerDocument" [(visible)]="showManagerDocument"></dxi-button>
 
                            
                         </dxi-column>

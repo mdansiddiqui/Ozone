@@ -1015,9 +1015,23 @@ namespace Ozone.Infrastructure.Shared.Services
                 long? userId = 0;
 
                 if (keyValuePairs.ContainsKey("reportMasterid"))
-                    ReportMasterid =Convert.ToInt64(keyValuePairs["reportMasterid"]);
+                {
+                    ReportMasterid = Convert.ToInt64(keyValuePairs["reportMasterid"]);
+                }
                 if (keyValuePairs.ContainsKey("userId"))
+                {
                     userId = Convert.ToInt64(keyValuePairs["userId"]);
+                }
+
+
+               long minor=Convert.ToInt64(keyValuePairs["minor"]);
+               long major=Convert.ToInt64(keyValuePairs["major"]);
+                long critical = Convert.ToInt64(keyValuePairs["critical"]);
+                long timeBound = Convert.ToInt64(keyValuePairs["timeBound"]);
+                long observation = Convert.ToInt64(keyValuePairs["observation"]);
+
+
+
                 // OzoneContext ozonedb = new OzoneContext();
                 using (var transaction = _unitOfWork.BeginTransaction())
                 {
@@ -1057,10 +1071,22 @@ namespace Ozone.Infrastructure.Shared.Services
                         AuditReportHistoryMod.RemarksDate = DateTime.Now;
                         AuditReportHistoryMod.IsDeleted = false;
 
+
+                        ReportMaster.Minor = minor;
+                        ReportMaster.Major = major;
+                        ReportMaster.Critical = critical;
+                        ReportMaster.TimeBound = timeBound;
+                        ReportMaster.Observation = observation;
+
                         _dbContext.AuditReportHistory.Add(AuditReportHistoryMod);
 
                         _dbContext.AuditReportMaster.Update(ReportMaster);
                         _dbContext.ClientAuditVisit.Update(ClientAuditVisit);
+
+
+
+
+
                         await _unitOfWork.SaveChangesAsync();
 
                         transaction.Commit();

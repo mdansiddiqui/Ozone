@@ -161,7 +161,7 @@ namespace Ozone.Infrastructure.Shared.Services
 
                 if (model.AuthAllowed == true)
                 {
-                    var list = await _dbContext.ClientSites.Include(x=>x.City).Include(x=>x.Country).Include(x=>x.State).Where(x => x.IsDeleted == false && x.IsActive == true && x.ClientId.ToString()==model.Keyword).OrderByDescending(x => x.Id).ToListAsync();
+                    var list = await _dbContext.ClientSites.Include(x=>x.City).Include(x=>x.Country).Include(x=>x.State).Include(x=>x.ClientProjects).Where(x => x.IsDeleted == false && x.IsActive == true && x.ClientId.ToString()==model.Keyword).OrderByDescending(x => x.Id).ToListAsync();
                     ClientList = _mapper.Map<List<ClientSitesModel>>(list);
 
                 }

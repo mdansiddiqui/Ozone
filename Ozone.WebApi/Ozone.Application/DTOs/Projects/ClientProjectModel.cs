@@ -50,7 +50,10 @@ namespace Ozone.Application.DTOs
         public long? ProjectAmountId { get; set; }
         public decimal ProjectStandardAmount { get; set; }
         public string Registration_no { get; set; }
-
+        public DateTime? CertificateIssueDate { get; set; }
+  
+        public DateTime? CertificationExpiryDate { get; set; }
+        public string CycleCode { get; set; }
 
     }
 }

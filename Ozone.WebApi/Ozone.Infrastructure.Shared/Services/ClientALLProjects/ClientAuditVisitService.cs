@@ -2268,19 +2268,19 @@ namespace Ozone.Infrastructure.Shared.Services
                         transaction.Commit();
 
 
-                        return "Successfully Deleted!";
+                        return "Successfully Deactived!";
 
                     }
                     catch (Exception ex)
                     {
                         var Exception = ex;
                         transaction.Rollback();
-                        return "Not Deleted!";
+                        return "Not Deactived!";
                     }
                 }
                 else
                 {
-                    return "Record not Exists!";
+                    return "Record not Update!";
                 }
 
 

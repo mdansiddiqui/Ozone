@@ -1992,24 +1992,36 @@ var name =  "Window Period"
 
       
     };
+
+    abp.message.confirm(
+      "you want to mark this record and remove it from Window Periods Alert?",
+      undefined,
+      (result: boolean) => {
+        if (result) {
+
+          debugger
+          this._DashboardService.windowperiod(windowperiodModel).subscribe(data => {
+            debugger
+            
+            if (data.message=="1")
+            {
+              this.UpdateProject();
+              this.windowPeriodgrid=false;
+              abp.message.info("Record Marked");
+            
+            }
+            else 
+            {
+              abp.message.error("Record Not Marked");
+            }
+            
+            
+               });
+        }
+      }
+    );
   //  alert(e.row.data.projectId);
-   this._DashboardService.windowperiod(windowperiodModel).subscribe(data => {
-debugger
-
-if (data.message=="1")
-{
-  this.UpdateProject();
-  this.windowPeriodgrid=false;
-  abp.message.info("Record Marked");
-
-}
-else 
-{
-  abp.message.error("Record Not Marked");
-}
-
-
-   });
+ 
 
   }
 }

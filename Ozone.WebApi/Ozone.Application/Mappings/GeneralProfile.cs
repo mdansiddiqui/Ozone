@@ -298,6 +298,7 @@ namespace Ozone.Application.Mappings
 
                 .ForMember(x => x.RiskId, opt => opt.MapFrom(src => src.Client.RiskId))
                 .ForMember(x => x.RiskName, opt => opt.MapFrom(src => src.Client.Risk.Name))
+                 .ForMember(x => x.ProjectsCount, opt => opt.MapFrom(src => src.ClientProjects.Count))
 
 
 
@@ -522,6 +523,8 @@ namespace Ozone.Application.Mappings
 
             CreateMap<AuditReviewerDocuments, AuditReviewerDocumentModel>()
              .ForMember(x => x.AuditDocumentTypename, opt => opt.MapFrom(src => src.AuditDocumentType.Name))
+           .ForMember(x => x.DocumentPath, opt => opt.MapFrom(src => src.DocumentPath))
+              .ForMember(x => x.DocumentContentType, opt => opt.MapFrom(src => src.DocumentContentType))
                 .ReverseMap();
 
             CreateMap<AuditManagerDocuments, AuditMangerDocumentModel>()
