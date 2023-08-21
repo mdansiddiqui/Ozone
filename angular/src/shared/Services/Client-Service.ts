@@ -123,6 +123,8 @@ export class ClientService {
   // }
 
   GeClientDatabyId(id) {
+   id= parseInt(id);
+    debugger
     let headers = new HttpHeaders({
       "Content-Type": "application/json",
       Authorization: "Bearer " + JSON.parse(localStorage.getItem("token")),

@@ -51,7 +51,7 @@ namespace Ozone.Application.Helpers
             byte[] salt = Convert.FromBase64String(saltStr);
 
             // derive a 256-bit subkey (use HMACSHA1 with 10,000 iterations)
-            string hashed = Convert.ToBase64String(KeyDerivation.(
+            string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
                 password: str,
                 salt: salt,
                 prf: KeyDerivationPrf.HMACSHA1,

@@ -69,8 +69,8 @@ export class ClientAuditVisitService {
     }
 
 
-    GetClientAuditVisitBYId(id) {
-
+    GetClientAuditVisitBYId(id: number) {
+debugger
         let headers = new HttpHeaders({
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('token')),
