@@ -363,7 +363,7 @@
                                     <br />
                                     <button type="button" *ngIf="auditcompletebtn"
                                     class="btn-sm btn-success btn float-right ml-1" (click)="onSubmit()"><i class="fa fa-save"></i> Submit</button>
-                                    <button type="button"
+                                    <button type="button" *ngIf="auditcompletebtn"
                                     class="btn-sm btn-primary btn float-right ml-1" (click)="NewRecord()"><i class="fas fa-plus-square"></i> New</button>
                                     <button type="button"
                                     class="btn-sm btn btn-dark btn  float-right ml-1" (click)="Back()"><i class="fa fa-arrow-circle-left"></i> Go to Contract()</button>

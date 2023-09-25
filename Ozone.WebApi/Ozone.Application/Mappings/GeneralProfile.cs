@@ -34,6 +34,7 @@ namespace Ozone.Application.Mappings
             //CreateMap<CreatePositionCommand, Position>();
             
             //Authentication
+
             CreateMap<SecUser, SecUserPasswordModel>().ReverseMap();
             CreateMap<SecUserModel, SecUser>().ReverseMap();
             CreateMap<SecUser, SecUserModel>()

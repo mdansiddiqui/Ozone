@@ -83,7 +83,7 @@ namespace Ozone.Application.DTOs
 
         public string NaceCode { get; set; }
         public string EACode { get; set; }
-
+        public DateTime? CycleStartDate { get; set; }
 
     }
     public class GetPagedClientAuditVisitModel

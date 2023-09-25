@@ -403,7 +403,19 @@ export class QCMasterListComponent implements OnInit {
       var ClientAuditVisitModel = Response.clientAuditVisitModel
       
       if (Response.clientAuditVisitModel.reviewerId == this.userId || Response.clientAuditVisitModel.leadAuditorId == this.userId)   {
+        if (Response.clientAuditVisitModel.reviewerId== this.userId)
+        {
+        if(!(Response.clientAuditVisitModel.visitStatusId==3)){
         this.btnSave = true
+        }
+      }
+
+        if(Response.clientAuditVisitModel.leadAuditorId == this.userId)
+        {
+          if(!(Response.clientAuditVisitModel.visitStatusId==4)){
+            this.btnSave = true
+            }
+        }
   
 
       }
@@ -615,8 +627,11 @@ export class QCMasterListComponent implements OnInit {
     this._ClientAuditVisitService.AddCommentList(this.NewComments).subscribe((Response) => {
   
       abp.message.info(Response.message)
+      // if(Response.message=="Please Upload all required Reviewer documents")
+      // {}
       this.UploadList();
       this.closePopup()
+      //window.location.reload();
       // this.router.navigateByUrl('/app/pages/security-module/agency')
 
     })

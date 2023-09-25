@@ -173,6 +173,11 @@ export class ClientAddVisitComponent implements OnInit {
     this.LoadVisitLevel();
     this.ClientVisitForm.controls.VisitStatusId.setValue(6);
     this.ClientVisitForm.get('VisitStatusId').disable();
+    let roleId=parseInt(localStorage.getItem('roleId'));
+    if(roleId==21 || roleId==2 || roleId==12)
+    {
+      this.auditcompletebtn=false
+    }
     // this.editVisit()
   }
   ClientVisitForm = new FormGroup({
@@ -1120,6 +1125,11 @@ debugger
   }
   deleteVisit(e) {
 
+    let roleId=parseInt(localStorage.getItem('roleId'));
+    if(roleId==21 || roleId==2 || roleId==12)
+    {
+      return e.row.isEditing;
+    }
 
 
     if (e.row.data.visitStatusId == "5" || e.row.data.visitStatusId == "6") {
@@ -1135,7 +1145,11 @@ debugger
   }
   recordEdit(e) {
 
-
+    let roleId=parseInt(localStorage.getItem('roleId'));
+    if(roleId==21 || roleId==2 || roleId==12)
+    {
+      return e.row.isEditing;
+    }
 
     if (e.row.data.visitStatusId == "5" || e.row.data.visitStatusId == "6") {
       return !e.row.isEditing;

@@ -29,6 +29,7 @@ using System.Web;
 using System.Drawing;
 using Microsoft.AspNetCore.Http.Internal;
 using Ozone.Application.DTOs.Projects;
+using System.Xml.Linq;
 
 namespace Ozone.Infrastructure.Shared.Services
 {
@@ -145,7 +146,7 @@ namespace Ozone.Infrastructure.Shared.Services
                         {
                             dbreportdetail.LastModifiedDate = DateTime.Now;
                             dbreportdetail.LastModifiedById = input.LastModifiedById;
-                            _dbContext.AuditReportDetail.Update(dbreportdetail);
+                           _dbContext.AuditReportDetail.Update(dbreportdetail);
                         }
                         //await base.AddAsync(secuserEntity);
                         //await SecUser.(secuserEntity);
@@ -871,7 +872,24 @@ namespace Ozone.Infrastructure.Shared.Services
                         }
                         else 
                         {
+                        
+
                             ClientProjects ClientProject = _dbContext.ClientProjects.Where(u => u.Id == input[0].ProjectId).FirstOrDefault();
+
+                            var reviewer = await _dbContext.AuditReviewerDocuments.Where(x => x.ClientAuditVisitId == input[0].clientAuditVisitId).ToListAsync();
+
+                            var DocumentList = await Task.Run(() => _dbContext.MappingDocumentsWithStandard.Include(x => x.DocumentType).Where(x => x.IsDeleted == false && x.IsActive == true && x.StandardId == ClientProject.StandardId && x.VisitLevelId == ClientAudit.VisitLevelId && x.DocumentAssignId == 2 && x.IsRequired==true).ToList());
+                            foreach (var mapdocuments in DocumentList)
+                            {
+                                int documentCount=reviewer.Where(x => x.AuditDocumentTypeId == mapdocuments.DocumentTypeId).Count();
+
+                                if (!(documentCount > 0))
+                                {
+                                    transaction.Rollback();
+                                    return "Please Upload all required Reviewer documents";
+                                }
+                            }
+
 
                             ProjectLedger projectLedgerDbmod = new ProjectLedger();
                             projectLedgerDbmod = _dbContext.ProjectLedger.Where(u => u.ProjectId == input[0].ProjectId).FirstOrDefault();
@@ -921,7 +939,7 @@ namespace Ozone.Infrastructure.Shared.Services
                                 ClientAudit.ApprovedById = input[0].RemarksById;
                                 AuditReportHistoryMod.ApprovalStatusId = 2;
                                 AuditReportHistoryMod.Remarks = "Approved QC";
-                                if (ClientAudit.VisitLevelId == 8) 
+                                if (ClientAudit.VisitLevelId == 8 || ClientAudit.VisitLevelId == 21 || ClientAudit.VisitLevelId == 23) 
                                 {
                                 
                                   ClientProjects ClientProject2 = _dbContext.ClientProjects.Where(u => u.Id == input[0].ProjectId).FirstOrDefault();
@@ -938,11 +956,21 @@ namespace Ozone.Infrastructure.Shared.Services
                                     string Day = Date.ToString("dd");
                                     int? ProjectCount = _dbContext.ClientProjects.Where(x => x.CertificateIssueDate != null && x.IsDeleted == false).Count();
                                     ProjectCount = ProjectCount + 1;
-                                    string RegistrationNo = Standardcode + "-" + year + Month + Day+ "-" + ProjectCount;
+
+                                    //Random generator = new Random();
+                                    //String r = generator.Next(0, 1000000).ToString("D6");
+                                    //string RegistrationNo = Standardcode + "-" + r + "-" + ProjectCount;
+                                     string RegistrationNo = await registrationno(ProjectCount,Standardcode);
+
+
 
                                     int? cycleCount = _dbContext.ClientProjects.Where(x => x.CertificateIssueDate != null && x.RegistrationNo!=null && x.StandardId==ClientProject2.StandardId && x.ClientId==ClientProject2.ClientId && x.IsDeleted == false).Count();
                                     cycleCount = cycleCount + 1;
+
+
                                   
+                                    //System.Console.WriteLine(r);
+
                                     string cycleCode = Standardcode + "-" + year + "-" + cycleCount;
                                     ClientProject2.CycleCode = cycleCode;
 
@@ -953,7 +981,7 @@ namespace Ozone.Infrastructure.Shared.Services
 
                                     history.ApprovalStatusId = 3;
 
-                                    history.Remarks = "Stage 2 QC Approved";
+                                    history.Remarks = "QC Approved";
                                     history.RemarksById = input[0].RemarksById;
 
                                     history.RemarksDate = DateTime.Now;
@@ -1007,6 +1035,23 @@ namespace Ozone.Infrastructure.Shared.Services
             }
 
         }
+        public async Task<string> registrationno(int? ProjectCount,string Standardcode) 
+        {
+            Random generator = new Random();
+            String r = generator.Next(0, 1000000).ToString("D6");
+            string RegistrationNo = Standardcode + "-" + r + "-" + ProjectCount;
+
+            int? db = _dbContext.ClientProjects.Where(x => x.RegistrationNo == RegistrationNo).Count();
+
+            if (db > 0)
+            {
+                ProjectCount = ProjectCount + 1;
+               await registrationno(ProjectCount, Standardcode);
+            }
+
+            return RegistrationNo;
+        }
+
         public async Task<string> SubmitForReview(IDictionary<string, long> keyValuePairs)
         {
             try

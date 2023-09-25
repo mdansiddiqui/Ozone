@@ -60,11 +60,15 @@
                     <!-- <h3
                         style="text-align: center; color: rgb(35 52 86) ;font-family: 'Times New Roman'; font-weight: bold; ">
                         Audit</h3> -->
-                    <b>
-                        <a class="nav-item nav-link active float-right" id="nav-profile-tab"
-                            [routerLink]="['/app/pages/sales/audit-plan-list']" data-toggle="tab" data-toggle="tab"
-                            role="tab" style="text-decoration: underline" aria-controls="nav-profile"
-                            aria-selected="false"><i class="fa fa-arrow-circle-left"></i> Back</a></b>
+                    <!-- <b> -->
+                        <!-- <button class="nav-item nav-link active float-right" id="nav-profile-tab"
+                            onclick="Goauditplan()"  style="text-decoration: underline" aria-controls="nav-profile"
+                            aria-selected="false"><i class="fa fa-arrow-circle-left"></i>View All Visit</button>-->
+                            <button type="button" class="btn-sm btn btn-primary float-right mt-4" (click)="Goauditplan()">
+                                Go to All Visit
+                            </button>
+    
+                        <!-- </b>  -->
 
                     <h4 style="
               text-align: center;
@@ -265,7 +269,7 @@
                     </div>
                     <div class="col-md-6">
                         <button class="btn-sm btn-danger col-md-4 ml-1 mb-1 float-right" icon="download"
-                            (click)=" Pdf()">
+                            (click)="Pdf()">
                             Certifiacte Template
                         </button>
                     </div>
@@ -452,7 +456,8 @@
                             required [ngClass]="{
                 'is-invalid': submitted && f.AuditDocumentTypeId.errors
               }" id="AuditDocumentTypeId">
-                            <option *ngFor="let item of DocumentsTypeList" [value]="item.documentTypeId">
+                            <option *ngFor="let item of DocumentsTypeList" [value]="item.documentTypeId"
+                            [ngStyle]="{'background-color': item.isRequired ?   '#ed7777' : '#e6dadc'}">>
                                 {{ item.documentName }}
                             </option>
                         </select>
@@ -603,7 +608,8 @@
                             required [ngClass]="{
 'is-invalid': reviewersubmitted && f.ReviewerDocumentTypeId.errors
               }" id="ReviewerDocumentTypeId">
-                            <option *ngFor="let item of AuditReviewerDocumentsTypeList" [value]="item.documentTypeId">
+                            <option *ngFor="let item of AuditReviewerDocumentsTypeList" [value]="item.documentTypeId"
+                            [ngStyle]="{'background-color': item.isRequired ?   '#ed7777' : '#e6dadc'}">
                                 {{ item.documentName }}
                             </option>
                         </select>
