@@ -718,32 +718,117 @@
                     autocomplete="off"
                     class="form-control form-control-sm col-md-12"
                     id="address1"
-                    required
-                    [ngClass]="{ 'is-invalid': submitted && f.address1.errors }"
+                 
                   ></textarea>
-                  <div
-                    *ngIf="submitted && f.address1.errors"
-                    class="invalid-feedback"
-                  >
-                    <div *ngIf="f.address1.errors.required">
-                      Address is required
-                    </div>
-                  </div>
+                
                 </div>
-
                 <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="file">Evidence File</label>
-                    <input
-                      type="file"
-                      id="File"
-                      (change)="handlefileInput($event)"
-                      name="File"
-                      formControlName="File"
-                    />
-                  </div>
+                  <label class="mb-0" for="denomination">
+                    {{ "Prefix" }}
+                  </label>
+                  <select
+                    class="form-control form-control-sm col-md-12"
+                    formControlName="prefixId"
+                    id="PrefixId"
+                  >
+                    <option *ngFor="let item of PrefixList" [value]="item.id">
+                      {{ item.name }}
+                    </option>
+                  </select>
+                </div>
+               
+              </div>
+
+
+            <div class="row mt-1 mx-2">
+             
+              <div class="col-md-6">
+                <label class="mb-0" for="ContactPerson"
+                  >Contact Person</label
+                >
+                <input
+                  type="text"
+                  autocomplete="off"
+                  formControlName="contactPerson"
+                  class="form-control form-control-sm col-md-12"
+                  id="ContactPerson"
+                 
+                />
+              
+              </div>
+              <div class="col-md-6">
+                <label class="mb-0" for="Position">Position</label>
+                <input
+                  type="text"
+                  formControlName="position"
+                  autocomplete="off"
+                  class="form-control form-control-sm col-md-12"
+                  id="Position"
+                
+                />
+                
+              </div>
+            </div>
+            <!-- <div class="row mt-1 mx-2">
+            
+            <div class="col-md-6">
+              <label class="mb-0" for="EacodeId">
+                {{ "EA Code" }}
+              </label>
+              <select
+              
+                formControlName="EacodeId"
+                class="form-control form-control-sm col-md-12"
+                autocomplete="off"
+                id="EacodeId"
+                (change)="loadNaceCode($event.target.value)"
+              >
+                <option *ngFor="let item of EACodeList" [value]="item.id">
+                  {{ item.code + " " + item.name }}
+                </option>
+              </select>
+             
+            </div>
+            <div class="col-md-6">
+              <label class="mb-0" for="NaceCodeId">
+                {{ "Nace Code" }}
+              </label>
+              <select
+               
+                formControlName="NaceCodeId"
+                class="form-control form-control-sm col-md-12"
+                id="NaceCodeId"
+                (change)="RiskLevel($event.target.value)"
+              >
+                <option
+                  *ngFor="let item of NaceCodeList"
+                  [value]="item.id"
+                >
+                  {{ item.code + " " + item.description }}
+                </option>
+              </select>
+             
+            </div>
+          </div> -->
+            <div class="row mt-1 mx-2">
+            
+
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="file">Evidence File</label>
+                  <input
+                    type="file"
+                    id="File"
+                    (change)="handlefileInput($event)"
+                    name="File"
+                    formControlName="File"
+                  />
                 </div>
               </div>
+
+            </div>
+
+
             </div>
           </div>
         </div>

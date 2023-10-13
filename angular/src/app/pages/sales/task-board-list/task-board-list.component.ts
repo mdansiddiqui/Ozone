@@ -411,6 +411,24 @@ delete(e) {
       //     //this .Liststandard=this.StandardList;
       //   })
       //  }
-
+      showdeleted(e) {
+        console.log(e.row.data,"showdeleted")
+        
+      
+     
+        if (e.row.data.showdeleted==false )
+        {
+        return e.row.isEditing;
+        }
+      
+        else
+        {
+      
+          return !e.row.isEditing;
+        }
+      
+     
+      
+      }
        
 }

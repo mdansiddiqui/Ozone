@@ -26,7 +26,6 @@ namespace Ozone.Infrastructure.Persistence.Models
         public DateTime? LastUpdateDate { get; set; }
         public bool? IsDeleted { get; set; }
         public bool? Deactive { get; set; }
-        
 
         [ForeignKey(nameof(AuditDocumentTypeId))]
         [InverseProperty(nameof(AuditDocumentsType.AuditManagerDocuments))]

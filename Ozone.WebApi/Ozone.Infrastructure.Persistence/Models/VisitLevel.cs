@@ -31,6 +31,7 @@ namespace Ozone.Infrastructure.Persistence.Models
         public long? LastUpdatedById { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime? LastUpdatedDate { get; set; }
+        public long? StandardId { get; set; }
 
         [ForeignKey(nameof(CreatedById))]
         [InverseProperty(nameof(SecUser.VisitLevelCreatedBy))]
@@ -38,6 +39,9 @@ namespace Ozone.Infrastructure.Persistence.Models
         [ForeignKey(nameof(LastUpdatedById))]
         [InverseProperty(nameof(SecUser.VisitLevelLastUpdatedBy))]
         public virtual SecUser LastUpdatedBy { get; set; }
+        [ForeignKey(nameof(StandardId))]
+        [InverseProperty(nameof(Certification.VisitLevel))]
+        public virtual Certification Standard { get; set; }
         [InverseProperty("VisitLevel")]
         public virtual ICollection<ClientAuditVisit> ClientAuditVisit { get; set; }
         [InverseProperty("VisitLevel")]

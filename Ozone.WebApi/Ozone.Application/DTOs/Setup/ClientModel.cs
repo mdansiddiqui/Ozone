@@ -76,7 +76,7 @@ namespace Ozone.Application.DTOs
         public string FilePath { get; set; }
         public string ContentType { get; set; }
 
-
+        public bool? showdeleted { get; set; }
         //public string SiteContractName { get; set; }
         //public string SiteContractNumber { get; set; }
         //public string SiteEmail { get; set; }

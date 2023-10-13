@@ -299,7 +299,7 @@ namespace Ozone.Application.Mappings
 
                 .ForMember(x => x.RiskId, opt => opt.MapFrom(src => src.Client.RiskId))
                 .ForMember(x => x.RiskName, opt => opt.MapFrom(src => src.Client.Risk.Name))
-                 .ForMember(x => x.ProjectsCount, opt => opt.MapFrom(src => src.ClientProjects.Count))
+                 .ForMember(x => x.ProjectsCount, opt => opt.MapFrom(src => src.ClientProjects.Where(x=>x.ApprovalStatusId!=6).Count()))
 
 
 
@@ -390,6 +390,7 @@ namespace Ozone.Application.Mappings
                                .ForMember(x => x.ClientName, opt => opt.MapFrom(src => src.Project.Client.Name))
                                .ForMember(x => x.ClientSiteName, opt => opt.MapFrom(src => src.Project.ClientSite.SiteName))
                                .ForMember(x => x.ClientName, opt => opt.MapFrom(src => src.Project.ClientSite.Client.Name))
+
 
 
 
@@ -493,7 +494,11 @@ namespace Ozone.Application.Mappings
               .ForMember(x => x.StatusName, opt => opt.MapFrom(src => src.QcStatus.Name)).ReverseMap();
 
             CreateMap<Consultant, ConsultantModel>();
-            CreateMap<VisitLevel, VisitLevelModel>();
+            CreateMap<VisitLevel, VisitLevelModel>()
+                .ForMember(x => x.StandardName, opt => opt.MapFrom(src => src.Standard.Name))
+         
+            .ReverseMap();
+
             CreateMap<TypeOfEnrollment, EnrollmentTypeModel>();
             
             CreateMap<FileUploading, FileUploadingModel>()

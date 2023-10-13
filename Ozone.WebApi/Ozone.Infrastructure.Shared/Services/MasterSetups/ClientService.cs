@@ -88,8 +88,8 @@ namespace Ozone.Infrastructure.Shared.Services.MasterSetups
                 var sitecount = Clientdata.ClientSites.Count();
                 result.SiteCount = sitecount;
             }
-            var clientprojects = await Task.Run(() => _dbContext.ClientProjects.Include(x=>x.ClientSite).Where(x => x.ClientId == id && x.IsDeleted==false).FirstOrDefault());
-            if (clientprojects != null)
+            var clientprojects = await Task.Run(() => _dbContext.ClientProjects.Include(x=>x.ClientSite).Where(x => x.ClientId == id && x.IsDeleted==false && x.ApprovalStatusId!=6).ToListAsync());
+            if (clientprojects.Count>0)
             {
                 //result.
                 result.IsProjectExist = true;
@@ -535,8 +535,23 @@ namespace Ozone.Infrastructure.Shared.Services.MasterSetups
                   
                 }
 
+                foreach (var client in ClientList)
+                {
+                    if(client.Id == 98)
+                        {
+                        var clientId = client.Id;
+                            }
+                   var project= await _dbContext.ClientProjects.Where(x => x.IsDeleted == false && x.ClientId == client.Id && x.ApprovalStatusId !=6).ToListAsync();
 
-             
+                    if (project.Count > 0)
+                    {
+                        client.showdeleted = false;
+                    }
+
+                }
+
+
+
                 //  var list = await _productDenominationRepository.GetPagedProductDenominationReponseAsync(model);
 
                 result.ClientModel = GetPage(ClientList, model.Page, model.PageSize);

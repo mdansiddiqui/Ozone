@@ -1893,6 +1893,11 @@ namespace Ozone.Infrastructure.Persistence.Models
                     .WithMany(p => p.VisitLevelLastUpdatedBy)
                     .HasForeignKey(d => d.LastUpdatedById)
                     .HasConstraintName("FK_VisitLevel_SecUser1");
+
+                entity.HasOne(d => d.Standard)
+                    .WithMany(p => p.VisitLevel)
+                    .HasForeignKey(d => d.StandardId)
+                    .HasConstraintName("FK_VisitLevel_Certification");
             });
 
             modelBuilder.Entity<WindowPeriodIntimation>(entity =>

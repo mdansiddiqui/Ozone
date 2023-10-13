@@ -90,7 +90,9 @@ namespace Ozone.WebApi
                 var reactURl = configuration.GetValue<string>("reactUrl");
                 option.AddDefaultPolicy(pol =>
                 {
-                    pol.WithOrigins(reactURl).AllowAnyMethod().AllowAnyHeader();
+                    pol.WithOrigins(reactURl).AllowAnyMethod().AllowAnyHeader()
+                     .AllowCredentials()
+                     .AllowAnyMethod();
                 });
             });
 

@@ -5,7 +5,7 @@ export class VisitLevel implements IVisitLevel {
     IsActive: boolean | undefined;
     IsDeleted: boolean | undefined;
     Description: string | undefined;
-
+    StandardId: number | undefined
     constructor(data?: VisitLevel) {
         if (data) {
             for (var property in data) {
@@ -27,6 +27,7 @@ export class VisitLevel implements IVisitLevel {
             this.IsActive = data["IsActive"];
             this.IsDeleted = data["IsDeleted"];
             this.Description=data["Description"];
+            this.StandardId=data["StandardId"]
         }
     }
 
@@ -45,6 +46,7 @@ export class VisitLevel implements IVisitLevel {
         data["IsActive"] = this.IsActive;
         data["IsDeleted"] = this.IsDeleted;
        data["Description"]=this.Description;
+       data["StandardId"]=this.StandardId;
         return data;
     }
 
@@ -65,4 +67,5 @@ export interface IVisitLevel {
     IsActive: boolean | undefined;
     IsDeleted: boolean | undefined;
     Description: string | undefined;
+    StandardId: number | undefined
 }

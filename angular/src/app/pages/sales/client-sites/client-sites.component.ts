@@ -444,7 +444,7 @@ export class ClientSitesComponent implements OnInit {
           this.ClientSitesForm.get('CityId').setValue(e.row.data.cityId);
      
          
-
+if(parseInt(e.row.data.projectsCount) > 0){
 this.ClientSitesForm.controls.SiteName.disable();
 this.ClientSitesForm.controls.LegalStatus.disable();
 this.ClientSitesForm.controls.OutsourceProductionProcessess.disable();
@@ -454,7 +454,7 @@ this.ClientSitesForm.controls.Address.disable();
 this.ClientSitesForm.get('CountryId').disable();
 this.ClientSitesForm.get('StateId').disable();
 this.ClientSitesForm.get('CityId').disable();
-            
+}  
   
      }  
    
@@ -554,7 +554,12 @@ this.ClientSitesForm.get('CityId').disable();
   
   
   
-    Back(): void {this.router.navigateByUrl('/app/pages/sales/task-board-list'); }
+    Back(): void {
+     
+        this.router.navigateByUrl('/app/pages/sales/task-board?'+this.Clientid);
+      
+     // this.router.navigateByUrl('/app/pages/sales/task-board-list'); 
+    }
    
     loadCities(stateId): void {
       
@@ -625,7 +630,29 @@ this.ClientSitesForm.get('CityId').disable();
     
     
     //  var tt= this.authorizer;
-      if(parseInt(e.row.data.ProjectsCount) > 0 )
+      if(parseInt(e.row.data.projectsCount) > 0 )
+      {
+    
+      return e.row.isEditing;
+    }
+    
+      else
+      {
+    
+        return !e.row.isEditing;
+      }
+    
+   
+    
+    }
+
+    changeRequest(e) {
+      console.log(e.row.data)
+    
+    
+    
+    //  var tt= this.authorizer;
+      if(parseInt(e.row.data.projectsCount) > 0 )
       {
     
       return !e.row.isEditing;

@@ -116,6 +116,9 @@ export class TaskBoardComponent implements OnInit {
     stateId: new FormControl(''),
     postalCode: new FormControl(''),
     email: new FormControl(''),
+    prefixId: new FormControl(''),
+    contactPerson: new FormControl(''),
+    position: new FormControl(''),
   })
 
 
@@ -230,7 +233,9 @@ export class TaskBoardComponent implements OnInit {
           this.ClientEditForm.get('postalCode').setValue(agencyData.postalCode);
           this.ClientEditForm.get('email').setValue(agencyData.email);
 
-
+          this.ClientEditForm.get('prefixId').setValue(agencyData.prefixId);
+          this.ClientEditForm.get('contactPerson').setValue(agencyData.contactPerson);
+          this.ClientEditForm.get('position').setValue(agencyData.position);
         }
         
     
@@ -336,6 +341,7 @@ export class TaskBoardComponent implements OnInit {
             // this.ClientForm.get('Website').disable();
             this.ClientForm.get('IsActive').disable();
             this.ClientForm.get('Multisite').disable();
+            this.ClientForm.disable();
             this.change = true
           
             this.saveBtns= false;
@@ -524,6 +530,12 @@ this.fileToUpload= <File>e?.target?.files[0];
     foData.append("PostalCode",this.ClientEditForm.get('postalCode').value);
     foData.append("FormName",this.formName);
     foData.append('File',this.fileToUpload);
+
+    foData.append("PrefixId",this.ClientEditForm.get('prefixId').value);
+    foData.append("ContactPerson",this.ClientEditForm.get('contactPerson').value);
+    // foData.append("CountryId",this.ClientEditForm.get('countryId').value);
+    foData.append("Position",this.ClientEditForm.get('position').value);
+  
 
     console.log(this.fileToUpload);
 

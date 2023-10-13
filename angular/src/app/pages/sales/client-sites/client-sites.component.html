@@ -273,9 +273,9 @@
                                             <i class="fas fa-plus-square"></i> New
                                         </button>
                                         <button type="button"
-                                            class="btn-sm btn btn-dark btn float-right mx-1 px-3 mt-2 pt-2 pb-2 mt-3"
+                                            class="btn-sm btn btn-primary btn float-right mx-1 px-3 mt-2 pt-2 pb-2 mt-3"
                                             (click)="Back()">
-                                            <i class="fa fa-arrow-circle-left"></i> Back
+                                            <i class="fa fa-arrow-circle-left"></i> Client Info
                                         </button>
                                     </div>
                                 </div>
@@ -320,7 +320,7 @@
                                 <dxi-column dataField="cityName" caption="city"></dxi-column>
 
                                 <dxi-column type="buttons" caption="Action">
-                                    <dxi-button icon="increaselinespacing" [onClick]="onpopup" hint="Change Request"
+                                    <dxi-button icon="increaselinespacing"  [(visible)]="changeRequest" [onClick]="onpopup" hint="Change Request"
                                        ></dxi-button>
 
                                     <dxi-button icon="edit" [onClick]="edit" hint="Edit"

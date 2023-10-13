@@ -20,5 +20,7 @@ namespace Ozone.Application.DTOs
         public long? LastUpdatedById { get; set; }
   
         public DateTime? LastUpdatedDate { get; set; }
+        public long? StandardId { get; set; }
+        public string StandardName { get; set; }
     }
 }

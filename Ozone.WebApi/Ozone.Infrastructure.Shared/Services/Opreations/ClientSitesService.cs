@@ -657,7 +657,27 @@ namespace Ozone.Infrastructure.Shared.Services
                         Acmodel.OldValues = cityold.Name;
                         Acmodel.NewValues = citynew.Name;
                     }
-
+                    if (Acmodel.AffectedColumns == "PrefixId")
+                    {
+                        var cityold = await _dbContext.Prifix.Where(x => x.Id == Convert.ToInt64(activityLog.OldValues)).FirstOrDefaultAsync();
+                        var citynew = await _dbContext.Prifix.Where(x => x.Id == Convert.ToInt64(activityLog.NewValues)).FirstOrDefaultAsync();
+                        Acmodel.OldValues = cityold.Name;
+                        Acmodel.NewValues = citynew.Name;
+                    }
+                    if (Acmodel.AffectedColumns == "NaceCodeId")
+                    {
+                        var cityold = await _dbContext.NaceCode.Where(x => x.Id == Convert.ToInt64(activityLog.OldValues)).FirstOrDefaultAsync();
+                        var citynew = await _dbContext.NaceCode.Where(x => x.Id == Convert.ToInt64(activityLog.NewValues)).FirstOrDefaultAsync();
+                        Acmodel.OldValues = cityold.Name;
+                        Acmodel.NewValues = citynew.Name;
+                    }
+                    if (Acmodel.AffectedColumns == "EACodeId")
+                    {
+                        var cityold = await _dbContext.Eacode.Where(x => x.Id == Convert.ToInt64(activityLog.OldValues)).FirstOrDefaultAsync();
+                        var citynew = await _dbContext.Eacode.Where(x => x.Id == Convert.ToInt64(activityLog.NewValues)).FirstOrDefaultAsync();
+                        Acmodel.OldValues = cityold.Name;
+                        Acmodel.NewValues = citynew.Name;
+                    }
 
                     AuditList.Add(Acmodel);
 
@@ -836,7 +856,31 @@ namespace Ozone.Infrastructure.Shared.Services
 
                                     client.PostalCode = activityLog.NewValues;
                                 }
+                                if (columnName == "ContactPerson")
+                                {
 
+                                    client.ContactPerson = activityLog.NewValues;
+                                }
+                                if (columnName == "PrefixId")
+                                {
+
+                                    client.PrefixId = Convert.ToInt64(activityLog.NewValues);
+                                }
+                                if (columnName == "Position")
+                                {
+
+                                    client.Position = activityLog.NewValues;
+                                }
+                                if (columnName == "NaceCodeId")
+                                {
+
+                                    client.NaceCodeId = Convert.ToInt64(activityLog.NewValues);
+                                }
+                                if (columnName == "EacodeId")
+                                {
+
+                                    client.EacodeId = Convert.ToInt64(activityLog.NewValues);
+                                }
                                 _dbContext.Client.Update(client);
                             }
                             //Client cl = new Client();

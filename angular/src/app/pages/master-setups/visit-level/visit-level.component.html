@@ -22,6 +22,22 @@
                                 [formControlName]="field.name" [options]="field.options" [required]="i === 1">
                         </div>
                         <div class="col-md-4">
+                            <label class="mb-0" for="StandardId">
+                                {{ "Standards" }}
+                            </label>
+                            <select formControlName="StandardId"
+                                class="form-control form-control-sm col-md-12" id="StandardId" required
+                                [ngClass]="{ 'is-invalid': submitted && f.StandardId.errors }">
+                                <option *ngFor="let item of StandardList" [value]="item.id">
+                                    {{ item.name }}
+                                </option>
+                            </select>
+                            <div *ngIf="submitted && f.StandardId.errors" class="invalid-feedback">
+                                <div *ngIf="f.StandardId.errors.required">Standard is required</div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-4">
                             <label for="IsActive" class="mb-0">{{ "Status" }}</label>
                             <select class="form-control form-control-sm col-md-12" id="IsActive"
                                 formControlName="IsActive" required>
@@ -62,9 +78,11 @@
                         }" keyExpr="id">
                             <dxo-scrolling mode="virtual"></dxo-scrolling>
                             <dxo-scrolling columnRenderingMode="virtual"></dxo-scrolling>
-                            <dxi-column dataField="code" caption="Code"></dxi-column>
+                            <!-- <dxi-column dataField="code" caption="Code"></dxi-column> -->
                             <dxi-column dataField="name" caption="Name"></dxi-column>
-                            <dxi-column dataField="description" caption="Description"></dxi-column>
+                            <dxi-column dataField="standardName" caption="Standard"></dxi-column>
+                            
+                            <!-- <dxi-column dataField="description" caption="Description"></dxi-column> -->
                             <dxi-column dataField="isActive" caption="Status"></dxi-column>
                             <dxi-column type="buttons" caption="Action">
                                 <dxi-button hint="Edit" icon="edit" [(visible)]="isAddShown" [onClick]="editClientData">

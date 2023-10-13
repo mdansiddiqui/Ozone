@@ -8,6 +8,7 @@ import {
   FormBuilder,
   Validators,
 } from "@angular/forms";
+import { UserStandardService } from "@shared/Services/User-Standard-service";
 
 @Component({
   selector: "app-visit-level",
@@ -17,6 +18,7 @@ import {
 export class VisitLevelComponent implements OnInit {
   public VisitLevelData = [];
 
+  public StandardList = [];
   public item: VisitLevel = new VisitLevel();
   VisitLevelForm = new FormGroup({
     Id: new FormControl(""),
@@ -24,6 +26,7 @@ export class VisitLevelComponent implements OnInit {
     Description: new FormControl(""),
     IsActive: new FormControl(""),
     Code: new FormControl(""),
+    StandardId:new FormControl(""),
   });
   submitted = false;
   id: number;
@@ -54,8 +57,9 @@ export class VisitLevelComponent implements OnInit {
       console.log(this.store);
       this.item.Id = this.store;
       this.item.Name = this.VisitLevelForm.get("Name").value;
-      this.item.Code = this.VisitLevelForm.get("Code").value;
-      this.item.Description = this.VisitLevelForm.get("Description").value;
+      // this.item.Code = this.VisitLevelForm.get("Code").value;
+      // this.item.Description = this.VisitLevelForm.get("Description").value;
+      this.item.StandardId=this.VisitLevelForm.get('StandardId').value;
       console.log(this.VisitLevelForm.get("IsActive").value);
       if (this.VisitLevelForm.get("IsActive").value == 1) {
         this.item.IsActive = true;
@@ -72,14 +76,14 @@ export class VisitLevelComponent implements OnInit {
       if (
         this.id > 0 &&
         this.id != null &&
-        this.id != undefined &&
-        this.id != NaN
+        this.id != undefined 
       ) {
         this.item.Id = this.id;
       }
       this.item.Name = this.VisitLevelForm.get("Name").value;
-      this.item.Code = this.VisitLevelForm.get("Code").value;
-      this.item.Description = this.VisitLevelForm.get("Description").value;
+      // this.item.Code = this.VisitLevelForm.get("Code").value;
+      // this.item.Description = this.VisitLevelForm.get("Description").value;
+      this.item.StandardId=this.VisitLevelForm.get('StandardId').value;
       console.log(this.VisitLevelForm.get("IsActive").value);
       if (this.VisitLevelForm.get("IsActive").value == 1) {
         this.item.IsActive = true;
@@ -107,24 +111,24 @@ export class VisitLevelComponent implements OnInit {
     { id: 2, name: "Not Active" },
   ];
   formFields = [
-    {
-      name: "Code",
-      label: "Code",
-      type: "text",
-      options: null,
-    },
+    // {
+    //   name: "Code",
+    //   label: "Code",
+    //   type: "text",
+    //   options: null,
+    // },
     {
       name: "Name",
       label: "Name",
       type: "text",
       options: null,
     },
-    {
-      name: "Description",
-      label: "Description",
-      type: "text",
-      options: null,
-    },
+    // {
+    //   name: "Description",
+    //   label: "Description",
+    //   type: "text",
+    //   options: null,
+    // },
 
     // ... add more fields here
   ];
@@ -137,6 +141,7 @@ export class VisitLevelComponent implements OnInit {
   }
   constructor(
     private _ClientAuditVisitService: ClientAuditVisitService,
+    private _UserStandardService: UserStandardService,
     private fb: FormBuilder
   ) {
     this.editClientData = this.editClientData.bind(this);
@@ -147,6 +152,7 @@ export class VisitLevelComponent implements OnInit {
     this.check == false;
     this.mode = false;
     this.GetAllVisitLevel();
+    this.loadStandard();
   }
   public totalCount: number;
   public pagedDto: PagedRequestModel = new PagedRequestModel();
@@ -162,6 +168,7 @@ export class VisitLevelComponent implements OnInit {
     this.VisitLevelForm.get("Code").setValue(e.row.data.code);
     this.VisitLevelForm.get("Description").setValue(e.row.data.description);
     this.VisitLevelForm.get("Name").setValue(e.row.data.name);
+    this.VisitLevelForm.get("StandardId").setValue(e.row.data.StandardId);
     if (e.row.data.isActive == true) {
       this.VisitLevelForm.get("IsActive").setValue(1);
     } else {
@@ -198,5 +205,14 @@ export class VisitLevelComponent implements OnInit {
   onTableDataChange(event) {
     this.pagedDto.page = event;
     this.GetAllVisitLevel();
+  }
+
+  loadStandard(): void {
+
+    this._UserStandardService.getAllStandard().subscribe((Response) => {
+      this.StandardList = Response
+      console.log(this.StandardList)
+
+    })
   }
 }

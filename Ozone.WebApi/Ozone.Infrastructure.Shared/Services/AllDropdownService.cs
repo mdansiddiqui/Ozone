@@ -468,16 +468,24 @@ namespace Ozone.Infrastructure.Shared.Services
         }
         public async Task<List<VisitLevelModel>> GetALLVisitLevel()
         {
-            var result = new List<VisitLevelModel>();
+            try
+            {
+                var result = new List<VisitLevelModel>();
 
-            var list = await Task.Run(() => _dbContext.VisitLevel.Where(x => x.IsDeleted == false == x.IsActive == true).ToList());
-            result = _mapper.Map<List<VisitLevelModel>>(list);
+                var list = await Task.Run(() => _dbContext.VisitLevel.Include(x => x.Standard).Where(x => x.IsDeleted == false == x.IsActive == true).ToList());
+                result = _mapper.Map<List<VisitLevelModel>>(list);
 
-            VisitLevelModel MM = new VisitLevelModel();
-            MM.Id = 0;
-            MM.Name = "--- Not Selected ---";
-            result.Add(MM);
-            return result.OrderBy(x => x.Id).ToList();
+                VisitLevelModel MM = new VisitLevelModel();
+                MM.Id = 0;
+                MM.Name = "--- Not Selected ---";
+                result.Add(MM);
+                return result.OrderBy(x => x.Id).ToList();
+            }
+            catch (Exception ex) 
+            {
+                return null;
+            }
+          
             //return result;
         }
 
@@ -522,6 +530,7 @@ namespace Ozone.Infrastructure.Shared.Services
                     //DbAudditor.Address = input.Address;
                     DbVisitLevel.Code = input.Code;
                     DbVisitLevel.CreatedById = input.CreatedById;
+                    DbVisitLevel.StandardId = input.StandardId;
 
 
                     if (New == true)

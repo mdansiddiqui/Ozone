@@ -27,6 +27,7 @@ namespace Ozone.Infrastructure.Persistence.Models
             UserConsultancy = new HashSet<UserConsultancy>();
             UserCpd = new HashSet<UserCpd>();
             UserStandards = new HashSet<UserStandards>();
+            VisitLevel = new HashSet<VisitLevel>();
         }
 
         [Key]
@@ -72,5 +73,7 @@ namespace Ozone.Infrastructure.Persistence.Models
         public virtual ICollection<UserCpd> UserCpd { get; set; }
         [InverseProperty("Standard")]
         public virtual ICollection<UserStandards> UserStandards { get; set; }
+        [InverseProperty("Standard")]
+        public virtual ICollection<VisitLevel> VisitLevel { get; set; }
     }
 }
