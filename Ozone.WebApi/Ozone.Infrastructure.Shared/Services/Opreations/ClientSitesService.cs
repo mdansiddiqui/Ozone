@@ -637,7 +637,12 @@ namespace Ozone.Infrastructure.Shared.Services
 
                     if (Acmodel.AffectedColumns == "CountryId")
                     {
-                        var countryold = await _dbContext.Countries.Where(x => x.Id == Convert.ToInt64(activityLog.OldValues)).FirstOrDefaultAsync();
+                        Countries countryold = new Countries();
+                        if (activityLog.OldValues != "" && activityLog.OldValues != null)
+                        {
+                             countryold = await _dbContext.Countries.Where(x => x.Id == Convert.ToInt64(activityLog.OldValues)).FirstOrDefaultAsync();
+                        }
+                        
                         var countrynew = await _dbContext.Countries.Where(x => x.Id == Convert.ToInt64(activityLog.NewValues)).FirstOrDefaultAsync();
                         Acmodel.OldValues = countryold.Name;
                         Acmodel.NewValues = countrynew.Name;
@@ -645,35 +650,62 @@ namespace Ozone.Infrastructure.Shared.Services
                     }
                     if (Acmodel.AffectedColumns == "StateId")
                     {
-                        var stateold = await _dbContext.State.Where(x => x.Id == Convert.ToInt64(activityLog.OldValues)).FirstOrDefaultAsync();
+                        State stateold = new State();
+                        if (activityLog.OldValues != "" && activityLog.OldValues != null)
+                        {
+                            stateold= await _dbContext.State.Where(x => x.Id == Convert.ToInt64(activityLog.OldValues)).FirstOrDefaultAsync();
+                        }
+                        
                         var statenew = await _dbContext.State.Where(x => x.Id == Convert.ToInt64(activityLog.NewValues)).FirstOrDefaultAsync();
                         Acmodel.OldValues = stateold.Name;
                         Acmodel.NewValues = statenew.Name;
                     }
                     if (Acmodel.AffectedColumns == "CityId")
                     {
-                        var cityold = await _dbContext.Cities.Where(x => x.Id == Convert.ToInt64(activityLog.OldValues)).FirstOrDefaultAsync();
+                        Cities cityold = new Cities();
+
+                        if (activityLog.OldValues != "" && activityLog.OldValues != null)
+                        {
+                             cityold = await _dbContext.Cities.Where(x => x.Id == Convert.ToInt64(activityLog.OldValues)).FirstOrDefaultAsync();
+                        }
+                        
                         var citynew = await _dbContext.Cities.Where(x => x.Id == Convert.ToInt64(activityLog.NewValues)).FirstOrDefaultAsync();
                         Acmodel.OldValues = cityold.Name;
                         Acmodel.NewValues = citynew.Name;
                     }
                     if (Acmodel.AffectedColumns == "PrefixId")
                     {
-                        var cityold = await _dbContext.Prifix.Where(x => x.Id == Convert.ToInt64(activityLog.OldValues)).FirstOrDefaultAsync();
+                        Prifix prefix = new Prifix();
+
+                        if (activityLog.OldValues != "" && activityLog.OldValues != null)
+                        {
+                             prefix = await _dbContext.Prifix.Where(x => x.Id == Convert.ToInt64(activityLog.OldValues)).FirstOrDefaultAsync();
+                        }
+                        
                         var citynew = await _dbContext.Prifix.Where(x => x.Id == Convert.ToInt64(activityLog.NewValues)).FirstOrDefaultAsync();
-                        Acmodel.OldValues = cityold.Name;
+                        Acmodel.OldValues = prefix.Name;
                         Acmodel.NewValues = citynew.Name;
                     }
                     if (Acmodel.AffectedColumns == "NaceCodeId")
                     {
-                        var cityold = await _dbContext.NaceCode.Where(x => x.Id == Convert.ToInt64(activityLog.OldValues)).FirstOrDefaultAsync();
+                        NaceCode cityold = new NaceCode();
+
+                        if (activityLog.OldValues != "" && activityLog.OldValues != null)
+                        {
+                             cityold = await _dbContext.NaceCode.Where(x => x.Id == Convert.ToInt64(activityLog.OldValues)).FirstOrDefaultAsync();
+                        }
                         var citynew = await _dbContext.NaceCode.Where(x => x.Id == Convert.ToInt64(activityLog.NewValues)).FirstOrDefaultAsync();
                         Acmodel.OldValues = cityold.Name;
                         Acmodel.NewValues = citynew.Name;
                     }
                     if (Acmodel.AffectedColumns == "EACodeId")
                     {
-                        var cityold = await _dbContext.Eacode.Where(x => x.Id == Convert.ToInt64(activityLog.OldValues)).FirstOrDefaultAsync();
+                        Eacode cityold = new Eacode();
+                        if (activityLog.OldValues != "" && activityLog.OldValues != null)
+                        {
+                             cityold = await _dbContext.Eacode.Where(x => x.Id == Convert.ToInt64(activityLog.OldValues)).FirstOrDefaultAsync();
+
+                        }
                         var citynew = await _dbContext.Eacode.Where(x => x.Id == Convert.ToInt64(activityLog.NewValues)).FirstOrDefaultAsync();
                         Acmodel.OldValues = cityold.Name;
                         Acmodel.NewValues = citynew.Name;
@@ -725,7 +757,12 @@ namespace Ozone.Infrastructure.Shared.Services
 
                     if (Acmodel.AffectedColumns == "CountryId")
                     {
-                        var countryold = await _dbContext.Countries.Where(x => x.Id == Convert.ToInt64(activityLog.OldValues)).FirstOrDefaultAsync();
+                        Countries countryold = new Countries();
+                        if (activityLog.OldValues != "" && activityLog.OldValues != null)
+                        {
+                             countryold = await _dbContext.Countries.Where(x => x.Id == Convert.ToInt64(activityLog.OldValues)).FirstOrDefaultAsync();
+
+                        }
                         var countrynew = await _dbContext.Countries.Where(x => x.Id == Convert.ToInt64(activityLog.NewValues)).FirstOrDefaultAsync();
                         Acmodel.OldValues = countryold.Name;
                         Acmodel.NewValues = countrynew.Name;
@@ -733,14 +770,24 @@ namespace Ozone.Infrastructure.Shared.Services
                     }
                     if (Acmodel.AffectedColumns == "StateId")
                     {
-                        var stateold = await _dbContext.State.Where(x => x.Id == Convert.ToInt64(activityLog.OldValues)).FirstOrDefaultAsync();
+                        State stateold = new State();
+                        if (activityLog.OldValues != "" && activityLog.OldValues != null)
+                        {
+                             stateold = await _dbContext.State.Where(x => x.Id == Convert.ToInt64(activityLog.OldValues)).FirstOrDefaultAsync();
+
+                        }
                         var statenew = await _dbContext.State.Where(x => x.Id == Convert.ToInt64(activityLog.NewValues)).FirstOrDefaultAsync();
                         Acmodel.OldValues = stateold.Name;
                         Acmodel.NewValues = statenew.Name;
                     }
                     if (Acmodel.AffectedColumns == "CityId")
                     {
-                        var cityold = await _dbContext.Cities.Where(x => x.Id == Convert.ToInt64(activityLog.OldValues)).FirstOrDefaultAsync();
+                        Cities cityold= new Cities();
+                        if (activityLog.OldValues != "" && activityLog.OldValues != null)
+                        {
+                             cityold = await _dbContext.Cities.Where(x => x.Id == Convert.ToInt64(activityLog.OldValues)).FirstOrDefaultAsync();
+
+                        }
                         var citynew = await _dbContext.Cities.Where(x => x.Id == Convert.ToInt64(activityLog.NewValues)).FirstOrDefaultAsync();
                         Acmodel.OldValues = cityold.Name;
                         Acmodel.NewValues = citynew.Name;

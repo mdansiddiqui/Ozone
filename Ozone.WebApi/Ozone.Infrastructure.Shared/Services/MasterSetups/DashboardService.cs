@@ -172,44 +172,54 @@ namespace Ozone.Infrastructure.Shared.Services.MasterSetups
                     }
                     db.ProjectId = model.Id;
                     db.CreateById = model.CreatedById;
-                    if (model.Type == "Intimation Surv_1")
-                    {
-                        db.IntimationdateSurv1 = true;
-                        db.IntimationdateSurv1Date = DateTime.Now;
-                    }
-                    else if (model.Type == "Window Period Surv_1")
-                    {
-                        db.WindowperiodStartSurv1 = true;
-                        db.WindowperiodStartSurv1Date = DateTime.Now;
-                    }
-                    else if (model.Type == "Follow Up Review_1")
-                    {
-                        db.WindowperiodStartFup1 = true;
-                        db.WindowperiodStartFup1Date = DateTime.Now;
-                    }
-                    else if (model.Type == "Window Period Surv_2")
-                    {
-                        db.WindowperiodStartSurv2 = true;
-                        db.WindowperiodStartSurv2Date = DateTime.Now;
+                if (model.Type == "Intimation Surv_1")
+                {
+                    db.IntimationdateSurv1 = true;
+                    db.IntimationdateSurv1Date = DateTime.Now;
+                }
+                else if (model.Type == "Window Period Surv_1")
+                {
+                    db.WindowperiodStartSurv1 = true;
+                    db.WindowperiodStartSurv1Date = DateTime.Now;
+                }
+                else if (model.Type == "Follow Up Review_1")
+                {
+                    db.WindowperiodStartFup1 = true;
+                    db.WindowperiodStartFup1Date = DateTime.Now;
+                }
+                else if (model.Type == "Window Period Surv_2")
+                {
+                    db.WindowperiodStartSurv2 = true;
+                    db.WindowperiodStartSurv2Date = DateTime.Now;
 
-                    }
-                    else if (model.Type == "Follow Up Review_2")
-                    {
-                        db.WindowperiodSartFup2 = true;
-                        db.WindowperiodSartFup2Date = DateTime.Now;
-                    }
-                    else if (model.Type == "Window Period Recertification")
-                    {
-                        db.RecertificationWindowperiodStartSurv2 = true;
-                        db.RecertificationWindowperiodStartSurv2Date = DateTime.Now;
-                    }
-                    else if (model.Type == "Followup_Recert_Start")
-                    {
+                }
+                else if (model.Type == "Follow Up Review_2")
+                {
+                    db.WindowperiodSartFup2 = true;
+                    db.WindowperiodSartFup2Date = DateTime.Now;
+                }
+                else if (model.Type == "Window Period Recertification")
+                {
+                    db.RecertificationWindowperiodStartSurv2 = true;
+                    db.RecertificationWindowperiodStartSurv2Date = DateTime.Now;
+                }
+                else if (model.Type == "Followup_Recert_Start")
+                {
 
-                        db.FollowupRecertStart = true;
-                        db.FollowupRecertStartDate = DateTime.Now;
-                    }
+                    db.FollowupRecertStart = true;
+                    db.FollowupRecertStartDate = DateTime.Now;
+                }
+                else if (model.Type == "Intimation Surv_2")
+                {
+                    db.IntimationdateSurv2 = true;
+                    db.IntimationdateSurv1Date = DateTime.Now;
+                }
+                else if (model.Type == "RecertifiCation_Intimation")
+                {
+                    db.RecertificationIntimation = true;
+                    db.RecertificationIntimationDate = DateTime.Now;
 
+                }
                     if (New == true)
                     {
 

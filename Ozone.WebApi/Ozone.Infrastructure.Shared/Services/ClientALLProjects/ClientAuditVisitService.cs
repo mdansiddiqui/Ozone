@@ -1553,8 +1553,10 @@ namespace Ozone.Infrastructure.Shared.Services
                 var w6 = tWindowperiod.Where(x => x.Windowperiod_Sart_FUP_2 != null).ToList();
                 var w7 = tWindowperiod.Where(x => x.Recertification_Windowperiod_start_Surv_2 != null).ToList();
                 var w8 = tWindowperiod.Where(x => x.Followup_Recert_Start != null).ToList();
+                var w9 = tWindowperiod.Where(x => x.RecertificationIntimationdate != null).ToList();
+                
 
-               
+
                 //var IntimationdateSurv_1 = tWindowperiod.Where(x=> x.IntimationdateSurv_1 > DateTime.Now.AddDays(-1) &&  x.IntimationdateSurv_1 < DateTime.Now.AddDays(8)).ToList();
                 //var Windowperiod_start_Surv_1 = tWindowperiod.Where(x => x.Windowperiod_start_Surv_1 > DateTime.Now.AddDays(-1) && x.Windowperiod_start_Surv_1 < DateTime.Now.AddDays(8)).ToList();
                 //var Windowperiod_Start_FUP_1 = tWindowperiod.Where(x => x.Windowperiod_Start_FUP_1 > DateTime.Now.AddDays(-1) &&  x.Windowperiod_Start_FUP_1 < DateTime.Now.AddDays(8)).ToList();
@@ -1564,6 +1566,7 @@ namespace Ozone.Infrastructure.Shared.Services
                 //var Recertification_Windowperiod_start_Surv_2 = tWindowperiod.Where(x => x.Recertification_Windowperiod_start_Surv_2 > DateTime.Now.AddDays(-1) && x.Recertification_Windowperiod_start_Surv_2 < DateTime.Now.AddDays(8)).ToList();
                 //var Followup_Recert_Start = tWindowperiod.Where(x => x.Followup_Recert_Start > DateTime.Now.AddDays(-1) && x.Followup_Recert_Start < DateTime.Now.AddDays(8)).ToList();
 
+
                 var IntimationdateSurv_1 = tWindowperiod.Where(x => x.IntimationdateSurv_1 < DateTime.Now.AddDays(8)).ToList();
                 var Windowperiod_start_Surv_1 = tWindowperiod.Where(x => x.Windowperiod_start_Surv_1 < DateTime.Now.AddDays(8)).ToList();
                 var Windowperiod_Start_FUP_1 = tWindowperiod.Where(x => x.Windowperiod_Start_FUP_1 < DateTime.Now.AddDays(8)).ToList();
@@ -1572,8 +1575,26 @@ namespace Ozone.Infrastructure.Shared.Services
                 var Windowperiod_Sart_FUP_2 = tWindowperiod.Where(x => x.Windowperiod_Sart_FUP_2 < DateTime.Now.AddDays(8)).ToList();
                 var Recertification_Windowperiod_start_Surv_2 = tWindowperiod.Where(x =>  x.Recertification_Windowperiod_start_Surv_2 < DateTime.Now.AddDays(8)).ToList();
                 var Followup_Recert_Start = tWindowperiod.Where(x => x.Followup_Recert_Start < DateTime.Now.AddDays(8)).ToList();
+                var RecertifiCation_Intimation_Date= tWindowperiod.Where(x => x.RecertificationIntimationdate < DateTime.Now.AddDays(8)).ToList();
 
 
+                List<CertifiedClientModel> intomationServ2 = new List<CertifiedClientModel>();
+
+                foreach (var Intimatiom in IntimationdateSurv_2)
+                {
+
+
+                    var windowResult = _dbContext.WindowPeriodIntimation.Where(x => x.ProjectId == Intimatiom.ProjectId && x.IntimationdateSurv2 == true && x.IsDeleted == false).ToList();
+
+
+                    if (windowResult.Count == 0)
+                    {
+                        intomationServ2.Add(Intimatiom);
+                        //CertifiedClientModel.AddRange(IntimationdateSurv_1);
+                    }
+
+
+                }
 
                 List<CertifiedClientModel> intomationServ1 = new List<CertifiedClientModel>();
                 foreach (var Intimatiom in IntimationdateSurv_1)
@@ -1691,6 +1712,25 @@ namespace Ozone.Infrastructure.Shared.Services
 
 
                 }
+                //RecertifiCation_Intimation_Date
+
+
+                List<CertifiedClientModel> RecertifiCationIntimationDate = new List<CertifiedClientModel>();
+                foreach (var ReInt in RecertifiCation_Intimation_Date)
+                {
+
+
+                    var windowResult = _dbContext.WindowPeriodIntimation.Where(x => x.ProjectId == ReInt.ProjectId && x.RecertificationIntimation == true && x.IsDeleted == false).ToList();
+
+
+                    if (windowResult.Count == 0)
+                    {
+                        RecertifiCationIntimationDate.Add(ReInt);
+                        //CertifiedClientModel.AddRange(Windowperiod_Start_FUP_1);
+                    }
+
+
+                }
                 // CertifiedClientModel.AddRange(IntimationdateSurv_2);
                 //CertifiedClientModel.AddRange(Windowperiod_start_Surv_2);
                 //CertifiedClientModel.AddRange(Windowperiod_Sart_FUP_2);
@@ -1706,6 +1746,8 @@ namespace Ozone.Infrastructure.Shared.Services
                 result.Windowperiod_Sart_FUP_2 = WindowperiodSartFUP2;
                 result.Recertification_Windowperiod_start_Surv_2 = Recertification_Windowperiod_start_Surv_2;
                 result.Followup_Recert_Start = FollowupRecertStart;
+                result.IntimationdateSurv_2 = intomationServ2;
+                result.RecertifiCation_Intimation_Date = RecertifiCationIntimationDate;
 
                 windiwPeriodModel windiwPeriod = new windiwPeriodModel();
                 windiwPeriod = new windiwPeriodModel();
@@ -1749,6 +1791,18 @@ namespace Ozone.Infrastructure.Shared.Services
                 windiwPeriod.Id = 7;
                 windiwPeriod.Name = "Followup_Recert_Start";
                 windiwPeriod.Count = FollowupRecertStart.Count();
+                windowPeriodList.Add(windiwPeriod);
+
+                windiwPeriod = new windiwPeriodModel();
+                windiwPeriod.Id = 8;
+                windiwPeriod.Name = "Intimation Surv_2";
+                windiwPeriod.Count = intomationServ2.Count();
+                windowPeriodList.Add(windiwPeriod);
+
+                windiwPeriod = new windiwPeriodModel();
+                windiwPeriod.Id = 9;
+                windiwPeriod.Name = "RecertifiCation_Intimation";
+                windiwPeriod.Count = RecertifiCationIntimationDate.Count();
                 windowPeriodList.Add(windiwPeriod);
 
                 result.WindiwPeriodModel = windowPeriodList;
@@ -1843,7 +1897,7 @@ namespace Ozone.Infrastructure.Shared.Services
                                 SHA.currentState = (!(dataReader["currentState"] is DBNull)) ? dataReader["currentState"].ToString() : null;
                                 SHA.Registration_no = (!(dataReader["Registration_no"] is DBNull)) ? dataReader["Registration_no"].ToString() : null;
                                 SHA.CertificationIssueDate = (!(dataReader["CertificationIssueDate"] is DBNull)) ? Convert.ToDateTime(dataReader["CertificationIssueDate"]) : (DateTime?)null;
-                                SHA.CertificationExpiryDate = (!(dataReader["CertificationExpiryDate"] is DBNull)) ? Convert.ToDateTime(dataReader["CertificationExpiryDate"]).AddDays(-2) : (DateTime?)null;
+                                SHA.CertificationExpiryDate = (!(dataReader["CertificationExpiryDate"] is DBNull)) ? Convert.ToDateTime(dataReader["CertificationExpiryDate"]): (DateTime?)null;
                                 SHA.Surveillance_Frequency = (!(dataReader["Surveillance_Frequency"] is DBNull)) ? dataReader["Surveillance_Frequency"].ToString() : null;
                                 SHA.IntimationdateSurv_1 = (!(dataReader["IntimationdateSurv_1"] is DBNull)) ? Convert.ToDateTime(dataReader["IntimationdateSurv_1"]) : (DateTime?)null;
                                 SHA.Windowperiod_start_Surv_1 = (!(dataReader["Windowperiod_start_Surv_1"] is DBNull)) ? Convert.ToDateTime(dataReader["Windowperiod_start_Surv_1"]) : (DateTime?)null;

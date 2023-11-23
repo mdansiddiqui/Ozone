@@ -29,6 +29,7 @@ namespace Ozone.Application.DTOs.Reports
         public DateTime? Surv_2_due { get; set; }
         public DateTime? Windowperiod_Sart_FUP_2 { get; set; }
         public DateTime? Windowperiod_end_FUP_2 { get; set; }
+       
         public DateTime? RecertificationIntimationdate { get; set; }
         public DateTime? Recertification_Windowperiod_start_Surv_2 { get; set; }
         public DateTime? Recertification_Windowperiod_end_Surv_2 { get; set; }

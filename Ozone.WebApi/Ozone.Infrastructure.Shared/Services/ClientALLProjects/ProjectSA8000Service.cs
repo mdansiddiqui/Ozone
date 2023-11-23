@@ -508,7 +508,11 @@ namespace Ozone.Infrastructure.Shared.Services
                     {
                         if (Acmodel.AffectedColumns == "SurveillanceMethodId")
                         {
-                            var SurveillanceMethodold = await _dbContext.SurveillanceMethod.Where(x => x.Id == Convert.ToInt64(activityLog.OldValues)).FirstOrDefaultAsync();
+                            SurveillanceMethod SurveillanceMethodold = new SurveillanceMethod();
+                            if (activityLog.OldValues != "" && activityLog.OldValues != null)
+                            {
+                                 SurveillanceMethodold = await _dbContext.SurveillanceMethod.Where(x => x.Id == Convert.ToInt64(activityLog.OldValues)).FirstOrDefaultAsync();
+                            }
                             var SurveillanceMethodnew = await _dbContext.SurveillanceMethod.Where(x => x.Id == Convert.ToInt64(activityLog.NewValues)).FirstOrDefaultAsync();
                             Acmodel.OldValues = SurveillanceMethodold.Name;
                             Acmodel.NewValues = SurveillanceMethodnew.Name;
@@ -517,7 +521,12 @@ namespace Ozone.Infrastructure.Shared.Services
 
                         if (Acmodel.AffectedColumns == "SurveillanceVisitFrequencyId")
                         {
-                            var SurveillanceVisitFrequencyold = await _dbContext.SurveillanceVisitFrequency.Where(x => x.Id == Convert.ToInt64(activityLog.OldValues)).FirstOrDefaultAsync();
+                            SurveillanceVisitFrequency SurveillanceVisitFrequencyold = new SurveillanceVisitFrequency();
+                            if (activityLog.OldValues != "" && activityLog.OldValues != null)
+                            {
+                                 SurveillanceVisitFrequencyold = await _dbContext.SurveillanceVisitFrequency.Where(x => x.Id == Convert.ToInt64(activityLog.OldValues)).FirstOrDefaultAsync();
+
+                            }
                             var SurveillanceVisitFrequencynew = await _dbContext.SurveillanceVisitFrequency.Where(x => x.Id == Convert.ToInt64(activityLog.NewValues)).FirstOrDefaultAsync();
                             Acmodel.OldValues = SurveillanceVisitFrequencyold.Name;
                             Acmodel.NewValues = SurveillanceVisitFrequencynew.Name;
@@ -530,8 +539,12 @@ namespace Ozone.Infrastructure.Shared.Services
                     {
                         if (Acmodel.AffectedColumns == "AssessmentCompletedId")
                         {
-                            var AssessmentCompletedOld = await _dbContext.AssessmentCompleted.Where(x => x.Id == Convert.ToInt64(activityLog.OldValues)).FirstOrDefaultAsync();
-                            var SAssessmentCompletedNew = await _dbContext.AssessmentCompleted.Where(x => x.Id == Convert.ToInt64(activityLog.NewValues)).FirstOrDefaultAsync();
+                            AssessmentCompleted AssessmentCompletedOld = new AssessmentCompleted();
+                            if (activityLog.OldValues != "" && activityLog.OldValues != null)
+                            {
+                                 AssessmentCompletedOld = await _dbContext.AssessmentCompleted.Where(x => x.Id == Convert.ToInt64(activityLog.OldValues)).FirstOrDefaultAsync();
+                            }
+                                var SAssessmentCompletedNew = await _dbContext.AssessmentCompleted.Where(x => x.Id == Convert.ToInt64(activityLog.NewValues)).FirstOrDefaultAsync();
                             Acmodel.OldValues = AssessmentCompletedOld.Name;
                             Acmodel.NewValues = SAssessmentCompletedNew.Name;
 
@@ -539,7 +552,12 @@ namespace Ozone.Infrastructure.Shared.Services
 
                         if (Acmodel.AffectedColumns == "AccreditationId")
                         {
-                            var AccreditationOld = await _dbContext.Accreditation.Where(x => x.Id == Convert.ToInt64(activityLog.OldValues)).FirstOrDefaultAsync();
+                            Accreditation AccreditationOld = new Accreditation();
+                            if (activityLog.OldValues != "" && activityLog.OldValues != null)
+                            {
+                                 AccreditationOld = await _dbContext.Accreditation.Where(x => x.Id == Convert.ToInt64(activityLog.OldValues)).FirstOrDefaultAsync();
+
+                            }
                             var AccreditationNew = await _dbContext.Accreditation.Where(x => x.Id == Convert.ToInt64(activityLog.NewValues)).FirstOrDefaultAsync();
                             Acmodel.OldValues = AccreditationOld.Name;
                             Acmodel.NewValues = AccreditationNew.Name;
@@ -547,15 +565,25 @@ namespace Ozone.Infrastructure.Shared.Services
                         }
                         if (Acmodel.AffectedColumns == "CompletedStepId")
                         {
-                            var CompletedStepold = await _dbContext.CompletedSteps.Where(x => x.Id == Convert.ToInt64(activityLog.OldValues)).FirstOrDefaultAsync();
-                            var CompletedStepnew = await _dbContext.CompletedSteps.Where(x => x.Id == Convert.ToInt64(activityLog.NewValues)).FirstOrDefaultAsync();
+                            CompletedSteps CompletedStepold = new CompletedSteps();
+                            if (activityLog.OldValues != "" && activityLog.OldValues != null)
+                            {
+                                 CompletedStepold = await _dbContext.CompletedSteps.Where(x => x.Id == Convert.ToInt64(activityLog.OldValues)).FirstOrDefaultAsync();
+
+                            }
+                                var CompletedStepnew = await _dbContext.CompletedSteps.Where(x => x.Id == Convert.ToInt64(activityLog.NewValues)).FirstOrDefaultAsync();
                             Acmodel.OldValues = CompletedStepold.Name;
                             Acmodel.NewValues = CompletedStepnew.Name;
 
                         }
                         if (Acmodel.AffectedColumns == "RequestOfSiteId")
                         {
-                            var RequestOfSiteold = await _dbContext.RequestOfSite.Where(x => x.Id == Convert.ToInt64(activityLog.OldValues)).FirstOrDefaultAsync();
+                            RequestOfSite RequestOfSiteold = new RequestOfSite();
+                            if (activityLog.OldValues != "" && activityLog.OldValues != null)
+                            {
+                                 RequestOfSiteold = await _dbContext.RequestOfSite.Where(x => x.Id == Convert.ToInt64(activityLog.OldValues)).FirstOrDefaultAsync();
+
+                            }
                             var RequestOfSitenew = await _dbContext.RequestOfSite.Where(x => x.Id == Convert.ToInt64(activityLog.NewValues)).FirstOrDefaultAsync();
                             Acmodel.OldValues = RequestOfSiteold.Name;
                             Acmodel.NewValues = RequestOfSitenew.Name;
@@ -563,7 +591,12 @@ namespace Ozone.Infrastructure.Shared.Services
                         }
                         if (Acmodel.AffectedColumns == "ModuleVersionId")
                         {
-                            var ModuleVersionold = await _dbContext.ModuleVersion.Where(x => x.Id == Convert.ToInt64(activityLog.OldValues)).FirstOrDefaultAsync();
+                            ModuleVersion ModuleVersionold = new ModuleVersion();
+                            if (activityLog.OldValues != "" && activityLog.OldValues != null)
+                            {
+                                 ModuleVersionold = await _dbContext.ModuleVersion.Where(x => x.Id == Convert.ToInt64(activityLog.OldValues)).FirstOrDefaultAsync();
+
+                            }
                             var ModuleVersionnew = await _dbContext.ModuleVersion.Where(x => x.Id == Convert.ToInt64(activityLog.NewValues)).FirstOrDefaultAsync();
                             Acmodel.OldValues = ModuleVersionold.Name;
                             Acmodel.NewValues = ModuleVersionnew.Name;
@@ -571,7 +604,12 @@ namespace Ozone.Infrastructure.Shared.Services
                         }
                         if (Acmodel.AffectedColumns == "ModuleShareId")
                         {
-                            var ModuleShareold = await _dbContext.ModuleShare.Where(x => x.Id == Convert.ToInt64(activityLog.OldValues)).FirstOrDefaultAsync();
+                            ModuleShare ModuleShareold=new ModuleShare();
+                            if (activityLog.OldValues != "" && activityLog.OldValues != null)
+                            {
+                                 ModuleShareold = await _dbContext.ModuleShare.Where(x => x.Id == Convert.ToInt64(activityLog.OldValues)).FirstOrDefaultAsync();
+
+                            }
                             var ModuleSharenew = await _dbContext.ModuleShare.Where(x => x.Id == Convert.ToInt64(activityLog.NewValues)).FirstOrDefaultAsync();
                             Acmodel.OldValues = ModuleShareold.Name;
                             Acmodel.NewValues = ModuleSharenew.Name;
@@ -579,7 +617,12 @@ namespace Ozone.Infrastructure.Shared.Services
                         }
                         if (Acmodel.AffectedColumns == "ServicesTypeId")
                         {
-                            var ServicesTypeold = await _dbContext.ServiceType.Where(x => x.Id == Convert.ToInt64(activityLog.OldValues)).FirstOrDefaultAsync();
+                            ServiceType ServicesTypeold = new ServiceType();
+                            if (activityLog.OldValues != "" && activityLog.OldValues != null)
+                            {
+                                 ServicesTypeold = await _dbContext.ServiceType.Where(x => x.Id == Convert.ToInt64(activityLog.OldValues)).FirstOrDefaultAsync();
+
+                            }
                             var ServicesTypenew = await _dbContext.ServiceType.Where(x => x.Id == Convert.ToInt64(activityLog.NewValues)).FirstOrDefaultAsync();
                             Acmodel.OldValues = ServicesTypeold.Name;
                             Acmodel.NewValues = ServicesTypenew.Name;
@@ -587,7 +630,12 @@ namespace Ozone.Infrastructure.Shared.Services
                         }
                         if (Acmodel.AffectedColumns == "MethodologyId")
                         {
-                            var Methodologyold = await _dbContext.Methodology.Where(x => x.Id == Convert.ToInt64(activityLog.OldValues)).FirstOrDefaultAsync();
+                            Methodology Methodologyold = new Methodology();
+                            if (activityLog.OldValues != "" && activityLog.OldValues != null)
+                            {
+                                 Methodologyold = await _dbContext.Methodology.Where(x => x.Id == Convert.ToInt64(activityLog.OldValues)).FirstOrDefaultAsync();
+
+                            }
                             var Methodologynew = await _dbContext.Methodology.Where(x => x.Id == Convert.ToInt64(activityLog.NewValues)).FirstOrDefaultAsync();
                             Acmodel.OldValues = Methodologyold.Name;
                             Acmodel.NewValues = Methodologynew.Name;
@@ -600,7 +648,12 @@ namespace Ozone.Infrastructure.Shared.Services
                     {
                         if (Acmodel.AffectedColumns == "AssessmentCompletedId")
                         {
-                            var AssessmentCompletedOld = await _dbContext.AssessmentCompleted.Where(x => x.Id == Convert.ToInt64(activityLog.OldValues)).FirstOrDefaultAsync();
+                            AssessmentCompleted AssessmentCompletedOld = new AssessmentCompleted();
+                            if (activityLog.OldValues != "" && activityLog.OldValues != null)
+                            {
+                                 AssessmentCompletedOld = await _dbContext.AssessmentCompleted.Where(x => x.Id == Convert.ToInt64(activityLog.OldValues)).FirstOrDefaultAsync();
+
+                            }
                             var AssessmentCompletedNew = await _dbContext.AssessmentCompleted.Where(x => x.Id == Convert.ToInt64(activityLog.NewValues)).FirstOrDefaultAsync();
                             Acmodel.OldValues = AssessmentCompletedOld.Name;
                             Acmodel.NewValues = AssessmentCompletedNew.Name;
@@ -609,7 +662,12 @@ namespace Ozone.Infrastructure.Shared.Services
 
                         if (Acmodel.AffectedColumns == "CompletedModuleId")
                         {
-                            var CompletedModuleOld = await _dbContext.CompletedModule.Where(x => x.Id == Convert.ToInt64(activityLog.OldValues)).FirstOrDefaultAsync();
+                            CompletedModule CompletedModuleOld = new CompletedModule();
+                            if (activityLog.OldValues != "" && activityLog.OldValues != null)
+                            {
+                                 CompletedModuleOld = await _dbContext.CompletedModule.Where(x => x.Id == Convert.ToInt64(activityLog.OldValues)).FirstOrDefaultAsync();
+
+                            }
                             var CompletedModuleNew = await _dbContext.CompletedModule.Where(x => x.Id == Convert.ToInt64(activityLog.NewValues)).FirstOrDefaultAsync();
                             Acmodel.OldValues = CompletedModuleOld.Name;
                             Acmodel.NewValues = CompletedModuleNew.Name;
@@ -617,7 +675,12 @@ namespace Ozone.Infrastructure.Shared.Services
                         }
                         if (Acmodel.AffectedColumns == "EffluentTreatmentPlantId")
                         {
-                            var EffluentTreatmentPlantold = await _dbContext.EffluentTreatmentPlant.Where(x => x.Id == Convert.ToInt64(activityLog.OldValues)).FirstOrDefaultAsync();
+                            EffluentTreatmentPlant EffluentTreatmentPlantold = new EffluentTreatmentPlant();
+                            if (activityLog.OldValues != "" && activityLog.OldValues != null)
+                            {
+                                 EffluentTreatmentPlantold = await _dbContext.EffluentTreatmentPlant.Where(x => x.Id == Convert.ToInt64(activityLog.OldValues)).FirstOrDefaultAsync();
+
+                            }
                             var EffluentTreatmentPlantnew = await _dbContext.EffluentTreatmentPlant.Where(x => x.Id == Convert.ToInt64(activityLog.NewValues)).FirstOrDefaultAsync();
                             Acmodel.OldValues = EffluentTreatmentPlantold.Name;
                             Acmodel.NewValues = EffluentTreatmentPlantnew.Name;
@@ -626,7 +689,12 @@ namespace Ozone.Infrastructure.Shared.Services
 
                         if (Acmodel.AffectedColumns == "ServicesTypeId")
                         {
-                            var ServicesTypeold = await _dbContext.ServiceType.Where(x => x.Id == Convert.ToInt64(activityLog.OldValues)).FirstOrDefaultAsync();
+                            ServiceType ServicesTypeold = new ServiceType();
+                            if (activityLog.OldValues != "" && activityLog.OldValues != null)
+                            {
+                                 ServicesTypeold = await _dbContext.ServiceType.Where(x => x.Id == Convert.ToInt64(activityLog.OldValues)).FirstOrDefaultAsync();
+
+                            }
                             var ServicesTypenew = await _dbContext.ServiceType.Where(x => x.Id == Convert.ToInt64(activityLog.NewValues)).FirstOrDefaultAsync();
                             Acmodel.OldValues = ServicesTypeold.Name;
                             Acmodel.NewValues = ServicesTypenew.Name;
@@ -634,7 +702,12 @@ namespace Ozone.Infrastructure.Shared.Services
                         }
                         if (Acmodel.AffectedColumns == "MethodologyId")
                         {
-                            var Methodologyold = await _dbContext.Methodology.Where(x => x.Id == Convert.ToInt64(activityLog.OldValues)).FirstOrDefaultAsync();
+                            Methodology Methodologyold = new Methodology();
+                            if (activityLog.OldValues != "" && activityLog.OldValues != null)
+                            {
+                                 Methodologyold = await _dbContext.Methodology.Where(x => x.Id == Convert.ToInt64(activityLog.OldValues)).FirstOrDefaultAsync();
+
+                            }
                             var Methodologynew = await _dbContext.Methodology.Where(x => x.Id == Convert.ToInt64(activityLog.NewValues)).FirstOrDefaultAsync();
                             Acmodel.OldValues = Methodologyold.Name;
                             Acmodel.NewValues = Methodologynew.Name;
@@ -642,7 +715,12 @@ namespace Ozone.Infrastructure.Shared.Services
                         }
                         if (Acmodel.AffectedColumns == "RequestOfSiteId")
                         {
-                            var RequestOfSiteold = await _dbContext.RequestOfSite.Where(x => x.Id == Convert.ToInt64(activityLog.OldValues)).FirstOrDefaultAsync();
+                            RequestOfSite RequestOfSiteold = new RequestOfSite();
+                            if (activityLog.OldValues != "" && activityLog.OldValues != null)
+                            {
+                                 RequestOfSiteold = await _dbContext.RequestOfSite.Where(x => x.Id == Convert.ToInt64(activityLog.OldValues)).FirstOrDefaultAsync();
+
+                            }
                             var RequestOfSitenew = await _dbContext.RequestOfSite.Where(x => x.Id == Convert.ToInt64(activityLog.NewValues)).FirstOrDefaultAsync();
                             Acmodel.OldValues = RequestOfSiteold.Name;
                             Acmodel.NewValues = RequestOfSitenew.Name;
@@ -650,7 +728,12 @@ namespace Ozone.Infrastructure.Shared.Services
                         }
                         if (Acmodel.AffectedColumns == "ModuleVersionId")
                         {
-                            var ModuleVersionold = await _dbContext.ModuleVersion.Where(x => x.Id == Convert.ToInt64(activityLog.OldValues)).FirstOrDefaultAsync();
+                            ModuleVersion ModuleVersionold = new ModuleVersion();
+                            if (activityLog.OldValues != "" && activityLog.OldValues != null)
+                            {
+                                 ModuleVersionold = await _dbContext.ModuleVersion.Where(x => x.Id == Convert.ToInt64(activityLog.OldValues)).FirstOrDefaultAsync();
+
+                            }
                             var ModuleVersionnew = await _dbContext.ModuleVersion.Where(x => x.Id == Convert.ToInt64(activityLog.NewValues)).FirstOrDefaultAsync();
                             Acmodel.OldValues = ModuleVersionold.Name;
                             Acmodel.NewValues = ModuleVersionnew.Name;
@@ -658,7 +741,12 @@ namespace Ozone.Infrastructure.Shared.Services
                         }
                         if (Acmodel.AffectedColumns == "ModuleShareId")
                         {
-                            var ModuleShareold = await _dbContext.ModuleShare.Where(x => x.Id == Convert.ToInt64(activityLog.OldValues)).FirstOrDefaultAsync();
+                            ModuleShare ModuleShareold = new ModuleShare();
+                            if (activityLog.OldValues != "" && activityLog.OldValues != null)
+                            {
+                                 ModuleShareold = await _dbContext.ModuleShare.Where(x => x.Id == Convert.ToInt64(activityLog.OldValues)).FirstOrDefaultAsync();
+
+                            }
                             var ModuleSharenew = await _dbContext.ModuleShare.Where(x => x.Id == Convert.ToInt64(activityLog.NewValues)).FirstOrDefaultAsync();
                             Acmodel.OldValues = ModuleShareold.Name;
                             Acmodel.NewValues = ModuleSharenew.Name;

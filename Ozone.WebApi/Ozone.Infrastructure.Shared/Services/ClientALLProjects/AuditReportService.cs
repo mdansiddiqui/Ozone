@@ -945,7 +945,10 @@ namespace Ozone.Infrastructure.Shared.Services
                                   ClientProjects ClientProject2 = _dbContext.ClientProjects.Where(u => u.Id == input[0].ProjectId).FirstOrDefault();
                                   ClientProject2.ApprovalStatusId = 3;
                                   ClientProject2.CertificateIssueDate = DateTime.Now;
-                                  ClientProject2.CertificationExpiryDate = DateTime.Now.AddYears(3);
+
+                                    var expiryDate = DateTime.Now.AddYears(3);
+                                  ClientProject2.CertificationExpiryDate = expiryDate.AddDays(-2);
+                                    //ClientProject2.CertificationExpiryDate = expiryDate.AddDays(-2);
 
 
                                     var standard=_dbContext.Certification.Where(x => x.Id == ClientProject2.StandardId && x.IsActive == true && x.IsDeleted == false).FirstOrDefault();

@@ -723,7 +723,7 @@ namespace Ozone.Infrastructure.Shared.Services
                                 SHA.Surv_4 = (!(dataReader["Surv_4"] is DBNull)) ? Convert.ToDateTime(dataReader["Surv_4"]).AddDays(-4) : (DateTime?)null;
 
                                 SHA.Surv_5 = (!(dataReader["Surv_5"] is DBNull)) ? Convert.ToDateTime(dataReader["Surv_5"]).AddDays(-5) : (DateTime?)null;
-                                SHA.Recertification = (!(dataReader["Recertification"] is DBNull)) ? Convert.ToDateTime(dataReader["Recertification"]).AddDays(-1) : (DateTime?)null;
+                                SHA.Recertification = (!(dataReader["Recertification"] is DBNull)) ? Convert.ToDateTime(dataReader["Recertification"]): (DateTime?)null;
                                 SHA.CertificationIssueDate = (!(dataReader["CertificationIssueDate"] is DBNull)) ? Convert.ToDateTime(dataReader["CertificationIssueDate"]) : (DateTime?)null;
 
                                 SHALIst.Add(SHA);
@@ -1061,7 +1061,7 @@ namespace Ozone.Infrastructure.Shared.Services
                                 SHA.currentState = (!(dataReader["currentState"] is DBNull)) ? dataReader["currentState"].ToString() : null;
                                 SHA.Registration_no = (!(dataReader["Registration_no"] is DBNull)) ? dataReader["Registration_no"].ToString() : null;
                                 SHA.CertificationIssueDate = (!(dataReader["CertificationIssueDate"] is DBNull)) ? Convert.ToDateTime(dataReader["CertificationIssueDate"]) : (DateTime?)null;
-                                SHA.CertificationExpiryDate = (!(dataReader["CertificationExpiryDate"] is DBNull)) ? Convert.ToDateTime(dataReader["CertificationExpiryDate"]).AddDays(-2) : (DateTime?)null;
+                                SHA.CertificationExpiryDate = (!(dataReader["CertificationExpiryDate"] is DBNull)) ? Convert.ToDateTime(dataReader["CertificationExpiryDate"]) : (DateTime?)null;
                                 SHA.Surveillance_Frequency = (!(dataReader["Surveillance_Frequency"] is DBNull)) ? dataReader["Surveillance_Frequency"].ToString() : null;
                                 SHA.IntimationdateSurv_1 = (!(dataReader["IntimationdateSurv_1"] is DBNull)) ? Convert.ToDateTime(dataReader["IntimationdateSurv_1"]) : (DateTime?)null;
                                 SHA.Windowperiod_start_Surv_1 = (!(dataReader["Windowperiod_start_Surv_1"] is DBNull)) ? Convert.ToDateTime(dataReader["Windowperiod_start_Surv_1"]) : (DateTime?)null;

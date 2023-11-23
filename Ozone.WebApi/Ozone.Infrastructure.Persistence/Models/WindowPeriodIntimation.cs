@@ -47,6 +47,10 @@ namespace Ozone.Infrastructure.Persistence.Models
         public DateTime? FollowupRecertStartDate { get; set; }
         public long? CreateById { get; set; }
         public bool? IsDeleted { get; set; }
+        [Column("Recertification_Intimation_Date", TypeName = "datetime")]
+        public DateTime? RecertificationIntimationDate { get; set; }
+        [Column("Recertification_Intimation")]
+        public bool? RecertificationIntimation { get; set; }
 
         [ForeignKey(nameof(CreateById))]
         [InverseProperty(nameof(SecUser.WindowPeriodIntimation))]

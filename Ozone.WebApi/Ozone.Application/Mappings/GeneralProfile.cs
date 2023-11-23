@@ -537,7 +537,8 @@ namespace Ozone.Application.Mappings
             .ForMember(x => x.AuditDocumentTypename, opt => opt.MapFrom(src => src.AuditDocumentType.Name))
               .ReverseMap();
 
-            
+            CreateMap<AuditDocumentsType, AuditDocumetTypeModel>();
+
         }
     }
 

@@ -147,6 +147,7 @@ namespace Ozone.Infrastructure.Shared
             services.AddTransient<IFileUploadingService, FileUploadingService>();
             services.AddTransient<IDashboardService, DashboardService>();
             services.AddTransient<IAuditorReportsService, AuditorReportsService>();
+            services.AddTransient<IAuditDocumentTypeService, AuditDocumentTypeService>();
 
         }
     }

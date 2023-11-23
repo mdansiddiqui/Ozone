@@ -69,6 +69,7 @@ namespace Ozone.Application.DTOs
 
 
         public List<CertifiedClientModel> IntimationdateSurv_1 { get; set; }
+
         public List<CertifiedClientModel> Windowperiod_start_Surv_1 { get; set; }
         public List<CertifiedClientModel> Windowperiod_Start_FUP_1 { get; set; }
         public List<CertifiedClientModel> IntimationdateSurv_2 { get; set; }
@@ -76,7 +77,8 @@ namespace Ozone.Application.DTOs
         public List<CertifiedClientModel> Windowperiod_Sart_FUP_2 { get; set; }
         public List<CertifiedClientModel> Recertification_Windowperiod_start_Surv_2 { get; set; }
         public List<CertifiedClientModel> Followup_Recert_Start { get; set; }
-        
+        public List<CertifiedClientModel> RecertifiCation_Intimation_Date { get; set; }
+
 
     }
 }
