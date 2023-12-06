@@ -380,4 +380,16 @@ debugger
             let options={headers:headers};
             return this.http.post(this.REST_API_SERVER+'/api/ClientAuditVisit/GetClientAuditVisitBySearch',values,options);
           }
+
+          ChangeReviewer(values): Observable<any>
+
+          {    let headers = new HttpHeaders({
+        
+            'Authorization' : 'Bearer ' + JSON.parse(localStorage.getItem('token')),
+        
+          });
+          let options = { headers: headers };
+             return this.http.post<any>(`${environment.apiUrl}/api/ClientAuditVisit/ChangeReviewer`,values,options)
+        
+          }
 }

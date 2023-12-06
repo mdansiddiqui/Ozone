@@ -107,8 +107,8 @@ import { AuditorReportsComponent } from './pages/reports/auditor-reports/auditor
 import { InvoiceComponent } from './pages/reports/invoice/invoice.component';
 import { AuditorAuditDetailsComponent } from './pages/reports/auditor-audit-details/auditor-audit-details.component';
 import { MappingStandardWithDocumentComponent } from './pages/master-setups/mapping-standard-with-document/mapping-standard-with-document.component';
-
-
+import {AuditDocumentComponent} from './pages/master-setups/audit-document/audit-document.component'
+import { GenerateinvoiceComponent } from './pages/sales//generateinvoice/generateinvoice.component';
 
 //RolesWithPermissionAuthorizerTaskBoardComponent
 //Transfer
@@ -158,8 +158,9 @@ import { MappingStandardWithDocumentComponent } from './pages/master-setups/mapp
                     { path: 'pages/sales/qc-master-list', component: QCMasterListComponent },
 
                     { path: 'pages/sales/general-form', component: GeneralFormComponent },
+                    { path: 'pages/sales/generateinvoice', component: GenerateinvoiceComponent },
 
-
+                    
 
 
                     //Encashment
@@ -230,6 +231,7 @@ import { MappingStandardWithDocumentComponent } from './pages/master-setups/mapp
                     { path: 'pages/master-setups/qc-document', component: QcDocumentComponent },
                     { path: 'pages/master-setups/dashboard', component: DashboardComponent },
 //Opeartions
+                    {path:'pages/master-setups/audit-document', component:AuditDocumentComponent},
 
                     { path: 'pages/Operations/consultant', component: ConsultantComponent },
 

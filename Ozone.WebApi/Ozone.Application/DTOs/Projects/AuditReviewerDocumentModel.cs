@@ -20,5 +20,7 @@ namespace Ozone.Application.DTOs
         public bool? IsDeleted { get; set; }
 
         public IFormFile File { get; set; }
+        public string StageName { get; set; }
+        
     }
 }

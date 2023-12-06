@@ -1926,10 +1926,15 @@ namespace Ozone.Infrastructure.Shared.Services
                                 SHALIst.Add(SHA);
                                 //}); ;
                             }
+
+                           
+
                         }
                     }
                 }
 
+                //Console.WriteLine(SHALIst);
+                //Console.ReadLine();
                 return SHALIst;
 
 
@@ -1948,7 +1953,17 @@ namespace Ozone.Infrastructure.Shared.Services
 
         
 
-            var DocumentList = await Task.Run(() => _dbContext.AuditReviewerDocuments.Include(x => x.AuditDocumentType).Where(x => x.IsDeleted == false && x.ClientAuditVisitId== clientauditvisitId).ToList());
+            var DocumentList = await Task.Run(() => _dbContext.AuditReviewerDocuments.Include(x => x.AuditDocumentType).Include(x => x.ClientAuditVisit).Include(x => x.ClientAuditVisit.VisitLevel).Where(x => x.IsDeleted == false && x.ClientAuditVisitId== clientauditvisitId).ToList());
+
+            var visit = await Task.Run(() => _dbContext.ClientAuditVisit.Where(x => x.IsDeleted == false && x.Id == clientauditvisitId).FirstOrDefaultAsync());
+            if (visit.VisitLevelId != 7)
+            {
+                var stage1 = await Task.Run(() => _dbContext.AuditReviewerDocuments.Include(x => x.AuditDocumentType).Include(x => x.ClientAuditVisit).Include(x => x.ClientAuditVisit.VisitLevel).Where(x => x.IsDeleted == false && x.ClientAuditVisit.VisitLevelId == 7 && x.ClientAuditVisit.ProjectId == visit.ProjectId).ToList());
+                if (stage1.Count > 0)
+                {
+                    DocumentList.AddRange(stage1);
+                }
+            }
             result = _mapper.Map<List<AuditReviewerDocumentModel>>(DocumentList);
 
 
@@ -2175,7 +2190,17 @@ namespace Ozone.Infrastructure.Shared.Services
 
 
 
-            var DocumentList = await Task.Run(() => _dbContext.AuditManagerDocuments.Include(x => x.AuditDocumentType).Where(x => x.IsDeleted == false && x.ClientAuditVisitId == clientauditvisitId).ToList());
+            var DocumentList = await Task.Run(() => _dbContext.AuditManagerDocuments.Include(x => x.AuditDocumentType).Include(x => x.ClientAuditVisit).Include(x => x.ClientAuditVisit.VisitLevel).Where(x => x.IsDeleted == false && x.ClientAuditVisitId == clientauditvisitId).ToList());
+
+            var visit = await Task.Run(() => _dbContext.ClientAuditVisit.Where(x => x.IsDeleted == false && x.Id == clientauditvisitId).FirstOrDefaultAsync());
+            if (visit.VisitLevelId != 7)
+            {
+                var stage1 = await Task.Run(() => _dbContext.AuditManagerDocuments.Include(x => x.AuditDocumentType).Include(x => x.ClientAuditVisit).Include(x => x.ClientAuditVisit.VisitLevel).Where(x => x.IsDeleted == false && x.ClientAuditVisit.VisitLevelId == 7 && x.ClientAuditVisit.ProjectId == visit.ProjectId).ToList());
+                if (stage1.Count > 0)
+                {
+                    DocumentList.AddRange(stage1);
+                }
+            }
             result = _mapper.Map<List<AuditMangerDocumentModel>>(DocumentList);
 
 
@@ -2367,6 +2392,56 @@ namespace Ozone.Infrastructure.Shared.Services
             }
 
         }
+
+
+
+         public async Task<string> ChangeReviewer(ReviewerModel input)
+        {
+            var Data = await Task.Run(() => _dbContext.ClientAuditVisit.Where(x => x.Id == input.AuditVisitId && x.IsDeleted == false).FirstOrDefault());
+
+            var newcode = "";
+            string Message = "";
+            long newid;
+
+
+
+            // OzoneContext ozonedb = new OzoneContext();
+            using (var transaction = _unitOfWork.BeginTransaction())
+            {
+               
+                if (Data !=null)
+                {
+                    try
+                    {
+
+                        Data.ReviewerId = input.ReviewerId;
+                        _dbContext.ClientAuditVisit.Update(Data);
+                        await _unitOfWork.SaveChangesAsync();
+
+
+                        transaction.Commit();
+                        Message = "1";
+
+                    }
+                    catch (Exception ex)
+                    {
+                        var Exception = ex;
+                        transaction.Rollback();
+                        return "Not Inserted!";
+                    }
+
+
+                }
+
+
+                return Message;
+
+
+            }
+
+
+        }
+
 
     }
 }

@@ -796,8 +796,8 @@ export class ProjectSA8000Component implements OnInit {
       this.ProjectCode = ClientProjectMod.projectCode
 
 
-
-      this._ClientService.GeClientDatabyId(ProjectSaData.clientId).subscribe((Response) => {
+     // alert("Update"+ProjectSaData.clientId);
+      this._ClientService.GeClientDatabyId(this.ClientId).subscribe((Response) => {
 
         this.clientinfo = Response;
 
@@ -2460,6 +2460,7 @@ export class ProjectSA8000Component implements OnInit {
   }
 
   ClientData(): void {
+    //alert(this.ClientId);
     this._ClientService.GeClientDatabyId(this.ClientId).subscribe((Response) => {
 
       this.clientinfo = Response;

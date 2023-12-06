@@ -254,6 +254,18 @@
                         {{ VerificationLevel }}
                     </div>
                     <div class="col-md-6">
+                        &nbsp;
+                        
+                        <button
+                        type="button"
+                        class="btn-sm btn-success btn mb-2 float-left"
+                        *ngIf="Reviewerbtn"
+                        (click)="onpopup()"
+                      >
+                        <i class="fa fa-save"></i> Change Reviewer
+                      </button>
+                      &nbsp;
+                      &nbsp;
                         <button type="button" class="btn-sm btn btn-success mb-2 float-left"
                             (click)="DownloadAuditPlan()">
                             <i class="fa fa-download"></i> Download Audit Plan
@@ -654,7 +666,8 @@
                         <dxo-search-panel [visible]="true" [width]="240" placeholder="Search...">
                         </dxo-search-panel>
                         <dxo-scrolling columnRenderingMode="virtual"></dxo-scrolling>
-        
+                        <dxi-column dataField="stageName" caption="Visit Level" cssClass="cell-header">
+                        </dxi-column>
                         <dxi-column dataField="auditDocumentTypename" caption="Document" cssClass="cell-header">
                         </dxi-column>
                         <!-- <dxi-column dataField="createdDate" dataType="date" caption="Uploaded Date"
@@ -746,7 +759,8 @@
                         <dxo-search-panel [visible]="true" [width]="240" placeholder="Search...">
                         </dxo-search-panel>
                         <dxo-scrolling columnRenderingMode="virtual"></dxo-scrolling>
-        
+                        <dxi-column dataField="stageName" caption="Visit Level" cssClass="cell-header">
+                        </dxi-column>
                         <dxi-column dataField="auditDocumentTypename" caption="Document" cssClass="cell-header">
                         </dxi-column>
                      
@@ -774,4 +788,70 @@
 </form>
 <br />
 <br />
+
+<form [formGroup]="ReviewerChangeForm" #reviewerChangeForm="ngForm">
+  <div
+    class="modal"
+    tabindex="-1"
+    role="dialog"
+    [ngStyle]="{ display: displayStyle }"
+  >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" style="color: #304570; font-weight: bold">
+            Reviewer Change
+          </h4>
+        </div>
+        <div class="modal-body">
+          
+            <div class="card mx-2 pt-3 pb-2">
+              <div class="row mx-2">
+               
+              </div>
+
+
+             
+
+              <div class="row mt-1 mx-2">
+              
+                <div class="col-md-6">
+                  <label class="mb-0" for="denomination">
+                    {{ "Reviewer" }}
+                  </label>
+                  <select formControlName="ReviewerId"  class="form-control" id="ReviewerId" >
+                    <option *ngFor="let item of ReviewerList" [value]="item.userId"
+               >
+                      {{item.userName }}
+                    </option>
+                  </select>
+                </div>
+               
+              </div>
+
+
+           
+          
+           
+
+
+            </div>
+        
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" (click)="closePopup()">
+            Close
+          </button>
+          <button
+            type="button"
+            class="btn-success btn"
+            (click)="reviewerChange()"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
 

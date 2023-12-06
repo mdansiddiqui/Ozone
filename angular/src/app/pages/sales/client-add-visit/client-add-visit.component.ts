@@ -217,6 +217,8 @@ export class ClientAddVisitComponent implements OnInit {
     this.GetAllJustifiedPersonList();
 
   }
+
+ 
   handlefileInput(e: any) {
 
     this.fileToUpload = <File>e?.target?.files[0];

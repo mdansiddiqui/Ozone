@@ -91,4 +91,7 @@ namespace Ozone.Application.DTOs
         public int TotalCount { get; set; }
         public List<ClientAuditVisitModel> ClientAuditModel { get; set; }
     }
+
+
+   
 }

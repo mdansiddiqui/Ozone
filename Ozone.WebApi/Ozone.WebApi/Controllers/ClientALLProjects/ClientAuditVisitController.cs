@@ -18,6 +18,8 @@ using System.Collections.Generic;
 using Ozone.Application.Interfaces.Security;
 using Ozone.Application.Interfaces.Setup;
 using Ozone.Application.Interfaces;
+using Ozone.Infrastructure.Shared.Services.MasterSetups;
+using Ozone.Infrastructure.Shared;
 
 namespace Ozone.WebApi.Controllers.ClientALLProjects
 {
@@ -727,6 +729,20 @@ namespace Ozone.WebApi.Controllers.ClientALLProjects
             var fileNM = Path.GetFileName(fileName);
 
             return File(memory, contenpe, fileNM);
+        }
+
+
+        [Route("ChangeReviewer")]
+        [HttpPost]
+        [Authorize]
+
+        public async Task<IActionResult> ChangeReviewer(ReviewerModel input)
+        {
+
+            var result = await _clientAuditVisitService.ChangeReviewer(input);
+            return Ok(new Response { Status = result, Message = result });
+
+
         }
     }
 }

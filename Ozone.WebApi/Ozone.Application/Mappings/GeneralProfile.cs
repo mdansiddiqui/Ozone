@@ -22,6 +22,7 @@ using Ozone.Infrastructure.Persistence.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Ozone.Application.Mappings
 {
@@ -531,10 +532,12 @@ namespace Ozone.Application.Mappings
              .ForMember(x => x.AuditDocumentTypename, opt => opt.MapFrom(src => src.AuditDocumentType.Name))
            .ForMember(x => x.DocumentPath, opt => opt.MapFrom(src => src.DocumentPath))
               .ForMember(x => x.DocumentContentType, opt => opt.MapFrom(src => src.DocumentContentType))
+             .ForMember(x => x.StageName, opt => opt.MapFrom(src => src.ClientAuditVisit.VisitLevel.Name))
                 .ReverseMap();
 
             CreateMap<AuditManagerDocuments, AuditMangerDocumentModel>()
             .ForMember(x => x.AuditDocumentTypename, opt => opt.MapFrom(src => src.AuditDocumentType.Name))
+            .ForMember(x => x.StageName, opt => opt.MapFrom(src => src.ClientAuditVisit.VisitLevel.Name))
               .ReverseMap();
 
             CreateMap<AuditDocumentsType, AuditDocumetTypeModel>();

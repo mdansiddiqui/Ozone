@@ -200,6 +200,8 @@ public editClientrecord:boolean=false
   public Recertification_Windowperiod_start_Surv_2 = [];
   public Followup_Recert_Start = [];
    public CertifiedClientList=[];
+   public RecertifiCation_Intimation=[];
+
 
   
   ngOnInit() : void{
@@ -1697,6 +1699,8 @@ this.pagedDto.organizationId = parseInt(localStorage.getItem('organizationId'));
    this.Windowperiod_Sart_FUP_2 =data.windowperiod_Sart_FUP_2
    this.Recertification_Windowperiod_start_Surv_2 = data.recertification_Windowperiod_start_Surv_2;
    this.Followup_Recert_Start = data.followup_Recert_Start;
+   this.IntimationdateSurv_2=data.intimationdateSurv_2;
+   this.RecertifiCation_Intimation=data.recertifiCation_Intimation_Date;
     //this.reloadGrid()
     
     //this.pagedDto.page =1;
@@ -1972,6 +1976,16 @@ var name =  "Window Period"
      if(e.data.id==7)
      {
       this.CertifiedClientList=this.Followup_Recert_Start;
+     }
+
+     if(e.data.id==8)
+     {
+      this.CertifiedClientList=this.IntimationdateSurv_2;
+     }
+
+     if(e.data.id==9)
+     {
+      this.CertifiedClientList=this.RecertifiCation_Intimation;
      }
 
     

@@ -21,5 +21,6 @@ namespace Ozone.Application.DTOs
         public bool? Deactive { get; set; }
 
         public IFormFile File { get; set; }
+        public string StageName { get; set; }
     }
 }

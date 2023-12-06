@@ -23,7 +23,7 @@ import { ProjectAmountComponent } from './project-amount/project-amount.componen
 import { VisitLevelComponent } from './visit-level/visit-level.component';
 import { MappingStandardWithDocumentComponent } from './mapping-standard-with-document/mapping-standard-with-document.component';
 //import { DashboardComponent } from './dashboard/dashboard.component';
-
+import { AuditDocumentComponent } from './audit-document/audit-document.component';
 
 
 
@@ -32,7 +32,8 @@ import { MappingStandardWithDocumentComponent } from './mapping-standard-with-do
   declarations: [
     DocumentTypeComponent,
     VisitLevelComponent,
-    MappingStandardWithDocumentComponent
+    MappingStandardWithDocumentComponent,
+    AuditDocumentComponent,
   ],
   imports: [
     CommonModule,

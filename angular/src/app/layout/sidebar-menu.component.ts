@@ -137,6 +137,14 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
                     'fas fa-user-edit',
                     this.permissionCheck('ProjectAmountReports')
                 ),
+
+
+                new MenuItem(
+                    'Invoice',
+                    '/app/pages/sales/generateinvoice',
+                    'fas fa-arrow-circle-right',
+                    this.permissionCheck('Invoice')
+                    ),
                 // new MenuItem(
                 //     'General Form',
                 //     '/app/pages/sales/general-form',
@@ -212,7 +220,12 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
 
             // new MenuItem(this.l('Master Setups'), '', 'fas fa-certificate', this.permissionCheckParent(['Standard', 'Modules', 'DocumentType', 'StandardType', 'ApplicationType', 'AudditorType', 'Country', 'State', 'City', 'CertificationBody', 'EaCode', 'NaceCode', 'CourseType', 'Section', 'Legislation', 'Accreditation', 'ProjectAmount']), [
                 new MenuItem(this.l('Master Setups'), '', 'fas fa-certificate', this.permissionCheckParent(['Master Setups']), [
-
+                    new MenuItem(
+                        'Audit Documents',
+                        '/app/pages/master-setups/audit-document',
+                        'fas fa-arrow-circle-right',
+                        this.permissionCheck('AuditDocuments')
+                    ),
                 new MenuItem(
                     'Visit Level',
                     '/app/pages/master-setups/visit-level',

@@ -1,0 +1,329 @@
+<section class="bg-dark text-white py-3">
+    <div class="container text-center">
+        <h4>MASTER SETUP / Generate Invoice</h4>
+    </div>
+</section>
+
+<form [formGroup]="GenerateInvoiceForm" #generateInvoiceForm="ngForm">
+
+    <section class="content-header pt-0 pb-0 mt-3 mx-0 mb-0 md-0">
+        <div class="container-fluid">
+            <div class="card">
+                <div class="row mt-1 mx-2 mb-2">
+                    <div class="col-md-4">
+                        <label for="TypeOfInvoice" class="mb-0">
+                            Type Of Invoice
+                        </label>
+                        <select class="form-control form-control-sm col-md-12" required id="TypeOfInvoice"
+                            formControlName="TypeOfInvoice" required>
+                            <option *ngFor="let item of StatusList1" [value]="item.name">
+                                {{ item.name }}
+                            </option>
+                        </select>
+                    </div>
+
+                </div>
+                <div class="row  mt-1 mx-2 mb-2">
+                    <div class="col-md-4">
+                        <label class="mb-0" for="InvoiceNo">Invoice No.</label>
+                        <input type="text" formControlName="InvoiceNo" class="form-control form-control-sm col-md-12"
+                            id="InvoiceNo" />
+                    </div>
+                    <div class="col-md-4">
+                        <label class="mb-0" for="InvoiceDate">Invoice Date</label>
+                        <input type="date" formControlName="InvoiceDate" class="form-control form-control-sm col-md-12"
+                            id="InvoiceDate" />
+                    </div>
+                    <div class="col-md-4">
+                        <label for="IsActive" class="mb-0">
+                            Reverse Charge
+                        </label>
+                        <select class="form-control form-control-sm col-md-12" required id="isActive"
+                            formControlName="IsActive" required>
+                            <option *ngFor="let item of StatusList" [value]="item.name">
+                                {{ item.name }}
+                            </option>
+                        </select>
+                    </div>
+
+                    <!-- <div class="col-md-4">
+                        <label class="mb-0" for="ProjectTypeId">
+                            {{ "Project Type" }}
+                        </label>
+                        <select formControlName="ProjectTypeId" class="form-control form-control-sm col-md-12"
+                            id="ProjectTypeId">
+                            <option *ngFor="let item of ProjectTypeList" [value]="item.id">
+                                {{ item.name }}
+                            </option>
+                        </select>
+
+                    </div> -->
+                    <!-- <div class="col-md-2">
+                                <label class="mb-0" for="indent">Employees</label>
+                                <input formControlName="StandardId" type="text" class="form-control form-control-sm col-md-12" id="indent" />
+                            </div> -->
+                    <!-- <div class="col-md-4">
+                                <label class="mb-0" for="Eacodename">
+                                    {{ "EA Code" }}
+                                </label>
+
+
+
+                                <input type="text"
+                                    class="form-control form-control-sm col-md-12" formControlName="Eacodename" id="Eacodename" disabled/>
+
+                            </div>
+
+
+
+
+
+                           </div> -->
+
+                </div>
+
+                <div class="row  mt-1 mx-2 mb-2">
+                    <div class="col-md-4">
+                        <label class="mb-0">GSTIN</label>
+                        <input class="form-control form-control-sm col-md-12" disabled placeholder="09BAHPS3707G2ZI" />
+                    </div>
+                    <div class="col-md-4">
+                        <label class="mb-0">State</label>
+                        <input class="form-control form-control-sm col-md-12" placeholder="Uttar Pradesh" disabled />
+                    </div>
+                    <div class="col-md-4">
+                        <label class="mb-0">State Code</label>
+                        <input class="form-control form-control-sm col-md-12" placeholder="09" disabled />
+                    </div>
+                </div>
+                <!-- <div class="card">
+                    <div class="card-header">
+
+                        <div class="row md-0 px-3 pb-2 ">
+
+
+                           
+                        </div>
+                        <div class="row md-0 px-3 pb-2 ">
+                            <b> <a class="nav-item nav-link active" id="nav-profile-tab" data-toggle="tab"
+                                    data-toggle="tab" role="tab" style="text-decoration: underline"
+                                    aria-controls="nav-profile" aria-selected="false">Details of Receiver (Billed
+                                    to)</a></b><br />
+                            <div class="col-md-4">
+                                <label for="InvoiceNo" class="md-0">Invoice No.</label>
+                                <input type="text" id="InvoiceNo" formControlName="InvoiceNo"
+                                    class="form-control form-control-sm col-md-12">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="InvoiceDate" class="md-0">Invoice Date</label>
+                                <input type="number" id="InvoiceDate" formControlName="Invoice Date"
+                                    class="form-control form-control-sm col-md-12">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="IsActive" class="mb-0">
+                                    Reverse Charge
+                                </label>
+                                <select class="form-control form-control-sm col-md-12" required id="isActive"
+                                    formControlName="IsActive" required>
+                                    <option *ngFor="let item of StatusList" [value]="item.id">
+                                        {{ item.name }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div> -->
+                <!-- <div class="card">
+                    <a class="nav-item nav-link active" id="nav-profile-tab" data-toggle="tab" data-toggle="tab"
+                        role="tab" style="text-decoration: underline" aria-controls="nav-profile"
+                        aria-selected="false">Invoice</a>
+
+                    <div class="row mt-1 mx-2">
+                        <div class="col-md-4">
+                            <label for="InvoiceDate" class="md-0">Invoice Date</label>
+                            <input type="date" id="InvoiceDate" formControlName="Invoice Date"
+                                class="form-control form-control-sm col-md-12">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="IsActive" class="mb-0">
+                                Reverse Charge
+                            </label>
+                            <select class="form-control form-control-sm col-md-12" required id="isActive"
+                                formControlName="IsActive" required>
+                                <option *ngFor="let item of StatusList" [value]="item.id">
+                                    {{ item.name }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div> -->
+
+            </div>
+            <div class="card">
+                <div>
+                    <b> <a class="nav-item nav-link active" id="nav-profile-tab" data-toggle="tab" data-toggle="tab"
+                            role="tab" style="text-decoration: underline" aria-controls="nav-profile"
+                            aria-selected="false">Details of Receiver (Billed to)
+                        </a>
+                    </b>
+                    <div class="row  mt-1 mx-2 mb-2">
+                        <div class="col-md-4">
+                            <label class="mb-0" for="Name">Name</label>
+                            <input type="text" formControlName="Name" class="form-control form-control-sm col-md-12"
+                                id="Name" />
+                        </div>
+                        <div class="col-md-8">
+                            <label class="mb-0" for="Address">Address</label>
+                            <input type="text" formControlName="Address" class="form-control form-control-sm col-md-12"
+                                id="Address" />
+                        </div>
+                    </div>
+
+
+
+                    <div class="row  mt-1 mx-2 mb-2">
+                        <div class="col-md-4">
+                            <label class="mb-0" for="Gstin">GSTIN</label>
+                            <input type="text" formControlName="Gstin" class="form-control form-control-sm col-md-12"
+                                id="Gstin" />
+                        </div>
+                        <div class="col-md-4">
+                            <label class="mb-0" for="State">State</label>
+                            <input type="text" formControlName="State" class="form-control form-control-sm col-md-12"
+                                id="State" />
+                        </div>
+                        <div class="col-md-4">
+                            <label class="mb-0" for="Statecode">State Code</label>
+                            <input type="number" formControlName="Statecode"
+                                class="form-control form-control-sm col-md-12" id="Statecode" />
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="col-md-4">
+                    <label class="mb-0" for="Sac">SAC</label>
+                    <input type="number" formControlName="Sac" class="form-control form-control-sm col-md-12"
+                        id="Sac" />
+                </div>
+                <div class="row  mt-1 mx-2 mb-2">
+                    <div class="col-md-8">
+                        <label class="mb-0" for="Description1">Description</label>
+                        <input type="text" formControlName="Description1" class="form-control form-control-sm col-md-12"
+                            id="Description1" />
+                    </div>
+                    <div class="col-md-4">
+                        <label class="mb-0" for="Amount1"> Amount (INR.)</label>
+                        <input type="number" formControlName="Amount1" class="form-control form-control-sm col-md-12"
+                            id="Amount1" />
+                    </div>
+                    <!-- <div formArrayName="Description1">
+                        <ng-container
+                            *ngFor="let skill of GenerateInvoiceForm.get('Description1')['contorls'];index = i">
+                            <div class="col-md-6">
+                                <label class="mb-0" for="Description1">Description</label>
+                                <input type="text" formControlName="{{i}}"
+                                    class="form-control form-control-sm col-md-12" id="Description1" />
+                            </div>
+                            <div class="col-md-4">
+                                <label class="mb-0" for="Amount1"> Amount (INR.)</label>
+                                <input type="number" formControlName="{{i}}"
+                                    class="form-control form-control-sm col-md-12" id="Amount1" />
+                            </div>
+                        </ng-container>
+                        <button (click)="addfields()">+ Add</button>
+
+                    </div> -->
+                </div>
+
+
+
+                <div class="row  mt-1 mx-2 mb-2">
+                    <div class="col-md-8">
+                        <label class="mb-0" for="Description2">Description</label>
+                        <input type="text" formControlName="Description2" class="form-control form-control-sm col-md-12"
+                            id="Description2" />
+                    </div>
+                    <div class="col-md-4">
+                        <label class="mb-0" for="Amount2"> Amount (INR.)</label>
+                        <input type="number" formControlName="Amount2" class="form-control form-control-sm col-md-12"
+                            id="Amount2" />
+                    </div>
+                </div>
+                <div class="row  mt-1 mx-2 mb-2">
+                    <div class="col-md-8">
+                        <label class="mb-0" for="Description3">Description</label>
+                        <input type="text" formControlName="Description3" class="form-control form-control-sm col-md-12"
+                            id="Description3" />
+                    </div>
+                    <div class="col-md-4">
+                        <label class="mb-0" for="Amount3"> Amount (INR.)</label>
+                        <input type="number" formControlName="Amount3" class="form-control form-control-sm col-md-12"
+                            id="Amount3" />
+                    </div>
+                </div>
+                <div class="row  mt-1 mx-2 mb-2">
+                    <div class="col-md-8">
+                        <label class="mb-0" for="Description4">Description</label>
+                        <input type="text" formControlName="Description4" class="form-control form-control-sm col-md-12"
+                            id="Description4" />
+                    </div>
+                    <div class="col-md-4">
+                        <label class="mb-0" for="Amount4"> Amount (INR.)</label>
+                        <input type="number" formControlName="Amount4" class="form-control form-control-sm col-md-12"
+                            id="Amount4" />
+                    </div>
+                </div>
+                <div class="row  mt-1 mx-2 mb-2">
+                    <div class="col-md-8">
+                        <label class="mb-0" for="Description5">Description</label>
+                        <input type="text" formControlName="Description5" class="form-control form-control-sm col-md-12"
+                            id="Description5" />
+                    </div>
+                    <div class="col-md-4">
+                        <label class="mb-0" for="Amount5"> Amount (INR.)</label>
+                        <input type="number" formControlName="Amount5" class="form-control form-control-sm col-md-12"
+                            id="Amount5" />
+                    </div>
+                </div>
+
+            </div>
+            <div class="card">
+                <div class="row mt-1 mx-2 mb-2">
+                    <div class="col-md-4">
+                        <label for="CGST" class="mb-0">Add: CGST@</label>
+                        <input type="number" class="form-control form-control-sm col-md-12" id="CGST"
+                            formControlName="CGST">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="SGST" class="mb-0">Add: SGST@</label>
+                        <input type="number" class=" form-control form-control-sm col-md-12" id="SGST"
+                            formControlName="SGST">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="IGST" class="mb-0">Add: IGST@</label>
+                        <input type="number" formControlName="IGST" class="form-control form-control-sm col-md-12"
+                            id="IGST">
+                    </div>
+
+                </div>
+
+            </div>
+            <button (click)="Pdf()" type="button"
+                class="btn-sm btn-success btn float- mx-1 px-4 mt-2 pt-2 pb-2 mt-3">Download Pdf</button>
+
+        </div>
+
+
+
+    </section>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+</form>
