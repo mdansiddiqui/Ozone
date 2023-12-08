@@ -47,6 +47,8 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { max } from 'rxjs/operators';
 import { SlcpService } from '@shared/Services/project-slcp-service';
 import { HiggService } from '@shared/Services/project-higg-service';
+import { ClientAuditVisitService } from '@shared/Services/Client-Audit-visit-service';
+import { log } from 'console';
 
 
 @Component({
@@ -218,6 +220,7 @@ export class ProjectSA8000Component implements OnInit {
     private route: ActivatedRoute,
     private _makerAuthorizerFormService: MakerAuthorizerFormService,
     private _SlcpService: SlcpService,
+    private _ClientAuditVisitService: ClientAuditVisitService,
 
     //public StandardService: StandardService
   ) {
@@ -225,9 +228,11 @@ export class ProjectSA8000Component implements OnInit {
     //this.Pdf=this.Pdf.bind(this);
     // this.edit = this.edit.bind(this);
   }
-
+RoleId:number
   ngOnInit(): void {
     var roleId = localStorage.getItem('roleId');
+    this.RoleId=parseInt(roleId)
+
     if (+roleId === 2 ) {
       this.RoleBaseHide = true
     }
@@ -290,7 +295,8 @@ export class ProjectSA8000Component implements OnInit {
 
       this._SA8000Service.GetProjectSA8000BYId(this.ProjectId).subscribe(data => {
         var ProjectSaData = data.projectSA8000Model;
-
+      debugger
+      console.log("Change Request    " +ProjectSaData);
 
           this.SAClientChangeRequest.controls.DurationStage2.setValue(ProjectSaData.durationStage2);
           this.SAClientChangeRequest.controls.NoOfSurveillanceVisits.setValue(ProjectSaData.noOfSurveillanceVisits)
@@ -299,6 +305,7 @@ export class ProjectSA8000Component implements OnInit {
           this.SAClientChangeRequest.controls.SurveillanceVisitFrequencyId.setValue(ProjectSaData.surveillanceVisitFrequencyId);
          this.SAClientChangeRequest.controls.Survfee.setValue(ProjectSaData.survfee);
          this.SAClientChangeRequest.controls.Assessmentfee.setValue(ProjectSaData.assessmentfee)
+         this.SAClientChangeRequest.controls.DurationSurvVisit.setValue(ProjectSaData.durationSurvVisit)
 
 
       })
@@ -550,7 +557,7 @@ export class ProjectSA8000Component implements OnInit {
       this.isShown = this.secRoleForm.authAllowed
 
 
-      if (this.Revieweruser == true) {
+      if (this.Revieweruser == true && this.RoleId!=21) {
         //this.secRoleForm.insertAllowed = false
         this.secRoleForm.authAllowed = true
       }
@@ -617,20 +624,22 @@ export class ProjectSA8000Component implements OnInit {
 
       //   this.Inserted = true
       // }
-      if (this.secRoleForm.insertAllowed == true) {
+
+      var roleId = localStorage.getItem('roleId');
+      if (this.secRoleForm.insertAllowed == true  ) {
         this.Inserted = true
         this.btnApproval = false;
         this.btnContractSave = false;
         this.SAForm.get('ContractStatusId').disable();
         this.SAForm.get('ApprovalStatusId').disable();
       }
-      else if (this.Revieweruser == true) {
+      else if (this.Revieweruser == true ) {
         this.Inserted = false;
         this.savebtn = false;
         this.IsContract = false;
         this.deletebtn = false;
         this.savebtn = false
-        if (this.ProjectId > 0) {
+        if (this.ProjectId > 0 && parseInt(roleId) !=21) {
           this.btnApproval = true
         }
         else {
@@ -692,10 +701,10 @@ export class ProjectSA8000Component implements OnInit {
       this.ProjectStatus = "New Project"
     }
     this.OrganizationId = parseInt(localStorage.getItem('organizationId'));
-    if(this.ProjectId > 0 &&   this.OrganizationId > 1){
+    if(this.ProjectId > 0 &&   this.OrganizationId > 1 && this.RoleId==6){
       this.btnChnageRequest = true
     }
-
+   
 
     // else {
     //   this.ProjectId = 0;
@@ -795,7 +804,7 @@ export class ProjectSA8000Component implements OnInit {
       this.SAForm.controls.ProjectCode.setValue(ClientProjectMod.projectCode);
       this.ProjectCode = ClientProjectMod.projectCode
 
-
+      
      // alert("Update"+ProjectSaData.clientId);
       this._ClientService.GeClientDatabyId(this.ClientId).subscribe((Response) => {
 
@@ -838,7 +847,7 @@ export class ProjectSA8000Component implements OnInit {
 
           }
         }
-        if (this.Inserted == true) {
+        if (this.Inserted == true && this.RoleId!=21) {
           if (ClientProjectMod.approvalStatusId == 8 || ClientProjectMod.approvalStatusId == 7 || ClientProjectMod.approvalStatusId == 1 || ClientProjectMod.approvalStatusId == 10) {
             this.btnContract = true
             this.btnContractSave = false
@@ -859,7 +868,7 @@ export class ProjectSA8000Component implements OnInit {
           //   this.SAForm.get('Remarks').disable();
           // }
         }
-        else if (this.authorizer == true) {
+        else if (this.authorizer == true && this.RoleId !=21 ) {
           if (ClientProjectMod.approvalStatusId == 9 || ClientProjectMod.approvalStatusId == 10) {
             this.btnContract = true
             this.btnContractSave = true
@@ -966,7 +975,14 @@ export class ProjectSA8000Component implements OnInit {
         //   this.UpdateProject();
         // }
       })
-
+      this._ClientAuditVisitService.GetProjectStatus(this.ProjectId).subscribe((Response) => {
+        if(Response!="0"){
+           this.ProjectStatus= Response;
+           this.SAForm.disable();
+           
+             //alert(Response);
+           }
+         });
       //this.SAForm.controls.ApprovalStatusId.setValue(ProjectSaData.approvalStatusId);
 
     })

@@ -744,5 +744,19 @@ namespace Ozone.WebApi.Controllers.ClientALLProjects
 
 
         }
+
+        [Route("GetProjectStatus")]
+        [HttpGet]
+        [Authorize]
+
+        public async Task<IActionResult> GetProjectStatus(long projectId)
+        {
+
+            var result = await _clientAuditVisitService.ProjectStatus(projectId);
+
+            return new JsonResult(result);
+
+
+        }
     }
 }

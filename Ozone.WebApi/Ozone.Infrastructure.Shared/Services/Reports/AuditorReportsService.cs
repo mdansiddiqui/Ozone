@@ -1067,6 +1067,7 @@ namespace Ozone.Infrastructure.Shared.Services
                                 SHA.Windowperiod_start_Surv_1 = (!(dataReader["Windowperiod_start_Surv_1"] is DBNull)) ? Convert.ToDateTime(dataReader["Windowperiod_start_Surv_1"]) : (DateTime?)null;
                                 SHA.Windowperiod_end_Surv_1 = (!(dataReader["Windowperiod_end_Surv_1"] is DBNull)) ? Convert.ToDateTime(dataReader["Windowperiod_end_Surv_1"]) : (DateTime?)null;
                                 SHA.Surv_1_due = (!(dataReader["Surv_1_due"] is DBNull)) ? Convert.ToDateTime(dataReader["Surv_1_due"]) : (DateTime?)null;
+                                SHA.Windowperiod_FUP_1_Intimation = (!(dataReader["Windowperiod_FUP_1_Intimation"] is DBNull)) ? Convert.ToDateTime(dataReader["Windowperiod_FUP_1_Intimation"]) : (DateTime?)null;
                                 SHA.Windowperiod_Start_FUP_1 = (!(dataReader["Windowperiod_Sart_FUP_1"] is DBNull)) ? Convert.ToDateTime(dataReader["Windowperiod_Sart_FUP_1"]) : (DateTime?)null;
                                 SHA.Windowperiod_end_FUP_1 = (!(dataReader["Windowperiod_end_FUP_1"] is DBNull)) ? Convert.ToDateTime(dataReader["Windowperiod_end_FUP_1"]) : (DateTime?)null;
 
@@ -1075,6 +1076,7 @@ namespace Ozone.Infrastructure.Shared.Services
                                 SHA.Windowperiod_start_Surv_2 = (!(dataReader["Windowperiod_start_Surv_2"] is DBNull)) ? Convert.ToDateTime(dataReader["Windowperiod_start_Surv_2"]) : (DateTime?)null;
                                 SHA.Windowperiod_end_Surv_2 = (!(dataReader["Windowperiod_end_Surv_2"] is DBNull)) ? Convert.ToDateTime(dataReader["Windowperiod_end_Surv_2"]) : (DateTime?)null;
                                 SHA.Surv_2_due = (!(dataReader["Surv_2_due"] is DBNull)) ? Convert.ToDateTime(dataReader["Surv_2_due"]) : (DateTime?)null;
+                                SHA.Windowperiod_FUP_2_Intimation = (!(dataReader["Windowperiod_FUP_2_Intimation"] is DBNull)) ? Convert.ToDateTime(dataReader["Windowperiod_FUP_2_Intimation"]) : (DateTime?)null;
                                 SHA.Windowperiod_Sart_FUP_2 = (!(dataReader["Windowperiod_Sart_FUP_2"] is DBNull)) ? Convert.ToDateTime(dataReader["Windowperiod_Sart_FUP_2"]) : (DateTime?)null;
                                 SHA.Windowperiod_end_FUP_2 = (!(dataReader["Windowperiod_end_FUP_2"] is DBNull)) ? Convert.ToDateTime(dataReader["Windowperiod_end_FUP_2"]) : (DateTime?)null;
 

@@ -536,10 +536,10 @@ CertifiedClientSearch(){
     this.ReportName="Certified Client Monitoring";
     this._AuditorService.GetCertifiedClientReport(this.filterForm.value).subscribe((Response) => {
                 
-
+debugger
        
       this.CertifiedClientList = Response;
-      console.log(Response);
+      console.log("CertifiedClientList   " +Response);
      
       //console.log(this.NaceCodeList)
     })

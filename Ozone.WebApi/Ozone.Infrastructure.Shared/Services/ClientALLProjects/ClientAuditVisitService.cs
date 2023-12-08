@@ -2443,5 +2443,57 @@ namespace Ozone.Infrastructure.Shared.Services
         }
 
 
+
+        public async Task<string> ProjectStatus(long projectId)
+        {
+            ClientAuditVisitModel mod = new ClientAuditVisitModel();
+            var Data = await Task.Run(() => _dbContext.ClientAuditVisit.Include(x=>x.VisitStatus).Include(x=>x.VisitLevel).Where(x => x.ProjectId == projectId && x.IsDeleted == false).OrderByDescending(x=>x.StartDate).FirstOrDefault());
+              mod = _mapper.Map<ClientAuditVisitModel>(Data);
+            var newcode = "";
+            string Message = "";
+            long newid;
+
+
+
+            // OzoneContext ozonedb = new OzoneContext();
+            using (var transaction = _unitOfWork.BeginTransaction())
+            {
+
+                if (Data != null)
+                {
+                    try
+                    {
+
+                        Message = mod.VisitLevelName + " : " + mod.VisitStatusName;
+
+
+                        ///transaction.Commit();
+                        // Message = "1";
+
+                    }
+                    catch (Exception ex)
+                    {
+                        //var Exception = ex;
+                        //transaction.Rollback();
+                        return "0";
+                    }
+
+
+                }
+                else 
+                {
+                    Message = "0";
+                }
+
+
+                return Message;
+
+
+            }
+
+
+        }
+
+
     }
 }

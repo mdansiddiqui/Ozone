@@ -18,15 +18,18 @@ namespace Ozone.Application.DTOs.Reports
         public DateTime? CertificationExpiryDate { get; set; }
         public string Surveillance_Frequency { get; set; }
         public DateTime? IntimationdateSurv_1 { get; set; }
+    
         public DateTime? Windowperiod_start_Surv_1 { get; set; }
         public DateTime? Windowperiod_end_Surv_1 { get; set; }
         public DateTime? Surv_1_due { get; set; }
+        public DateTime? Windowperiod_FUP_1_Intimation { get; set; }
         public DateTime? Windowperiod_Start_FUP_1 { get; set; }
         public DateTime? Windowperiod_end_FUP_1 { get; set; }
         public DateTime? IntimationdateSurv_2 { get; set; }
         public DateTime? Windowperiod_start_Surv_2 { get; set; }
         public DateTime? Windowperiod_end_Surv_2 { get; set; }
         public DateTime? Surv_2_due { get; set; }
+        public DateTime? Windowperiod_FUP_2_Intimation { get; set; }
         public DateTime? Windowperiod_Sart_FUP_2 { get; set; }
         public DateTime? Windowperiod_end_FUP_2 { get; set; }
        

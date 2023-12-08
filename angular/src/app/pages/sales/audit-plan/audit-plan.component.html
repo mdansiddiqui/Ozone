@@ -258,7 +258,7 @@
                         
                         <button
                         type="button"
-                        class="btn-sm btn-success btn mb-2 float-left"
+                        class="btn-sm btn-success btn mb-2 float-lef tmx-1"
                         *ngIf="Reviewerbtn"
                         (click)="onpopup()"
                       >
@@ -266,7 +266,7 @@
                       </button>
                       &nbsp;
                       &nbsp;
-                        <button type="button" class="btn-sm btn btn-success mb-2 float-left"
+                        <button type="button" class="btn-sm btn btn-success mb-2 float-left mx-1"
                             (click)="DownloadAuditPlan()">
                             <i class="fa fa-download"></i> Download Audit Plan
                         </button>
@@ -466,8 +466,8 @@
                         <label class="mb-0" for="AuditDocumentTypeId">Document Type</label>
                         <select class="form-control form-control-sm col-md-12" formControlName="AuditDocumentTypeId"
                             required [ngClass]="{
-                'is-invalid': submitted && f.AuditDocumentTypeId.errors
-              }" id="AuditDocumentTypeId">
+                                'is-invalid': submitted && f.AuditDocumentTypeId.errors
+                            }" id="AuditDocumentTypeId">
                             <option *ngFor="let item of DocumentsTypeList" [value]="item.documentTypeId"
                             [ngStyle]="{'background-color': item.isRequired ?   '#ed7777' : '#e6dadc'}">>
                                 {{ item.documentName }}
@@ -482,8 +482,8 @@
 
                     <div class="col-md-4">
                         <label class="mb-0" for="file">Upload Document (PDF)</label>
-                        <input type="file" class="form-control-sm col-md-12" id="File"
-                            (change)="handlefileInput($event)" name="File" formControlName="File" />
+                        <input type="file" class="form-control-sm col-md-12" 
+                            (change)="handlefileInput($event)"  formControlName="File" />
                     </div>
                     <div class="col-md-4 mt-3">
                         <label class="mb-0" for="VisitStatusId">

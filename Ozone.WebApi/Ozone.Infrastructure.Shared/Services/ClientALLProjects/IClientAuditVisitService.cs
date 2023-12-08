@@ -42,6 +42,7 @@ namespace Ozone.Infrastructure.Shared.Services
         Task<AuditMangerDocumentModel> DownloadAudiorManagerDocuments(long id);
 
         Task<string> ChangeReviewer(ReviewerModel input);
+        Task<string> ProjectStatus(long projectId);
 
     }
 }

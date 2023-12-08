@@ -392,4 +392,20 @@ debugger
              return this.http.post<any>(`${environment.apiUrl}/api/ClientAuditVisit/ChangeReviewer`,values,options)
         
           }
+
+
+
+          GetProjectStatus(projectId) {
+            projectId= parseInt(projectId);
+             debugger
+             let headers = new HttpHeaders({
+               "Content-Type": "application/json",
+               Authorization: "Bearer " + JSON.parse(localStorage.getItem("token")),
+             });
+             let options = { headers: headers };
+             return this.http.get<any>(
+               `${environment.apiUrl}/api/ClientAuditVisit/GetProjectStatus?projectId=${projectId}`,
+               options
+             );
+           }
 }
