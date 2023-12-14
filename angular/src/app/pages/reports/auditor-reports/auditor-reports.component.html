@@ -1,176 +1,179 @@
-<form  [formGroup]="filterForm">
-    <section class="content-header pt-0 pb-0 mt-0 mx-0 mb-0 md-0">
-        <div class="container-fluid mx-0 px-0 mx-0 mb-0">
-            <div class="row md-0 mb-1 mt-0">
-                <div class="col-sm-12 px-0">
-                    <div class="alert alert-info alert-dismissible">
-                        <h6>Auditor Reports</h6>
-                    </div>
-                </div>
-            </div>
+<form [formGroup]="filterForm">
+  <section class="content-header pt-0 pb-0 mt-0 mx-0 mb-0 md-0">
+    <div class="container-fluid mx-0 px-0 mx-0 mb-0">
+      <div class="row md-0 mb-1 mt-0">
+        <div class="col-sm-12 px-0">
+          <div class="alert alert-info alert-dismissible">
+            <h6>Auditor Reports</h6>
+          </div>
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
 
-    <section class="content-header pt-0 pb-0 mt-3 mx-0 mb-0 md-0">
-        <div class="container-fluid">
-            <div class="card">
-                <div class="card-header">
-                    <div class="row md-0 px-3 pb-2 ">
+  <section class="content-header pt-0 pb-0 mt-3 mx-0 mb-0 md-0">
+    <div class="container-fluid">
+      <div class="card">
+        <div class="card-header">
+          <div class="row md-0 px-3 pb-2 ">
 
-                        <div class="col-md-4">
-                            <label class="mb-0" for="fromdate">From Date</label>
-                            <input type="date" formControlName="fromdate" class="form-control form-control-sm col-md-12" id="fromdate" />
-                        </div>
-
-                        <div class="col-md-4">
-                            <label class="mb-0" for="todate">To Date</label>
-                            <input type="date" formControlName="todate" class="form-control form-control-sm col-md-12" id="todate" />
-                        </div>
-
-                        <div class="col-md-4">
-                            <label class="mb-0 " for="Agency">Branch Office</label>
-                            <select  class="form-control form-control-sm col-md-12" formControlName="OrganizationId" id="OrganizationId">
-                                <option *ngFor="let item of OrganizationList" [value]="item.id">
-                                    {{item.name }}
-                                </option>
-                            </select>
-                        </div>
-
-                    </div>
-                    <div class="row  mt-1 mx-2">
-                        <div class="col-md-4">
-                            <label class="mb-0 " for="Standard">Standard</label>
-                            <select formControlName="StandardId"
-                                class="form-control form-control-sm col-md-12"
-                                id="StandardId">
-
-                                <option *ngFor="let item of standardList" [value]="item.id">
-                                    {{item.name }}
-                                </option>
-                            </select>
-                        </div>
-                        <div class="col-md-4">
-
-                            <label class="mb-0 " for="ReportId">Report Name</label>
-                            <select formControlName="ReportId"
-                                class="form-control form-control-sm col-md-12"  (change)="loadStatus($event.target.value)"
-                                id="ReportId">
-
-                                <option *ngFor="let item of ReportsList" [value]="item.id">
-                                    {{item.name }}
-                                </option>
-                            </select>
-                        </div>
-
-
-                        <div class="col-md-4" *ngIf="Status">
-                            <label class="mb-0 " for="Agency">Status</label>
-                            <select  class="form-control form-control-sm col-md-12" formControlName="StatusId" id="StatusId">
-                                <option *ngFor="let item of StatusList" [value]="item.id">
-                                    {{item.name }}
-                                </option>
-                            </select>
-                        </div>
-
-                    </div>
-
-                    <div class="row  mt-1 mx-2">
-                        <div class="col-md-6"></div>
-
-                        <div class="col-md-6">
-                            <button type="button"
-                                class="btn-sm btn btn-primary float-right mx-2 px-4 mt-2 pt-2 pb-2 mt-3 fas fa-search" (click)="Search()" type="submit"> <i
-                                    class="fas fa-search"
-                                    ></i> Search</button>
-                        </div>
-                    </div>
-
-                </div>
+            <div class="col-md-4">
+              <label class="mb-0" for="fromdate">From Date</label>
+              <input type="date" formControlName="fromdate" class="form-control form-control-sm col-md-12"
+                id="fromdate" />
             </div>
+
+            <div class="col-md-4">
+              <label class="mb-0" for="todate">To Date</label>
+              <input type="date" formControlName="todate" class="form-control form-control-sm col-md-12" id="todate" />
+            </div>
+
+            <div class="col-md-4">
+              <label class="mb-0 " for="Agency">Branch Office</label>
+              <select class="form-control form-control-sm col-md-12" formControlName="OrganizationId"
+                id="OrganizationId">
+                <option *ngFor="let item of OrganizationList" [value]="item.id">
+                  {{item.name }}
+                </option>
+              </select>
+            </div>
+
+          </div>
+          <div class="row  mt-1 mx-2">
+            <div class="col-md-4">
+              <label class="mb-0 " for="Standard">Standard</label>
+              <select formControlName="StandardId" class="form-control form-control-sm col-md-12" id="StandardId">
+
+                <option *ngFor="let item of standardList" [value]="item.id">
+                  {{item.name }}
+                </option>
+              </select>
+            </div>
+            <div class="col-md-4">
+
+              <label class="mb-0 " for="ReportId">Report Name</label>
+              <select formControlName="ReportId" class="form-control form-control-sm col-md-12"
+                (change)="loadStatus($event.target.value)" id="ReportId">
+
+                <option *ngFor="let item of ReportsList" [value]="item.id">
+                  {{item.name }}
+                </option>
+              </select>
+            </div>
+
+
+            <div class="col-md-4" *ngIf="Status">
+              <label class="mb-0 " for="Agency">Status</label>
+              <select class="form-control form-control-sm col-md-12" formControlName="StatusId" id="StatusId">
+                <option *ngFor="let item of StatusList" [value]="item.id">
+                  {{item.name }}
+                </option>
+              </select>
+            </div>
+
+          </div>
+
+          <div class="row  mt-1 mx-2">
+            <div class="col-md-6"></div>
+
+            <div class="col-md-6">
+              <button type="button"
+                class="btn-sm btn btn-primary float-right mx-2 px-4 mt-2 pt-2 pb-2 mt-3 fas fa-search"
+                (click)="Search()" type="submit"> <i class="fas fa-search"></i> Search</button>
+            </div>
+          </div>
+
         </div>
+      </div>
+    </div>
 
 
 
 
-        <div class="container-fluid mt-2">
-            <div class="row">
-                <div class="col-md-12">
+    <div class="container-fluid mt-2">
+      <div class="row">
+        <div class="col-md-12">
 
-                    <div class="card" *ngIf="AuditReport">
-
-
-
-                        <div class="card-body table-responsive p-0">
+          <div class="card" *ngIf="AuditReport">
 
 
-                            <div class="long-title">
-                                <h3
-                                class="modal-title"
-                                style="
+
+            <div class="card-body table-responsive p-0">
+
+
+              <div class="long-title">
+                <h3 class="modal-title" style="
                                   text-align: center;
                                   color: rgb(9, 26, 59);
                                   font-family: 'Times New Roman';
                                   font-weight: bold;
                                   margin-top: 10px;
                                   text-decoration: underline;
-                                "
-                              >
-                                {{ ReportName }}
-                              </h3>
-                              </div>
-                            <dx-data-grid class="mx-3 mb-3" id="gridContainer" [showBorders]="true" [rowAlternationEnabled]="true"
-                              [showRowLines]="true" [columnAutoWidth]="true" [showColumnLines]="true" [allowColumnReordering]="true"
-                              [dataSource]="AuditorReport" keyExpr="id"
-                              (onExporting)="onExporting($event)"
-                              >
-                              <dxo-paging [pageSize]="10"></dxo-paging>
-                              <dxo-pager
-                                [showPageSizeSelector]="true"
-                                [allowedPageSizes]="[10, 25, 50, 100]"
-                              ></dxo-pager>
+                                ">
+                  {{ ReportName }}
+                </h3>
+              </div>
+              <dx-data-grid class="mx-3 mb-3" id="gridContainer" [showBorders]="true" [rowAlternationEnabled]="true"
+                [showRowLines]="true" [columnAutoWidth]="true" [showColumnLines]="true" [allowColumnReordering]="true"
+                [dataSource]="AuditorReport" keyExpr="id" (onExporting)="onExporting($event)">
+                <dxo-paging [pageSize]="10"></dxo-paging>
+                <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[10, 25, 50, 100]"></dxo-pager>
 
 
-                              <dxo-scrolling  columnRenderingMode="virtual"></dxo-scrolling>
-                              <dxo-search-panel class="mt-10 mb-3"[visible]="true" [width]="240" placeholder="Search...">
-                              </dxo-search-panel>
-                              <dxo-grouping [autoExpandAll]="true"></dxo-grouping>
-                              <dxo-selection mode="multiple"></dxo-selection>
-                              <dxi-column dataField="leadAuditorName" caption="Auditor Name"  cssClass="cell-header" alignment="left"></dxi-column>
-                              <!-- <dxi-column dataField="name" caption="Name"></dxi-column> -->
-                              <dxi-column dataField="noOfAudits" caption="Nos of audits done"  cssClass="cell-header" alignment="left"></dxi-column>
-                              <dxi-column dataField="ncs" caption="Nos of NCs in a audit"  cssClass="cell-header" alignment="left"></dxi-column>
+                <dxo-scrolling columnRenderingMode="virtual"></dxo-scrolling>
+                <dxo-search-panel class="mt-10 mb-3" [visible]="true" [width]="240" placeholder="Search...">
+                </dxo-search-panel>
+                <dxo-grouping [autoExpandAll]="true"></dxo-grouping>
+                <dxo-selection mode="multiple"></dxo-selection>
+                <dxi-column dataField="leadAuditorName" caption="Auditor Name" cssClass="cell-header"
+                  alignment="left"></dxi-column>
+                <!-- <dxi-column dataField="name" caption="Name"></dxi-column> -->
+                <dxi-column dataField="noOfAudits" caption="Nos of audits done" cssClass="cell-header"
+                  alignment="left"></dxi-column>
+                <dxi-column dataField="ncs" caption="Nos of NCs in a audit" cssClass="cell-header"
+                  alignment="left"> </dxi-column>
 
-                              <dxi-column dataField="avgncs" caption="Average nos of NC per audit"  cssClass="cell-header" alignment="left"></dxi-column>
+                <dxi-column dataField="avgncs" caption="Average nos of NC per audit" cssClass="cell-header"
+                  alignment="left"></dxi-column>
 
 
 
-                              <!-- <dxi-column dataField="avgTAT" caption="Average TAT ( )"  cssClass="cell-header"  alignment="left"> </dxi-column> -->
-                              <dxi-column dataField="avgTAT_1" caption="Average TAT (Audit Conduct to Submited QC)"  cssClass="cell-header"  alignment="left"> </dxi-column>
+                <!-- <dxi-column dataField="avgTAT" caption="Average TAT ( )"  cssClass="cell-header"  alignment="left"> </dxi-column> -->
+                <dxi-column dataField="avgTAT_1" caption="Average TAT (Audit Conduct to Submited QC)"
+                  cssClass="cell-header" alignment="left"> </dxi-column>
 
-                              <dxi-column dataField="avgTAT_2" caption="Average TAT (Submited QC to Reject)"  cssClass="cell-header"  alignment="left"> </dxi-column>
-                              <dxi-column dataField="avgTAT_3" caption="Average TAT (Reject QC to Resubmit)"  cssClass="cell-header"  alignment="left"> </dxi-column>
-                              <dxi-column dataField="avgTAT_4" caption="Average TAT (Resubmit to Approved)"  cssClass="cell-header"  alignment="left"> </dxi-column>
-                              <dxi-column dataField="avgTAT_5" caption="Average TAT (Submit QC to Approved)"  cssClass="cell-header"  alignment="left"> </dxi-column>
-                              <!-- <dxi-column dataField="avgTAT_5" caption="Average TAT including all stages of reviews, resubmission (days)"  cssClass="cell-header"  alignment="left"> </dxi-column> -->
+                <dxi-column dataField="avgTAT_2" caption="Average TAT (Submited QC to Reject)" cssClass="cell-header"
+                  alignment="left"> </dxi-column>
+                <dxi-column dataField="avgTAT_3" caption="Average TAT (Reject QC to Resubmit)" cssClass="cell-header"
+                  alignment="left"> </dxi-column>
+                <dxi-column dataField="avgTAT_4" caption="Average TAT (Resubmit to Approved)" cssClass="cell-header"
+                  alignment="left"> </dxi-column>
+                <dxi-column dataField="avgTAT_5" caption="Average TAT (Submit QC to Approved)" cssClass="cell-header"
+                  alignment="left"> </dxi-column>
+                  <dxi-column type="buttons" caption="NCS">
+                  <dxi-button class="cursor-point" icon="verticalaligntop" hint="View NCS" [onClick]="viewNCS" >
+                  </dxi-button>
+                </dxi-column>
+                <!-- <dxi-column dataField="avgTAT_5" caption="Average TAT including all stages of reviews, resubmission (days)"  cssClass="cell-header"  alignment="left"> </dxi-column> -->
 
-                              <dxo-export [enabled]="true" [allowExportSelectedData]="true"></dxo-export>
+                <dxo-export [enabled]="true" [allowExportSelectedData]="true"></dxo-export>
 
-                              <dxo-summary>
-                                <dxi-total-item column="leadAuditorName" summaryType="count"> </dxi-total-item>
-                            </dxo-summary>
-                            <dxo-export [enabled]="true" [allowExportSelectedData]="true"></dxo-export>
+                <dxo-summary>
+                  <dxi-total-item column="leadAuditorName" summaryType="count"> </dxi-total-item>
+                </dxo-summary>
+                <dxo-export [enabled]="true" [allowExportSelectedData]="true"></dxo-export>
 
-                            <dxo-master-detail [enabled]="true" template="detail"></dxo-master-detail>
-                            <div *dxTemplate="let employee of 'detail'">
-                              <div class="master-detail-caption">{{
-                                "Audits Details"
-                                }}</div>
-                              <app-auditor-audit-details [key]="employee.key" [auditorReportDetailsList]="AuditorReportDetailsList"
-                                (newItemEvent)="addItem($event)">
-                              </app-auditor-audit-details>
-                            </div>
-                            </dx-data-grid>
-                                <!-- <div class="col-sm-2 col-12 ">
+                <dxo-master-detail [enabled]="true" template="detail"></dxo-master-detail>
+                <div *dxTemplate="let employee of 'detail'">
+                  <div class="master-detail-caption">{{
+                    "Audits Details"
+                    }}</div>
+                  <app-auditor-audit-details [key]="employee.key" [auditorReportDetailsList]="AuditorReportDetailsList"
+                    (newItemEvent)="addItem($event)">
+                  </app-auditor-audit-details>
+                </div>
+              </dx-data-grid>
+              <!-- <div class="col-sm-2 col-12 ">
 
                                     <div class="d-flex flex-row-reverse bd-highlight mb-2">
                                         <div class="p-2 bd-highlight">
@@ -183,478 +186,523 @@
                                     </div>
                                 </div> -->
 
-                          </div>
-                    </div>
+            </div>
+          </div>
 
 
-                    <div class="card" *ngIf="ClientProjectReport">
+          <div class="card" *ngIf="ClientProjectReport">
 
 
-                        <div class="card-body table-responsive p-0">
+            <div class="card-body table-responsive p-0">
 
 
-                            <div class="long-title">
-                                <h3
-                                class="modal-title"
-                                style="
+              <div class="long-title">
+                <h3 class="modal-title" style="
                                   text-align: center;
                                   color: rgb(9, 26, 59);
                                   font-family: 'Times New Roman';
                                   font-weight: bold;
                                   margin-top: 10px;
                                   text-decoration: underline;
-                                "
-                              >
-                                {{ ReportName }}
-                              </h3>
-                              </div>
-                            <dx-data-grid class="mx-3 mb-3" id="gridContainer" [showBorders]="true" [rowAlternationEnabled]="true"
-                              [showRowLines]="true" [columnAutoWidth]="true" [showColumnLines]="true" [allowColumnReordering]="true"
-                              [dataSource]="ClientProjectsReport" keyExpr="s_No"
-                              (onExporting)="onExporting($event)"
+                                ">
+                  {{ ReportName }}
+                </h3>
+              </div>
+              <dx-data-grid class="mx-3 mb-3" id="gridContainer" [showBorders]="true" [rowAlternationEnabled]="true"
+                [showRowLines]="true" [columnAutoWidth]="true" [showColumnLines]="true" [allowColumnReordering]="true"
+                [dataSource]="ClientProjectsReport" keyExpr="s_No" (onExporting)="onExporting($event)">
+                <dxo-paging [pageSize]="10"></dxo-paging>
+                <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[10, 25, 50, 100]"></dxo-pager>
 
-                              >
-                              <dxo-paging [pageSize]="10"></dxo-paging>
-                              <dxo-pager
-                                [showPageSizeSelector]="true"
-                                [allowedPageSizes]="[10, 25, 50, 100]"
-                              ></dxo-pager>
+                <dxo-grouping [autoExpandAll]="true"></dxo-grouping>
+                <dxo-selection mode="multiple"></dxo-selection>
+                <dxo-scrolling columnRenderingMode="virtual"></dxo-scrolling>
+                <dxo-search-panel class="mt-15 mb-3 my-3" [visible]="true" [width]="240" placeholder="Search...">
+                </dxo-search-panel>
 
-                              <dxo-grouping [autoExpandAll]="true"></dxo-grouping>
-                              <dxo-selection mode="multiple"></dxo-selection>
-                              <dxo-scrolling  columnRenderingMode="virtual"></dxo-scrolling>
-                              <dxo-search-panel class="mt-15 mb-3 my-3"[visible]="true" [width]="240" placeholder="Search...">
-                              </dxo-search-panel>
+                <dxi-column dataField="s_No" caption="S.No" cssClass="cell-header"></dxi-column>
 
-                              <dxi-column dataField="s_No" caption="S.No"  cssClass="cell-header"></dxi-column>
+                <dxi-column dataField="statusCode" caption="Status" cssClass="cell-header"></dxi-column>
 
-                              <dxi-column dataField="statusCode" caption="Status"  cssClass="cell-header"></dxi-column>
+                <dxi-column dataField="registration_no" caption="Registration No." cssClass="cell-header"></dxi-column>
 
-                              <dxi-column dataField="registration_no" caption="Registration No."  cssClass="cell-header"></dxi-column>
+                <dxi-column dataField="clientName" caption="Name of Client" cssClass="cell-header"></dxi-column>
 
-                              <dxi-column dataField="clientName" caption="Name of Client"  cssClass="cell-header"></dxi-column>
+                <dxi-column dataField="address" caption="Address" cssClass="cell-header"></dxi-column>
 
-                              <dxi-column dataField="address" caption="Address"  cssClass="cell-header"></dxi-column>
+                <dxi-column dataField="scope" caption="Scope" cssClass="cell-header"></dxi-column>
 
-                              <dxi-column dataField="scope" caption="Scope"  cssClass="cell-header"></dxi-column>
+                <dxi-column dataField="naceCode" caption="Nace Code" cssClass="cell-header"></dxi-column>
 
-                              <dxi-column dataField="naceCode" caption="Nace Code"  cssClass="cell-header"></dxi-column>
-
-                              <dxi-column dataField="countryName" caption="Country"  cssClass="cell-header"></dxi-column>
-                              <dxo-export [enabled]="true" [allowExportSelectedData]="true"></dxo-export>
-                              <dxo-summary>
-                                <dxi-total-item column="s_No" summaryType="count"> </dxi-total-item>
-                            </dxo-summary>
-                            </dx-data-grid>
-                            <!-- <dxo-export
+                <dxi-column dataField="countryName" caption="Country" cssClass="cell-header"></dxi-column>
+                <dxo-export [enabled]="true" [allowExportSelectedData]="true"></dxo-export>
+                <dxo-summary>
+                  <dxi-total-item column="s_No" summaryType="count"> </dxi-total-item>
+                </dxo-summary>
+              </dx-data-grid>
+              <!-- <dxo-export
                             [enabled]="true"
                             [formats]="['pdf']"
                             [allowExportSelectedData]="true"
                           ></dxo-export> -->
 
 
-                          </div>
-                    </div>
+            </div>
+          </div>
 
-                    <div class="card" *ngIf="AuditorListReport">
-
-
-
-                        <div class="card-body table-responsive p-0">
+          <div class="card" *ngIf="AuditorListReport">
 
 
-                            <div class="long-title">
-                                <h3
-                                class="modal-title"
-                                style="
+
+            <div class="card-body table-responsive p-0">
+
+
+              <div class="long-title">
+                <h3 class="modal-title" style="
                                   text-align: center;
                                   color: rgb(9, 26, 59);
                                   font-family: 'Times New Roman';
                                   font-weight: bold;
                                   margin-top: 10px;
                                   text-decoration: underline;
-                                "
-                              >
-                                {{ ReportName }}
-                              </h3>
-                              </div>
-                            <dx-data-grid class="mx-3 mb-3" id="gridContainer" [showBorders]="true" [rowAlternationEnabled]="true"
-                              [showRowLines]="true" [columnAutoWidth]="true" [showColumnLines]="true" [allowColumnReordering]="true"
-                              [dataSource]="AuditorListsReport" keyExpr="s_No"
-                              (onExporting)="onExporting($event)"
-                              >
-                              <dxo-paging [pageSize]="10"></dxo-paging>
-                              <dxo-pager
-                                [showPageSizeSelector]="true"
-                                [allowedPageSizes]="[10, 25, 50, 100]"
-                              ></dxo-pager>
+                                ">
+                  {{ ReportName }}
+                </h3>
+              </div>
+              <dx-data-grid class="mx-3 mb-3" id="gridContainer" [showBorders]="true" [rowAlternationEnabled]="true"
+                [showRowLines]="true" [columnAutoWidth]="true" [showColumnLines]="true" [allowColumnReordering]="true"
+                [dataSource]="AuditorListsReport" keyExpr="s_No" (onExporting)="onExporting($event)">
+                <dxo-paging [pageSize]="10"></dxo-paging>
+                <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[10, 25, 50, 100]"></dxo-pager>
 
-                              <dxo-grouping [autoExpandAll]="true"></dxo-grouping>
-                              <dxo-selection mode="multiple"></dxo-selection>
-                              <dxo-scrolling  columnRenderingMode="virtual"></dxo-scrolling>
-                              <dxo-search-panel class="mt-15 mb-3 my-3"[visible]="true" [width]="240" placeholder="Search...">
-                              </dxo-search-panel>
+                <dxo-grouping [autoExpandAll]="true"></dxo-grouping>
+                <dxo-selection mode="multiple"></dxo-selection>
+                <dxo-scrolling columnRenderingMode="virtual"></dxo-scrolling>
+                <dxo-search-panel class="mt-15 mb-3 my-3" [visible]="true" [width]="240" placeholder="Search...">
+                </dxo-search-panel>
 
-                              <dxi-column dataField="s_No" caption="S.No"  cssClass="cell-header"></dxi-column>
+                <dxi-column dataField="s_No" caption="S.No" cssClass="cell-header"></dxi-column>
 
-                              <dxi-column dataField="status" caption="Status"  cssClass="cell-header"></dxi-column>
-                              <dxi-column dataField="fullName" caption="Name Of Personnel"  cssClass="cell-header"></dxi-column>
+                <dxi-column dataField="status" caption="Status" cssClass="cell-header"></dxi-column>
+                <dxi-column dataField="fullName" caption="Name Of Personnel" cssClass="cell-header"></dxi-column>
 
 
-                              <dxi-column dataField="auditorLevel" caption="Auditor Level"  cssClass="cell-header"></dxi-column>
-                              <dxi-column dataField="typeOfEnrollment" caption="Type Of Enrollment"  cssClass="cell-header"></dxi-column>
+                <dxi-column dataField="auditorLevel" caption="Auditor Level" cssClass="cell-header"></dxi-column>
+                <dxi-column dataField="typeOfEnrollment" caption="Type Of Enrollment"
+                  cssClass="cell-header"></dxi-column>
 
-                              <dxi-column dataField="gender" caption="Gender"  cssClass="cell-header"></dxi-column>
+                <dxi-column dataField="gender" caption="Gender" cssClass="cell-header"></dxi-column>
 
-                              <dxi-column dataField="country" caption="Country"  cssClass="cell-header"></dxi-column>
-
-
-                              <dxi-column dataField="naceApproved" caption="Nace Approved"  cssClass="cell-header"></dxi-column>
-                              <dxo-export [enabled]="true" [allowExportSelectedData]="true"></dxo-export>
-                              <dxo-summary>
-                                <dxi-total-item column="s_No" summaryType="count"> </dxi-total-item>
-                            </dxo-summary>
-                            </dx-data-grid>
+                <dxi-column dataField="country" caption="Country" cssClass="cell-header"></dxi-column>
 
 
-                          </div>
-                    </div>
+                <dxi-column dataField="naceApproved" caption="Nace Approved" cssClass="cell-header"></dxi-column>
+                <dxo-export [enabled]="true" [allowExportSelectedData]="true"></dxo-export>
+                <dxo-summary>
+                  <dxi-total-item column="s_No" summaryType="count"> </dxi-total-item>
+                </dxo-summary>
+              </dx-data-grid>
 
-                    <div class="card" *ngIf="AuditorValidationScheduleReport">
+
+            </div>
+          </div>
+
+          <div class="card" *ngIf="AuditorValidationScheduleReport">
 
 
 
-                        <div class="card-body table-responsive p-0">
+            <div class="card-body table-responsive p-0">
 
-                            <div class="long-title">
-                                <h3
-                                class="modal-title"
-                                style="
+              <div class="long-title">
+                <h3 class="modal-title" style="
                                   text-align: center;
                                   color: rgb(9, 26, 59);
                                   font-family: 'Times New Roman';
                                   font-weight: bold;
                                   margin-top: 10px;
                                   text-decoration: underline;
-                                "
-                              >
-                                {{ ReportName }}
-                              </h3>
-                              </div>
+                                ">
+                  {{ ReportName }}
+                </h3>
+              </div>
 
-                            <dx-data-grid class="mx-3 mb-3" id="gridContainer" [showBorders]="true" [rowAlternationEnabled]="true"
-                              [showRowLines]="true" [columnAutoWidth]="true" [showColumnLines]="true" [allowColumnReordering]="true"
-                              [dataSource]="AuditorScheduleList" keyExpr="s_No"
-                              (onExporting)="onExporting($event)">
-                              <dxo-paging [pageSize]="10"></dxo-paging>
-                              <dxo-pager
-                                [showPageSizeSelector]="true"
-                                [allowedPageSizes]="[10, 25, 50, 100]"
-                              ></dxo-pager>
+              <dx-data-grid class="mx-3 mb-3" id="gridContainer" [showBorders]="true" [rowAlternationEnabled]="true"
+                [showRowLines]="true" [columnAutoWidth]="true" [showColumnLines]="true" [allowColumnReordering]="true"
+                [dataSource]="AuditorScheduleList" keyExpr="s_No" (onExporting)="onExporting($event)">
+                <dxo-paging [pageSize]="10"></dxo-paging>
+                <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[10, 25, 50, 100]"></dxo-pager>
 
 
-                              <dxo-scrolling  columnRenderingMode="virtual"></dxo-scrolling>
-                              <dxo-grouping [autoExpandAll]="true"></dxo-grouping>
-                              <dxo-selection mode="multiple"></dxo-selection>
-                              <dxo-search-panel class="mt-15 mb-3 my-3"[visible]="true" [width]="240" placeholder="Search...">
-                              </dxo-search-panel>
+                <dxo-scrolling columnRenderingMode="virtual"></dxo-scrolling>
+                <dxo-grouping [autoExpandAll]="true"></dxo-grouping>
+                <dxo-selection mode="multiple"></dxo-selection>
+                <dxo-search-panel class="mt-15 mb-3 my-3" [visible]="true" [width]="240" placeholder="Search...">
+                </dxo-search-panel>
 
-                              <dxi-column dataField="s_No" caption="S. No."  cssClass="cell-header"></dxi-column>
+                <dxi-column dataField="s_No" caption="S. No." cssClass="cell-header"></dxi-column>
 
-                              <dxi-column dataField="auditorName" caption="Name"  cssClass="cell-header"></dxi-column>
+                <dxi-column dataField="auditorName" caption="Name" cssClass="cell-header"></dxi-column>
 
-                              <dxi-column dataField="auditorGrade" caption="Auditor Name"  cssClass="cell-header"></dxi-column>
+                <dxi-column dataField="auditorGrade" caption="Auditor Name" cssClass="cell-header"></dxi-column>
 
-                              <dxi-column dataField="joiningDate" caption="Joining Date"  cssClass="cell-header" dataType="date"></dxi-column>
+                <dxi-column dataField="joiningDate" caption="Joining Date" cssClass="cell-header"
+                  dataType="date"></dxi-column>
 
-                              <dxi-column dataField="lastValidationDate" caption="Last Validation Date"  cssClass="cell-header" dataType="date"></dxi-column>
+                <dxi-column dataField="lastValidationDate" caption="Last Validation Date" cssClass="cell-header"
+                  dataType="date"></dxi-column>
 
-                              <dxi-column dataField="nextDueDate" caption="Next Due Date"  cssClass="cell-header" dataType="date"></dxi-column>
-
-
-                              <dxo-export [enabled]="true" [allowExportSelectedData]="true"></dxo-export>
-                              <dxo-summary>
-                                <dxi-total-item column="s_No" summaryType="count"> </dxi-total-item>
-                            </dxo-summary>
-                            </dx-data-grid>
+                <dxi-column dataField="nextDueDate" caption="Next Due Date" cssClass="cell-header"
+                  dataType="date"></dxi-column>
 
 
-                          </div>
-                    </div>
+                <dxo-export [enabled]="true" [allowExportSelectedData]="true"></dxo-export>
+                <dxo-summary>
+                  <dxi-total-item column="s_No" summaryType="count"> </dxi-total-item>
+                </dxo-summary>
+              </dx-data-grid>
 
-                    <div class="card" *ngIf="ScheduleOfAuditReport">
+
+            </div>
+          </div>
+
+          <div class="card" *ngIf="ScheduleOfAuditReport">
 
 
 
-                        <div class="card-body table-responsive p-0">
+            <div class="card-body table-responsive p-0">
 
-                            <div class="long-title">
-                                <h3
-                                class="modal-title"
-                                style="
+              <div class="long-title">
+                <h3 class="modal-title" style="
                                   text-align: center;
                                   color: rgb(9, 26, 59);
                                   font-family: 'Times New Roman';
                                   font-weight: bold;
                                   margin-top: 10px;
                                   text-decoration: underline;
-                                "
-                              >
-                                {{ ReportName }}
-                              </h3>
-                              </div>
+                                ">
+                  {{ ReportName }}
+                </h3>
+              </div>
 
-                            <dx-data-grid class="mx-3 mb-3" id="gridContainer" [showBorders]="true" [rowAlternationEnabled]="true"
-                              [showRowLines]="true" [columnAutoWidth]="true" [showColumnLines]="true" [allowColumnReordering]="true"
-                              [dataSource]="ScheduleOfAuditList" keyExpr="s_No"
-                              (onExporting)="onExporting($event)">
-                              <dxo-paging [pageSize]="10"></dxo-paging>
-                              <dxo-pager
-                                [showPageSizeSelector]="true"
-                                [allowedPageSizes]="[10, 25, 50, 100]"
-                              ></dxo-pager>
+              <dx-data-grid class="mx-3 mb-3" id="gridContainer" [showBorders]="true" [rowAlternationEnabled]="true"
+                [showRowLines]="true" [columnAutoWidth]="true" [showColumnLines]="true" [allowColumnReordering]="true"
+                [dataSource]="ScheduleOfAuditList" keyExpr="s_No" (onExporting)="onExporting($event)">
+                <dxo-paging [pageSize]="10"></dxo-paging>
+                <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[10, 25, 50, 100]"></dxo-pager>
 
-                              <dxo-grouping [autoExpandAll]="true"></dxo-grouping>
-                              <dxo-selection mode="multiple"></dxo-selection>
-                              <dxo-scrolling  columnRenderingMode="virtual"></dxo-scrolling>
+                <dxo-grouping [autoExpandAll]="true"></dxo-grouping>
+                <dxo-selection mode="multiple"></dxo-selection>
+                <dxo-scrolling columnRenderingMode="virtual"></dxo-scrolling>
 
-                              <dxo-search-panel class="mt-15 mb-3 my-3"[visible]="true" [width]="240" placeholder="Search...">
-                              </dxo-search-panel>
+                <dxo-search-panel class="mt-15 mb-3 my-3" [visible]="true" [width]="240" placeholder="Search...">
+                </dxo-search-panel>
 
-                              <dxi-column dataField="s_No" caption="S.No"  cssClass="cell-header"></dxi-column>
+                <dxi-column dataField="s_No" caption="S.No" cssClass="cell-header"></dxi-column>
 
-                              <dxi-column dataField="registration_no" caption="Registration NO."  cssClass="cell-header"></dxi-column>
+                <dxi-column dataField="registration_no" caption="Registration NO." cssClass="cell-header"></dxi-column>
 
-                              <dxi-column dataField="clientName" caption="Client"  cssClass="cell-header"></dxi-column>
+                <dxi-column dataField="clientName" caption="Client" cssClass="cell-header"></dxi-column>
 
-                              <dxi-column dataField="projectCode" caption="Project Code"  cssClass="cell-header"></dxi-column>
+                <dxi-column dataField="projectCode" caption="Project Code" cssClass="cell-header"></dxi-column>
 
-                              <dxi-column dataField="projectType" caption="Project Type"  cssClass="cell-header"></dxi-column>
+                <dxi-column dataField="projectType" caption="Project Type" cssClass="cell-header"></dxi-column>
 
-                              <dxi-column dataField="naceCode" caption="Nace Code"  cssClass="cell-header"></dxi-column>
+                <dxi-column dataField="naceCode" caption="Nace Code" cssClass="cell-header"></dxi-column>
 
 
 
-                              <dxi-column dataField="stage_1" caption="Stage-1" dataType="date" cssClass="cell-header"></dxi-column>
+                <dxi-column dataField="stage_1" caption="Stage-1" dataType="date" cssClass="cell-header"></dxi-column>
 
 
-                              <dxi-column dataField="stage_2" caption="Stage-2"  cssClass="cell-header"  dataType="date"></dxi-column>
-                              <dxi-column dataField="surveillance_Frequency" caption="Surveillance Frequency"  cssClass="cell-header"></dxi-column>
+                <dxi-column dataField="stage_2" caption="Stage-2" cssClass="cell-header" dataType="date"></dxi-column>
+                <dxi-column dataField="surveillance_Frequency" caption="Surveillance Frequency"
+                  cssClass="cell-header"></dxi-column>
 
-                              <dxi-column dataField="certificationIssueDate" caption="Certification Issue Date" dataType="date" cssClass="cell-header"></dxi-column>
-                              <dxi-column dataField="surv_1" caption="Surv 1"  cssClass="cell-header"  dataType="date"></dxi-column>
+                <dxi-column dataField="certificationIssueDate" caption="Certification Issue Date" dataType="date"
+                  cssClass="cell-header"></dxi-column>
+                <dxi-column dataField="surv_1" caption="Surv 1" cssClass="cell-header" dataType="date"></dxi-column>
 
-                              <dxi-column dataField="followup_1" caption="Followup 1" dataType="date"  cssClass="cell-header" ></dxi-column>
+                <dxi-column dataField="followup_1" caption="Followup 1" dataType="date"
+                  cssClass="cell-header"></dxi-column>
 
-                              <dxi-column dataField="surv_2" caption="surv 2"  cssClass="cell-header"  dataType="date"></dxi-column>
+                <dxi-column dataField="surv_2" caption="surv 2" cssClass="cell-header" dataType="date"></dxi-column>
 
-                              <dxi-column dataField="followup_2" caption="Followup 2"  cssClass="cell-header"  dataType="date"></dxi-column>
+                <dxi-column dataField="followup_2" caption="Followup 2" cssClass="cell-header"
+                  dataType="date"></dxi-column>
 
-                              <dxi-column dataField="surv_3" caption="Surv 3"  cssClass="cell-header"  dataType="date"></dxi-column>
+                <dxi-column dataField="surv_3" caption="Surv 3" cssClass="cell-header" dataType="date"></dxi-column>
 
-                              <dxi-column dataField="surv_4" caption="Surv 4"  cssClass="cell-header"  dataType="date"></dxi-column>
-                              <dxi-column dataField="surv_5" caption="Surv 5"  cssClass="cell-header"  dataType="date"></dxi-column>
+                <dxi-column dataField="surv_4" caption="Surv 4" cssClass="cell-header" dataType="date"></dxi-column>
+                <dxi-column dataField="surv_5" caption="Surv 5" cssClass="cell-header" dataType="date"></dxi-column>
 
-                              <dxi-column dataField="recertification" caption="Recertification"  dataType="date" cssClass="cell-header"></dxi-column>
-                              <dxo-export [enabled]="true" [allowExportSelectedData]="true"></dxo-export>
-                              <dxo-summary>
-                                <dxi-total-item column="s_No" summaryType="count"> </dxi-total-item>
-                            </dxo-summary>
-                            </dx-data-grid>
-
-
-                          </div>
-                    </div>
-
-                    <div class="card" *ngIf="ImpartialityReviewReport">
-
+                <dxi-column dataField="recertification" caption="Recertification" dataType="date"
+                  cssClass="cell-header"></dxi-column>
+                <dxo-export [enabled]="true" [allowExportSelectedData]="true"></dxo-export>
+                <dxo-summary>
+                  <dxi-total-item column="s_No" summaryType="count"> </dxi-total-item>
+                </dxo-summary>
+              </dx-data-grid>
 
 
-                        <div class="card-body table-responsive p-0">
+            </div>
+          </div>
+
+          <div class="card" *ngIf="ImpartialityReviewReport">
 
 
-                            <div class="long-title">
-                                <h3
-                                class="modal-title"
-                                style="
+
+            <div class="card-body table-responsive p-0">
+
+
+              <div class="long-title">
+                <h3 class="modal-title" style="
                                   text-align: center;
                                   color: rgb(9, 26, 59);
                                   font-family: 'Times New Roman';
                                   font-weight: bold;
                                   margin-top: 10px;
                                   text-decoration: underline;
-                                "
-                              >
-                                {{ ReportName }}
-                              </h3>
-                              </div>
-                            <dx-data-grid class="mx-3 mb-3" id="gridContainer" [showBorders]="true" [rowAlternationEnabled]="true"
-                              [showRowLines]="true" [columnAutoWidth]="true" [showColumnLines]="true" [allowColumnReordering]="true"
-                              [dataSource]="ImpartialityReviewList" keyExpr="s_No"
-                              (onExporting)="onExporting($event)">
-                              <dxo-paging [pageSize]="10"></dxo-paging>
-                              <dxo-pager
-                                [showPageSizeSelector]="true"
-                                [allowedPageSizes]="[10, 25, 50, 100]"
-                              ></dxo-pager>
+                                ">
+                  {{ ReportName }}
+                </h3>
+              </div>
+              <dx-data-grid class="mx-3 mb-3" id="gridContainer" [showBorders]="true" [rowAlternationEnabled]="true"
+                [showRowLines]="true" [columnAutoWidth]="true" [showColumnLines]="true" [allowColumnReordering]="true"
+                [dataSource]="ImpartialityReviewList" keyExpr="s_No" (onExporting)="onExporting($event)">
+                <dxo-paging [pageSize]="10"></dxo-paging>
+                <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[10, 25, 50, 100]"></dxo-pager>
 
-                              <dxo-grouping [autoExpandAll]="true"></dxo-grouping>
-                              <dxo-selection mode="multiple"></dxo-selection>
-                              <dxo-scrolling  columnRenderingMode="virtual"></dxo-scrolling>
-                              <dxo-search-panel class="mt-15 mb-3 my-3"[visible]="true" [width]="240" placeholder="Search...">
-                              </dxo-search-panel>
+                <dxo-grouping [autoExpandAll]="true"></dxo-grouping>
+                <dxo-selection mode="multiple"></dxo-selection>
+                <dxo-scrolling columnRenderingMode="virtual"></dxo-scrolling>
+                <dxo-search-panel class="mt-15 mb-3 my-3" [visible]="true" [width]="240" placeholder="Search...">
+                </dxo-search-panel>
 
-                              <dxi-column dataField="s_No" caption="S.No"  cssClass="cell-header"></dxi-column>
+                <dxi-column dataField="s_No" caption="S.No" cssClass="cell-header"></dxi-column>
 
-                              <dxi-column dataField="projectNo" caption="Project No."  cssClass="cell-header"></dxi-column>
+                <dxi-column dataField="projectNo" caption="Project No." cssClass="cell-header"></dxi-column>
 
-                              <dxi-column dataField="clientName" caption="Client Name"  cssClass="cell-header"></dxi-column>
+                <dxi-column dataField="clientName" caption="Client Name" cssClass="cell-header"></dxi-column>
 
-                              <dxi-column dataField="consultant" caption="Consultant"  cssClass="cell-header"></dxi-column>
+                <dxi-column dataField="endDate" caption="Audit End Date" cssClass="cell-header" dataType="date"></dxi-column>
+                <dxi-column dataField="consultant" caption="Consultant" cssClass="cell-header"></dxi-column>
 
-                              <dxi-column dataField="consultancyName" caption="Consultancy Name"  cssClass="cell-header"></dxi-column>
+                <dxi-column dataField="consultancyName" caption="Consultancy Name" cssClass="cell-header"></dxi-column>
 
-                              <dxi-column dataField="contarctReview" caption="Contract Review"  cssClass="cell-header"></dxi-column>
+                <dxi-column dataField="contarctReview" caption="Contract Review" cssClass="cell-header"></dxi-column>
 
-                              <dxi-column dataField="auditTeam" caption="Audit Team"  cssClass="cell-header"></dxi-column>
+                <dxi-column dataField="auditTeam" caption="Audit Team" cssClass="cell-header"></dxi-column>
 
-                              <dxi-column dataField="certificateDecision" caption="Certificate Decision / Reviewer"  cssClass="cell-header"></dxi-column>
+                <dxi-column dataField="certificateDecision" caption="Certificate Decision / Reviewer"
+                  cssClass="cell-header"></dxi-column>
 
-                              <dxi-column dataField="paymentRecived" caption="Payment Recived"  cssClass="cell-header"></dxi-column>
-                              <dxo-export [enabled]="true" [allowExportSelectedData]="true"></dxo-export>
-                              <dxo-summary>
-                                <dxi-total-item column="s_No" summaryType="count"> </dxi-total-item>
-                            </dxo-summary>
-                            </dx-data-grid>
+                <dxi-column dataField="paymentRecived" caption="Payment Recived" cssClass="cell-header"></dxi-column>
+                <dxo-export [enabled]="true" [allowExportSelectedData]="true"></dxo-export>
+                <dxo-summary>
+                  <dxi-total-item column="s_No" summaryType="count"> </dxi-total-item>
+                </dxo-summary>
+              </dx-data-grid>
 
 
-                          </div>
-                    </div>
-                    <div class="card" *ngIf="CertifiedClientReport">
+            </div>
+          </div>
+          <div class="card" *ngIf="CertifiedClientReport">
 
 
 
-                      <div class="card-body table-responsive p-0">
+            <div class="card-body table-responsive p-0">
 
-                          <div class="long-title">
-                              <h3
-                              class="modal-title"
-                              style="
+              <div class="long-title">
+                <h3 class="modal-title" style="
                                 text-align: center;
                                 color: rgb(9, 26, 59);
                                 font-family: 'Times New Roman';
                                 font-weight: bold;
                                 margin-top: 10px;
                                 text-decoration: underline;
-                              "
-                            >
-                              {{ ReportName }}
-                            </h3>
-                            </div>
+                              ">
+                  {{ ReportName }}
+                </h3>
+              </div>
 
-                          <dx-data-grid class="mx-3 mb-3" id="gridContainer" [showBorders]="true" [rowAlternationEnabled]="true"
-                            [showRowLines]="true" [columnAutoWidth]="true" [showColumnLines]="true" [allowColumnReordering]="true"
-                            [dataSource]="CertifiedClientList" keyExpr="s_No"
-                            (onExporting)="onExporting($event)">
-                            <dxo-paging [pageSize]="10"></dxo-paging>
-                            <dxo-pager
-                              [showPageSizeSelector]="true"
-                              [allowedPageSizes]="[10, 25, 50, 100]"
-                            ></dxo-pager>
+              <dx-data-grid class="mx-3 mb-3" id="gridContainer" [showBorders]="true" [rowAlternationEnabled]="true"
+                [showRowLines]="true" [columnAutoWidth]="true" [showColumnLines]="true" [allowColumnReordering]="true"
+                [dataSource]="CertifiedClientList" keyExpr="s_No" (onExporting)="onExporting($event)">
+                <dxo-paging [pageSize]="10"></dxo-paging>
+                <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[10, 25, 50, 100]"></dxo-pager>
 
-                            <dxo-grouping [autoExpandAll]="true"></dxo-grouping>
-                            <dxo-selection mode="multiple"></dxo-selection>
-                            <dxo-scrolling  columnRenderingMode="virtual"></dxo-scrolling>
+                <dxo-grouping [autoExpandAll]="true"></dxo-grouping>
+                <dxo-selection mode="multiple"></dxo-selection>
+                <dxo-scrolling columnRenderingMode="virtual"></dxo-scrolling>
 
-                            <dxo-search-panel class="mt-15 mb-3 my-3"[visible]="true" [width]="240" placeholder="Search...">
-                            </dxo-search-panel>
+                <dxo-search-panel class="mt-15 mb-3 my-3" [visible]="true" [width]="240" placeholder="Search...">
+                </dxo-search-panel>
 
-                            <dxi-column dataField="s_No" caption="S.No"  cssClass="cell-header"></dxi-column>
-                            <dxi-column dataField="clientName" caption="Certified Organization"  cssClass="cell-header"></dxi-column>
-                            <dxi-column dataField="country" caption="Country"  cssClass="cell-header"></dxi-column>
-                            <dxi-column dataField="certificationStatus" caption="Certification status."  cssClass="cell-header"></dxi-column>
+                <dxi-column dataField="s_No" caption="S.No" cssClass="cell-header"></dxi-column>
+                <dxi-column dataField="clientName" caption="Certified Organization" cssClass="cell-header"></dxi-column>
+                <dxi-column dataField="country" caption="Country" cssClass="cell-header"></dxi-column>
+                <dxi-column dataField="certificationStatus" caption="Certification status."
+                  cssClass="cell-header"></dxi-column>
 
 
 
-                            <dxi-column dataField="currentState" caption="Current state"  cssClass="cell-header"></dxi-column>
+                <dxi-column dataField="currentState" caption="Current state" cssClass="cell-header"></dxi-column>
 
-                            <dxi-column dataField="registration_no" caption="Registration no."  cssClass="cell-header"></dxi-column>
+                <dxi-column dataField="registration_no" caption="Registration no." cssClass="cell-header"></dxi-column>
 
-                            <dxi-column dataField="certificationIssueDate" caption="Date of initial certification"   dataType="date" cssClass="cell-header"></dxi-column>
-                            <dxi-column dataField="certificationExpiryDate" caption="Date of expiry"   dataType="date" cssClass="cell-header"></dxi-column>
-                            <dxi-column dataField="cycleCode" caption="Cycle Code"  cssClass="cell-header"></dxi-column>
-                            <dxi-column dataField="surveillance_Frequency" caption="Surv Frequency"  cssClass="cell-header"></dxi-column>
+                <dxi-column dataField="certificationIssueDate" caption="Date of initial certification" dataType="date"
+                  cssClass="cell-header"></dxi-column>
+                <dxi-column dataField="certificationExpiryDate" caption="Date of expiry" dataType="date"
+                  cssClass="cell-header"></dxi-column>
+                <dxi-column dataField="cycleCode" caption="Cycle Code" cssClass="cell-header"></dxi-column>
+                <dxi-column dataField="surveillance_Frequency" caption="Surv Frequency"
+                  cssClass="cell-header"></dxi-column>
 
-                            <dxi-column caption="Surv 1" cssClass="cell-header" alignment="center">
-                            <dxi-column dataField="intimationdateSurv_1" caption="Intimation date Surv 1" dataType="date" cssClass="cell-header"></dxi-column>
+                <dxi-column caption="Surv 1" cssClass="cell-header" alignment="center">
+                  <dxi-column dataField="intimationdateSurv_1" caption="Intimation date Surv 1" dataType="date"
+                    cssClass="cell-header"></dxi-column>
 
-                            <dxi-column caption="Window period : Surv 1"  cssClass="cell-header">
-                            <dxi-column dataField="windowperiod_start_Surv_1" caption="Start Date" cssClass="cell-header"  dataType="date"></dxi-column>
-                            <dxi-column dataField="windowperiod_end_Surv_1"  caption="End End"  dataType="date" cssClass="cell-header"></dxi-column>
-                            </dxi-column>
-                            <dxi-column dataField="surv_1_due" caption="Surv 1 due" dataType="date" cssClass="cell-header"></dxi-column>
-                          </dxi-column>
-                            <!-- <dxi-column dataField="surv_1" caption="Surv 1"  cssClass="cell-header"  dataType="date"></dxi-column> -->
-                            <dxi-column caption="Followup review-1" cssClass="cell-header" alignment="center">
-                            
-                              <dxi-column dataField="windowperiod_FUP_1_Intimation" caption="Intimation Date" dataType="date"  cssClass="cell-header" ></dxi-column>
-                              <dxi-column dataField="windowperiod_Start_FUP_1" caption="Window period : FUP-1 Start" dataType="date"  cssClass="cell-header" ></dxi-column>
-                            <dxi-column dataField="windowperiod_end_FUP_1" caption="Window period : FUP-1 End" dataType="date"  cssClass="cell-header" ></dxi-column>
-                          </dxi-column>
+                  <dxi-column caption="Window period : Surv 1" cssClass="cell-header">
+                    <dxi-column dataField="windowperiod_start_Surv_1" caption="Start Date" cssClass="cell-header"
+                      dataType="date"></dxi-column>
+                    <dxi-column dataField="windowperiod_end_Surv_1" caption="End End" dataType="date"
+                      cssClass="cell-header"></dxi-column>
+                  </dxi-column>
+                  <dxi-column dataField="surv_1_due" caption="Surv 1 due" dataType="date"
+                    cssClass="cell-header"></dxi-column>
+                </dxi-column>
+                <!-- <dxi-column dataField="surv_1" caption="Surv 1"  cssClass="cell-header"  dataType="date"></dxi-column> -->
+                <dxi-column caption="Followup review-1" cssClass="cell-header" alignment="center">
 
-
-                          <dxi-column caption="Surv 2" cssClass="cell-header" alignment="center">
-                            <dxi-column dataField="intimationdateSurv_2" caption="Intimation date Surv 2" dataType="date" cssClass="cell-header"></dxi-column>
-
-                            <dxi-column caption="Window period of Surv 2"  cssClass="cell-header">
-                            <dxi-column dataField="windowperiod_start_Surv_2" caption="Start Date" cssClass="cell-header"  dataType="date"></dxi-column>
-                            <dxi-column dataField="windowperiod_end_Surv_2"  caption="End End" dataType="date" cssClass="cell-header"></dxi-column>
-                            </dxi-column>
-                            <dxi-column dataField="surv_2_due" caption="Surv 2 due" dataType="date" cssClass="cell-header"></dxi-column>
-                          </dxi-column>
-
-                            <!-- <dxi-column dataField="surv_2" caption="surv 2"  cssClass="cell-header"  dataType="date"></dxi-column> -->
-                            <dxi-column caption="Followup review-2" cssClass="cell-header" alignment="center">
-                              <dxi-column dataField="windowperiod_FUP_2_Intimation" caption="Intimation Date" dataType="date"  cssClass="cell-header" ></dxi-column>
-                              <dxi-column dataField="windowperiod_Sart_FUP_2" caption="Window period : FUP-2 Start" dataType="date"  cssClass="cell-header" ></dxi-column>
-                              <dxi-column dataField="windowperiod_end_FUP_2" caption="Window period : FUP-2  End" dataType="date"  cssClass="cell-header" ></dxi-column>
-                            </dxi-column>
+                  <dxi-column dataField="windowperiod_FUP_1_Intimation" caption="Intimation Date" dataType="date"
+                    cssClass="cell-header"></dxi-column>
+                  <dxi-column dataField="windowperiod_Start_FUP_1" caption="Window period : FUP-1 Start" dataType="date"
+                    cssClass="cell-header"></dxi-column>
+                  <dxi-column dataField="windowperiod_end_FUP_1" caption="Window period : FUP-1 End" dataType="date"
+                    cssClass="cell-header"></dxi-column>
+                </dxi-column>
 
 
-                            <!-- <dxi-column dataField="followup_2" caption="Followup 2"  cssClass="cell-header"  dataType="date"></dxi-column> -->
+                <dxi-column caption="Surv 2" cssClass="cell-header" alignment="center">
+                  <dxi-column dataField="intimationdateSurv_2" caption="Intimation date Surv 2" dataType="date"
+                    cssClass="cell-header"></dxi-column>
 
-                            <dxi-column caption="Recertification" cssClass="cell-header" alignment="center">
-                              <dxi-column dataField="recertificationIntimationdate" caption="Intimation" dataType="date"  cssClass="cell-header" ></dxi-column>
-                              <dxi-column dataField="recertification_Windowperiod_start_Surv_2" caption="Start" dataType="date"  cssClass="cell-header" ></dxi-column>
-                              <dxi-column dataField="recertification_Windowperiod_end_Surv_2" caption="End" dataType="date"  cssClass="cell-header" ></dxi-column>
-                            </dxi-column>
+                  <dxi-column caption="Window period of Surv 2" cssClass="cell-header">
+                    <dxi-column dataField="windowperiod_start_Surv_2" caption="Start Date" cssClass="cell-header"
+                      dataType="date"></dxi-column>
+                    <dxi-column dataField="windowperiod_end_Surv_2" caption="End End" dataType="date"
+                      cssClass="cell-header"></dxi-column>
+                  </dxi-column>
+                  <dxi-column dataField="surv_2_due" caption="Surv 2 due" dataType="date"
+                    cssClass="cell-header"></dxi-column>
+                </dxi-column>
 
-                            <dxi-column caption="Followup-Recertification" cssClass="cell-header" alignment="center">
-                              <dxi-column dataField="followup_Recert_Start" caption="Window period : FUP Start" dataType="date"  cssClass="cell-header" ></dxi-column>
-                              <dxi-column dataField="followup_Recert_end" caption="Window period : FUP End" dataType="date"  cssClass="cell-header" ></dxi-column>
-                            </dxi-column>
-                            <!-- <dxi-column dataField="surv_3" caption="Surv 3"  cssClass="cell-header"  dataType="date"></dxi-column>
+                <!-- <dxi-column dataField="surv_2" caption="surv 2"  cssClass="cell-header"  dataType="date"></dxi-column> -->
+                <dxi-column caption="Followup review-2" cssClass="cell-header" alignment="center">
+                  <dxi-column dataField="windowperiod_FUP_2_Intimation" caption="Intimation Date" dataType="date"
+                    cssClass="cell-header"></dxi-column>
+                  <dxi-column dataField="windowperiod_Sart_FUP_2" caption="Window period : FUP-2 Start" dataType="date"
+                    cssClass="cell-header"></dxi-column>
+                  <dxi-column dataField="windowperiod_end_FUP_2" caption="Window period : FUP-2  End" dataType="date"
+                    cssClass="cell-header"></dxi-column>
+                </dxi-column>
+
+
+                <!-- <dxi-column dataField="followup_2" caption="Followup 2"  cssClass="cell-header"  dataType="date"></dxi-column> -->
+
+                <dxi-column caption="Recertification" cssClass="cell-header" alignment="center">
+                  <dxi-column dataField="recertificationIntimationdate" caption="Intimation" dataType="date"
+                    cssClass="cell-header"></dxi-column>
+                  <dxi-column dataField="recertification_Windowperiod_start_Surv_2" caption="Start" dataType="date"
+                    cssClass="cell-header"></dxi-column>
+                  <dxi-column dataField="recertification_Windowperiod_end_Surv_2" caption="End" dataType="date"
+                    cssClass="cell-header"></dxi-column>
+                </dxi-column>
+
+                <dxi-column caption="Followup-Recertification" cssClass="cell-header" alignment="center">
+                  <dxi-column dataField="followup_Recert_Start" caption="Window period : FUP Start" dataType="date"
+                    cssClass="cell-header"></dxi-column>
+                  <dxi-column dataField="followup_Recert_end" caption="Window period : FUP End" dataType="date"
+                    cssClass="cell-header"></dxi-column>
+                </dxi-column>
+                <!-- <dxi-column dataField="surv_3" caption="Surv 3"  cssClass="cell-header"  dataType="date"></dxi-column>
 
                             <dxi-column dataField="surv_4" caption="Surv 4"  cssClass="cell-header"  dataType="date"></dxi-column>
                             <dxi-column dataField="surv_5" caption="Surv 5"  cssClass="cell-header"  dataType="date"></dxi-column>
 
                             <dxi-column dataField="recertification" caption="Recertification"  dataType="date" cssClass="cell-header"></dxi-column> -->
-                            <dxo-export [enabled]="true" [allowExportSelectedData]="true"></dxo-export>
-                            <dxo-summary>
-                              <dxi-total-item column="s_No" summaryType="count"> </dxi-total-item>
-                          </dxo-summary>
-                          </dx-data-grid>
+                <dxo-export [enabled]="true" [allowExportSelectedData]="true"></dxo-export>
+                <dxo-summary>
+                  <dxi-total-item column="s_No" summaryType="count"> </dxi-total-item>
+                </dxo-summary>
+              </dx-data-grid>
 
 
-                        </div>
-                  </div>
-                </div>
             </div>
+          </div>
         </div>
+      </div>
+    </div>
 
 
 
 
 
-    </section>
+  </section>
 </form> <br><br>
+
+<form  [formGroup]="NCSForm" #ncsForm="ngForm">
+  <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayNCSPopup}">
+      <div class="ncs-modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header my-center">
+                  <h4 class="">NCS</h4>
+              </div>
+             
+              <div class="col-sm-12">
+               
+                        <div class="col-md-12">
+                            <label class="mb-0" for="Minor">
+                                {{ "Minor" }}
+                            </label>
+                            <input type="text" formControlName="Minor"
+                                class="form-control form-control-sm col-md-12" id="Minor" />
+                        </div>
+
+                        <div class="col-md-12">
+                            <label class="mb-0" for="Major">
+                                {{ "Major" }}
+                            </label>
+                            <input type="text" formControlName="Major"
+                                class="form-control form-control-sm col-md-12" id="Major" />
+                        </div>
+
+                        <div class="col-md-12">
+                            <label class="mb-0" for="Critical">Critical</label>
+                            <input type="text" formControlName="Critical"
+                                class="form-control form-control-sm col-md-12" id="Critical" />
+                        </div>
+                    
+              
+                        <div class="col-md-12">
+                            <label class="mb-0" for="TimeBound">
+                                {{ "Time Bound" }}
+                            </label>
+                            <input type="text" formControlName="TimeBound"
+                                class="form-control form-control-sm col-md-12" id="TimeBound" />
+                     
+                    </div>
+                    <!-- <div class="row  mt-1 mx-2">
+
+                    </div> -->
+                
+            </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-danger" (click)="closeNCSPopup()">
+                      Close
+                  </button>
+              </div>
+          </div>
+      </div>
+  </div>
+</form>

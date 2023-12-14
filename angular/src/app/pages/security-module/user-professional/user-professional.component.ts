@@ -126,6 +126,12 @@ export class UserProfessionalComponent implements OnInit {
 
   }
   editVsible(e) {
+
+    var RoleId =  parseInt( localStorage.getItem('roleId'));
+    if(RoleId==2)
+    {
+      return !e.row.isEditing;
+    }
     debugger
     var organizationId =  parseInt( localStorage.getItem('organizationId'));
     // console.log(roleId)
@@ -247,7 +253,7 @@ this.fileToUpload= <File>e?.target?.files[0];
   }
   else
   {
-    if (this.fileToUpload != null && this.fileToUpload != "" && this.fileToUpload != undefined && this.fileToUpload != undefined && this.fileToUpload != NaN && this.fileToUpload != undefined && this.fileToUpload != "" && this.fileToUpload != undefined && this.fileToUpload != '') {
+    if (this.fileToUpload != null && this.fileToUpload != "" && this.fileToUpload != undefined && this.fileToUpload != undefined && !Number.isNaN(this.fileToUpload) && this.fileToUpload != undefined && this.fileToUpload != "" && this.fileToUpload != undefined && this.fileToUpload != '') {
 
 
     }
@@ -421,7 +427,7 @@ delete(e) {
 
    DownloadProfesional(e): void {
 
-    if(e.row.data.documentsFilePath!=null && e.row.data.documentsFilePath!=undefined && e.row.data.documentsFilePath!=NaN && e.row.data.documentsFilePath!="" && e.row.data.documentsFilePath!='')
+    if(e.row.data.documentsFilePath!=null && e.row.data.documentsFilePath!=undefined && !Number.isNaN(e.row.data.documentsFilePath) && e.row.data.documentsFilePath!="" && e.row.data.documentsFilePath!='')
     {
     this.id=e.row.data.id;
    // var fillename=e.row.data.title;

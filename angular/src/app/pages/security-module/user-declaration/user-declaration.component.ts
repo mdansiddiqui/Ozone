@@ -178,6 +178,13 @@ this.loadApprovalStatus()
 
   }
   editVsible(e) {
+
+ 
+    var RoleId =  parseInt( localStorage.getItem('roleId'));
+    if(RoleId==2)
+    {
+      return !e.row.isEditing;
+    }
     debugger
     var organizationId =  parseInt( localStorage.getItem('organizationId'));
     var userstatusId =  parseInt( localStorage.getItem('userstatusId'));

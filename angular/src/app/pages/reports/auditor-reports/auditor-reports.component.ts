@@ -58,12 +58,21 @@ export class AuditorReportsComponent implements OnInit {
   StatusId: new FormControl(''),
 });
 
+NCSForm = new FormGroup({
+ 
 
+  Minor: new FormControl(""),
+  Major: new FormControl(""),
+  Critical: new FormControl(""),
+  TimeBound: new FormControl(""),
+  
+});
   constructor(
      public ProjectAmountReportsService: ProjectAmountReportsService,
      public _AuditorService: AuditorService,
      public LibraryResourceService: LibraryResourceService
-     ) { }
+     
+     ) { this.viewNCS=this.viewNCS.bind(this); }
 
   ngOnInit(): void {
     this.loadAgency();
@@ -536,7 +545,7 @@ CertifiedClientSearch(){
     this.ReportName="Certified Client Monitoring";
     this._AuditorService.GetCertifiedClientReport(this.filterForm.value).subscribe((Response) => {
                 
-debugger
+
        
       this.CertifiedClientList = Response;
       console.log("CertifiedClientList   " +Response);
@@ -549,5 +558,44 @@ debugger
     return
     // MesseageError="Version is Empty";
     }
+}
+
+displayNCSPopup = "none";
+viewNCS(e) {
+
+  debugger
+  //console.log("Mission completed");
+  //  this.userId=0;
+  // this.userId=e.row.data.id;
+  // this.userdata=e.row.data;
+  // this.ResetPasswordForm.get('EmailForgotPassword').setValue(e.row.data.emailForgotPassword);
+  // this.ResetPasswordForm.get('EmailForgotPassword').disable();
+  this.displayNCSPopup = "block";
+
+  this._AuditorService.AuditNCS(e.row.data.id).subscribe((Response)=>{
+    this.NCSForm.disable();
+   console.log("ncs" +Response)
+
+   this.NCSForm.controls.Minor.setValue(
+    Response.minor
+  );
+  this.NCSForm.controls.Major.setValue(
+    Response.major
+  );
+  this.NCSForm.controls.Critical.setValue(
+    Response.critical
+  );
+  this.NCSForm.controls.TimeBound.setValue(
+    Response.timeBound
+  );
+
+  // this.viewHistoryReportData = Response
+
+   })
+
+  //this.router.navigateByUrl('/app/pages/stock-management/library?'+this.id);
+}
+closeNCSPopup() {
+  this.displayNCSPopup = "none";
 }
 }

@@ -90,8 +90,9 @@ import { FileUploadingComponent } from './file-uploading/file-uploading.componen
     DxSpeedDialActionModule,
     NgxPaginationModule,
     DxDataGridModule,
+    NgxPaginationModule,
 
-
+  
   ]
 })
 export class SecurityModuleModule { }

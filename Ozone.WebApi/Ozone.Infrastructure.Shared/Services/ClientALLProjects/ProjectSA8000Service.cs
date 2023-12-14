@@ -1465,7 +1465,7 @@ namespace Ozone.Infrastructure.Shared.Services
             var ProjectSAModel = new ProjectSA8000Model();
             var ClientProjectMod = new ClientProjectModel();
             var ClientSitesModel = new ClientSitesModel();
-            var Dbresult = await Task.Run(() => _dbContext.ProjectSa8000.Where(x => x.ClientProjectId == id).FirstOrDefault());
+            var Dbresult = await Task.Run(() => _dbContext.ProjectSa8000.Include(x=>x.Consultant).Where(x => x.ClientProjectId == id).FirstOrDefault());
             ProjectSAModel = _mapper.Map<ProjectSA8000Model>(Dbresult);
             var Dbresult2 = await Task.Run(() => _dbContext.ClientProjects.Include(x=>x.ClientSite).Include(x=>x.Client).Include(X => X.Client.Eacode).Include(x => x.Client.NaceCode).Include(x => x.Client.Risk).Include(x=>x.ApprovalStatus).Include(x=>x.ProjectType).Where(x => x.Id == id).FirstOrDefault());
             ClientProjectMod = _mapper.Map<ClientProjectModel>(Dbresult2);
@@ -1474,10 +1474,16 @@ namespace Ozone.Infrastructure.Shared.Services
             //var Dbresult3 = await Task.Run(() => _dbContext.ClientSites.Where(x => x.Id == Dbresult2.ClientSiteId).FirstOrDefault());
             //ClientSitesModel = _mapper.Map<ClientSitesModel>(Dbresult3);
 
+            var consultant = new List<ConsultantModel>();
+
+            var list = await Task.Run(() => _dbContext.Consultant.Where(x => x.IsDeleted == false == x.IsActive == true && x.OrganizationId == ClientProjectMod.AgencyId).ToList());
+            consultant = _mapper.Map<List<ConsultantModel>>(list);
+
 
             result.ProjectSA8000Model = ProjectSAModel;
             result.ClientProjectModel = ClientProjectMod;
             result.ClientSitesModel = ClientSitesModel;
+            result.ConsultantModels = consultant;
 
             return result;
         }

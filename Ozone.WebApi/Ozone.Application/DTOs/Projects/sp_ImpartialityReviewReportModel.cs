@@ -20,6 +20,7 @@ namespace Ozone.Application.DTOs.Projects
 
         public string CertificateDecision { get; set; }
         public string PaymentRecived { get; set; }
+        public DateTime? EndDate { get; set; }
 
     }
 

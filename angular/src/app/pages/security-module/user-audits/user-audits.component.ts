@@ -41,14 +41,16 @@ import dxNumberBox from 'devextreme/ui/number_box';
 import { DatePipe } from '@angular/common';
 import{ UserAuditModel} from'@shared/Dto/user-audit-model';
 import { SecUserService } from '@shared/Services/sec-user.service';
-
+import { Workbook } from 'exceljs';
+import { exportDataGrid } from 'devextreme/excel_exporter';
+import { saveAs } from 'file-saver-es';
 @Component({
   selector: 'app-user-audits',
   templateUrl: './user-audits.component.html',
   styleUrls: ['./user-audits.component.css']
 })
 export class UserAuditsComponent implements OnInit {
-
+  @ViewChild('dataGridVar', { static: false }) dataGrid: DxDataGridComponent;
   public UserAudit: UserAuditModel = new UserAuditModel();
   UserAuditForm = new FormGroup({
     // Id: new FormControl(''),
@@ -65,6 +67,11 @@ export class UserAuditsComponent implements OnInit {
     // IsDeleted: new FormControl(''),
 
   })
+
+
+
+
+
   datePipe = new DatePipe("en-US");
   public UserName:string;
   @Input() formName : string
@@ -123,7 +130,22 @@ export class UserAuditsComponent implements OnInit {
     {    this.edit = this.edit.bind(this);
       this.delete = this.delete.bind(this);
       this.editRecord =this.editRecord.bind(this); }
-
+      
+      onExporting(e) {
+        const workbook = new Workbook();
+        const worksheet = workbook.addWorksheet("Audits");
+    
+        exportDataGrid({
+          component: e.component,
+          worksheet,
+          autoFilterEnabled: true,
+        }).then(() => {
+          workbook.xlsx.writeBuffer().then((buffer) => {
+            saveAs(new Blob([buffer], { type: 'application/octet-stream' }), 'Audits.xlsx');
+          });
+        });
+        e.cancel = true;
+      }
   ngOnInit(): void {
 
 this.loadStandard();
@@ -323,6 +345,13 @@ onTableSizeChange(event): void {
   this.onSearch();
 }
 editViaible(e) {
+
+  var RoleId =  parseInt( localStorage.getItem('roleId'));
+  if(RoleId==2 && !(e.row.data.certificationBodyName === 'Ozone'))
+  {
+    return !e.row.isEditing;
+  }
+
  if (e.row.data.certificationBodyName === 'Ozone')
   {
   return e.row.isEditing;

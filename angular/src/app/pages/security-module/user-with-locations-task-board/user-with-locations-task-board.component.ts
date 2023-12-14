@@ -175,19 +175,36 @@ export class UserWithLocationsTaskBoardComponent implements OnInit {
   }
   editVsible(e) {
     debugger
+    var RoleId =  parseInt( localStorage.getItem('roleId'));
+    if(RoleId==2)
+    {
+      return !e.row.isEditing;
+    }
+
     var organizationId =  parseInt( localStorage.getItem('organizationId'));
     // console.log(roleId)
     let oid = parseInt(localStorage.getItem('UserOrganizationID'));
     if  (e.row.data.approvelStatusId === 1 || e.row.data.approvelStatusId === 2)
      {
      return e.row.isEditing;
-   }else if (organizationId === e.row.data.organizationId) {
+   }
+   else if (organizationId === e.row.data.organizationId) {
     return !e.row.isEditing;
    }else{
     return e.row.isEditing;
    }
+  
+
+
+
    }
     manageVisible(e){
+
+      var RoleId =  parseInt( localStorage.getItem('roleId'));
+      if(RoleId==2)
+      {
+        return !e.row.isEditing;
+      }
       debugger
       var organizationId =  parseInt( localStorage.getItem('organizationId'));
     if (organizationId === e.row.data.organizationId) {

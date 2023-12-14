@@ -17,6 +17,7 @@ using System.Data;
 using Microsoft.Data.SqlClient;
 using System.Data.Common;
 using Ozone.Application.DTOs.Reports;
+using System.Security.Cryptography;
 
 namespace Ozone.Infrastructure.Shared.Services
 {
@@ -834,7 +835,7 @@ namespace Ozone.Infrastructure.Shared.Services
                                 CPR.AuditTeam = (!(dataReader["AuditTeam"] is DBNull)) ? dataReader["AuditTeam"].ToString() : null;
                                 CPR.CertificateDecision = (!(dataReader["CertificateDecision"] is DBNull)) ? dataReader["CertificateDecision"].ToString() : null;
                                 CPR.PaymentRecived = (!(dataReader["PaymentRecived"] is DBNull)) ? dataReader["PaymentRecived"].ToString() : null;
-
+                                CPR.EndDate = (!(dataReader["EndDate"] is DBNull)) ? Convert.ToDateTime(dataReader["EndDate"]) : (DateTime?)null;
                                 CPRLIst.Add(CPR);
                                 //}); ;
                             }
@@ -867,6 +868,23 @@ namespace Ozone.Infrastructure.Shared.Services
             result = _mapper.Map<List<AuditReportHistoryModel>>(DbAuditReportHistory);
             return result;
         }
+
+        public async Task<AuditReportMSModel> AuditNCS(int id)
+        {
+            var result = new List<AuditReportMSModel>();
+            var DbAuditReportHistory = await Task.Run(() => _dbContext.AuditReportMaster.Include(x => x.ClientAuditVisit).Where(x => x.ClientAuditVisit.LeadAuditorId == id && x.ClientAuditVisit.IsDeleted==false && x.IsDeleted==false && x.ClientAuditVisit.VisitLevelId !=7 && x.ClientAuditVisit.VisitStatusId==2 ).ToList());
+            result = _mapper.Map<List<AuditReportMSModel>>(DbAuditReportHistory);
+
+            AuditReportMSModel auditReport = new AuditReportMSModel();
+
+
+            auditReport.Major = result.Sum(x => x.Major);
+            auditReport.Minor = result.Sum(x => x.Minor);
+            auditReport.Critical = result.Sum(x => x.Critical);
+            auditReport.TimeBound = result.Sum(x => x.TimeBound);
+            return auditReport;
+        }
+
 
 
         public async Task<List<SPAuditorDetailModel>> AuditorReportsDetail(IDictionary<string, string> keyValuePairs)

@@ -133,8 +133,8 @@ ngAfterViewInit() : void {
 public TypeList = [
 
 
-  {id:"1",name:"Type-1"  },
-  {id:"2",name:"Type-2" },
+  {id:"1",name:"Type-1 Structured"  },
+  {id:"2",name:"Type-2 Unstructured" },
 
 
 
@@ -152,6 +152,12 @@ public TypeList = [
 //  }
 //  }
 editVsible(e) {
+
+  var RoleId =  parseInt( localStorage.getItem('roleId'));
+    if(RoleId==2)
+    {
+      return !e.row.isEditing;
+    }
   debugger
   var organizationId =  parseInt( localStorage.getItem('organizationId'));
   // console.log(roleId)
@@ -271,7 +277,7 @@ foData.append('UserId',this.Userid.toString());
  foData.append('CreatedBy',LoginUserId);
 
  Object.keys(this.CPDForm.controls).forEach(key => {
-  if (this.CPDForm.controls[key].value != null && this.CPDForm.controls[key].value != "" && this.CPDForm.controls[key].value != undefined && this.CPDForm.controls[key].value != NaN &&this.CPDForm.controls[key].value != "" && this.CPDForm.controls[key].value !='') {
+  if (this.CPDForm.controls[key].value != null && this.CPDForm.controls[key].value != "" && this.CPDForm.controls[key].value != undefined && !Number.isNaN(this.CPDForm.controls[key].value) &&this.CPDForm.controls[key].value != "" && this.CPDForm.controls[key].value !='') {
     var sname = key;
     //var sname= this.SLCPForm.controls[key].;
     var val = this.CPDForm.controls[key].value;
@@ -514,7 +520,7 @@ Downloadfile(e): void {
  }
  DownloadCPD(e): void {
 
-  if(e.row.data.documentsFilePath!=null && e.row.data.documentsFilePath!=undefined && e.row.data.documentsFilePath!=NaN && e.row.data.documentsFilePath!="" && e.row.data.documentsFilePath!='')
+  if(e.row.data.documentsFilePath!=null && e.row.data.documentsFilePath!=undefined && !Number.isNaN(e.row.data.documentsFilePath) && e.row.data.documentsFilePath!="" && e.row.data.documentsFilePath!='')
   {
   this.id=e.row.data.id;
  // var fillename=e.row.data.title;

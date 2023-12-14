@@ -143,6 +143,12 @@ export class UserStandardsComponent implements OnInit {
   }
   ManageVisit(e) {
     debugger
+
+    var RoleId =  parseInt( localStorage.getItem('roleId'));
+    if(RoleId==2)
+    {
+      return !e.row.isEditing;
+    }
     // var roleId = localStorage.getItem('roleId');
     // if (+roleId === 2 ) {
     //   if (e.row.data.approvalStatusId === 1 || e.row.data.approvalStatusId === 10003)
@@ -317,11 +323,11 @@ export class UserStandardsComponent implements OnInit {
     this.UserStandar.StandardId = parseInt(this.UserStandardForm.get('StandardId').value)
     this.UserStandar.AuditorTypeId = parseInt(this.UserStandardForm.get('AuditorTypeId').value)
     this.UserStandar.CourseTypeId = parseInt(this.UserStandardForm.get('CourseTypeId').value)
-    if (this.UserStandardForm.get('CourseDate').value != null && this.UserStandardForm.get('CourseDate').value != undefined && this.UserStandardForm.get('CourseDate').value != NaN && this.UserStandardForm.get('CourseDate').value != "" && this.UserStandardForm.get('CourseDate').value != '') { this.UserStandar.CourseDate = this.UserStandardForm.get('CourseDate').value }
+    if (this.UserStandardForm.get('CourseDate').value != null && this.UserStandardForm.get('CourseDate').value != undefined && !Number.isNaN(this.UserStandardForm.get('CourseDate').value) && this.UserStandardForm.get('CourseDate').value != "" && this.UserStandardForm.get('CourseDate').value != '') { this.UserStandar.CourseDate = this.UserStandardForm.get('CourseDate').value }
     //else{this.UserStandar.CourseDate=null}
-    if (this.UserStandardForm.get('PreValidDate').value != null && this.UserStandardForm.get('PreValidDate').value != undefined && this.UserStandardForm.get('PreValidDate').value != NaN && this.UserStandardForm.get('PreValidDate').value != "" && this.UserStandardForm.get('PreValidDate').value != '') { this.UserStandar.PreValidDate = this.UserStandardForm.get('PreValidDate').value }
+    if (this.UserStandardForm.get('PreValidDate').value != null && this.UserStandardForm.get('PreValidDate').value != undefined && !Number.isNaN(this.UserStandardForm.get('PreValidDate').value) && this.UserStandardForm.get('PreValidDate').value != "" && this.UserStandardForm.get('PreValidDate').value != '') { this.UserStandar.PreValidDate = this.UserStandardForm.get('PreValidDate').value }
     //else{this.UserStandar.PreValidDate=null}
-    if (this.UserStandardForm.get('ValidationDate').value != null && this.UserStandardForm.get('ValidationDate').value != undefined && this.UserStandardForm.get('ValidationDate').value != NaN && this.UserStandardForm.get('ValidationDate').value != "" && this.UserStandardForm.get('ValidationDate').value != '') { this.UserStandar.ValidationDate = this.UserStandardForm.get('ValidationDate').value }
+    if (this.UserStandardForm.get('ValidationDate').value != null && this.UserStandardForm.get('ValidationDate').value != undefined && !Number.isNaN(this.UserStandardForm.get('ValidationDate').value) && this.UserStandardForm.get('ValidationDate').value != "" && this.UserStandardForm.get('ValidationDate').value != '') { this.UserStandar.ValidationDate = this.UserStandardForm.get('ValidationDate').value }
     //else{this.UserStandar.ValidationDate=null}
 
       // if (this.fileToUpload != null && this.fileToUpload != "" && this.fileToUpload != undefined && this.fileToUpload != undefined && this.fileToUpload != NaN) {
@@ -337,7 +343,7 @@ export class UserStandardsComponent implements OnInit {
         //this.UserStandar.Id = parseInt(this.id);
         foData.append('Id',this.id.toString());
       }
-    if(this.fileToUpload!=null && this.fileToUpload!=""&& this.fileToUpload!=''&& this.fileToUpload!=undefined &&this.fileToUpload!=NaN)
+    if(this.fileToUpload!=null && this.fileToUpload!=""&& this.fileToUpload!=''&& this.fileToUpload!=undefined && !Number.isNaN(this.fileToUpload))
     {
       foData.append('DocumentFile',this.fileToUpload);
     }
@@ -352,7 +358,7 @@ export class UserStandardsComponent implements OnInit {
     //this.UserStandar.LastModifiedBy = parseInt(LoginUserId)
     foData.append('LastModifiedBy',LoginUserId);
     Object.keys(this.UserStandardForm.controls).forEach(key => {
-      if (this.UserStandardForm.controls[key].value != null && this.UserStandardForm.controls[key].value != "" && this.UserStandardForm.controls[key].value != undefined && this.UserStandardForm.controls[key].value != NaN &&this.UserStandardForm.controls[key].value != "" && this.UserStandardForm.controls[key].value !='') {
+      if (this.UserStandardForm.controls[key].value != null && this.UserStandardForm.controls[key].value != "" && this.UserStandardForm.controls[key].value != undefined && !Number.isNaN(this.UserStandardForm.controls[key].value) &&this.UserStandardForm.controls[key].value != "" && this.UserStandardForm.controls[key].value !='') {
         var sname = key;
         //var sname= this.SLCPForm.controls[key].;
         var val = this.UserStandardForm.controls[key].value;
@@ -406,19 +412,19 @@ export class UserStandardsComponent implements OnInit {
     this.UserStandardForm.controls.StandardId.setValue(e.row.data.standardId);
     this.UserStandardForm.controls.AuditorTypeId.setValue(e.row.data.auditorTypeId);
     this.UserStandardForm.controls.CourseTypeId.setValue(e.row.data.courseTypeId);
-    if (e.row.data.courseDate != null && e.row.data.courseDate != undefined && e.row.data.courseDate != NaN && e.row.data.courseDate != "" && e.row.data.courseDate != '') {
+    if (e.row.data.courseDate != null && e.row.data.courseDate != undefined && !Number.isNaN(e.row.data.courseDate) && e.row.data.courseDate != "" && e.row.data.courseDate != '') {
       let req = new Date(this.datePipe.transform(e.row.data.courseDate, 'yyyy/MM/dd'))
 
       this.UserStandardForm.get('CourseDate').setValue(this.datePipe.transform(req, 'yyyy-MM-dd'))
     }
-    if (e.row.data.preValidDate != null && e.row.data.preValidDate != undefined && e.row.data.preValidDate != NaN && e.row.data.preValidDate != "" && e.row.data.preValidDate != '') {
+    if (e.row.data.preValidDate != null && e.row.data.preValidDate != undefined && !Number.isNaN(e.row.data.preValidDate) && e.row.data.preValidDate != "" && e.row.data.preValidDate != '') {
 
     let PreValid_Date = new Date(this.datePipe.transform(e.row.data.preValidDate, 'yyyy/MM/dd'))
 
     this.UserStandardForm.get('PreValidDate').setValue(this.datePipe.transform(PreValid_Date, 'yyyy-MM-dd'))
 
      }
-     if (e.row.data.validationDate != null && e.row.data.validationDate != undefined && e.row.data.validationDate != NaN && e.row.data.validationDate != "" && e.row.data.validationDate != '') {
+     if (e.row.data.validationDate != null && e.row.data.validationDate != undefined && !Number.isNaN(e.row.data.validationDate) && e.row.data.validationDate != "" && e.row.data.validationDate != '') {
 
      let Validation_Date = new Date(this.datePipe.transform(e.row.data.validationDate, 'yyyy/MM/dd'))
 

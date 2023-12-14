@@ -34,5 +34,7 @@ namespace Ozone.Application.Interfaces
 
         Task<List<SPAuditorDetailModel>> AuditorReportsDetail(IDictionary<string, string> keyValuePairs);
         Task<List<CertifiedClientModel>> GetScheduleOfAuditWithWindowPeriod(IDictionary<string, string> keyValuePairs);
+
+        Task<AuditReportMSModel> AuditNCS(int id);
     }
 }

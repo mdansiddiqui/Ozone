@@ -12,15 +12,12 @@
   <dxi-column dataField="avgTAT_4" caption="TAT (Resubmit to Approved)" dataType="string"></dxi-column>
   <dxi-column dataField="avgTAT_5" caption="Average TAT (Submit QC to Approved)"  dataType="string"></dxi-column>
   <dxi-column type="buttons" caption="Action">
-    <dxi-button class="cursor-point" icon="fas fa-eye text-secondary" hint="View Report Remarks History" [onClick]="viewHistoryReport" >
-    </dxi-button>
-
-
-
-
+    <dxi-button class="cursor-point" icon="fas fa-eye text-secondary" hint="View Report Remarks History" [onClick]="viewHistoryReport" > </dxi-button>
+   
   </dxi-column>
 
 </dx-data-grid>
+
 <form #resetPasswordForm="ngForm">
   <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayHistoryPopup}">
       <div class="history-modal-dialog" role="document">
@@ -63,3 +60,23 @@
       </div>
   </div>
 </form>
+
+
+<form #nvsForm="ngForm">
+    <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayNCSPopup}">
+        <div class="history-modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header my-center">
+                    <h4 class="">NCS</h4>
+                </div>
+               
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" (click)="closeNCSPopup()">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+  </form>
+  

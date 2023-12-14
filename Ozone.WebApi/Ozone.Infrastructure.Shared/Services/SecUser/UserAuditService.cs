@@ -128,7 +128,7 @@ namespace Ozone.Infrastructure.Shared.Services
             return list.Skip((page - 1) * pageSize).Take(pageSize).ToList();
         }
         public async Task<GetPagedUserAuditModel> GetPagedUserAuditResponse(PagedResponseModel model)
-        {
+         {
             try
             {
 
@@ -177,7 +177,8 @@ namespace Ozone.Infrastructure.Shared.Services
 
                 }
                 //UserStdList.AddRange(_mapper.Map<List<UserAuditModel>>(clientAuditsList));
-                result.UserAuditModel = GetPage(UserStdList, model.Page, model.PageSize);
+                result.UserAuditModel =UserStdList;
+                //result.UserAuditModel = GetPage(UserStdList, model.Page, model.PageSize);
                 result.TotalCount = UserStdList.Count();
                 return result;
             }

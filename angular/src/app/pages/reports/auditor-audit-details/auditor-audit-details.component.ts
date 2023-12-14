@@ -118,7 +118,7 @@ export class AuditorAuditDetailsComponent implements AfterViewInit {
     this.delete = this.delete.bind(this);
     this.Downloadfile = this.Downloadfile.bind(this);
     this.viewHistoryReport = this.viewHistoryReport.bind(this);
-
+    this.viewNCS=this.viewNCS.bind(this);
     // this.ViewHistory=this.ViewHistory.bind(this);
 
     // this.editButton=this.editButton(this);
@@ -175,6 +175,7 @@ export class AuditorAuditDetailsComponent implements AfterViewInit {
   //    EmailForgotPassword: new FormControl(''),
   //   })
   displayHistoryPopup = "none";
+  displayNCSPopup = "none";
   viewHistoryReport(e) {
     console.log("Mission completed");
     //  this.userId=0;
@@ -192,10 +193,41 @@ export class AuditorAuditDetailsComponent implements AfterViewInit {
 
     //this.router.navigateByUrl('/app/pages/stock-management/library?'+this.id);
   }
+  
+
   closeHistoryPopup() {
     this.displayHistoryPopup = "none";
   }
+
+
+
+
   displayStyle = "none";
+
+
+  viewNCS(e) {
+
+    debugger
+    //console.log("Mission completed");
+    //  this.userId=0;
+    // this.userId=e.row.data.id;
+    // this.userdata=e.row.data;
+    // this.ResetPasswordForm.get('EmailForgotPassword').setValue(e.row.data.emailForgotPassword);
+    // this.ResetPasswordForm.get('EmailForgotPassword').disable();
+    this.displayNCSPopup = "block";
+
+    this.auditorService.AuditNCS(e.row.data.id).subscribe((Response)=>{
+     console.log("ncs" +Response)
+    // this.viewHistoryReportData = Response
+
+     })
+
+    //this.router.navigateByUrl('/app/pages/stock-management/library?'+this.id);
+  }
+  closeNCSPopup() {
+    this.displayHistoryPopup = "none";
+  }
+
   addComments(e) {
     e.row.data;
 

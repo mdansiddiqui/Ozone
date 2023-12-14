@@ -121,6 +121,17 @@ export const API_BASE_URL = new InjectionToken<string>('API_BASE_URL');
 
       }
 
+      AuditNCS(id): Observable<any> {
+debugger
+        let headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Authorization' : 'Bearer ' + JSON.parse(localStorage.getItem('token')),
+        });
+        let options = { headers: headers };
+        return this.http.get<any>(`${environment.apiUrl}/api/AuditorReports/AuditNCS?id=${id}` , options);
+
+      }
+      
       GetCertifiedClientReport(values: any):Observable<any>
       {
         ;debugger

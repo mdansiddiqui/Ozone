@@ -147,6 +147,7 @@ projectListData(PId:number)
   this.pagedDto.userId = parseInt(localStorage.getItem('userId'));
   this.pagedDto.organizationId = parseInt( localStorage.getItem('organizationId'));
 
+  alert("Home 150" + PId);
   this._DashboardService.GetAllProjects(PId,this.pagedDto).subscribe((Response) => {
               
   debugger
@@ -172,7 +173,7 @@ projectListData(PId:number)
     console.log(e.data.id)
   
     this.pagedDto.organizationId = parseInt( localStorage.getItem('organizationId'));
-
+    alert("Home 176" + e.data.id);
     this._DashboardService.GetAllProjects( e.data.id,this.pagedDto).subscribe((Response) => {
                 
     debugger

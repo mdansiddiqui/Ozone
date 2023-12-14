@@ -1569,9 +1569,11 @@ namespace Ozone.Infrastructure.Shared.Services
 
                 var IntimationdateSurv_1 = tWindowperiod.Where(x => x.IntimationdateSurv_1 < DateTime.Now.AddDays(8)).ToList();
                 var Windowperiod_start_Surv_1 = tWindowperiod.Where(x => x.Windowperiod_start_Surv_1 < DateTime.Now.AddDays(8)).ToList();
+                var Windowperiod_Intimation_FUP_1 = tWindowperiod.Where(x => x.Windowperiod_Start_FUP_1 < DateTime.Now.AddDays(73)).ToList();
                 var Windowperiod_Start_FUP_1 = tWindowperiod.Where(x => x.Windowperiod_Start_FUP_1 < DateTime.Now.AddDays(8)).ToList();
                 var IntimationdateSurv_2 = tWindowperiod.Where(x =>  x.IntimationdateSurv_2 < DateTime.Now.AddDays(8)).ToList();
                 var Windowperiod_start_Surv_2 = tWindowperiod.Where(x => x.Windowperiod_start_Surv_2 < DateTime.Now.AddDays(8)).ToList();
+                var Windowperiod_Intimation_FUP_2 = tWindowperiod.Where(x => x.Windowperiod_Sart_FUP_2 < DateTime.Now.AddDays(73)).ToList();
                 var Windowperiod_Sart_FUP_2 = tWindowperiod.Where(x => x.Windowperiod_Sart_FUP_2 < DateTime.Now.AddDays(8)).ToList();
                 var Recertification_Windowperiod_start_Surv_2 = tWindowperiod.Where(x =>  x.Recertification_Windowperiod_start_Surv_2 < DateTime.Now.AddDays(8)).ToList();
                 var Followup_Recert_Start = tWindowperiod.Where(x => x.Followup_Recert_Start < DateTime.Now.AddDays(8)).ToList();
@@ -1634,6 +1636,23 @@ namespace Ozone.Infrastructure.Shared.Services
 
 
                     var windowResult = _dbContext.WindowPeriodIntimation.Where(x => x.ProjectId == FUP1.ProjectId && x.WindowperiodStartFup1 == true && x.IsDeleted == false).ToList();
+
+
+                    if (windowResult.Count == 0)
+                    {
+                        FUP_1.Add(FUP1);
+                        //CertifiedClientModel.AddRange(Windowperiod_Start_FUP_1);
+                    }
+
+
+                }
+
+                List<CertifiedClientModel> Intimation_FUP_1 = new List<CertifiedClientModel>();
+                foreach (var Intimation_FUP1 in Windowperiod_Intimation_FUP_1)
+                {
+
+
+                    var windowResult = _dbContext.WindowPeriodIntimation.Where(x => x.ProjectId == Intimation_FUP1.ProjectId && x.in == true && x.IsDeleted == false).ToList();
 
 
                     if (windowResult.Count == 0)
@@ -1756,43 +1775,6 @@ namespace Ozone.Infrastructure.Shared.Services
                 windiwPeriod.Count = intomationServ1.Count();
                 windowPeriodList.Add(windiwPeriod);
 
-
-                windiwPeriod = new windiwPeriodModel();
-                windiwPeriod.Id = 2;
-                windiwPeriod.Name = "Window Period Surv_1";
-                windiwPeriod.Count = WindowperiodstartSurv1.Count();
-                windowPeriodList.Add(windiwPeriod);
-
-                windiwPeriod = new windiwPeriodModel();
-                windiwPeriod.Id = 3;
-                windiwPeriod.Name = "Follow Up Review_1";
-                windiwPeriod.Count = FUP_1.Count();
-                windowPeriodList.Add(windiwPeriod);
-
-                windiwPeriod = new windiwPeriodModel();
-                windiwPeriod.Id = 4;
-                windiwPeriod.Name = "Window Period Surv_2";
-                windiwPeriod.Count = WindowperiodstartSurv2.Count();
-                windowPeriodList.Add(windiwPeriod);
-
-                windiwPeriod = new windiwPeriodModel();
-                windiwPeriod.Id = 5;
-                windiwPeriod.Name = "Follow Up Review_2";
-                windiwPeriod.Count = WindowperiodSartFUP2.Count();
-                windowPeriodList.Add(windiwPeriod);
-
-                windiwPeriod = new windiwPeriodModel();
-                windiwPeriod.Id = 6;
-                windiwPeriod.Name = "Window Period Recertification";
-                windiwPeriod.Count = RecertificationServ2.Count();
-                windowPeriodList.Add(windiwPeriod);
-
-                windiwPeriod = new windiwPeriodModel();
-                windiwPeriod.Id = 7;
-                windiwPeriod.Name = "Followup_Recert_Start";
-                windiwPeriod.Count = FollowupRecertStart.Count();
-                windowPeriodList.Add(windiwPeriod);
-
                 windiwPeriod = new windiwPeriodModel();
                 windiwPeriod.Id = 8;
                 windiwPeriod.Name = "Intimation Surv_2";
@@ -1804,6 +1786,50 @@ namespace Ozone.Infrastructure.Shared.Services
                 windiwPeriod.Name = "RecertifiCation_Intimation";
                 windiwPeriod.Count = RecertifiCationIntimationDate.Count();
                 windowPeriodList.Add(windiwPeriod);
+
+                windiwPeriod = new windiwPeriodModel();
+                windiwPeriod.Id = 2;
+                windiwPeriod.Name = "Window Period Surv_1";
+                windiwPeriod.Count = WindowperiodstartSurv1.Count();
+                windowPeriodList.Add(windiwPeriod);
+
+                windiwPeriod = new windiwPeriodModel();
+                windiwPeriod.Id = 4;
+                windiwPeriod.Name = "Window Period Surv_2";
+                windiwPeriod.Count = WindowperiodstartSurv2.Count();
+                windowPeriodList.Add(windiwPeriod);
+
+                windiwPeriod = new windiwPeriodModel();
+                windiwPeriod.Id = 6;
+                windiwPeriod.Name = "Window Period Recertification";
+                windiwPeriod.Count = RecertificationServ2.Count();
+                windowPeriodList.Add(windiwPeriod);
+
+                windiwPeriod = new windiwPeriodModel();
+                windiwPeriod.Id = 3;
+                windiwPeriod.Name = "Follow Up Review_1";
+                windiwPeriod.Count = FUP_1.Count();
+                windowPeriodList.Add(windiwPeriod);
+
+               
+
+                windiwPeriod = new windiwPeriodModel();
+                windiwPeriod.Id = 5;
+                windiwPeriod.Name = "Follow Up Review_2";
+                windiwPeriod.Count = WindowperiodSartFUP2.Count();
+                windowPeriodList.Add(windiwPeriod);
+
+               
+
+                windiwPeriod = new windiwPeriodModel();
+                windiwPeriod.Id = 7;
+                windiwPeriod.Name = "Followup_Recert_Start";
+                windiwPeriod.Count = FollowupRecertStart.Count();
+                windowPeriodList.Add(windiwPeriod);
+
+              
+
+              
 
                 result.WindiwPeriodModel = windowPeriodList;
                 //PS.Count
@@ -2190,12 +2216,12 @@ namespace Ozone.Infrastructure.Shared.Services
 
 
 
-            var DocumentList = await Task.Run(() => _dbContext.AuditManagerDocuments.Include(x => x.AuditDocumentType).Include(x => x.ClientAuditVisit).Include(x => x.ClientAuditVisit.VisitLevel).Where(x => x.IsDeleted == false && x.ClientAuditVisitId == clientauditvisitId).ToList());
+            var DocumentList = await Task.Run(() => _dbContext.AuditManagerDocuments.Include(x => x.AuditDocumentType).Include(x => x.ClientAuditVisit).Include(x => x.ClientAuditVisit.VisitLevel).Where(x => x.IsDeleted == false && x.ClientAuditVisitId == clientauditvisitId && x.Deactive == false).ToList());
 
             var visit = await Task.Run(() => _dbContext.ClientAuditVisit.Where(x => x.IsDeleted == false && x.Id == clientauditvisitId).FirstOrDefaultAsync());
             if (visit.VisitLevelId != 7)
             {
-                var stage1 = await Task.Run(() => _dbContext.AuditManagerDocuments.Include(x => x.AuditDocumentType).Include(x => x.ClientAuditVisit).Include(x => x.ClientAuditVisit.VisitLevel).Where(x => x.IsDeleted == false && x.ClientAuditVisit.VisitLevelId == 7 && x.ClientAuditVisit.ProjectId == visit.ProjectId).ToList());
+                var stage1 = await Task.Run(() => _dbContext.AuditManagerDocuments.Include(x => x.AuditDocumentType).Include(x => x.ClientAuditVisit).Include(x => x.ClientAuditVisit.VisitLevel).Where(x => x.IsDeleted == false && x.ClientAuditVisit.VisitLevelId == 7 && x.ClientAuditVisit.ProjectId == visit.ProjectId && x.Deactive==false).ToList());
                 if (stage1.Count > 0)
                 {
                     DocumentList.AddRange(stage1);

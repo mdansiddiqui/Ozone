@@ -78,22 +78,22 @@
                                 
                             </div>
                         </div> -->
-                        <div class="container-fluid mb-2">
-                            <div class="row mx-2">
-                                <div class="col-md-4" style="font-size:large;">
+                            <div class="container-fluid mb-2">
+                                <div class="row mx-2">
+                                    <div class="col-md-4" style="font-size:large;">
 
-                                    <label class="mb-0" for="Code" style="color: black;">
-                                        {{ "User Name : "}} 
-                                        <u><b style="color:blue;">{{UserName}}</b></u>
-                                    </label>
-                                   
-                                    
-                                    
+                                        <label class="mb-0" for="Code" style="color: black;">
+                                            {{ "User Name : "}}
+                                            <u><b style="color:blue;">{{UserName}}</b></u>
+                                        </label>
+
+
+
+                                    </div>
+
                                 </div>
-
                             </div>
-                        </div>
-                        <br>
+                            <br>
                             <div class="container-fluid mb-2">
                                 <div class="row mx-2">
                                     <div class="col-md-4">
@@ -107,7 +107,8 @@
                                             <option *ngFor="let item of StandardList" [value]="item.id">
                                                 {{ item.name }}
                                             </option>
-                                        </select><div *ngIf="submitted && f.StandardId.errors" class="invalid-feedback">
+                                        </select>
+                                        <div *ngIf="submitted && f.StandardId.errors" class="invalid-feedback">
                                             <div *ngIf="f.StandardId.errors.required">Standard is required</div>
                                         </div>
 
@@ -132,9 +133,10 @@
                                         </label>
 
                                         <select formControlName="EacodeId"
-                                            class="form-control form-control-sm col-md-12" id="EacodeId"autocomplete="off" (change)="loadNaceCode($event.target.value)">
+                                            class="form-control form-control-sm col-md-12" id="EacodeId"
+                                            autocomplete="off" (change)="loadNaceCode($event.target.value)">
                                             <option *ngFor="let item of EACodeList" [value]="item.id">
-                                               {{item.code}} {{ item.name }}
+                                                {{item.code}} {{ item.name }}
                                             </option>
                                         </select>
                                     </div>
@@ -146,7 +148,7 @@
                                         <select formControlName="NaceCodeId"
                                             class="form-control form-control-sm col-md-12" id="NaceCodeId">
                                             <option *ngFor="let item of NaceCodeList" [value]="item.id">
-                                             {{item.code}}   {{ item.description }}
+                                                {{item.code}} {{ item.description }}
                                             </option>
                                         </select>
                                     </div>
@@ -194,17 +196,17 @@
 
                                 <div class="row  mt-1 mx-2">
                                     <div class="col-md-4">
-                                    <label class="mb-0" for="AuditLevel">
-                                        {{ "Audit Level" }}
-                                    </label>
+                                        <label class="mb-0" for="AuditLevel">
+                                            {{ "Audit Level" }}
+                                        </label>
 
-                                   
-                                        <input type="text"  id="AuditLevel" formControlName="AuditLevel"
-                                        class="form-control form-control-sm col-md-12" id="AuditLevel"/>
+
+                                        <input type="text" id="AuditLevel" formControlName="AuditLevel"
+                                            class="form-control form-control-sm col-md-12" id="AuditLevel" />
                                     </div>
                                     <div class="col-md-4">
                                     </div>
-                                        <div class="col-md-4"> </div>
+                                    <div class="col-md-4"> </div>
                                 </div>
                                 <div class="row  mt-1 mx-2">
                                     <div class="col-md-12">
@@ -237,16 +239,27 @@
 
 
 
-                            <dx-data-grid id="dataGrid" [rowAlternationEnabled]="true" [showRowLines]="true"
-                                [showColumnLines]="true" [allowColumnReordering]="true" [dataSource]="UserAuditList | paginate
-                        : {
-                            id: 'server',
-                            itemsPerPage: this.pagedDto.pageSize,
-                            currentPage: this.pagedDto.page,
-                            totalItems: this.totalCount
-                          }" keyExpr="id">
-                                <dxo-scrolling mode="virtual"></dxo-scrolling>
+                            <dx-data-grid id="gridContainer"  [showBorders]="true" [rowAlternationEnabled]="true"
+                             [showRowLines]="true" [columnAutoWidth]="true" [showColumnLines]="true"
+                                [allowColumnReordering]="true" [dataSource]="UserAuditList" keyExpr="id"
+                                (onExporting)="onExporting($event)">
 
+                                <dxo-paging [pageSize]="10"></dxo-paging>
+                                <dxo-pager [showPageSizeSelector]="true"
+                                    [allowedPageSizes]="[10, 25, 50, 100]"></dxo-pager>
+
+                             
+                                <dxo-search-panel class="mt-15 mb-3 my-3" [visible]="true" [width]="240"
+                                    placeholder="Search...">
+                                </dxo-search-panel>
+
+                                <dxo-grouping [autoExpandAll]="true"></dxo-grouping>
+                                <dxo-selection mode="multiple"></dxo-selection>
+
+
+                                
+             
+                           <dxo-scrolling columnRenderingMode="virtual"></dxo-scrolling>
                                 <!-- <dxo-search-panel [visible]="true" [width]="240" placeholder="Search...">
                         </dxo-search-panel> -->
                                 <dxi-column dataField="organization" caption="Organization"></dxi-column>
@@ -259,17 +272,24 @@
                                 <dxi-column dataField="certificationBodyName" caption="Certification Body"></dxi-column>
 
                                 <dxi-column dataField="auditTypeName" caption="Audit Type"></dxi-column>
-                                <dxi-column   dataField="auditLevel"  
-                                caption="Audit Level" ></dxi-column>
+                                <dxi-column dataField="auditLevel" caption="Audit Level"></dxi-column>
                                 <dxi-column type="buttons" caption="Action">
-                                    <dxi-button icon="edit"   hint="Edit" [onClick]="edit" [visible]="editViaible"></dxi-button>
+                                    <dxi-button icon="edit" hint="Edit" [onClick]="edit"
+                                        [visible]="editViaible"></dxi-button>
 
-                                    <dxi-button icon="deleterow"  hint="Delete" [onClick]="delete" [visible]="editViaible">
+                                    <dxi-button icon="deleterow" hint="Delete" [onClick]="delete"
+                                        [visible]="editViaible">
                                     </dxi-button>
 
                                 </dxi-column>
 
 
+                               
+
+                                <dxo-summary>
+                                    <dxi-total-item column="organization" summaryType="count"> </dxi-total-item>
+                                </dxo-summary>
+                                <dxo-export [enabled]="true" [allowExportSelectedData]="true"></dxo-export>
 
 
 

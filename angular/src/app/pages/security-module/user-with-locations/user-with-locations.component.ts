@@ -264,7 +264,7 @@ export class UserWithLocationsComponent implements OnInit {
           
         
           //this.SecUserForm.get('Id').setValue(this.UserMaker.id);
-          if(this.UserMaker.parentAgencyId != null && this.UserMaker.parentAgencyId != undefined && this.UserMaker.parentAgencyId != NaN)
+          if(this.UserMaker.parentAgencyId != null && this.UserMaker.parentAgencyId != undefined && !Number.isNaN(this.UserMaker.parentAgencyId))
           {
             this.SecUserForm.get('ParentAgencyId').setValue(this.UserMaker.parentAgencyId);
             this.loadAllUsers(this.UserMaker.parentAgencyId);
@@ -331,17 +331,17 @@ export class UserWithLocationsComponent implements OnInit {
             this.isResetPassword = false;
           }
 
-          if(data.confidentialityPath!=null && data.confidentialityPath!=undefined && data.confidentialityPath!=NaN && data.confidentialityPath!="" && data.confidentialityPath!='')
+          if(data.confidentialityPath!=null && data.confidentialityPath!=undefined && !Number.isNaN(data.confidentialityPath) && data.confidentialityPath!="" && data.confidentialityPath!='')
           {
             //this.SecUserForm.get('ConfidentialityFile').setValue(data.confidentialityPath)
             this.Confidentialitypath=true;
           }
-          if(data.photoPath!=null && data.photoPath!=undefined && data.photoPath!=NaN && data.photoPath!="" && data.photoPath!='')
+          if(data.photoPath!=null && data.photoPath!=undefined && !Number.isNaN(data.photoPath) && data.photoPath!="" && data.photoPath!='')
           {
           
             this.PhotoPath=true;
           }
-          if(data.contractPath!=null && data.contractPath!=undefined && data.contractPath!=NaN && data.contractPath!="" && data.contractPath!='')
+          if(data.contractPath!=null && data.contractPath!=undefined && !Number.isNaN(data.contractPath) && data.contractPath!="" && data.contractPath!='')
           {
           
             this.ContractPath=true;

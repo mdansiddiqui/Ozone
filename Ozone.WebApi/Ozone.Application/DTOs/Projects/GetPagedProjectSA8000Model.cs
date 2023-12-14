@@ -15,6 +15,8 @@ namespace Ozone.Application.DTOs
         public ClientProjectModel ClientProjectModel { get; set; }
         public ProjectSA8000Model ProjectSA8000Model { get; set; }
         public ClientSitesModel ClientSitesModel { get; set; }
+        public List<ConsultantModel> ConsultantModels { get; set; }
+        
     }
 
     public class GetPagedProjectHiggModel

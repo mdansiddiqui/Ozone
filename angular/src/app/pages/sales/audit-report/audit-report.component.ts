@@ -408,7 +408,7 @@ Downloadfile(e): void {
   }
   else
    {
-    if (this.fileToUpload != null && this.fileToUpload != "" && this.fileToUpload != undefined && this.fileToUpload != undefined && this.fileToUpload != NaN) {
+    if (this.fileToUpload != null && this.fileToUpload != "" && this.fileToUpload != undefined && this.fileToUpload != undefined && !Number.isNaN(this.fileToUpload)) {
 
      
     }

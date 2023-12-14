@@ -152,7 +152,7 @@ namespace Ozone.Infrastructure.Shared.Services
 
                 // var list = await _secuserRepository.GetPagedSecUserReponseAsync(model);
                // userList = _mapper.Map<List<SecUserModel>>(list);
-                result.SecUserModel = GetPage(userList, model.Page, model.PageSize);
+                result.SecUserModel = GetPage(userList.OrderByDescending(x=>x.IsActive).ToList(), model.Page, model.PageSize);
                 result.TotalCount = userList.Count();
                 return result;
             }

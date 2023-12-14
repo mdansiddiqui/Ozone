@@ -350,7 +350,7 @@
                         class="form-control form-control-sm col-md-12" formControlName="RiskName"id="RiskName" disabled/>
 
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4" *ngIf="!Consultancy">
                         <label class="mb-0" for="ConsultantId">
                             {{ "Consultant" }}
                         </label>
@@ -360,6 +360,14 @@
                                 {{ item.name }}
                             </option>
                         </select>
+                    </div>
+                    <div class="col-md-4" *ngIf="Consultancy">
+                        <label class="mb-0" for="ConsultantId">
+                            {{ "Consultant" }}
+                        </label>
+                        <input type="text"
+                        class="form-control form-control-sm col-md-12" formControlName="ConsultancyName"id="ConsultancyName" disabled/>
+
                     </div>
 
                 </div>

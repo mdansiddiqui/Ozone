@@ -106,6 +106,7 @@ export class ProjectSA8000Component implements OnInit {
     NaceCodeName: new FormControl(''),
     ProjectRemarks: new FormControl(''),
     VisitStatusId: new FormControl(''),
+    ConsultancyName: new FormControl(''),
 
   })
 
@@ -160,6 +161,9 @@ export class ProjectSA8000Component implements OnInit {
   public ApplicationfileName: string;
   public ContarctFileName: string;
   public ProjectStatus: string;
+  public ConsultantId: number;
+  
+  public Consultancy:boolean=false;
   //public CompletedSetupList = [];
   //public MethodologyList = [];
   public ConsultantList = [];
@@ -252,7 +256,7 @@ RoleId:number
     this.loadSurveillanceVisitFrequency()
     this.loadExpences()
     this.loadAllApprovalStatus();
-    this.loadConsultant();
+    
     this.loadClientSites();
 
   }
@@ -261,6 +265,9 @@ RoleId:number
     if (this.ProjectId > 0) {
       this.editSA8000User();
       this.UpdateProject();
+    }
+    else{
+    this.loadConsultant();
     }
 
 
@@ -294,18 +301,19 @@ RoleId:number
 
 
       this._SA8000Service.GetProjectSA8000BYId(this.ProjectId).subscribe(data => {
-        var ProjectSaData = data.projectSA8000Model;
+        debugger
+        var ProjectSaDataSa = data.projectSA8000Model;
       debugger
-      console.log("Change Request    " +ProjectSaData);
+      console.log("Change Request    " +ProjectSaDataSa);
 
-          this.SAClientChangeRequest.controls.DurationStage2.setValue(ProjectSaData.durationStage2);
-          this.SAClientChangeRequest.controls.NoOfSurveillanceVisits.setValue(ProjectSaData.noOfSurveillanceVisits)
-          this.SAClientChangeRequest.controls.Scope.setValue(ProjectSaData.scope);
-           this.SAClientChangeRequest.controls.SurveillanceMethodId.setValue(ProjectSaData.surveillanceMethodId)
-          this.SAClientChangeRequest.controls.SurveillanceVisitFrequencyId.setValue(ProjectSaData.surveillanceVisitFrequencyId);
-         this.SAClientChangeRequest.controls.Survfee.setValue(ProjectSaData.survfee);
-         this.SAClientChangeRequest.controls.Assessmentfee.setValue(ProjectSaData.assessmentfee)
-         this.SAClientChangeRequest.controls.DurationSurvVisit.setValue(ProjectSaData.durationSurvVisit)
+          this.SAClientChangeRequest.controls.DurationStage2.setValue(ProjectSaDataSa.durationStage2);
+          this.SAClientChangeRequest.controls.NoOfSurveillanceVisits.setValue(ProjectSaDataSa.noOfSurveillanceVisits)
+          this.SAClientChangeRequest.controls.Scope.setValue(ProjectSaDataSa.scope);
+           this.SAClientChangeRequest.controls.SurveillanceMethodId.setValue(ProjectSaDataSa.surveillanceMethodId)
+          this.SAClientChangeRequest.controls.SurveillanceVisitFrequencyId.setValue(ProjectSaDataSa.surveillanceVisitFrequencyId);
+         this.SAClientChangeRequest.controls.Survfee.setValue(ProjectSaDataSa.survfee);
+         this.SAClientChangeRequest.controls.Assessmentfee.setValue(ProjectSaDataSa.assessmentfee)
+         this.SAClientChangeRequest.controls.DurationSurvVisit.setValue(ProjectSaDataSa.durationSurvVisit)
 
 
       })
@@ -722,6 +730,7 @@ RoleId:number
   UpdateProject() {
 
     this._SA8000Service.GetProjectSA8000BYId(this.ProjectId).subscribe(data => {
+      debugger
       console.log('Testing Sa800')
       console.log('Testing Sa800')
       this.Registration = data.clientProjectModel.registration_no
@@ -731,6 +740,7 @@ RoleId:number
       var ProjectSaData = data.projectSA8000Model;
       this.projectinfo = data.clientSitesModel;
       var ClientProjectMod = data.clientProjectModel;
+      this.ConsultantId=ProjectSaData.consultantId;
       //this.UserAuditList= data
       this.ApplicationfileName=ProjectSaData.applicationFormPath;
     this.ContarctFileName=ClientProjectMod.contractFilePath;
@@ -776,7 +786,32 @@ RoleId:number
       this.SAForm.controls.AccreditationId.setValue(ProjectSaData.accreditationId);
       this.SAForm.controls.Applicatonfee.setValue(ProjectSaData.applicatonfee);
       this.SAForm.controls.Assessmentfee.setValue(ProjectSaData.assessmentfee)
-      this.SAForm.controls.ConsultantId.setValue(ProjectSaData.consultantId)
+      //this.SAForm.controls.ConsultantId.setValue(ProjectSaData.consultantId)
+
+      this.ConsultantList =[];
+      debugger
+      //this._SA8000Service.GetAllConsultantList(ClientProjectMod.agencyId).subscribe((Response) => {
+        this.ConsultantList = data.consultantModels
+        this.SAForm.controls.ConsultantId.setValue(ProjectSaData.consultantId)
+        this.SAForm.controls.ConsultancyName.setValue(ProjectSaData.consultantName)
+        // this.Consultancy=true;
+        if(ClientProjectMod.approvalStatusId != 5 && ClientProjectMod.approvalStatusId != 6)
+        {
+          this.Consultancy=true;
+
+        }
+        var RoleId = parseInt(localStorage.getItem('roleId'));
+        if(RoleId ==2 || RoleId== 21 || RoleId==12)
+        {
+          this.Consultancy=true;
+        }
+        
+        
+        //   if(this.ProjectId>0)
+        //   {
+        //   this.UpdateProject();
+        // }
+      //})
 
       this.SAForm.controls.DurationStage1.setValue(ProjectSaData.durationStage1);
       this.SAForm.controls.DurationStage2.setValue(ProjectSaData.durationStage2);
@@ -967,14 +1002,7 @@ RoleId:number
       //      this.savedownload=true;
       //    }
       this.loadClientSites();
-      this.ConsultantList = null;
-      this._SA8000Service.GetAllConsultantList(ClientProjectMod.agencyId).subscribe((Response) => {
-        this.ConsultantList = Response
-        //   if(this.ProjectId>0)
-        //   {
-        //   this.UpdateProject();
-        // }
-      })
+     
       this._ClientAuditVisitService.GetProjectStatus(this.ProjectId).subscribe((Response) => {
         if(Response!="0"){
            this.ProjectStatus= Response;
@@ -983,10 +1011,12 @@ RoleId:number
              //alert(Response);
            }
          });
+
+         debugger
       //this.SAForm.controls.ApprovalStatusId.setValue(ProjectSaData.approvalStatusId);
 
     })
-
+   debugger
   }
   loadNaceCode(eacodeId): void {
 
@@ -1074,10 +1104,18 @@ RoleId:number
     })
   }
   loadConsultant(): void {
-
+    debugger
     this.OrganizationId = parseInt(localStorage.getItem('organizationId'));
     this._SA8000Service.GetAllConsultantList(this.OrganizationId).subscribe((Response) => {
-      this.ConsultantList = Response
+      //this.ConsultantList = Response
+      if(this.ConsultantId > 0){
+      this.SAForm.controls.ConsultantId.setValue(this.ConsultantId)
+      }
+      else
+      {
+        this.ConsultantList = Response
+      
+      }
       //   if(this.ProjectId>0)
       //   {
       //   this.UpdateProject();
@@ -1494,7 +1532,7 @@ RoleId:number
 
     var documentDefinition = {
       info: {
-        title: 'SLCP Proposal Weaving' + "/" + this.clientinfo.name,
+        title: 'SA8000:2014 Proposal Weaving' + "/" + this.clientinfo.name,
 
       },
       // pageMargins: [ 10, 70, 10, 20 ],
@@ -1711,7 +1749,7 @@ RoleId:number
         },
 
         {
-          text: 'SA8000:2014',
+          text: 'SA8000:2014 VERIFICATION',
           alignment: "left",
           fontSize: 14,
           //decoration: "underline" ,
@@ -2335,7 +2373,7 @@ RoleId:number
           columns: [
 
             {
-              text: 'Ozone Group',
+              text: 'Ozone Sustainability',
               alignment: "left",
               fontSize: 11,
               //decoration: "underline" ,
@@ -2361,7 +2399,7 @@ RoleId:number
           columns: [
 
             {
-              text: 'Zahid Iqbal' + '\n' + 'Operation Head' + '\n' + 'Cell #: +92-3333-2179917',
+              text: 'Office Coordinator',
               alignment: "left",
               fontSize: 10,
               //decoration: "underline" ,

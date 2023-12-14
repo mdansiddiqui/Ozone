@@ -192,5 +192,20 @@ namespace Ozone.WebApi.Controllers.AllReports
 
             return new JsonResult(list);
         }
+
+
+
+        [Route("AuditNCS")]
+        [HttpGet]
+        [Authorize]
+
+        public async Task<IActionResult> AuditNCS(int id)
+        {
+
+
+            var list = await _auditorReportsService.AuditNCS(id);
+
+            return new JsonResult(list);
+        }
     }
 }

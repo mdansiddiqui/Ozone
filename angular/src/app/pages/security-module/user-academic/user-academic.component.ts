@@ -178,6 +178,13 @@ this.fileToUpload= <File>e?.target?.files[0];
 
   get f() { return this.UserAcademicForm.controls; }
   editVsible(e) {
+
+    var RoleId =  parseInt( localStorage.getItem('roleId'));
+    if(RoleId==2)
+    {
+      return !e.row.isEditing;
+    }
+
     debugger
     var organizationId =  parseInt( localStorage.getItem('organizationId'));
     // console.log(roleId)
@@ -212,7 +219,7 @@ this.fileToUpload= <File>e?.target?.files[0];
     foData.append("Id",this.id.toString());
   }
   else {
-    if (this.fileToUpload != null && this.fileToUpload != "" && this.fileToUpload != undefined && this.fileToUpload != undefined && this.fileToUpload != NaN) {
+    if (this.fileToUpload != null && this.fileToUpload != "" && this.fileToUpload != undefined && this.fileToUpload != undefined ) {
 
 
     }
@@ -228,7 +235,7 @@ this.fileToUpload= <File>e?.target?.files[0];
   foData.append('UserId',this.Userid.toString());
 
   Object.keys(this.UserAcademicForm.controls).forEach(key => {
-  if (this.UserAcademicForm.controls[key].value != null && this.UserAcademicForm.controls[key].value != "" && this.UserAcademicForm.controls[key].value != undefined && this.UserAcademicForm.controls[key].value != NaN &&this.UserAcademicForm.controls[key].value != "" && this.UserAcademicForm.controls[key].value !='') {
+  if (this.UserAcademicForm.controls[key].value != null && this.UserAcademicForm.controls[key].value != "" && this.UserAcademicForm.controls[key].value != undefined && !Number.isNaN(this.UserAcademicForm.controls[key].value) &&this.UserAcademicForm.controls[key].value != "" && this.UserAcademicForm.controls[key].value !='') {
     var sname = key;
     //var sname= this.SLCPForm.controls[key].;
     var val = this.UserAcademicForm.controls[key].value;
