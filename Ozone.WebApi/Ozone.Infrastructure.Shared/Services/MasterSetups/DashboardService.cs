@@ -220,7 +220,19 @@ namespace Ozone.Infrastructure.Shared.Services.MasterSetups
                     db.RecertificationIntimationDate = DateTime.Now;
 
                 }
-                    if (New == true)
+                else if (model.Type == "Intimation FU_1")
+                {
+                    db.WindowperiodIntimationFup1 = true;
+                    db.WindowperiodIntimationFup1Date = DateTime.Now;
+
+                }
+                else if (model.Type == "Intimation FU_2")
+                {
+                    db.WindowperiodIntimationFup2 = true;
+                    db.WindowperiodIntimationFup2Date = DateTime.Now;
+
+                }
+                if (New == true)
                     {
 
                         db.IsDeleted = false;

@@ -1652,12 +1652,28 @@ namespace Ozone.Infrastructure.Shared.Services
                 {
 
 
-                    var windowResult = _dbContext.WindowPeriodIntimation.Where(x => x.ProjectId == Intimation_FUP1.ProjectId && x.in == true && x.IsDeleted == false).ToList();
+                    var windowResult = _dbContext.WindowPeriodIntimation.Where(x => x.ProjectId == Intimation_FUP1.ProjectId && x.WindowperiodIntimationFup1 == true && x.IsDeleted == false).ToList();
 
 
                     if (windowResult.Count == 0)
                     {
-                        FUP_1.Add(FUP1);
+                        Intimation_FUP_1.Add(Intimation_FUP1);
+                        //CertifiedClientModel.AddRange(Windowperiod_Start_FUP_1);
+                    }
+
+
+                }
+                List<CertifiedClientModel> Intimation_FUP_2 = new List<CertifiedClientModel>();
+                foreach (var Intimation_FUP2 in Windowperiod_Intimation_FUP_2)
+                {
+
+
+                    var windowResult = _dbContext.WindowPeriodIntimation.Where(x => x.ProjectId == Intimation_FUP2.ProjectId && x.WindowperiodIntimationFup2 == true && x.IsDeleted == false).ToList();
+
+
+                    if (windowResult.Count == 0)
+                    {
+                        Intimation_FUP_2.Add(Intimation_FUP2);
                         //CertifiedClientModel.AddRange(Windowperiod_Start_FUP_1);
                     }
 
@@ -1761,6 +1777,8 @@ namespace Ozone.Infrastructure.Shared.Services
                 result.IntimationdateSurv_1 = intomationServ1;
                 result.Windowperiod_start_Surv_1 = WindowperiodstartSurv1;
                 result.Windowperiod_Start_FUP_1 = FUP_1;
+                result.Windowperiod_Intimation_FUP_1 = Intimation_FUP_1;
+                result.Windowperiod_Intimation_FUP_2 = Intimation_FUP_2;
                 result.Windowperiod_start_Surv_2 = WindowperiodstartSurv2;
                 result.Windowperiod_Sart_FUP_2 = WindowperiodSartFUP2;
                 result.Recertification_Windowperiod_start_Surv_2 = Recertification_Windowperiod_start_Surv_2;
@@ -1779,6 +1797,19 @@ namespace Ozone.Infrastructure.Shared.Services
                 windiwPeriod.Id = 8;
                 windiwPeriod.Name = "Intimation Surv_2";
                 windiwPeriod.Count = intomationServ2.Count();
+                windowPeriodList.Add(windiwPeriod);
+
+                windiwPeriod = new windiwPeriodModel();
+                windiwPeriod.Id = 10;
+                windiwPeriod.Name = "Intimation FU_1";
+                windiwPeriod.Count = Intimation_FUP_1.Count();
+                windowPeriodList.Add(windiwPeriod);
+
+
+                windiwPeriod = new windiwPeriodModel();
+                windiwPeriod.Id = 11;
+                windiwPeriod.Name = "Intimation FU_2";
+                windiwPeriod.Count = Intimation_FUP_2.Count();
                 windowPeriodList.Add(windiwPeriod);
 
                 windiwPeriod = new windiwPeriodModel();
@@ -1929,6 +1960,7 @@ namespace Ozone.Infrastructure.Shared.Services
                                 SHA.Windowperiod_start_Surv_1 = (!(dataReader["Windowperiod_start_Surv_1"] is DBNull)) ? Convert.ToDateTime(dataReader["Windowperiod_start_Surv_1"]) : (DateTime?)null;
                                 SHA.Windowperiod_end_Surv_1 = (!(dataReader["Windowperiod_end_Surv_1"] is DBNull)) ? Convert.ToDateTime(dataReader["Windowperiod_end_Surv_1"]) : (DateTime?)null;
                                 SHA.Surv_1_due = (!(dataReader["Surv_1_due"] is DBNull)) ? Convert.ToDateTime(dataReader["Surv_1_due"]) : (DateTime?)null;
+                                SHA.Windowperiod_FUP_1_Intimation = (!(dataReader["Windowperiod_FUP_1_Intimation"] is DBNull)) ? Convert.ToDateTime(dataReader["Windowperiod_FUP_1_Intimation"]) : (DateTime?)null;
                                 SHA.Windowperiod_Start_FUP_1 = (!(dataReader["Windowperiod_Sart_FUP_1"] is DBNull)) ? Convert.ToDateTime(dataReader["Windowperiod_Sart_FUP_1"]) : (DateTime?)null;
                                 SHA.Windowperiod_end_FUP_1 = (!(dataReader["Windowperiod_end_FUP_1"] is DBNull)) ? Convert.ToDateTime(dataReader["Windowperiod_end_FUP_1"]) : (DateTime?)null;
 
@@ -1937,6 +1969,7 @@ namespace Ozone.Infrastructure.Shared.Services
                                 SHA.Windowperiod_start_Surv_2 = (!(dataReader["Windowperiod_start_Surv_2"] is DBNull)) ? Convert.ToDateTime(dataReader["Windowperiod_start_Surv_2"]) : (DateTime?)null;
                                 SHA.Windowperiod_end_Surv_2 = (!(dataReader["Windowperiod_end_Surv_2"] is DBNull)) ? Convert.ToDateTime(dataReader["Windowperiod_end_Surv_2"]) : (DateTime?)null;
                                 SHA.Surv_2_due = (!(dataReader["Surv_2_due"] is DBNull)) ? Convert.ToDateTime(dataReader["Surv_2_due"]) : (DateTime?)null;
+                                SHA.Windowperiod_FUP_2_Intimation = (!(dataReader["Windowperiod_FUP_2_Intimation"] is DBNull)) ? Convert.ToDateTime(dataReader["Windowperiod_FUP_2_Intimation"]) : (DateTime?)null;
                                 SHA.Windowperiod_Sart_FUP_2 = (!(dataReader["Windowperiod_Sart_FUP_2"] is DBNull)) ? Convert.ToDateTime(dataReader["Windowperiod_Sart_FUP_2"]) : (DateTime?)null;
                                 SHA.Windowperiod_end_FUP_2 = (!(dataReader["Windowperiod_end_FUP_2"] is DBNull)) ? Convert.ToDateTime(dataReader["Windowperiod_end_FUP_2"]) : (DateTime?)null;
 

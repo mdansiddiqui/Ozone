@@ -51,6 +51,14 @@ namespace Ozone.Infrastructure.Persistence.Models
         public DateTime? RecertificationIntimationDate { get; set; }
         [Column("Recertification_Intimation")]
         public bool? RecertificationIntimation { get; set; }
+        [Column("Windowperiod_Intimation_FUP_1")]
+        public bool? WindowperiodIntimationFup1 { get; set; }
+        [Column("Windowperiod_Intimation_FUP_1_Date", TypeName = "datetime")]
+        public DateTime? WindowperiodIntimationFup1Date { get; set; }
+        [Column("Windowperiod_Intimation_FUP_2")]
+        public bool? WindowperiodIntimationFup2 { get; set; }
+        [Column("Windowperiod_Intimation_FUP_2_Date", TypeName = "datetime")]
+        public DateTime? WindowperiodIntimationFup2Date { get; set; }
 
         [ForeignKey(nameof(CreateById))]
         [InverseProperty(nameof(SecUser.WindowPeriodIntimation))]

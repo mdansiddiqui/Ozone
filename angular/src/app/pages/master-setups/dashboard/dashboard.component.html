@@ -12,54 +12,6 @@
           <div class="card-body table-responsive p-0">
             <dx-data-grid id="dataGrid" class="mx-1 mb-1 mt-1" [showBorders]="true" [rowAlternationEnabled]="true"
               [showRowLines]="true" [columnAutoWidth]="true" [showColumnLines]="false" [allowColumnReordering]="true"
-              (onRowClick)="onRowContractClick($event)" [dataSource]="
-                ContractStatus
-                  | paginate
-                    : {
-                        id: 'server',
-                        itemsPerPage: this.pagedDto.pageSize,
-                        currentPage: this.pagedDto.page,
-                        totalItems: this.totalCount
-                      }
-              " keyExpr="id">
-              <dxo-scrolling columnRenderingMode="virtual"></dxo-scrolling>
-
-              <dxi-column dataField="name" caption="Client Contracts" cssClass="cell-header"></dxi-column>
-              <dxi-column dataField="count" caption="Count" cssClass="cell-header"></dxi-column>
-            </dx-data-grid>
-            <!-- <div class="card-footer table-card-footer pb-0 border-top">
-          <div class="row">
-            <div class="col-sm-2 col-12 text-sm-left text-center">
-              <button class="btn btn-sm">
-                <i class="fas fa-redo text-info" (click)="reloadGrid()"></i>
-              </button>
-            </div> -->
-            <!-- <div class="col-sm-8 col-12">
-              <pagination-controls id="server" (pageChange)="onTableDataChange($event)">
-              </pagination-controls>
-            </div> -->
-            <!-- <div class="col-sm-2 col-12 ">
-
-              <div class="d-flex flex-row-reverse bd-highlight mb-2">
-                <div class="p-2 bd-highlight">
-                  <select (change)="onTableSizeChange($event)" class="custom-select">
-                    <option *ngFor="let size of tableSizes" [ngValue]="size">
-                      {{ size }}
-                    </option>
-                  </select>
-                </div>
-              </div>
-            </div> -->
-            <!-- </div>
-        </div> -->
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-4">
-        <div class="card">
-          <div class="card-body table-responsive p-0">
-            <dx-data-grid id="dataGrid" class="mx-1 mb-1 mt-1" [showBorders]="true" [rowAlternationEnabled]="true"
-              [showRowLines]="true" [columnAutoWidth]="true" [showColumnLines]="false" [allowColumnReordering]="true"
               (onRowClick)="onWindowPeriod($event)" [dataSource]="
               WindowPeriod
                   | paginate
@@ -103,6 +55,55 @@
           </div>
         </div>
       </div>
+      <div class="col-sm-4">
+        <div class="card">
+          <div class="card-body table-responsive p-0">
+            <dx-data-grid id="dataGrid" class="mx-1 mb-1 mt-1" [showBorders]="true" [rowAlternationEnabled]="true"
+              [showRowLines]="true" [columnAutoWidth]="true" [showColumnLines]="false" [allowColumnReordering]="true"
+              (onRowClick)="onRowContractClick($event)" [dataSource]="
+                ContractStatus
+                  | paginate
+                    : {
+                        id: 'server',
+                        itemsPerPage: this.pagedDto.pageSize,
+                        currentPage: this.pagedDto.page,
+                        totalItems: this.totalCount
+                      }
+              " keyExpr="id">
+              <dxo-scrolling columnRenderingMode="virtual"></dxo-scrolling>
+
+              <dxi-column dataField="name" caption="Client Contracts" cssClass="cell-header"></dxi-column>
+              <dxi-column dataField="count" caption="Count" cssClass="cell-header"></dxi-column>
+            </dx-data-grid>
+            <!-- <div class="card-footer table-card-footer pb-0 border-top">
+          <div class="row">
+            <div class="col-sm-2 col-12 text-sm-left text-center">
+              <button class="btn btn-sm">
+                <i class="fas fa-redo text-info" (click)="reloadGrid()"></i>
+              </button>
+            </div> -->
+            <!-- <div class="col-sm-8 col-12">
+              <pagination-controls id="server" (pageChange)="onTableDataChange($event)">
+              </pagination-controls>
+            </div> -->
+            <!-- <div class="col-sm-2 col-12 ">
+
+              <div class="d-flex flex-row-reverse bd-highlight mb-2">
+                <div class="p-2 bd-highlight">
+                  <select (change)="onTableSizeChange($event)" class="custom-select">
+                    <option *ngFor="let size of tableSizes" [ngValue]="size">
+                      {{ size }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div> -->
+            <!-- </div>
+        </div> -->
+          </div>
+        </div>
+      </div>
+     
       <div class="col-sm-4">
         <div class="card">
           <div class="card-body table-responsive p-0">
@@ -745,6 +746,8 @@
                 </dxi-column>
                 <!-- <dxi-column dataField="surv_1" caption="Surv 1"  cssClass="cell-header"  dataType="date"></dxi-column> -->
                 <dxi-column caption="Followup review-1" cssClass="cell-header" alignment="center">
+                  <dxi-column dataField="windowperiod_FUP_1_Intimation" caption="Intimation FUP-1" dataType="date"
+                  format="dd/MM/yyyy" cssClass="cell-header"></dxi-column>
                   <dxi-column dataField="windowperiod_Start_FUP_1" caption="Window period : FUP-1 Start" dataType="date"
                   format="dd/MM/yyyy" cssClass="cell-header"></dxi-column>
                   <dxi-column dataField="windowperiod_end_FUP_1" caption="Window period : FUP-1 End" dataType="date"
@@ -768,6 +771,8 @@
 
                 <!-- <dxi-column dataField="surv_2" caption="surv 2"  cssClass="cell-header"  dataType="date"></dxi-column> -->
                 <dxi-column caption="Followup review-2" cssClass="cell-header" alignment="center">
+                  <dxi-column dataField="windowperiod_FUP_2_Intimation" caption="Intimation FUP-2" dataType="date"
+                  format="dd/MM/yyyy" cssClass="cell-header"></dxi-column>
                   <dxi-column dataField="windowperiod_Sart_FUP_2" caption="Window period : FUP-2 Start" dataType="date"
                   format="dd/MM/yyyy" cssClass="cell-header"></dxi-column>
                   <dxi-column dataField="windowperiod_end_FUP_2" caption="Window period : FUP-2  End" dataType="date"
