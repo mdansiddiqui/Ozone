@@ -27,6 +27,7 @@ using Ozone.Application.DTOs.Projects;
 using System.Data;
 using Microsoft.Data.SqlClient;
 using System.Security.Cryptography;
+using System.Linq.Dynamic.Core;
 
 namespace Ozone.Infrastructure.Shared.Services
 {
@@ -374,15 +375,28 @@ namespace Ozone.Infrastructure.Shared.Services
 
         public async Task<ClientAuditVisitModel> GetClientAuditVisitBYId(long id)
         {
-            var result = new ClientAuditVisitModel();
-            var DbData = await Task.Run(() => _dbContext.ClientAuditVisit.Include(x=>x.Project).Include(x=>x.VisitStatus).Include(x => x.VisitType).Include(x=>x.VisitLevel) .Include(x=>x.Auditor1).Include(x => x.Auditor2).Include(x => x.Auditor3).Include(x => x.Auditor4).Include(x => x.Auditor5).Include(x => x.LeadAuditor).Include(x => x.JustifiedPerson).Include(x => x.TechnicalExpert).Include(x=>x.Reviewer).Where(x => x.Id == id).OrderByDescending(x=>x.Id).FirstOrDefault());
-            result = _mapper.Map<ClientAuditVisitModel>(DbData);
-            var oldvisit = await Task.Run(() => _dbContext.ClientAuditVisit.Where(x => x.ProjectId == result.ProjectId  && (x.VisitLevelId == 8 || x.VisitLevelId == 21 || x.VisitLevelId == 23)).OrderByDescending(x => x.Id).FirstOrDefault());
-            if (oldvisit != null)
+            try
             {
-                result.CycleStartDate = oldvisit.EndDate;
+
+                IQueryable<ClientAuditVisit> query =_dbContext.ClientAuditVisit.Include(x => x.Project).Include(x => x.VisitStatus).Include(x => x.VisitType).Include(x => x.VisitLevel).Include(x => x.Auditor1).Include(x => x.Auditor2).Include(x => x.Auditor3).Include(x => x.Auditor4).Include(x => x.Auditor5).Include(x => x.LeadAuditor).Include(x => x.JustifiedPerson).Include(x => x.TechnicalExpert).Include(x => x.Reviewer);
+
+                List<ClientAuditVisitModel> result2 = _mapper.ProjectTo<ClientAuditVisitModel>(query).ToList();
+
+                var result = new ClientAuditVisitModel();
+                var DbData = await Task.Run(() => _dbContext.ClientAuditVisit.Include(x => x.Project).Include(x => x.VisitStatus).Include(x => x.VisitType).Include(x => x.VisitLevel).Include(x => x.Auditor1).Include(x => x.Auditor2).Include(x => x.Auditor3).Include(x => x.Auditor4).Include(x => x.Auditor5).Include(x => x.LeadAuditor).Include(x => x.JustifiedPerson).Include(x => x.TechnicalExpert).Include(x => x.Reviewer).Where(x => x.Id == id).OrderByDescending(x => x.Id).FirstOrDefault());
+                result = _mapper.Map<ClientAuditVisitModel>(DbData);
+                var oldvisit = await Task.Run(() => _dbContext.ClientAuditVisit.Where(x => x.ProjectId == result.ProjectId && (x.VisitLevelId == 8 || x.VisitLevelId == 21 || x.VisitLevelId == 23)).OrderByDescending(x => x.Id).FirstOrDefault());
+                if (oldvisit != null)
+                {
+                    result.CycleStartDate = oldvisit.EndDate;
+                }
+                return result;
             }
-            return result;
+            catch (Exception ex)
+            {
+                var excep = ex;
+                return null;
+            }
         }
 
 

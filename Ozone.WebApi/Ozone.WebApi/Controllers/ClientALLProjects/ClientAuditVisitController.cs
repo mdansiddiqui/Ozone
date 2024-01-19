@@ -20,6 +20,7 @@ using Ozone.Application.Interfaces.Setup;
 using Ozone.Application.Interfaces;
 using Ozone.Infrastructure.Shared.Services.MasterSetups;
 using Ozone.Infrastructure.Shared;
+using System;
 
 namespace Ozone.WebApi.Controllers.ClientALLProjects
 {
@@ -758,5 +759,25 @@ namespace Ozone.WebApi.Controllers.ClientALLProjects
 
 
         }
+
+
+        //[Route("TestAPI")]
+        //[HttpPost]
+        //[Authorize]
+
+        //public async Task<IActionResult> TestAPI([FromBody] PostData postData)
+        //{
+        //   // var list = await _clientAuditVisitService.GetClientAuditVisitBYId(id);
+        //    return new JsonResult(postData);
+
+
+        //}
+
+        //public class PostData
+        //{
+        //    public string Title { get; set; }
+        //    public string Content { get; set; }
+        //    // Agar aur properties hain to unko bhi add karein
+        //}
     }
 }

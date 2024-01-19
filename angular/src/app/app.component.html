@@ -8,7 +8,7 @@
   <app-footer></app-footer>
   <div id="sidebar-overlay" (click)="toggleSidebar()"></div>
 </div>
-<section class="idle" *ngIf="idleState"  [@fadeInOut]>
+<section class="idle" *ngIf="idleState">
   <div class="idle-div">
       <h1> Your Session is about to end.</h1>
       <p>
@@ -16,9 +16,7 @@
         in approximately {{idleCounter}} seconds, you may choose "Stay signed in" to continue or sign out if you're done.
       </p>
       <button class="btn btn-light "  (click)="logout()">Sign out</button>
-      <!-- <button class="btn btn-info "  (click)="startIdleOrResume()"> Stay Signed in 
-        
-      </button>-->
+      
   </div>
 </section>
 

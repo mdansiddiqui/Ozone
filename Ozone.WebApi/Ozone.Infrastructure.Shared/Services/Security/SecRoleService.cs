@@ -19,6 +19,7 @@ using Ozone.Application.Interfaces;
 using Ozone.Infrastructure.Persistence.Entities;
 using Microsoft.EntityFrameworkCore;
 using Ozone.Application.Repository;
+using System.Text.Json;
 
 namespace Ozone.Infrastructure.Shared.Services
 {
@@ -244,36 +245,49 @@ namespace Ozone.Infrastructure.Shared.Services
                 var result = new List<SecRoleFormLoginModel>();
             try
             {
-                var ListRoleform = _context.SecRoleForm.Include("SecForm").Where(x => x.RoleId == id && (x.UpdateAllowed == true || x.InsertAllowed == true || x.AuthAllowed == true || x.QueryAllowed == true || x.DeleteAllowed == true || x.ViewRecordAllowed == true)).ToListAsync();
-                var forms = (await Task.Run(() => _context.SecForm.ToList()));
+                //var ListRoleform = _context.SecRoleForm.Include("SecForm").Where(x => x.RoleId == id && (x.UpdateAllowed == true || x.InsertAllowed == true || x.AuthAllowed == true || x.QueryAllowed == true || x.DeleteAllowed == true || x.ViewRecordAllowed == true)).ToListAsync();
+                //var forms = (await Task.Run(() => _context.SecForm.ToList()));
 
-                var list = (await Task.Run(() => _context.SecRoleForm.Where(x => x.RoleId == id).ToList()));
+                var list = (await Task.Run(() => _context.SecRoleForm.Include(x=>x.Permission).Where(x => x.RoleId == id).ToList()));
                 List<SecRoleFormLoginModel> secRoleFormLoginmodel = new List<SecRoleFormLoginModel>();
-                foreach (var listroleForm in list)
-                {
-                    SecRoleFormLoginModel mod = new SecRoleFormLoginModel();
-                    mod.Id = listroleForm.Id;
-                    mod.FormId = listroleForm.PermissionId;
-                    mod.RoleId = listroleForm.RoleId;
-                    mod.FormCode = forms.Where(a => a.Id == mod.FormId).Select(a => a.Code).FirstOrDefault();
 
-                    mod.FormName = forms.Where(a => a.Id == mod.FormId).Select(a => a.Name).FirstOrDefault();
-                    mod.InsertAllowed = listroleForm.InsertAllowed;
-                    mod.UpdateAllowed = listroleForm.UpdateAllowed;
-                    // mod.
-                    mod.QueryAllowed = listroleForm.QueryAllowed;
-                   // mod.SbpAllowed = listroleForm.SbpAllowed.Value;
+                secRoleFormLoginmodel = _mapper.Map<List<SecRoleFormLoginModel>>(list);
 
-                    mod.AuthAllowed = listroleForm.AuthAllowed;
+                //string jsonCustom = JsonSerializer.Serialize(secRoleFormLoginmodel, new JsonSerializerOptions
+                //{
+                //    WriteIndented = true // Optional: to format the JSON for better readability
+                //});
 
-                    mod.ManageAllowed = listroleForm.ManageAllowed;
+                //List<SecRoleFormLoginModel> secRoleFormLoginmodel = new List<SecRoleFormLoginModel>();
 
-                    mod.DeleteAllowed = listroleForm.DeleteAllowed;
-                    mod.ViewRecordAllowed = listroleForm.ViewRecordAllowed;
-                    secRoleFormLoginmodel.Add(mod);
+                //foreach (var listroleForm in list)
+                //{
+                //    SecRoleFormLoginModel mod = new SecRoleFormLoginModel();
+                //    mod.Id = listroleForm.Id;
+                //    mod.FormId = listroleForm.PermissionId;
+                //    mod.RoleId = listroleForm.RoleId;
+                //    mod.FormCode = forms.Where(a => a.Id == mod.FormId).Select(a => a.Code).FirstOrDefault();
 
-                }
+                //    mod.FormName = forms.Where(a => a.Id == mod.FormId).Select(a => a.Name).FirstOrDefault();
+                //    mod.InsertAllowed = listroleForm.InsertAllowed;
+                //    mod.UpdateAllowed = listroleForm.UpdateAllowed;
+                //    // mod.
+                //    mod.QueryAllowed = listroleForm.QueryAllowed;
+                //   // mod.SbpAllowed = listroleForm.SbpAllowed.Value;
 
+                //    mod.AuthAllowed = listroleForm.AuthAllowed;
+
+                //    mod.ManageAllowed = listroleForm.ManageAllowed;
+
+                //    mod.DeleteAllowed = listroleForm.DeleteAllowed;
+                //    mod.ViewRecordAllowed = listroleForm.ViewRecordAllowed;
+                //    secRoleFormLoginmodel.Add(mod);
+
+                //}
+                //string jsonCustom2 = JsonSerializer.Serialize(secRoleFormLoginmodel, new JsonSerializerOptions
+                //{
+                //    WriteIndented = true // Optional: to format the JSON for better readability
+                //});
 
                 //   var list = await _secRoleFormRepository.GetAllByRoleId(id);
                 // result = _mapper.Map<List<SecRoleFormLoginModel>>(list);

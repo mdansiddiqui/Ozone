@@ -936,6 +936,18 @@
                                                 class="form-control form-control-sm col-md-12" id="DurationSurvVisit" />
 
                                         </div>
+
+                                          <div class="col-md-6">
+                                            <label class="mb-0" for="ConsultantId">
+                                                {{ "Consultant" }}
+                                            </label>
+                                            <select formControlName="ConsultantId" class="form-control form-control-sm col-md-12"
+                                                id="ConsultantId">
+                                                <option *ngFor="let item of ConsultantList" [value]="item.id">
+                                                    {{ item.name }}
+                                                </option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

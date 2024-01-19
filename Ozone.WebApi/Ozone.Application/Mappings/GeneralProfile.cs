@@ -542,6 +542,24 @@ namespace Ozone.Application.Mappings
 
             CreateMap<AuditDocumentsType, AuditDocumetTypeModel>();
 
+
+
+
+
+
+
+            CreateMap<SecRoleForm, SecRoleFormLoginModel>()
+                 .ForMember(x => x.FormId, opt => opt.MapFrom(src => src.PermissionId))
+                 .ForMember(x => x.FormName, opt => opt.MapFrom(src => src.Permission.Name))
+                 .ForMember(x => x.FormCode, opt => opt.MapFrom(src => src.Permission.Code))
+                 .ForMember(x => x.InsertAllowed, opt => opt.MapFrom(src => src.InsertAllowed))
+                  .ForMember(x => x.UpdateAllowed, opt => opt.MapFrom(src => src.UpdateAllowed))
+                   .ForMember(x => x.QueryAllowed, opt => opt.MapFrom(src => src.QueryAllowed))
+                   .ForMember(x => x.InsertAllowed, opt => opt.MapFrom(src => src.InsertAllowed))
+                 
+                // InsertAllowed
+                .ReverseMap();
+
         }
     }
 
