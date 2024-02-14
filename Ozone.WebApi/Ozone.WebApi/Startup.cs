@@ -21,6 +21,7 @@ using Microsoft.SqlServer.Server;
 using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore.SqlServer;
 using Ozone.Infrastructure.Persistence.Models;
+using System.Configuration;
 
 
 namespace Ozone.WebApi
@@ -53,7 +54,15 @@ namespace Ozone.WebApi
             services.AddControllersExtension();
             services.AddAutoMapper(typeof(Startup));
             services.AddControllersWithViews();
-
+            services.AddCors(option =>
+            {
+                var reactURl = _config.GetValue<string>("reactUrl");
+              
+                option.AddDefaultPolicy(pol =>
+                {
+                    pol.WithOrigins(reactURl).AllowAnyMethod().AllowAnyHeader();
+                });
+            });
             // Authentication
             //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             //    .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options => _config.Bind("JWTSettings", options));

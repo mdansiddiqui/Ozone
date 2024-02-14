@@ -13,6 +13,7 @@ using Ozone.Application.Interfaces.Setup;
 using Ozone.Infrastructure.Shared.Services.MasterSetups;
 using Ozone.Infrastructure.Shared.Services.ClientALLProjects;
 using Ozone.Infrastructure.Shared.Services.Opreations;
+//using Ozone.Application.Interfaces.Setup.SecUser;
 //using Ozone.Infrastructure.Shared.Services;
 
 namespace Ozone.Infrastructure.Shared
@@ -147,6 +148,9 @@ namespace Ozone.Infrastructure.Shared
             services.AddTransient<IFileUploadingService, FileUploadingService>();
             services.AddTransient<IDashboardService, DashboardService>();
             services.AddTransient<IAuditorReportsService, AuditorReportsService>();
+            services.AddTransient<IMainClause, MainClauseService>();
+            services.AddTransient<ISubClause, SubClauseService>();
+
 
         }
     }

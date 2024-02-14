@@ -104,7 +104,9 @@ import { DashboardComponent } from './pages/master-setups/dashboard/dashboard.co
 import { AuditorReportsComponent } from './pages/reports/auditor-reports/auditor-reports.component';
 import { InvoiceComponent } from './pages/reports/invoice/invoice.component';
 import { AuditorAuditDetailsComponent } from './pages/reports/auditor-audit-details/auditor-audit-details.component';
-
+import { AuditFindingsComponent } from './pages/sales/audit-findings/audit-findings.component';
+import { MasterStandardMainClauseComponent } from './pages/master-setups/master-standard-main-clause/master-standard-main-clause.component';
+import { MasterStandardSubClauseComponent } from './pages/master-setups/master-standard-sub-clause/master-standard-sub-clause.component';
 
 
 //RolesWithPermissionAuthorizerTaskBoardComponent
@@ -155,6 +157,7 @@ import { AuditorAuditDetailsComponent } from './pages/reports/auditor-audit-deta
                     { path: 'pages/sales/qc-master-list', component: QCMasterListComponent },
 
                     { path: 'pages/sales/general-form', component: GeneralFormComponent },
+                    { path: 'pages/sales/audit-findings', component: AuditFindingsComponent },
                     
 
 
@@ -223,6 +226,10 @@ import { AuditorAuditDetailsComponent } from './pages/reports/auditor-audit-deta
                     { path: 'pages/master-setups/project-amount', component: ProjectAmountComponent },
                     { path: 'pages/master-setups/qc-document', component: QcDocumentComponent },
                     { path: 'pages/master-setups/dashboard', component: DashboardComponent },
+                    { path: 'pages/master-setups/master-standard-main-clause', component: MasterStandardMainClauseComponent },
+                    { path: 'pages/master-setups/master-standard-sub-clause', component: MasterStandardSubClauseComponent },
+
+
 //Opeartions
                     
                     { path: 'pages/Operations/consultant', component: ConsultantComponent },

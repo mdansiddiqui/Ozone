@@ -37,6 +37,7 @@ import { QCDetailGridComponent } from './qc-detail-grid/qc-detail-grid.component
 
 import { QCMasterListComponent } from './qc-master-list/qc-master-list.component';
 import { GeneralFormComponent } from './general-form/general-form.component';
+import { AuditFindingsComponent } from './audit-findings/audit-findings.component';
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
   //interactionPlugin
@@ -63,6 +64,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
  
     QCMasterListComponent,
     GeneralFormComponent,
+    AuditFindingsComponent,
   ],
   imports: [
     CommonModule,

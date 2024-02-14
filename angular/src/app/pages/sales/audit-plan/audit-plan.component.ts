@@ -1302,6 +1302,11 @@ debugger
     })
   }
 
+  summaryRoute(){
+    this.router.navigateByUrl('/app/pages/sales/audit-findings');
+  }
+
+
   CheckReviewer() {
     
     const UserModel =

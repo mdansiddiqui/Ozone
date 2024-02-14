@@ -1,0 +1,173 @@
+<form [formGroup]="SummaryOfAuditFindings" #summarOfAuditFindings="ngForm">
+   
+    <div class="container-fluid mt-2">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <h3 style="
+            text-align: center;
+            color: rgb(35 52 86);
+            font-family: 'Times New Roman';
+            font-weight: bold;
+            margin-top: 10px;
+            text-decoration: underline;
+          ">
+                       SUMMARY OF AUDIT FINDINGS
+                       
+                    </h3>
+                    <div class="container-fluid">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="row">
+                                    <label class="mb-0 mx-2" for="IsActive">
+                                        SA8000:2014 Requirement , PI=Performance Indicator
+                                    </label>
+                                    <select class="form-control form-control-sm mt-2 mb-3"  formControlName="Selectdata" style="text-decoration: underline; color: rgb(9, 110, 143); font-size: 16px;">
+                       
+                                        <option *ngFor="let item of statusList" [value]="item.id">
+                                            {{ item.name }}
+                                        </option>
+                                        <!-- <option value="yes">Top Management</option>
+                        <option value="yes">Workers interview and Group Interview: Clause 1 to 9</option>
+                        <option value="yes">Child Labour & PI</option>
+                        <option value="yes">Forced or Compulsory Labour & PI</option>
+                        <option value="yes">Health and Safety & PI</option>
+                        <option value="yes">Freedom of Association & Right to Collective Bargaining & PI</option>
+                        <option value="yes">Discrimination & PI</option>
+                        <option value="yes">Disciplinary Practices & PI</option>
+                        <option value="yes">Working Hours & PI</option>
+                        <option value="yes">Remuneration and Basic Needs Wage & PI</option>
+                        <option value="yes">Management Systems - Policies, Procedures and Records & PI</option>
+                        <option value="yes">Management Systems - Social Performance Team & PI</option>
+                        <option value="yes">Management Systems - Identification and Assessment of Risks & PI</option>
+                        <option value="yes">Management Systems-Monitoring & PI</option>
+                        <option value="yes">Management Systems - Internal Involvement and Communication & PI</option>
+                        <option value="yes">Management Systems - Complaint Management and Resolution & PI</option>
+                        <option value="yes">Management Systems - External Verification and Stakeholder Engagement & PI</option>
+                        <option value="yes">Management Systems - Corrective and Preventive Action & PI</option>
+                        <option value="yes">Management Systems - Training and Capacity Building & PI</option>
+                        <option value="yes">Management Systems-Management of Suppliers and Contractors & PI</option>
+                        <option value="yes">Review of Previous Audit Findings</option>
+                        <option value="yes">Social Fingerprint Review & Completion of independent evaluation on social finger print</option>
+                        <option value="yes">Use of SAAS/CB Logo</option> -->
+                       
+
+                    </select><br />
+                                    <div class="col-sm-12">
+                                        <div class="container-fluid mb-2" >
+                                            <div class="row mx-2">
+                                                <div class="col-md-3">
+                                                    <label class="mb-0" for="CheckedThisVisit">
+                                                        Checked this Visit
+                                                    </label>
+                                                    <select class="form-control form-control-sm col-md-12" formControlName="CheckedThisVisit">
+                                                        <option *ngFor="let item of checkVisitList" [value]="item.id">
+                                                            {{ item.name }}
+                                                        </option>
+                                                    </select>
+                                                </div>
+            
+                                                <div class="col-md-3">
+                                                    <label class="mb-0" for="MajorNCs" >
+                                                        Major NC's
+                                                    </label>
+                                                    <input type="number" 
+                                                        class="form-control form-control-sm col-md-12" formControlName="MajorNCs" />
+                                                </div>
+            
+                                                <div class="col-md-3" >
+                                                    <label class="mb-0" for="MinorNCs" >Minor NC's</label>
+                                                    <input type="number" 
+                                                        class="form-control form-control-sm col-md-12"  formControlName="MinorNCs"/>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label class="mb-0" for="CriticalNCs">
+                                                    Critical NC's
+                                                    </label>
+                                                    <input type="number" 
+                                                        class="form-control form-control-sm col-md-12" formControlName="CriticalNCs"/>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-1 mx-2">
+                                                
+            
+                                                <div class="col-md-3">
+                                                    <label class="mb-0" for="TimeBoundNCs">Time Bound NC's</label>
+                                                    <input type="number" formControlName="TimeBoundNCs"
+                                                        class="form-control form-control-sm col-md-12"/>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label class="mb-0" for="Stage1Observations" >Stage 1-Observations</label>
+                                                    <input type="number"
+                                                        class="form-control form-control-sm col-md-12" formControlName="Stage1Observations"/>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label class="mb-0" style="font-size: 13px;" for="Ofi">
+                                                        Opportunity for Improvement (OFI)
+                                                    </label>
+                                                    <input type="number" formControlName="Ofi"
+                                                        class="form-control form-control-sm col-md-12"  />
+                                                </div>
+            
+                                                <div class="col-md-3">
+                                                    <label class="mb-0" for="CheckNextVisit">Check next Visit</label>
+                                                    <input type="number" 
+                                                        class="form-control form-control-sm col-md-12" formControlName="CheckNextVisit" />
+                                                </div>
+                                            </div>
+
+                                            <div class="row mt-1 mx-2">
+                                                <div class="col-md-9">
+                                                    <label class="mb-0" for="Remarks">Remarks & Specific Areas to Address Next Visit</label>
+                                                    <textarea class="form-control form-control-sm col-md-12" rows="4" formControlName="Remarks"></textarea>
+                                                </div>
+                                                <div class="col-md-2 " style="margin-top: 35px; margin-left: 8px;">
+                                                    <button type="button" 
+                                                        class="btn-sm btn-success btn float-right mx-2 px-3 mt-2 pt-2 pb-2 mt-3"
+                                                         (click)="onSubmit()">Submit</button>
+                                                </div>
+                                            </div>
+                                           
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <br>
+                               
+                                <div class="card-body table-responsive p-0">
+                                    <dx-data-grid id="gridContainer" class="mx-3 mb-3" [showBorders]="true"
+                                        [rowAlternationEnabled]="true" [showRowLines]="true" [columnAutoWidth]="true"
+                                        [showColumnLines]="false" [showRowLines]="true" [allowColumnReordering]="true"
+                                        [dataSource]="gridData"
+                                        >
+                                        <dxo-search-panel [visible]="true" [width]="240" placeholder="Search...">
+                                        </dxo-search-panel>
+                                        <dxo-scrolling columnRenderingMode="virtual"></dxo-scrolling>
+        
+                                        <dxi-column dataField="selectedField" caption="SA8000:2014 Requirement , PI=Performance Indicator" cssClass="cell-header"></dxi-column>
+                                        <dxi-column dataField="checkedThisVisit" caption="Checked this Visit" cssClass="cell-header"></dxi-column>
+                                        <dxi-column dataField="majorNCs" caption="Major NC's" cssClass="cell-header"></dxi-column>
+                                        <dxi-column dataField="minorNCs" caption="Minor NC's" cssClass="cell-header"></dxi-column>
+                                        <dxi-column dataField="criticalNCs" caption="Critical NC's" cssClass="cell-header"></dxi-column>
+                                        <dxi-column dataField="timeBoundNCs" caption="Time Bound NC's" cssClass="cell-header"></dxi-column>
+                                        <dxi-column dataField="stage1Observations" caption="Stage 1-Observations" cssClass="cell-header"></dxi-column>
+                                        <dxi-column dataField="ofi" caption="Opportunity for Improvement (OFI)" cssClass="cell-header"></dxi-column>
+                                        <dxi-column dataField="checkNextVisit" caption="Check next Visit" cssClass="cell-header"></dxi-column>
+                                        <dxi-column dataField="remarks" caption="Remarks & Specific Areas to Address Next Visit" cssClass="cell-header"></dxi-column>
+                                        
+        
+                                        
+                                    </dx-data-grid>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+        
+
+        
+</form> <br> <br>

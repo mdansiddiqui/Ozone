@@ -20,6 +20,8 @@ import { EaCodeComponent } from './ea-code/ea-code.component';
 import { LegislationComponent } from './legislation/legislation.component';
 import { AudditorTypeComponent } from './audditor-type/audditor-type.component';
 import { ProjectAmountComponent } from './project-amount/project-amount.component';
+import { MasterStandardMainClauseComponent } from './master-standard-main-clause/master-standard-main-clause.component';
+import { MasterStandardSubClauseComponent } from './master-standard-sub-clause/master-standard-sub-clause.component';
 //import { DashboardComponent } from './dashboard/dashboard.component';
 
 
@@ -29,6 +31,8 @@ import { ProjectAmountComponent } from './project-amount/project-amount.componen
 @NgModule({
   declarations: [
     DocumentTypeComponent,
+    MasterStandardMainClauseComponent,
+    MasterStandardSubClauseComponent,
   ],
   imports: [
     CommonModule,

@@ -61,3 +61,22 @@
 ::ng-deep #gridContainer {
   max-height: 400px;
 }
+textarea.form-control {
+  resize: vertical; /* Allow vertical resizing */
+  min-height: 100px; /* Set a minimum height */
+  border-radius: 5px; /* Rounded corners */
+  border: 1px solid #ced4da; /* Add a border */
+}
+
+/* Optional: Add some padding for better appearance */
+textarea.form-control {
+  padding: 8px;
+}
+
+select.form-control {
+  margin-top: 10px;
+  /* Add other styling as needed */
+}
+
+
+
