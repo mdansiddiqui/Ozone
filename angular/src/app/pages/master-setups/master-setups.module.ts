@@ -24,6 +24,9 @@ import { VisitLevelComponent } from './visit-level/visit-level.component';
 import { MappingStandardWithDocumentComponent } from './mapping-standard-with-document/mapping-standard-with-document.component';
 //import { DashboardComponent } from './dashboard/dashboard.component';
 import { AuditDocumentComponent } from './audit-document/audit-document.component';
+import { MasterStandardMainClauseComponent } from './master-standard-main-clause/master-standard-main-clause.component';
+import { MasterStandardSubClauseComponent } from './master-standard-sub-clause/master-standard-sub-clause.component';
+
 
 
 
@@ -34,6 +37,8 @@ import { AuditDocumentComponent } from './audit-document/audit-document.componen
     VisitLevelComponent,
     MappingStandardWithDocumentComponent,
     AuditDocumentComponent,
+    MasterStandardMainClauseComponent,
+    MasterStandardSubClauseComponent,
   ],
   imports: [
     CommonModule,

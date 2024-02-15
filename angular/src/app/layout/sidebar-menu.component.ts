@@ -245,6 +245,19 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
                     this.permissionCheck('Standard')
                 ),
                 new MenuItem(
+                    'Master Main Clause',
+                    '/app/pages/master-setups/master-standard-main-clause',
+                    'fas fa-arrow-circle-right',
+                    this.permissionCheck('MainClause')
+                ),
+                new MenuItem(
+                    'Master Sub Clause',
+                    '/app/pages/master-setups/master-standard-sub-clause',
+                    'fas fa-arrow-circle-right',
+                    this.permissionCheck('SubClause')
+                
+                ),
+                new MenuItem(
                     'Modules',
                     '/app/pages/certification-setups/module',
                     'fas fa-arrow-circle-right',
@@ -310,6 +323,7 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
                     'fas fa-arrow-circle-right',
                     this.permissionCheck('NaceCode')
                 ),
+
                 // new MenuItem(
                 //     'Course Type',
                 //     '/app/pages/master-setups/course-type',

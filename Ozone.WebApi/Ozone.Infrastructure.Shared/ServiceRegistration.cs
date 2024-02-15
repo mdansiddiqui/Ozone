@@ -148,6 +148,8 @@ namespace Ozone.Infrastructure.Shared
             services.AddTransient<IDashboardService, DashboardService>();
             services.AddTransient<IAuditorReportsService, AuditorReportsService>();
             services.AddTransient<IAuditDocumentTypeService, AuditDocumentTypeService>();
+            services.AddTransient<IMainClause, MainClauseService>();
+            services.AddTransient<ISubClause, SubClauseService>();
 
         }
     }

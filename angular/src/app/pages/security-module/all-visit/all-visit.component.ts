@@ -106,6 +106,15 @@ export class AllVisitComponent implements OnInit {
     this.router.navigateByUrl('/app/pages/sales/audit-plan?ProjectId=' + e.row.data.projectId + "&StandardId=" + e.row.data.standardId + "&ClientId=" + e.row.data.clientId + "&AuditVisitId=" + e.row.data.id);
     
   }
+
+
+  general()
+  {debugger
+   
+    ///#/app/pages/sales/audit-plan?ProjectId=' + this.AllVisitDataList[_i].projectId + "&StandardId=" + this.AllVisitDataList[_i].standardId + "&ClientId=" + this.AllVisitDataList[_i].clientId + "&AuditVisitId=" + this.AllVisitDataList[_i].id
+    // this.router.navigateByUrl('/app/pages/sales/audit-plan?'+e.row.data.projectId);
+    this.router.navigateByUrl('/app/pages/security-module/general-information');
+  }
   LoadVisitLevel(): void {
 
 
