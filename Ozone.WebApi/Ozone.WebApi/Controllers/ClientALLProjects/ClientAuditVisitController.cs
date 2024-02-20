@@ -30,34 +30,34 @@ namespace Ozone.WebApi.Controllers.ClientALLProjects
     {
         private readonly IConfiguration _configuration;
 
-    IAllDropdownService _AllDropdownService;
-    ISecUserSessionService _userSessionService;
+        IAllDropdownService _AllDropdownService;
+        ISecUserSessionService _userSessionService;
         IClientAuditVisitService _clientAuditVisitService;
         IAuditReportService _auditReportService;
         private readonly IJwtAuthManager _jwtAuthManager;
 
 
-    //public AuthenticateController(UserManager<SecUser> userManager, IConfiguration configuration)
-    public ClientAuditVisitController(
-        // UserService userService,
-        IConfiguration configuration,
+        //public AuthenticateController(UserManager<SecUser> userManager, IConfiguration configuration)
+        public ClientAuditVisitController(
+            // UserService userService,
+            IConfiguration configuration,
 
-        ISecUserSessionService userSessionService,
-        IClientAuditVisitService clientAuditVisitService,
-        IAuditReportService auditReportService,
-        IJwtAuthManager jwtAuthManager,
-        IAllDropdownService allDropdownService
-        )
-    {
-        //this.userManager = userManager;
-        // this._userService = userService;
-        _configuration = configuration;
-        this._AllDropdownService = allDropdownService;
-        this._userSessionService = userSessionService;
-        this._clientAuditVisitService = clientAuditVisitService;
-        this._jwtAuthManager = jwtAuthManager;
+            ISecUserSessionService userSessionService,
+            IClientAuditVisitService clientAuditVisitService,
+            IAuditReportService auditReportService,
+            IJwtAuthManager jwtAuthManager,
+            IAllDropdownService allDropdownService
+            )
+        {
+            //this.userManager = userManager;
+            // this._userService = userService;
+            _configuration = configuration;
+            this._AllDropdownService = allDropdownService;
+            this._userSessionService = userSessionService;
+            this._clientAuditVisitService = clientAuditVisitService;
+            this._jwtAuthManager = jwtAuthManager;
             this._auditReportService = auditReportService;
-    }
+        }
 
 
 
@@ -467,7 +467,7 @@ namespace Ozone.WebApi.Controllers.ClientALLProjects
         [Route("GetAllQcStatus")]
         [HttpGet]
         [Authorize]
-        
+
         public async Task<IActionResult> GetAllQcStatus()
         {
             var List = await _auditReportService.GetAllQcStatus();
@@ -506,7 +506,7 @@ namespace Ozone.WebApi.Controllers.ClientALLProjects
         [Authorize]
 
         public async Task<IActionResult> GetAllAdminList()
-        
+
         {
             var List = await _AllDropdownService.GetAllAdminList();
             return new JsonResult(List);
@@ -596,7 +596,7 @@ namespace Ozone.WebApi.Controllers.ClientALLProjects
 
         public async Task<IActionResult> CreateAuditReviewerDocument([FromForm] AuditReviewerDocumentModel input)
         {
-           
+
             var result = await _clientAuditVisitService.AuditReviewerDocumentCreate(input);
             return Ok(new Response { Status = result, Message = result });
 
@@ -621,10 +621,10 @@ namespace Ozone.WebApi.Controllers.ClientALLProjects
                 await stream.CopyToAsync(memory);
             }
             memory.Position = 0;
-     
+
             var contenpe = result.DocumentContentType;
             var fileNM = Path.GetFileName(fileName);
-          
+
             return File(memory, contenpe, fileNM);
         }
 
