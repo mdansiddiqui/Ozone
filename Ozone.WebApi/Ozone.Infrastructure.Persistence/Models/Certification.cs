@@ -14,6 +14,7 @@ namespace Ozone.Infrastructure.Persistence.Models
         {
             ClientProjects = new HashSet<ClientProjects>();
             Library = new HashSet<Library>();
+            MainClause = new HashSet<MainClause>();
             MappingDocumentsWithStandard = new HashSet<MappingDocumentsWithStandard>();
             ModuleVersion = new HashSet<ModuleVersion>();
             OrgCertification = new HashSet<OrgCertification>();
@@ -22,6 +23,7 @@ namespace Ozone.Infrastructure.Persistence.Models
             ProjectGeneralForm = new HashSet<ProjectGeneralForm>();
             QcdocumentsList = new HashSet<QcdocumentsList>();
             StageOfCertification = new HashSet<StageOfCertification>();
+            SubClause = new HashSet<SubClause>();
             UserAudit = new HashSet<UserAudit>();
             UserAuditorNace = new HashSet<UserAuditorNace>();
             UserConsultancy = new HashSet<UserConsultancy>();
@@ -48,6 +50,8 @@ namespace Ozone.Infrastructure.Persistence.Models
         [InverseProperty("Certification")]
         public virtual ICollection<Library> Library { get; set; }
         [InverseProperty("Standard")]
+        public virtual ICollection<MainClause> MainClause { get; set; }
+        [InverseProperty("Standard")]
         public virtual ICollection<MappingDocumentsWithStandard> MappingDocumentsWithStandard { get; set; }
         [InverseProperty("Standard")]
         public virtual ICollection<ModuleVersion> ModuleVersion { get; set; }
@@ -63,6 +67,8 @@ namespace Ozone.Infrastructure.Persistence.Models
         public virtual ICollection<QcdocumentsList> QcdocumentsList { get; set; }
         [InverseProperty("Standard")]
         public virtual ICollection<StageOfCertification> StageOfCertification { get; set; }
+        [InverseProperty("Standard")]
+        public virtual ICollection<SubClause> SubClause { get; set; }
         [InverseProperty("Standard")]
         public virtual ICollection<UserAudit> UserAudit { get; set; }
         [InverseProperty("Standard")]

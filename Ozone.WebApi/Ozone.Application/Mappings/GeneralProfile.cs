@@ -191,6 +191,18 @@ namespace Ozone.Application.Mappings
                
 
               .ReverseMap();
+
+            CreateMap<MainClause, MainClauseModel>()
+              .ForMember(x => x.StandardName, opt => opt.MapFrom(src => src.Standard.Name))
+
+
+              .ReverseMap();
+
+            CreateMap<SubClause, SubClauseModel>()
+               .ForMember(x => x.StandardName, opt => opt.MapFrom(src => src.Standard.Name))
+                .ForMember(x => x.MainClauseName, opt => opt.MapFrom(src => src.MainClause.MainClauseName))
+
+               .ReverseMap();
             //get
             CreateMap<UserDeclaration, UserDeclarationModel>()
             .ForMember(x => x.ContractTypeName, opt => opt.MapFrom(src => src.ContractType.Name))

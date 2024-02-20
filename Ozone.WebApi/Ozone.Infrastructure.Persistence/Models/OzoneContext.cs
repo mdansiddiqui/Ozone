@@ -57,6 +57,7 @@ namespace Ozone.Infrastructure.Persistence.Models
         public virtual DbSet<HolidayType> HolidayType { get; set; }
         public virtual DbSet<Legislation> Legislation { get; set; }
         public virtual DbSet<Library> Library { get; set; }
+        public virtual DbSet<MainClause> MainClause { get; set; }
         public virtual DbSet<MappingDocumentsWithStandard> MappingDocumentsWithStandard { get; set; }
         public virtual DbSet<Methodology> Methodology { get; set; }
         public virtual DbSet<Module> Module { get; set; }
@@ -100,6 +101,7 @@ namespace Ozone.Infrastructure.Persistence.Models
         public virtual DbSet<StandardType> StandardType { get; set; }
         public virtual DbSet<State> State { get; set; }
         public virtual DbSet<Status> Status { get; set; }
+        public virtual DbSet<SubClause> SubClause { get; set; }
         public virtual DbSet<SurveillanceMethod> SurveillanceMethod { get; set; }
         public virtual DbSet<SurveillanceVisitFrequency> SurveillanceVisitFrequency { get; set; }
         public virtual DbSet<TypeOfEnrollment> TypeOfEnrollment { get; set; }
@@ -121,14 +123,14 @@ namespace Ozone.Infrastructure.Persistence.Models
         public virtual DbSet<WindowPeriodIntimation> WindowPeriodIntimation { get; set; }
         public virtual DbSet<Yourtable> Yourtable { get; set; }
 
-//        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-//        {
-//            if (!optionsBuilder.IsConfigured)
-//            {
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-//                optionsBuilder.UseSqlServer("Data Source=DESKTOP-PE36NEL;Initial Catalog=Ozone;user id=sa;password=123qwe;integrated security=True;");
-//            }
-//        }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer("Data Source=DESKTOP-H4RP7V9;Initial Catalog=Ozone;user id=sa;password=123qwe;integrated security=True;");
+            }
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -793,6 +795,19 @@ namespace Ozone.Infrastructure.Persistence.Models
                     .HasConstraintName("FK_Library_Status");
             });
 
+            modelBuilder.Entity<MainClause>(entity =>
+            {
+                entity.Property(e => e.Heading).IsUnicode(false);
+
+                entity.Property(e => e.Requirement).IsUnicode(false);
+
+                entity.HasOne(d => d.Standard)
+                    .WithMany(p => p.MainClause)
+                    .HasForeignKey(d => d.StandardId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__MainClaus__Stand__3AA1AEB8");
+            });
+
             modelBuilder.Entity<MappingDocumentsWithStandard>(entity =>
             {
                 entity.HasOne(d => d.DocumentAssign)
@@ -1403,7 +1418,7 @@ namespace Ozone.Infrastructure.Persistence.Models
                 entity.HasOne(d => d.ApprovelStatus)
                     .WithMany(p => p.SecUser)
                     .HasForeignKey(d => d.ApprovelStatusId)
-                    .HasConstraintName("FK__SecUser__Approve__2C88998B");
+                    .HasConstraintName("FK__SecUser__Approve__595B4002");
 
                 entity.HasOne(d => d.City)
                     .WithMany(p => p.SecUser)
@@ -1525,6 +1540,25 @@ namespace Ozone.Infrastructure.Persistence.Models
                     .WithMany(p => p.State)
                     .HasForeignKey(d => d.CountryId)
                     .HasConstraintName("FK_State_Countries");
+            });
+
+            modelBuilder.Entity<SubClause>(entity =>
+            {
+                entity.Property(e => e.Requirement).IsUnicode(false);
+
+                entity.Property(e => e.SubClauseName).IsUnicode(false);
+
+                entity.HasOne(d => d.MainClause)
+                    .WithMany(p => p.SubClause)
+                    .HasForeignKey(d => d.MainClauseId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__SubClause__MainClause");
+
+                entity.HasOne(d => d.Standard)
+                    .WithMany(p => p.SubClause)
+                    .HasForeignKey(d => d.StandardId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__SubClause__Standdard");
             });
 
             modelBuilder.Entity<SurveillanceMethod>(entity =>

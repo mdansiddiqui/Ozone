@@ -40,6 +40,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { UserReviewComponent } from './user-review/user-review.component';
 import { UserRemarksComponent } from './user-remarks/user-remarks.component';
 import { FileUploadingComponent } from './file-uploading/file-uploading.component';
+import { GeneralInformationComponent } from './general-information/general-information.component';
 
 
 
@@ -73,7 +74,8 @@ import { FileUploadingComponent } from './file-uploading/file-uploading.componen
     UserReviewComponent,
     UserRemarksComponent,
     FileUploadingComponent,
-    AllVisitComponent
+    AllVisitComponent,
+    GeneralInformationComponent
 
 
   ],

@@ -109,7 +109,9 @@ import { AuditorAuditDetailsComponent } from './pages/reports/auditor-audit-deta
 import { MappingStandardWithDocumentComponent } from './pages/master-setups/mapping-standard-with-document/mapping-standard-with-document.component';
 import {AuditDocumentComponent} from './pages/master-setups/audit-document/audit-document.component'
 import { GenerateinvoiceComponent } from './pages/sales//generateinvoice/generateinvoice.component';
-
+import { MasterStandardMainClauseComponent } from './pages/master-setups/master-standard-main-clause/master-standard-main-clause.component';
+import { MasterStandardSubClauseComponent } from './pages/master-setups/master-standard-sub-clause/master-standard-sub-clause.component';
+import { GeneralInformationComponent } from './pages/security-module/general-information/general-information.component'; 
 //RolesWithPermissionAuthorizerTaskBoardComponent
 //Transfer
 @NgModule({
@@ -194,6 +196,7 @@ import { GenerateinvoiceComponent } from './pages/sales//generateinvoice/generat
                     { path: 'pages/security-module/user-remarks', component: UserRemarksComponent },
                     { path: 'pages/security-module/file-uploading', component: FileUploadingComponent },
                     { path: 'pages/security-module/all-visit', component: AllVisitComponent },
+                    {path:'pages/security-module/general-information',component:GeneralInformationComponent},
 
 
                     //reports
@@ -230,6 +233,8 @@ import { GenerateinvoiceComponent } from './pages/sales//generateinvoice/generat
                     { path: 'pages/master-setups/project-amount', component: ProjectAmountComponent },
                     { path: 'pages/master-setups/qc-document', component: QcDocumentComponent },
                     { path: 'pages/master-setups/dashboard', component: DashboardComponent },
+                    { path: 'pages/master-setups/master-standard-main-clause', component: MasterStandardMainClauseComponent },
+                    { path: 'pages/master-setups/master-standard-sub-clause', component: MasterStandardSubClauseComponent },
 //Opeartions
                     {path:'pages/master-setups/audit-document', component:AuditDocumentComponent},
 
