@@ -15,7 +15,7 @@ namespace Ozone.Application.DTOs.Projects
         public string StandardName { get; set; }
 
         public long MainClauseId { get; set; }
-        public decimal MainClauseName { get; set; }
+        public string MainClauseName { get; set; }
         public string SubClauseName { get; set; }
         public string Requirement { get; set; }
         public long CreatedById { get; set; }

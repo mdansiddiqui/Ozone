@@ -12,14 +12,16 @@ namespace Ozone.Infrastructure.Persistence.Models
     {
         public MainClause()
         {
+          //  GoodPractices = new HashSet<GoodPractices>();
             SubClause = new HashSet<SubClause>();
         }
 
         [Key]
         public long Id { get; set; }
         public long StandardId { get; set; }
-        [Column(TypeName = "decimal(18, 2)")]
-        public decimal MainClauseName { get; set; }
+        [Required]
+        [StringLength(50)]
+        public string MainClauseName { get; set; }
         public string Heading { get; set; }
         public string Requirement { get; set; }
         public long CreatedById { get; set; }
@@ -33,6 +35,8 @@ namespace Ozone.Infrastructure.Persistence.Models
         [ForeignKey(nameof(StandardId))]
         [InverseProperty(nameof(Certification.MainClause))]
         public virtual Certification Standard { get; set; }
+        [InverseProperty("DescriptionOfGoodPracticeNavigation")]
+        public virtual ICollection<GoodPractices> GoodPractices { get; set; }
         [InverseProperty("MainClause")]
         public virtual ICollection<SubClause> SubClause { get; set; }
     }

@@ -68,7 +68,7 @@ let MainClauseId=0
     }
 
     const standard = Number(this.StandardMainClause.get('Standard').value);
-    const mainClause = this.StandardMainClause.get('MainClause').value;
+    const mainClause =String( this.StandardMainClause.get('MainClause').value);
     const headings =  this.StandardMainClause.get('Headings').value;
     const  Requirement = this.StandardMainClause.get('Requirement').value;
 
@@ -170,5 +170,11 @@ debugger
              }
        )
         }
+
+
+        onTableDataChange(event) {
+    this.pagedDto.page = event;
+    this.onSearch();
+  }
 
 }

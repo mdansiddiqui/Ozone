@@ -171,6 +171,9 @@ export class MasterStandardSubClauseComponent implements OnInit {
             
           })
         }
-
+        onTableDataChange(event) {
+          this.pagedDto.page = event;
+          this.onSearch();
+        }
     
 }

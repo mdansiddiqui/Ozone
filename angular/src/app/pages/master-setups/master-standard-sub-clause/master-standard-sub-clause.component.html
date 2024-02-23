@@ -1,4 +1,3 @@
-<p>master-standard-sub-clause works!</p>
 
 <section class="content-header pt-0 pb-0 mt-0 mx-0 mb-0 md-0">
     <div class="container-fluid mx-0 px-0 mx-0 mb-0">
@@ -167,32 +166,20 @@
                             <div class="row">
                                 <div class="col-sm-2 col-12 text-sm-left text-center">
                                     <button class="btn btn-sm">
-                                        <i class="fas fa-redo text-info"></i>
+                                        <i class="fas fa-redo text-info"(click)="reloadGrid()"></i>
                                    
                                    
                                     </button>
         
                                 </div>
                                 <div class="col-sm-6 col-12">
-                                    <!-- <pagination-controls id="server" (pageChange)="onTableDataChange($event)">
-                                    </pagination-controls> -->
+                                    
                                 </div>
                                 <div class="col-sm-4 col-12">
-                                    <pagination-controls id="server" >
+                                    <pagination-controls id="server" (pageChange)="onTableDataChange($event)">
                                     </pagination-controls>
                                 </div>
-                                <!-- <div class="col-sm-2 col-12 ">
-        
-                                    <div class="d-flex flex-row-reverse bd-highlight mb-2">
-                                        <div class="p-2 bd-highlight">
-                                            <select (change)="onTableSizeChange($event)" class="custom-select">
-                                                <option *ngFor="let size of tableSizes" [ngValue]="size">
-                                                    {{ size }}
-                                                </option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div> -->
+                                
                             </div>
                         </div>
                         <!-- <dx-tree-list>
