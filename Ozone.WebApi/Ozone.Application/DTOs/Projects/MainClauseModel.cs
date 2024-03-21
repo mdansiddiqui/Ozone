@@ -6,13 +6,14 @@ using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace Ozone.Application.DTOs
-{
+{ 
     public class MainClauseModel
     {
         public long Id { get; set; }
         public long StandardId { get; set; }
         public string StandardName { get; set; }
-        public decimal MainClauseName { get; set; }
+   
+        public string MainClauseName { get; set; }
         public string Heading { get; set; }
         public string Requirement { get; set; }
         public long? CreatedById { get; set; }
