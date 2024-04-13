@@ -53,6 +53,7 @@ namespace Ozone.Infrastructure.Persistence.Models
         public virtual DbSet<EffluentTreatmentPlant> EffluentTreatmentPlant { get; set; }
         public virtual DbSet<Expenses> Expenses { get; set; }
         public virtual DbSet<FileUploading> FileUploading { get; set; }
+        public virtual DbSet<GoodPractices> GoodPractices { get; set; }
         public virtual DbSet<HolidayCalendar> HolidayCalendar { get; set; }
         public virtual DbSet<HolidayType> HolidayType { get; set; }
         public virtual DbSet<Legislation> Legislation { get; set; }
@@ -719,6 +720,16 @@ namespace Ozone.Infrastructure.Persistence.Models
                     .WithMany(p => p.FileUploadingToUser)
                     .HasForeignKey(d => d.ToUserId)
                     .HasConstraintName("FK_FileUploading_SecUser1");
+            });
+
+            modelBuilder.Entity<GoodPractices>(entity =>
+            {
+                entity.Property(e => e.ObjectiveEvidence).IsUnicode(false);
+
+                entity.HasOne(d => d.DescriptionOfGoodPracticeNavigation)
+                    .WithMany(p => p.GoodPractices)
+                    .HasForeignKey(d => d.DescriptionOfGoodPractice)
+                    .HasConstraintName("FK_Good_Practices_MainClause");
             });
 
             modelBuilder.Entity<HolidayCalendar>(entity =>

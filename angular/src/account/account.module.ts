@@ -17,6 +17,7 @@ import { AccountFooterComponent } from './layout/account-footer.component';
 // tenants
 import { TenantChangeComponent } from './tenant/tenant-change.component';
 import { TenantChangeDialogComponent } from './tenant/tenant-change-dialog.component';
+import { NgxUiLoaderModule } from 'ngx-ui-loader';
 
 @NgModule({
     imports: [
@@ -27,7 +28,8 @@ import { TenantChangeDialogComponent } from './tenant/tenant-change-dialog.compo
         SharedModule,
         ServiceProxyModule,
         AccountRoutingModule,
-        ModalModule.forChild()
+        ModalModule.forChild(),
+        NgxUiLoaderModule,
     ],
     declarations: [
         AccountComponent,

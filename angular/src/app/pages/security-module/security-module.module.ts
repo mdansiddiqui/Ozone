@@ -41,6 +41,9 @@ import { UserReviewComponent } from './user-review/user-review.component';
 import { UserRemarksComponent } from './user-remarks/user-remarks.component';
 import { FileUploadingComponent } from './file-uploading/file-uploading.component';
 import { GeneralInformationComponent } from './general-information/general-information.component';
+import { WageAnalysisComponent } from './wage-analysis/wage-analysis.component';
+import { GoodPracticesComponent } from './good-practices/good-practices.component';
+import { NonConfirmatyNCComponent } from './non-confirmaty-nc/non-confirmaty-nc.component';
 
 
 
@@ -75,7 +78,10 @@ import { GeneralInformationComponent } from './general-information/general-infor
     UserRemarksComponent,
     FileUploadingComponent,
     AllVisitComponent,
-    GeneralInformationComponent
+    GeneralInformationComponent,
+    WageAnalysisComponent,
+    GoodPracticesComponent,
+    NonConfirmatyNCComponent
 
 
   ],

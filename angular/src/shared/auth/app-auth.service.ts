@@ -143,7 +143,9 @@ export class AppAuthService {
      // location.href = initialUrl + "app/pages/stock-management/indenting-maker-list";
         // event.preventDefault();
         this._toster.success('sign in')
-        this._router.navigate(['app/home'])
+        // this._router.navigate(['app/home'])
+        this._router.navigate(['app/pages/master-setups/dashboard'])
+        
     }
 
 

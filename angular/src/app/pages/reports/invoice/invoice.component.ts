@@ -17,9 +17,6 @@ export class InvoiceComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
-
-
   Pdf() {
 
     debugger

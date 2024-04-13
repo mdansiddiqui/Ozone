@@ -17,6 +17,7 @@ namespace Ozone.Application.Interfaces.Setup
 
 
         Task<List<MainClauseModel>> GetAllClauseByStandard(long countryId);
+        Task<List<MainClauseModel>> GetAllMainClaus();
 
 
     }

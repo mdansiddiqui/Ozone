@@ -112,6 +112,9 @@ import { GenerateinvoiceComponent } from './pages/sales//generateinvoice/generat
 import { MasterStandardMainClauseComponent } from './pages/master-setups/master-standard-main-clause/master-standard-main-clause.component';
 import { MasterStandardSubClauseComponent } from './pages/master-setups/master-standard-sub-clause/master-standard-sub-clause.component';
 import { GeneralInformationComponent } from './pages/security-module/general-information/general-information.component'; 
+import { WageAnalysisComponent } from './pages/security-module/wage-analysis/wage-analysis.component';
+import { GoodPracticesComponent } from './pages/security-module/good-practices/good-practices.component';
+import { NonConfirmatyNCComponent } from './pages/security-module/non-confirmaty-nc/non-confirmaty-nc.component';
 //RolesWithPermissionAuthorizerTaskBoardComponent
 //Transfer
 @NgModule({
@@ -197,7 +200,11 @@ import { GeneralInformationComponent } from './pages/security-module/general-inf
                     { path: 'pages/security-module/file-uploading', component: FileUploadingComponent },
                     { path: 'pages/security-module/all-visit', component: AllVisitComponent },
                     {path:'pages/security-module/general-information',component:GeneralInformationComponent},
+                    {path:'pages/security-module/wage-analysis',component:WageAnalysisComponent},
+                    {path:'pages/security-module/good-practices',component:GoodPracticesComponent},
+                    {path:'pages/security-module/non-confirmaty',component:NonConfirmatyNCComponent},
 
+                   
 
                     //reports
 

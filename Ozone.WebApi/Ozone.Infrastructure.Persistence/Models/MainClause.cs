@@ -39,5 +39,6 @@ namespace Ozone.Infrastructure.Persistence.Models
         public virtual ICollection<GoodPractices> GoodPractices { get; set; }
         [InverseProperty("MainClause")]
         public virtual ICollection<SubClause> SubClause { get; set; }
+
     }
 }

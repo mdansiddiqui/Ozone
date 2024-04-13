@@ -108,13 +108,41 @@ export class AllVisitComponent implements OnInit {
   }
 
 
-  general()
-  {debugger
+//   general()
+//   {debugger
    
-    ///#/app/pages/sales/audit-plan?ProjectId=' + this.AllVisitDataList[_i].projectId + "&StandardId=" + this.AllVisitDataList[_i].standardId + "&ClientId=" + this.AllVisitDataList[_i].clientId + "&AuditVisitId=" + this.AllVisitDataList[_i].id
-    // this.router.navigateByUrl('/app/pages/sales/audit-plan?'+e.row.data.projectId);
-    this.router.navigateByUrl('/app/pages/security-module/general-information');
-  }
+//     ///#/app/pages/sales/audit-plan?ProjectId=' + this.AllVisitDataList[_i].projectId + "&StandardId=" + this.AllVisitDataList[_i].standardId + "&ClientId=" + this.AllVisitDataList[_i].clientId + "&AuditVisitId=" + this.AllVisitDataList[_i].id
+//     // this.router.navigateByUrl('/app/pages/sales/audit-plan?'+e.row.data.projectId);
+//     this.router.navigateByUrl('/app/pages/security-module/general-information');
+//   }
+
+//   wageAnalysis(){
+// debugger
+// this.router.navigateByUrl('/app/pages/security-module/wage-analysis');
+//   }
+
+//   goodPractices(){
+// this.router.navigateByUrl('/app/pages/security-module/good-practices');
+
+//   }
+//   nonConfirmaty(){
+//     this.router.navigateByUrl('/app/pages/security-module/non-confirmaty')
+
+//   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   LoadVisitLevel(): void {
 
 

@@ -939,20 +939,59 @@ namespace Ozone.Infrastructure.Shared.Services
                                 ClientAudit.ApprovedById = input[0].RemarksById;
                                 AuditReportHistoryMod.ApprovalStatusId = 2;
                                 AuditReportHistoryMod.Remarks = "Approved QC";
-                                if (ClientAudit.VisitLevelId == 8 || ClientAudit.VisitLevelId == 21 || ClientAudit.VisitLevelId == 23) 
+                                if (ClientAudit.VisitLevelId == 8 || ClientAudit.VisitLevelId == 21 || ClientAudit.VisitLevelId == 23)
                                 {
-                                
-                                  ClientProjects ClientProject2 = _dbContext.ClientProjects.Where(u => u.Id == input[0].ProjectId).FirstOrDefault();
-                                  ClientProject2.ApprovalStatusId = 3;
-                                  ClientProject2.CertificateIssueDate = DateTime.Now;
 
-                                    var expiryDate = DateTime.Now.AddYears(3);
-                                  ClientProject2.CertificationExpiryDate = expiryDate.AddDays(-2);
-                                    //ClientProject2.CertificationExpiryDate = expiryDate.AddDays(-2);
+                                    ClientProjects ClientProject2 = _dbContext.ClientProjects.Include(x => x.Client).Where(u => u.Id == input[0].ProjectId).FirstOrDefault();
+                                    ClientProject2.ApprovalStatusId = 3;
 
 
-                                    var standard=_dbContext.Certification.Where(x => x.Id == ClientProject2.StandardId && x.IsActive == true && x.IsDeleted == false).FirstOrDefault();
-                                    string Standardcode=standard.Code;
+                                    if (ClientAudit.VisitLevelId == 21)
+                                    {
+
+                                        DateTime? newIssueDate;
+                                        DateTime? expDate;
+                                        List<long?> Ids = new List<long?>() { 3, 15 };
+                                        if (ClientProject2.Client.Multisite == true)
+                                        {
+
+                                            var ClientProjectOld = _dbContext.ClientProjects.Where(u => u.ClientId == ClientProject2.ClientId && u.StandardId == ClientProject2.StandardId && u.IsDeleted == false && u.CertificationExpiryDate != null && Ids.Contains(u.ApprovalStatusId)).OrderByDescending(x=>x.Id).FirstOrDefault();
+
+                                            newIssueDate = ClientProjectOld.CertificationExpiryDate;
+                                            ClientProject2.CertificateIssueDate = newIssueDate.Value.AddDays(1);
+
+
+                                            ClientProject2.CertificationExpiryDate = ClientProjectOld.CertificationExpiryDate.Value.AddYears(3);
+
+
+                                        }
+                                        else
+                                        {
+                                            var ClientProjectOld = _dbContext.ClientProjects.Where(u => u.ClientId == ClientProject2.ClientId && u.StandardId == ClientProject2.StandardId && u.ClientSiteId == u.ClientSiteId && u.IsDeleted == false && u.CertificationExpiryDate != null && Ids.Contains(u.ApprovalStatusId)).OrderByDescending(x => x.Id).FirstOrDefault();
+
+                                            newIssueDate = ClientProjectOld.CertificationExpiryDate;
+                                            ClientProject2.CertificateIssueDate = newIssueDate.Value.AddDays(1);
+
+
+                                            ClientProject2.CertificationExpiryDate = ClientProjectOld.CertificationExpiryDate.Value.AddYears(3);
+                                        }
+
+                                    }
+
+                                    else
+                                    {
+                                        ClientProject2.CertificateIssueDate = DateTime.Now;
+
+                                        var expiryDate = DateTime.Now.AddYears(3);
+                                        ClientProject2.CertificationExpiryDate = expiryDate.AddDays(-1);
+                                        //ClientProject2.CertificationExpiryDate = expiryDate.AddDays(-2);
+
+                                    }
+
+
+
+                                    var standard = _dbContext.Certification.Where(x => x.Id == ClientProject2.StandardId && x.IsActive == true && x.IsDeleted == false).FirstOrDefault();
+                                    string Standardcode = standard.Code;
                                     DateTime Date = System.DateTime.Now;
                                     string year = Date.ToString("yyyy");
                                     string Month = Date.ToString("MM");
@@ -963,15 +1002,15 @@ namespace Ozone.Infrastructure.Shared.Services
                                     //Random generator = new Random();
                                     //String r = generator.Next(0, 1000000).ToString("D6");
                                     //string RegistrationNo = Standardcode + "-" + r + "-" + ProjectCount;
-                                     string RegistrationNo = await registrationno(ProjectCount,Standardcode);
+                                    string RegistrationNo = await registrationno(ProjectCount, Standardcode);
 
 
 
-                                    int? cycleCount = _dbContext.ClientProjects.Where(x => x.CertificateIssueDate != null && x.RegistrationNo!=null && x.StandardId==ClientProject2.StandardId && x.ClientId==ClientProject2.ClientId && x.IsDeleted == false).Count();
+                                    int? cycleCount = _dbContext.ClientProjects.Where(x => x.CertificateIssueDate != null && x.RegistrationNo != null && x.StandardId == ClientProject2.StandardId && x.ClientId == ClientProject2.ClientId && x.IsDeleted == false).Count();
                                     cycleCount = cycleCount + 1;
 
 
-                                  
+
                                     //System.Console.WriteLine(r);
 
                                     string cycleCode = Standardcode + "-" + year + "-" + cycleCount;
@@ -994,6 +1033,24 @@ namespace Ozone.Infrastructure.Shared.Services
 
                                     _dbContext.ProjectRemarksHistory.Add(history);
                                 }
+
+                                //else {
+
+
+                                //    ProjectRemarksHistory history = new ProjectRemarksHistory();
+
+                                //    history.ApprovalStatusId = 3;
+
+                                //    history.Remarks = "QC Approved";
+                                //    history.RemarksById = input[0].RemarksById;
+
+                                //    history.RemarksDate = DateTime.Now;
+                                //    history.ProjectId = input[0].ProjectId;
+
+                                //    history.IsDeleted = false;
+
+                                //    _dbContext.ProjectRemarksHistory.Add(history);
+                                //}
                                 //var  projectmaster= _dbContext.ClientProjects.Where(u => u.Id == input[0].ProjectId).FirstOrDefault();
                                 //projectmaster.ApprovalStatusId=3;
                                 //_dbContext.ClientProjects.Update(projectmaster);

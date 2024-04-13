@@ -201,13 +201,13 @@ onTableSizeChange(event): void {
       abp.message.error("Some fields are required ");
       return;
     }
-    if (this.id > 0 && this.id != null && this.id != undefined && this.id != NaN) {
+    if (this.id > 0 && this.id != null && this.id != undefined && !Number.isNaN(this.id)) {
       this.item.Id = this.id
     }
 // this.item.Id=this.DocumentTypeForm.get('Id').value
 this.item.Name=this.CountryForm.get('Name').value
 
-if (this.CountryForm.get('Code').value !=null && this.id != undefined && this.id != NaN) {
+if (this.CountryForm.get('Code').value !=null && this.id != undefined && !Number.isNaN(this.id)) {
   this.item.Code=this.CountryForm.get('Code').value
 }
 

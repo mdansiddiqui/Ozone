@@ -10,6 +10,7 @@ const routes: Routes = [
        canActivate: [AppRouteGuard], 
        canActivateChild: [AppRouteGuard],
         data: { preload: true }
+        
     },
     {
         path: 'app',

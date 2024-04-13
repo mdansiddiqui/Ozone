@@ -1,0 +1,166 @@
+
+<section class="content-header pt-0 pb-0 mt-0 mx-0 mb-0 md-0">
+    <div class="container-fluid mx-0 px-0 mx-0 mb-0">
+
+        <div class="row md-0 mb-1 mt-0">
+            <div class="col-sm-12 px-0">
+                <div class="alert alert-info alert-dismissible">
+                    <h6>Good Practices</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<form [formGroup]="GoodPractices" #goodPractices="ngForm">
+
+
+    <section class="content-header pt-0 pb-0 mt-3 mx-0 mb-0 md-0">
+    
+    
+    
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-header">
+    
+                  <!-- <form [formGroup]> -->
+                        <div class="row md-0 px-3 pb-2 ">
+                            <div class="col-md-4">
+                        
+                                <label class="mb-0 mx-2" for="Standard">
+                                    Description of Good Practices
+                                </label>
+                                <select class="form-control form-control-sm col-md-12 mx-2" formControlName="Standard" required
+                                id="Standard" required>
+                                <option *ngFor="let items of CertificationList" [value]="items.id">
+                                    {{ items.name }}
+                                </option>
+                              </select>
+                              <div  class="invalid-feedback">
+                                <div >Description is required</div>
+                              </div>
+                            
+                            </div>
+                            
+                            
+
+                            <div class="col-md-4">
+                                <label class="mb-0" for="SubCaluse">Objective Evidence</label>
+                                <input type="text" formControlName="SubCaluse" class="form-control form-control-sm col-md-12" id="SubCaluse" />
+                            </div>
+                            
+    
+                
+
+                    <div class="col-md-4">
+                    
+                      
+                            <label class="mb-0" for="Requirement">Upload Evidence</label>
+                            <input type="text" formControlName="Requirement" class="form-control form-control-sm col-md-12" id="Requirement" />
+
+                    
+                    </div>
+                </div>
+                    <div class="col-md-12">
+                        <button type="button"
+                        class="btn-sm btn btn-primary float-right mx-1 px-4 mt-2 pt-2 pb-2 mt-3 "  >New</button>
+                    <button type="button"
+                        class="btn-sm btn-success btn float-right mx-1 px-4 mt-2 pt-2 pb-2 mt-3" >Submit</button>
+                    
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <div class="container-fluid mt-2">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                    <div class="card-body table-responsive p-0">
+        
+                      
+        
+                        <dx-data-grid id="dataGrid"  [rowAlternationEnabled]="true" [showRowLines]="true"
+                            [showColumnLines]="true" [allowColumnReordering]="true"
+                            >
+                            <dxo-scrolling mode="virtual"></dxo-scrolling>
+    
+                            <dxo-search-panel [visible]="true" [width]="240" placeholder="Search...">
+                            </dxo-search-panel> 
+                            <dxi-column   dataField="standardName"  
+                            caption=" Description of Good Practices" ></dxi-column>
+                            <dxi-column   dataField="mainClauseName"  
+                            caption="Objective Evidence" ></dxi-column>
+                             <dxi-column   dataField="subClauseName"  
+                            caption="Upload Evidence"></dxi-column> 
+                          
+                           
+                           
+        
+                    
+                              <dxi-column type="buttons"caption="Action"  >  
+                                    <dxi-button   icon="edit"
+                                    hint="Edit Record"
+                                    
+                                    ></dxi-button>  
+    
+                                    <dxi-button   icon="deleterow"
+                                    hint="Delete Record"
+                              
+                                     ></dxi-button>
+                          
+                                
+                                <!-- <i class="fas fa-tasks"></i> -->
+                                <!-- <dxi-button
+                                hint="Download File"
+                                icon="download"
+                               [onClick]="Downloadfile"></dxi-button> -->
+                               <!-- <dxi-button   icon="edit"
+                               [routerLink]='["/app/pages/stock-management/library"]'
+                                 [(visible)]="isAddShown"
+                                 ></dxi-button>   -->
+                              </dxi-column>   
+                             
+                             
+                      
+        
+        
+        
+                        </dx-data-grid>
+                        <div class="card-footer table-card-footer pb-0 border-top">
+                            <div class="row">
+                                <div class="col-sm-2 col-12 text-sm-left text-center">
+                                    <button class="btn btn-sm">
+                                        <i class="fas fa-redo text-info"></i>
+                                   
+                                   
+                                    </button>
+        
+                                </div>
+                                <div class="col-sm-6 col-12">
+                                    
+                                </div>
+                                <div class="col-sm-4 col-12">
+                                    <pagination-controls id="server">
+                                    </pagination-controls>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <!-- <dx-tree-list>
+                            <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[10, 20, 50]"
+                                [showNavigationButtons]="true">
+                            </dxo-pager>
+                        </dx-tree-list> -->
+        
+        
+        
+        
+                    </div>
+                </div></div>
+            </div>
+        </div>
+       
+    
+    </section> </form>

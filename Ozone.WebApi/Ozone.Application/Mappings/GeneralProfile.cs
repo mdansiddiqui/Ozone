@@ -203,6 +203,11 @@ namespace Ozone.Application.Mappings
                 .ForMember(x => x.MainClauseName, opt => opt.MapFrom(src => src.MainClause.MainClauseName))
 
                .ReverseMap();
+
+            CreateMap<GoodPractices, GoodPracticeModel>()
+               .ForMember(x => x.DescriptionOfGoodPractice, opt => opt.MapFrom(src => src.DescriptionOfGoodPracticeNavigation.MainClauseName))
+               .ReverseMap();
+
             //get
             CreateMap<UserDeclaration, UserDeclarationModel>()
             .ForMember(x => x.ContractTypeName, opt => opt.MapFrom(src => src.ContractType.Name))

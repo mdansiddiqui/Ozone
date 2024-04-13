@@ -1,0 +1,621 @@
+<form [formGroup]="WageAnalysis" #wageAnalysis="ngForm">
+
+  <section class="content-header pt-0 pb-0 mt-0 mx-0 mb-0 md-0">
+    <div class="container-fluid mx-0 px-0 mx-0 mb-0">
+        <div class="row md-0 mb-1 mt-0">
+            <div class="col-sm-12 px-0">
+                <div class="alert alert-info alert-dismissible">
+                    <h6>Wage Calculations</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+  <section class="content pt-0 pb-0 mt-3 mx-2 mb-0 md-0">
+    <div class="container-fluid">
+        <!-- <h3>Wage Calculations</h3> -->
+      <div class="card" style="margin-top: 10px;">
+        <div class="row mt-1 mx-2">
+          <div class="col-md-4">
+            <label class="mb-0" for="Idheighest">Heighest Paid Month</label>
+          </div>
+          <div class="col-md-4">
+            <label class="mb-0" for="Idaverage">Average Paid Month</label>
+          </div>
+
+          <div class="col-md-4">
+            <label class="mb-0" for="Idlowest">Lowest Paid Month</label>
+          </div>
+        </div>
+        <b style="margin-top: 4px;">
+          <a
+            class="nav-item ml-2 mt-4"
+            id="nav-profile-tab"
+            data-toggle="tab"
+            data-toggle="tab"
+            role="tab"
+            style="text-decoration: underline"
+            aria-controls="nav-profile"
+            aria-selected="false"
+            >Id Number:
+          </a></b
+        >
+
+        <div class="row mx-2">
+          <div class="col-md-4">
+            <input
+              type="month"
+              formControlName="Idheighest"
+              class="form-control form-control-sm mb-2"
+              id="Idheighest"
+            />
+          </div>
+          <div class="col-md-4">
+            <input
+            type="month"
+              formControlName="Idaverage"
+              class="form-control form-control-sm mb-2"
+              id="Idaverage"
+            />
+          </div>
+
+          <div class="col-md-4">
+            <input
+            type="month"
+              formControlName="Idlowest"
+              class="form-control form-control-sm col-md-12"
+              id="Idlowest"
+            />
+          </div>
+        </div>
+        <b style="margin-top: 4px;">
+          <a
+            class="nav-item ml-2 mt-4"
+            id="nav-profile-tab"
+            data-toggle="tab"
+            data-toggle="tab"
+            role="tab"
+            style="text-decoration: underline"
+            aria-controls="nav-profile"
+            aria-selected="false"
+            >Gender:
+          </a></b
+        >
+
+        <div class="row mx-2 ">
+          <div class="col-md-4">        
+           <select class="form-control form-control-sm col-md-12" formControlName="Genderheighest" required
+                            id="Genderheighest" required>
+                            <option *ngFor="let item of genderList" [value]="item.name">
+                              {{item.name}}
+                            </option>
+                        </select>
+          </div>
+          <div class="col-md-4">
+           <select class="form-control form-control-sm col-md-12" formControlName="Genderaverage" required
+            id="Genderaverage" required>
+            <option *ngFor="let item of genderList" [value]="item.name">
+              {{item.name}}
+            </option>
+         </select>
+
+          </div>
+
+          <div class="col-md-4">
+            <select class="form-control form-control-sm col-md-12" formControlName="Genderlowest" required
+            id="Genderlowest" required>
+            <option *ngFor="let item of genderList" [value]="item.name">
+              {{item.name}}
+            </option>
+          </select>
+
+          </div>
+        </div>
+        <b style="margin-top: 4px;">
+          <a
+            class="nav-item ml-2 mt-4"
+            id="nav-profile-tab"
+            data-toggle="tab"
+            data-toggle="tab"
+            role="tab"
+            style="text-decoration: underline"
+            aria-controls="nav-profile"
+            aria-selected="false"
+            >Regular Working Hours:
+          </a></b
+        >
+
+        <div class="row mx-2">
+          <div class="col-md-4">
+           <input
+              type="text"
+              formControlName="RWHheighest"
+              class="form-control form-control-sm mb-2"
+              id="RWHheighest"
+            />
+          </div>
+          <div class="col-md-4">
+         <input
+              type="text"
+              formControlName="RWHaverage"
+              class="form-control form-control-sm mb-2"
+              id="RWHaverage"
+            />
+          </div>
+
+          <div class="col-md-4">
+            <input
+              type="text"
+              formControlName="RWHlowest"
+              class="form-control form-control-sm col-md-12"
+              id="RWHlowest"
+            />
+          </div>
+        </div>
+
+        <b style="margin-top: 4px;">
+          <a
+            class="nav-item ml-2 mt-4"
+            id="nav-profile-tab"
+            data-toggle="tab"
+            data-toggle="tab"
+            role="tab"
+            style="text-decoration: underline"
+            aria-controls="nav-profile"
+            aria-selected="false"
+            >Regular Pay Rate/Month
+          </a></b
+        >
+
+        <div class="row mx-2">
+          <div class="col-md-4">
+          <input
+              type="text"
+              formControlName="RPRheighest"
+              class="form-control form-control-sm mb-2"
+              id="RPRheighest"
+            />
+          </div>
+          <div class="col-md-4">
+           <input
+              type="text"
+              formControlName="RPRaverage"
+              class="form-control form-control-sm mb-2"
+              id="RPRaverage"
+            />
+          </div>
+
+          <div class="col-md-4">
+            <input
+              type="text"
+              formControlName="RPRlowest"
+              class="form-control form-control-sm col-md-12"
+              id="RPRlowest"
+            />
+          </div>
+        </div>
+
+        <b style="margin-top: 4px;">
+          <a
+            class="nav-item ml-2 mt-4"
+            id="nav-profile-tab"
+            data-toggle="tab"
+            data-toggle="tab"
+            role="tab"
+            style="text-decoration: underline"
+            aria-controls="nav-profile"
+            aria-selected="false"
+            >Total No. of Worked Days for the Month</a
+          ></b
+        >
+
+        <div class="row mt-1 mx-2">
+          <div class="col-md-4">
+         <input
+              type="text"
+              formControlName="NoOfWorkDaysheighest"
+              class="form-control form-control-sm mb-2"
+              id="NoOfWorkDaysheighest"
+            />
+          </div>
+          <div class="col-md-4">
+          <input
+              type="text"
+              formControlName="NoOfWorkDaysaverage"
+              class="form-control form-control-sm mb-2"
+              id="NoOfWorkDaysaverage"
+            />
+          </div>
+
+          <div class="col-md-4">
+            <input
+              type="text"
+              formControlName="NoOfWorkDayslowest"
+              class="form-control form-control-sm col-md-12"
+              id="NoOfWorkDayslowest"
+            />
+          </div>
+        </div>
+
+        <b style="margin-top: 4px;">
+          <a
+            class="nav-item ml-2 mt-4"
+            id="nav-profile-tab"
+            data-toggle="tab"
+            data-toggle="tab"
+            role="tab"
+            style="text-decoration: underline"
+            aria-controls="nav-profile"
+            aria-selected="false"
+            >Salary Earned:
+          </a></b
+        >
+
+        <div class="row mt-1 mx-2">
+          <div class="col-md-4">
+        <input
+              type="text"
+              formControlName="SalaryEarnedheighest"
+              class="form-control form-control-sm mb-2"
+              id="SalaryEarnedheighest"
+            />
+          </div>
+          <div class="col-md-4">
+           <input
+              type="text"
+              formControlName="SalaryEarnedaverage"
+              class="form-control form-control-sm mb-2"
+              id="SalaryEarnedaverage"
+            />
+          </div>
+
+          <div class="col-md-4">
+         <input
+              type="text"
+              formControlName="SalaryEarnedlowest"
+              class="form-control form-control-sm col-md-12"
+              id="SalaryEarnedlowest"
+            />
+          </div>
+        </div>
+
+        <b style="margin-top: 4px;">
+          <a
+            class="nav-item ml-2 mt-4"
+            id="nav-profile-tab"
+            data-toggle="tab"
+            data-toggle="tab"
+            role="tab"
+            style="text-decoration: underline"
+            aria-controls="nav-profile"
+            aria-selected="false"
+            >Overtime Hours Done:
+          </a></b
+        >
+
+        <div class="row mt-1 mx-2">
+          <div class="col-md-4">
+            <input
+              type="text"
+              formControlName="OverTimeHoursheighest"
+              class="form-control form-control-sm mb-2"
+              id="OverTimeHoursheighest"
+            />
+          </div>
+          <div class="col-md-4">
+           <input
+              type="text"
+              formControlName="OverTimeHoursaverage"
+              class="form-control form-control-sm mb-2"
+              id="OverTimeHoursaverage"
+            />
+          </div>
+
+          <div class="col-md-4">
+            <input
+              type="text"
+              formControlName="OverTimeHourslowest"
+              class="form-control form-control-sm col-md-12"
+              id="OverTimeHourslowest"
+            />
+          </div>
+        </div>
+        <b style="margin-top: 4px;">
+          <a
+            class="nav-item ml-2 mt-4"
+            id="nav-profile-tab"
+            data-toggle="tab"
+            data-toggle="tab"
+            role="tab"
+            style="text-decoration: underline"
+            aria-controls="nav-profile"
+            aria-selected="false"
+            >Overtime Salary Earned:
+          </a></b
+        >
+
+        <div class="row mt-1 mx-2">
+          <div class="col-md-4">
+            <input
+              type="text"
+              formControlName="OverTimeSalaryheighest"
+              class="form-control form-control-sm mb-2"
+              id="OverTimeSalaryheighest"
+            />
+          </div>
+          <div class="col-md-4">
+           <input
+              type="text"
+              formControlName="OverTimeSalaryaverage"
+              class="form-control form-control-sm mb-2"
+              id="OverTimeSalaryaverage"
+            />
+          </div>
+
+          <div class="col-md-4">
+            <input
+              type="text"
+              formControlName="OverTimeSalarylowest"
+              class="form-control form-control-sm col-md-12"
+              id="OverTimeSalarylowest"
+            />
+          </div>
+        </div>
+        <b style="margin-top: 4px;">
+          <a
+            class="nav-item ml-2 mt-4"
+            id="nav-profile-tab"
+            data-toggle="tab"
+            data-toggle="tab"
+            role="tab"
+            style="text-decoration: underline"
+            aria-controls="nav-profile"
+            aria-selected="false"
+            >Holiday Overtime(Hours/Wages)
+          </a></b
+        >
+
+        <div class="row mt-1 mx-2">
+          <div class="col-md-4">
+           <input
+              type="text"
+              formControlName="HolidayOvertimeheighest"
+              class="form-control form-control-sm mb-2"
+              id="HolidayOvertimeheighest"
+            />
+          </div>
+          <div class="col-md-4">
+           <input
+              type="text"
+              formControlName="HolidayOvertimeaverage"
+              class="form-control form-control-sm mb-2"
+              id="HolidayOvertimeaverage"
+            />
+          </div>
+
+          <div class="col-md-4">
+            <input
+              type="text"
+              formControlName="HolidayOvertimelowest"
+              class="form-control form-control-sm col-md-12"
+              id="HolidayOvertimelowest"
+            />
+          </div>
+        </div>
+        <b style="margin-top: 4px;">
+          <a
+            class="nav-item ml-2 mt-4"
+            id="nav-profile-tab"
+            data-toggle="tab"
+            data-toggle="tab"
+            role="tab"
+            style="text-decoration: underline"
+            aria-controls="nav-profile"
+            aria-selected="false"
+            >Incentives/Allownces:
+          </a></b
+        >
+
+        <div class="row mt-1 mx-2">
+          <div class="col-md-4">
+          <input
+              type="text"
+              formControlName="Incentivesheighest"
+              class="form-control form-control-sm mb-2"
+              id="Incentivesheighest"
+            />
+          </div>
+          <div class="col-md-4">
+           <input
+              type="text"
+              formControlName="Incentivesaverage"
+              class="form-control form-control-sm mb-2"
+              id="Incentivesaverage"
+            />
+          </div>
+
+          <div class="col-md-4">
+            <input
+              type="text"
+              formControlName="Incentiveslowest"
+              class="form-control form-control-sm col-md-12"
+              id="Incentiveslowest"
+            />
+          </div>
+        </div>
+        <b style="margin-top: 4px;">
+          <a
+            class="nav-item ml-2 mt-4"
+            id="nav-profile-tab"
+            data-toggle="tab"
+            data-toggle="tab"
+            role="tab"
+            style="text-decoration: underline"
+            aria-controls="nav-profile"
+            aria-selected="false"
+            >Total Wages Earned
+          </a></b
+        >
+
+        <div class="row mt-1 mx-2">
+          <div class="col-md-4">
+            <input
+              type="text"
+              formControlName="TotalWagesheighest"
+              class="form-control form-control-sm mb-2"
+              id="TotalWagesheighest"
+            />
+          </div>
+          <div class="col-md-4">
+           <input
+              type="text"
+              formControlName="TotalWagesaverage"
+              class="form-control form-control-sm mb-2"
+              id="TotalWagesaverage"
+            />
+          </div>
+
+          <div class="col-md-4">
+          <input
+              type="text"
+              formControlName="TotalWageslowest"
+              class="form-control form-control-sm col-md-12"
+              id="TotalWageslowest"
+            />
+          </div>
+        </div>
+        <b style="margin-top: 4px;">
+          <a
+            class="nav-item ml-2 mt-4"
+            id="nav-profile-tab"
+            data-toggle="tab"
+            data-toggle="tab"
+            role="tab"
+            style="text-decoration: underline"
+            aria-controls="nav-profile"
+            aria-selected="false"
+            >Social Insurance and other Deductions:
+          </a></b
+        >
+
+        <div class="row mt-1 mx-2">
+          <div class="col-md-4">
+            <input
+              type="text"
+              formControlName="SocialInsuranceheighest"
+              class="form-control form-control-sm mb-2"
+              id="SocialInsuranceheighest"
+            />
+          </div>
+          <div class="col-md-4">
+           <input
+              type="text"
+              formControlName="SocialInsuranceaverage"
+              class="form-control form-control-sm mb-2"
+              id="SocialInsuranceaverage"
+            />
+          </div>
+
+          <div class="col-md-4">
+            <input
+              type="text"
+              formControlName="SocialInsurancelowest"
+              class="form-control form-control-sm col-md-12"
+              id="SocialInsurancelowest"
+            />
+          </div>
+        </div>
+        <b style="margin-top: 4px;">
+          <a
+            class="nav-item ml-2 mt-4"
+            id="nav-profile-tab"
+            data-toggle="tab"
+            data-toggle="tab"
+            role="tab"
+            style="text-decoration: underline"
+            aria-controls="nav-profile"
+            aria-selected="false"
+            >Actual Wage Paid:
+          </a></b
+        >
+
+        <div class="row mt-1 mx-2">
+          <div class="col-md-4">
+            <input
+              type="text"
+              formControlName="ActualWagePaidheighest"
+              class="form-control form-control-sm mb-2"
+              id="ActualWagePaidheighest"
+            />
+          </div>
+          <div class="col-md-4">
+            <input
+              type="text"
+              formControlName="ActualWagePaidaverage"
+              class="form-control form-control-sm mb-2"
+              id="ActualWagePaidaverage"
+            />
+          </div>
+
+          <div class="col-md-4">
+            <input
+              type="text"
+              formControlName="ActualWagePaidlowest"
+              class="form-control form-control-sm col-md-12"
+              id="ActualWagePaidlowest"
+            />
+          </div>
+        </div>
+        <b style="margin-top: 4px;"> 
+          <a
+            class="nav-item ml-2 mt-4"
+            id="nav-profile-tab"
+            data-toggle="tab"
+            data-toggle="tab"
+            role="tab"
+            style="text-decoration: underline"
+            aria-controls="nav-profile"
+            aria-selected="false"
+            >Comments:
+          </a></b
+        >
+
+        <div class="row mt-1 mx-2">
+          <div class="col-md-4">
+            <input
+              type="text"
+              formControlName="Commentsheighest"
+              class="form-control form-control-sm mb-2"
+              id="Commentsheighest"
+            />
+          </div>
+          <div class="col-md-4">
+           <input
+              type="text"
+              formControlName="Commentsaverage"
+              class="form-control form-control-sm mb-2"
+              id="Commentsaverage"
+            />
+          </div>
+
+          <div class="col-md-4">
+         <input
+              type="text"
+              formControlName="Commentslowest"
+              class="form-control form-control-sm col-md-12"
+              id="Commentslowest"
+            />
+          </div>
+        </div>
+      </div>
+
+
+
+      <button class="btn-primary" (click)="pdf()">Print</button>
+
+    </div>
+  </section>
+</form>
+<br>
+<br>
+

@@ -154,6 +154,13 @@ namespace Ozone.Infrastructure.Shared.Services.MasterSetups
             result = _mapper.Map<List<MainClauseModel>>(list);
             return result;
         }
+        public async Task<List<MainClauseModel>> GetAllMainClaus()
+        {
+            var result = new List<MainClauseModel>();
+            var list = await Task.Run(() => _dbContext.MainClause.Where(x => x.IsDeleted == false).ToList());
+            result = _mapper.Map<List<MainClauseModel>>(list);
+            return result;
+        }
 
 
 

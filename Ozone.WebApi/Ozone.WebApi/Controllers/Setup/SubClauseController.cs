@@ -96,7 +96,15 @@ namespace Ozone.WebApi.Controllers.Setup
             var List = await _subClause.GetAllClauseByStandard(id);
             return new JsonResult(List);
         }
+        [Route("GetAllMainClause")]
+        [HttpGet]
+        [Authorize]
 
+        public async Task<IActionResult> GetAllMainClause()
+        {
+            var List = await _subClause.GetAllMainClaus();
+            return new JsonResult(List);
+        }
 
 
     }

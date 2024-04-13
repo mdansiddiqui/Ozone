@@ -1,4 +1,5 @@
-﻿<div [@routerTransition]>
+﻿<ngx-ui-loader fgsType="three-strings" fgsColor="#025838" overlayColor="rgba(40,40,40,0.2)" pbColor="#025838"></ngx-ui-loader>
+<div [@routerTransition]>
   <h4 class="text-center mb-3">{{ "LogIn" | localize }}</h4>
   <form novalidate autocomplete="off" #loginForm="ngForm" (ngSubmit)="login()">
     <div class="form-group">
